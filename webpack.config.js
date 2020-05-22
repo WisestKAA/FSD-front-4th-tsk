@@ -13,7 +13,9 @@ module.exports = (env, options) => {
             rules: [
                 {
                     test: /\.ts$/,
-                    use: 'ts-loader',
+                    //use: 'ts-loader',
+                    loader: 'babel-loader',
+                    
                 },
                 {
                     test: /\.pug$/,
