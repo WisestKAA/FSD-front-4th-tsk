@@ -1,0 +1,36 @@
+{
+  "name": "fsd-front-4th-tsk",
+  "version": "1.0.0",
+  "description": "jquery slider plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WisestKAA/FSD-front-4th-tsk.git"
+  },
+  "keywords": [
+    "slider"
+  ],
+  "author": "WisestKAA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WisestKAA/FSD-front-4th-tsk/issues"
+  },
+  "homepage": "https://github.com/WisestKAA/FSD-front-4th-tsk#readme",
+  "devDependencies": {
+    "@types/jasmine": "^3.5.10",
+    "karma": "^5.0.9",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-cli": "^2.0.0",
+    "karma-jasmine": "^3.1.1",
+    "karma-spec-reporter": "0.0.32",
+    "karma-webpack": "^4.0.2",
+    "ts-loader": "^7.0.4",
+    "typescript": "^3.9.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
