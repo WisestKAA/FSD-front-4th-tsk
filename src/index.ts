@@ -1,18 +1,10 @@
 import './style.scss';
+import './plugin/simpleslider';
 
-(function( $ ) {
-    $.fn.tooltip = function( options ) {  
-  
-      // Создаём настройки по-умолчанию, расширяя их с помощью параметров, которые были переданы
-      var settings = $.extend( {
-        'location'         : 'top',
-        'background-color' : 'blue'
-      }, options);
-  
-      return this.each(function() {        
-  
-        // Тут пишем код плагина tooltip
-  
-      });  
-    };
-  })( jQuery );
+$(document).ready(() => {  
+  const sliders = document.querySelectorAll('.slider');
+
+  sliders.forEach((val => {
+    $(val).SimpleSlider({isHorizontal: true, minVal: 0, maxVal: 100});
+  }));
+});
