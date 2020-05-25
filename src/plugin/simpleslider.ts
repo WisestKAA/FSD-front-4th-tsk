@@ -1,4 +1,5 @@
 import { ISliderOptions } from'./model/ISliderOptions';
+import { Presenter } from './presenter/Presenter';
 
 declare global {
     interface Window {
@@ -12,9 +13,10 @@ declare global {
 }
 
 (function ($: JQueryStatic){
-    $.fn.SimpleSlider = function (options?: ISliderOptions){
-        var $elem = $(this);
-        $elem.html(`isHorizontal: ${options.isHorizontal}, minVal: ${options.maxVal}, etc`);
+    $.fn.SimpleSlider = function (options?: ISliderOptions){    
+        let $elem = $(this);
+        $elem.html(`it's slider`);
+        let a = new Presenter(options);
         return $elem;
     }
 }(jQuery));

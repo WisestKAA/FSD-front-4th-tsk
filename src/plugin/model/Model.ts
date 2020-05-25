@@ -1,21 +1,21 @@
 import { ISliderOptions } from './ISliderOptions';
 
 export class Model{    
-    public options = new Object({
-        isHorizontal: true,
-        minVal: 0,
-        maxVal: 100,
-    }); 
+    options: ISliderOptions;
 
-    constructor(options?: ISliderOptions){
-        this.setOptions(new Map(Object.entries(options)));        
+    constructor(options: ISliderOptions){
+        this.options = this.init(options);
     }
 
-    setOptions(options: Map<string, boolean | number>): void {
-        options.forEach((value, key)=>{
-            if(value){
-                this.options[key] = value;
-            }
-        });
+    init(options?: ISliderOptions){
+        let defaultOption : ISliderOptions = {
+            isHorizontal: true,
+            maxVal: 0,
+            minVal: 100,
+        };
+        let currentOptions = $.extend(defaultOption, options);
+        return currentOptions;
     }
+
+    
 }

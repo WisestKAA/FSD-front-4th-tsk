@@ -6,8 +6,8 @@ export class Presenter{
     private model: Model;
     private view: View;
 
-    constructor(options: ISliderOptions){
-        
+    constructor(options?: ISliderOptions){
+        this.model = new Model(options);
     }
 
 }
