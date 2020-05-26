@@ -6,8 +6,12 @@ export class Presenter{
     private model: Model;
     private view: View;
 
-    constructor(options?: ISliderOptions){
+    constructor(elem: HTMLElement, options?: ISliderOptions){
         this.model = new Model(options);
+        this.view = new View(elem);
     }
 
+    getReadySlider(){
+        return this.view.getReadySlider();
+    }
 }

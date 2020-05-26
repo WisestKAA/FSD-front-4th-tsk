@@ -1,5 +1,7 @@
+import './styles.scss';
 import { ISliderOptions } from'./model/ISliderOptions';
 import { Presenter } from './presenter/Presenter';
+
 
 declare global {
     interface Window {
@@ -13,10 +15,8 @@ declare global {
 }
 
 (function ($: JQueryStatic){
-    $.fn.SimpleSlider = function (options?: ISliderOptions){    
-        let $elem = $(this);
-        $elem.html(`it's slider`);
-        let a = new Presenter(options);
-        return $elem;
+    $.fn.SimpleSlider = function (options?: ISliderOptions){ 
+        let presenter = new Presenter(this, options);
+        return presenter.getReadySlider();
     }
 }(jQuery));
