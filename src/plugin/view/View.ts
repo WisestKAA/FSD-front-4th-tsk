@@ -16,7 +16,7 @@ export class View{
         let $header = $('<div>').addClass(StyleClasses.HEADER);
         let $wrapper = $('<div>').addClass(StyleClasses.WRAPPER);
         this.line = new SliderLine();
-        this.handle = new SliderHandle();
+        this.handle = new SliderHandle(this.line);
         $wrapper.append(this.line.getReadyElement(), this.handle.getReadyElement());
         $mainDiv.append($header, $wrapper);
 
