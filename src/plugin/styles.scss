@@ -3,7 +3,7 @@
     width: min-content;
 
     &__wrapper{
-        width: 100%;        
+        width: 100%;    
     }
 
     &__line{
@@ -15,11 +15,14 @@
     }
 
     &__handle{
+        position: relative; 
+        top: -12px;
+        left: 1px;
         width: 16px;
         height: 16px;
         background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
-        border: 2px solid #FFFFFF;
         border-radius: 50%;
         box-sizing: border-box;
+        cursor: pointer;
     }
 }

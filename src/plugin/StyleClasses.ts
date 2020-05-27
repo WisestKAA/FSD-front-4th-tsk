@@ -3,4 +3,5 @@ export enum StyleClasses {
      WRAPPER = 'simpleslider__wrapper',
      LINE = 'simpleslider__line',
      HANDLE = 'simpleslider__handle',
+     HEADER = 'simpleslider__header',
 }
