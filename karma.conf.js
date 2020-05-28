@@ -3,8 +3,9 @@ const webpackConfig = require('./webpack.testconfig');
 module.exports = function(config) {
     config.set({
         basePath: '',
-        frameworks: ['jasmine'],
-        files: ['test/*.ts', 'test/*.js'],
+        plugins: ['@metahub/karma-jasmine-jquery', 'karma-*'],
+        frameworks: ['jasmine-jquery', 'jasmine'],
+        files: ['test/*.ts', 'test/*.js', './node_modules/jquery/dist/jquery.js'],
         exclude: [],
         preprocessors: {
             'test/**/*.ts': ['webpack'],

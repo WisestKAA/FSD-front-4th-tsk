@@ -1,29 +1,27 @@
 import { StyleClasses } from "../StyleClasses";
 import { SliderLine } from "./SliderLine";
 import { SliderHandle } from "./SliderHandle";
+import { SliderWrapper } from "./SliderWrapper";
 
 export class View{
     slider: JQuery<HTMLElement>;
     line: SliderLine;
     handle: SliderHandle;
+    wrapper: SliderWrapper;
 
     constructor(elem: HTMLElement){
         this.init(elem);
     }
 
-    init(elem: HTMLElement){
+    protected init(elem: HTMLElement){
         let $mainDiv = $('<div>').addClass(StyleClasses.SLIDER);
         let $header = $('<div>').addClass(StyleClasses.HEADER);
-        let $wrapper = $('<div>').addClass(StyleClasses.WRAPPER);
         this.line = new SliderLine();
+        this.wrapper = new SliderWrapper();
         this.handle = new SliderHandle(this.line);
-        $wrapper.append(this.line.getReadyElement(), this.handle.getReadyElement());
-        $mainDiv.append($header, $wrapper);
+        this.wrapper.$elem.append(this.line.$elem, this.handle.$elem);
+        $mainDiv.append($header, this.wrapper.$elem);
 
         this.slider = $(elem).append($mainDiv);
-    }
-
-    getReadySlider(): JQuery<HTMLElement>{
-        return this.slider;
     }
 }

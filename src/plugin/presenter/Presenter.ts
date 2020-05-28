@@ -12,6 +12,6 @@ export class Presenter{
     }
 
     getReadySlider(){
-        return this.view.getReadySlider();
+        return this.view.slider;
     }
 }

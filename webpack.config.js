@@ -15,7 +15,7 @@ module.exports = (env, options) => {
                     test: /\.ts$/,
                     //use: 'ts-loader',
                     loader: 'babel-loader',
-                    
+                    exclude: /(node_modules|bower_components|\.spec.ts)/,                    
                 },
                 {
                     test: /\.pug$/,

@@ -9,12 +9,8 @@ export class SliderLine extends AbstractElement{
         this.init();
     }
 
-    init() {
+    protected init() {
         let $line: JQuery<HTMLElement> = $('<div>').addClass(StyleClasses.LINE);
         this.$elem = $line;
-    }
-
-    getReadyElement(): JQuery<HTMLElement> {
-        return this.$elem;
     }
 }
