@@ -1,5 +1,5 @@
 import { AbstractElement } from "./AbstractElement";
-import { StyleClasses } from "../StyleClasses";
+import { StyleClasses } from "./StyleClasses";
 
 export class SliderWrapper extends AbstractElement{
     $elem: JQuery<HTMLElement>;

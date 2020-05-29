@@ -1,6 +1,6 @@
 .simpleslider{
     min-width: 100px;
-    width: min-content;
+    width: 100%;
     display: inline-block; 
 
     &__wrapper{
@@ -19,8 +19,8 @@
     }
 
     &__handle{
+        display: inline-block; 
         position: relative; 
-        //top: -12px;
         width: 16px;
         height: 16px;
         background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);

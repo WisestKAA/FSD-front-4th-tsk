@@ -1,4 +1,4 @@
-import { StyleClasses } from "../StyleClasses";
+import { StyleClasses } from "./StyleClasses";
 import { SliderLine } from "./SliderLine";
 import { SliderHandle } from "./SliderHandle";
 import { SliderWrapper } from "./SliderWrapper";

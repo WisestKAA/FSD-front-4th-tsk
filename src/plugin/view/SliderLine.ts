@@ -1,4 +1,4 @@
-import { StyleClasses } from "../StyleClasses";
+import { StyleClasses } from "./StyleClasses";
 import { AbstractElement } from "./AbstractElement";
 
 export class SliderLine extends AbstractElement{    

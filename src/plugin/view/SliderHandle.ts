@@ -1,5 +1,5 @@
 import { AbstractElement } from "./AbstractElement";
-import { StyleClasses } from "../StyleClasses";
+import { StyleClasses } from "./StyleClasses";
 import { SliderLine } from "./SliderLine";
 import { SliderWrapper } from "./SliderWrapper";
 
