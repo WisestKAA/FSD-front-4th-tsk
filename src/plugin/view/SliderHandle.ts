@@ -46,15 +46,20 @@ export class SliderHandle extends AbstractElement{
     onMouseMove( event: JQuery.MouseMoveEvent): void {
         let lineHTMLElement = this.line.$elem;
 
-        let newLeft = event.clientX - this.shiftX - lineHTMLElement.offset().left;
-        if (newLeft < 0) {
-            newLeft = 0;
-        }
+        let newLeft = this.getNewLeft(event.clientX, 
+            lineHTMLElement.offset().left, 
+            lineHTMLElement.outerWidth(), 
+            this.$elem.outerWidth());
+        
+        // let newLeft = event.clientX - this.shiftX - lineHTMLElement.offset().left;
+        // if (newLeft < 0) {
+        //     newLeft = 0;
+        // }
 
-        let rightEdge = lineHTMLElement.outerWidth() - this.$elem.outerWidth();
-        if (newLeft > rightEdge) {
-            newLeft = rightEdge;
-        }
+        // let rightEdge = lineHTMLElement.outerWidth() - this.$elem.outerWidth();
+        // if (newLeft > rightEdge) {
+        //     newLeft = rightEdge;
+        // }
 
         this.$elem.attr("style", `left: ${newLeft}px`);
     }
@@ -63,4 +68,20 @@ export class SliderHandle extends AbstractElement{
         $(document).off("mousemove");
         $(document).off("mouseup");
     }
+
+    getNewLeft(clientX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
+        let newLeft = clientX - this.shiftX - offsetLeft;
+        if (newLeft < 0) {
+            newLeft = 0;
+        }
+
+        let rightEdge = lineWidth - handleWidth;
+        if (newLeft > rightEdge) {
+            newLeft = rightEdge;
+        }
+
+        return newLeft;
+    }
+
+    
 }

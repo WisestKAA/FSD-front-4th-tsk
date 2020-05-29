@@ -5,7 +5,10 @@ module.exports = function(config) {
         basePath: '',
         plugins: ['@metahub/karma-jasmine-jquery', 'karma-*'],
         frameworks: ['jasmine-jquery', 'jasmine'],
-        files: ['test/*.ts', 'test/*.js', './node_modules/jquery/dist/jquery.js'],
+        files: ['test/*.ts', 
+            'test/*.js', 
+            './node_modules/jquery/dist/jquery.js',
+            "test/**/*.ts"],
         exclude: [],
         preprocessors: {
             'test/**/*.ts': ['webpack'],
