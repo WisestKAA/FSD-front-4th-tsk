@@ -4,7 +4,7 @@ import { SliderLine } from "./SliderLine";
 
 export class SliderHandle extends AbstractElement{
     public $elem: JQuery<HTMLElement>;
-    private shiftX: number;
+    public shiftX: number;
     private line: SliderLine;
 
     constructor(line: SliderLine){
@@ -50,16 +50,6 @@ export class SliderHandle extends AbstractElement{
             lineHTMLElement.offset().left, 
             lineHTMLElement.outerWidth(), 
             this.$elem.outerWidth());
-        
-        // let newLeft = event.clientX - this.shiftX - lineHTMLElement.offset().left;
-        // if (newLeft < 0) {
-        //     newLeft = 0;
-        // }
-
-        // let rightEdge = lineHTMLElement.outerWidth() - this.$elem.outerWidth();
-        // if (newLeft > rightEdge) {
-        //     newLeft = rightEdge;
-        // }
 
         this.$elem.attr("style", `left: ${newLeft}px`);
     }
@@ -81,7 +71,5 @@ export class SliderHandle extends AbstractElement{
         }
 
         return newLeft;
-    }
-
-    
+    }    
 }

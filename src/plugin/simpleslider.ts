@@ -1,4 +1,3 @@
-import './styles.scss';
 import { ISliderOptions } from'./model/ISliderOptions';
 import { Presenter } from './presenter/Presenter';
 

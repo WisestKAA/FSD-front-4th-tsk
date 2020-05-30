@@ -21,7 +21,6 @@ export class View{
         this.handle = new SliderHandle(this.line);
         this.wrapper.$elem.append(this.line.$elem, this.handle.$elem);
         $mainDiv.append($header, this.wrapper.$elem);
-
         this.slider = $(elem).append($mainDiv);
     }
 }

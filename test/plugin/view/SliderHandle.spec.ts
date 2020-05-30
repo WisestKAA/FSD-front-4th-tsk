@@ -1,10 +1,17 @@
 import { SliderHandle } from "../../../src/plugin/view/SliderHandle";
 import { SliderLine } from "../../../src/plugin/view/SliderLine";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
+import '../../../src/plugin/simpleslider';
+
 
 describe('Check SliderHandle',()=>{
     let line = new SliderLine();
-    let handle = new SliderHandle(line);    
+    let handle = new SliderHandle(line);
+    
+    $(document.body).append('<div class="slider" style="width: 100px"></div>');
+    $(document.head).append('<link href="http://localhost:8080/style.css" rel="stylesheet">')   
+    $('.slider').SimpleSlider(); 
+       
 
     it('Tag of element must be DIV', () => {
         expect(handle.$elem.get(0).nodeName).toEqual('DIV');
@@ -15,14 +22,37 @@ describe('Check SliderHandle',()=>{
     });
 
     it('Element must have an event handler function for "onmousedown"', () => {
-        //spyOn(handle, handle.onMouseDown);
-
-        
-        // $(document.body).append(handle.$elem);
-        // let spyEvent = spyOnEvent('#'+StyleClasses.HANDLE, 'mousedown');
-        // handle.$elem.mousedown();
-        // //expect('mousedown').toHaveBeenTriggeredOn(StyleClasses.HANDLE);
-        // expect(spyEvent).toHaveBeenTriggered();
-        //expect().toHandle("mousedown");
+        let spy = spyOn(handle, "onMouseDown");
+        handle.$elem.mousedown();
+        expect(spy).toHaveBeenCalled();
     });
+
+    it('After the onmousedown element event, the document should call the event handler function for onmousemove and onmouseup', () =>{
+        let spyMouseMove = spyOn(handle, 'onMouseMove');
+        let spyMouseUp = spyOn(handle, 'onMouseUp');
+        handle.$elem.mousedown();
+        $(document).mousemove();
+        $(document).mouseup();
+        expect(spyMouseMove).toHaveBeenCalled();
+        expect(spyMouseUp).toHaveBeenCalled();
+    });
+
+    it('After the onmouseup document event, the document should\'t call the event handler function for onmousemove and onmouseup', () =>{
+        handle.$elem.mousedown();
+        $(document).mouseup();
+        let spyMouseMove = spyOn(handle, 'onMouseMove');
+        let spyMouseUp = spyOn(handle, 'onMouseUp');
+        $(document).mousemove();
+        $(document).mouseup();
+        expect(spyMouseMove).not.toHaveBeenCalled();
+        expect(spyMouseUp).not.toHaveBeenCalled();
+    });
+
+    it('After the onmousemove document event, element must have attribute "style"', () => {
+        handle.$elem.mousedown();
+        $(document).mousemove(); 
+        expect(handle.$elem.attr('style')).toBeDefined();
+    });
+
+    
 });
