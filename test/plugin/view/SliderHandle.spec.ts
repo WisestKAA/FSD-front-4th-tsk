@@ -3,7 +3,6 @@ import { SliderLine } from "../../../src/plugin/view/SliderLine";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 import '../../../src/plugin/simpleslider';
 
-
 describe('Check SliderHandle',()=>{
     let line = new SliderLine();
     let handle = new SliderHandle(line);
@@ -54,5 +53,13 @@ describe('Check SliderHandle',()=>{
         expect(handle.$elem.attr('style')).toBeDefined();
     });
 
-    
+    it("The handle should be in line area", () =>{
+        handle.shiftX=0;
+        let offsetLeft = 0;
+        let lineWidth = 100;
+        let handleWidth = 10;
+        expect(handle.getNewLeft(-10, offsetLeft, lineWidth, handleWidth)).toEqual(0);
+        expect(handle.getNewLeft(20, offsetLeft, lineWidth, handleWidth)).toEqual(20);
+        expect(handle.getNewLeft(100, offsetLeft, lineWidth, handleWidth)).toEqual(90);
+    });
 });
