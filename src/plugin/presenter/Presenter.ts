@@ -3,8 +3,8 @@ import { View } from "../view/View";
 import { ISliderOptions } from "../model/ISliderOptions";
 
 export class Presenter{
-    private model: Model;
-    private view: View;
+    model: Model;
+    view: View;
 
     constructor(elem: HTMLElement, options?: ISliderOptions){
         this.model = new Model(options);
