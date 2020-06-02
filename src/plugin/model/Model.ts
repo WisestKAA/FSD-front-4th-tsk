@@ -4,18 +4,16 @@ export class Model{
     options: ISliderOptions;
 
     constructor(options: ISliderOptions){
-        this.options = this.init(options);
+        this.init(options);
     }
 
-    init(options?: ISliderOptions){
+    init(options?: ISliderOptions): void{
         let defaultOption : ISliderOptions = {
             isHorizontal: true,
             maxVal: 0,
             minVal: 100,
         };
         let currentOptions = $.extend(defaultOption, options);
-        return currentOptions;
+        this.options = currentOptions;
     }
-
-    
 }
