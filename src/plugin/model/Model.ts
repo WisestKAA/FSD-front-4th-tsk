@@ -6,6 +6,7 @@ export class Model{
         isHorizontal: true,
         maxVal: 0,
         minVal: 100,
+        currentVal: 0,
     };
 
     constructor(options?: ISliderOptions){

@@ -4,4 +4,5 @@ export enum StyleClasses {
      LINE = 'simpleslider__line',
      HANDLE = 'simpleslider__handle',
      HEADER = 'simpleslider__header',
+     CURRENT = 'simpleslider__current',
 }
