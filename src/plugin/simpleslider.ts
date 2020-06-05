@@ -15,7 +15,7 @@ declare global {
 
 (function ($: JQueryStatic){
     $.fn.SimpleSlider = function (options?: ISliderOptions){ 
-        let presenter = new Presenter(this, options);
+        const presenter = new Presenter(this, options);
         return presenter.getReadySlider();
     }
 }(jQuery));

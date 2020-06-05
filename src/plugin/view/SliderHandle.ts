@@ -1,11 +1,15 @@
 import { AbstractElement } from "./AbstractElement";
 import { StyleClasses } from "./StyleClasses";
 import { SliderLine } from "./SliderLine";
+import { LiteEvent } from "../LiteEvent/LiteEvent";
+import { ILiteEvent } from "../LiteEvent/ILiteEvent";
 
 export class SliderHandle extends AbstractElement{
     public $elem: JQuery<HTMLElement>;
     public shiftX: number;
+    public position: number;
     private line: SliderLine;
+    public onPositionLeftChanged: LiteEvent<void>;
 
     constructor(line: SliderLine){
         super();
@@ -17,6 +21,8 @@ export class SliderHandle extends AbstractElement{
     protected init(): void {
         let $handle: JQuery<HTMLElement> = $('<div>').addClass(StyleClasses.HANDLE);
         this.$elem = $handle;
+        this.position = 0;
+        this.onPositionLeftChanged = new LiteEvent<void>();
     }
 
     private addEvents(): void {
@@ -45,13 +51,8 @@ export class SliderHandle extends AbstractElement{
 
     onMouseMove( event: JQuery.MouseMoveEvent): void {
         let lineHTMLElement = this.line.$elem;
-
-        let newLeft = this.getNewLeft(event.clientX, 
-            lineHTMLElement.offset().left, 
-            lineHTMLElement.outerWidth(), 
-            this.$elem.outerWidth());
-
-        this.$elem.attr("style", `left: ${newLeft}px`);
+        let newLeft = this.getNewLeft(event.clientX, lineHTMLElement.offset().left, lineHTMLElement.outerWidth(), this.$elem.outerWidth()); 
+        this.setNewPositionLeft(newLeft);
     }
 
     onMouseUp(): void{
@@ -70,6 +71,24 @@ export class SliderHandle extends AbstractElement{
             newLeft = rightEdge;
         }
 
-        return newLeft;
-    }    
+        let newLeftPercent = (100 * newLeft)/lineWidth;
+
+        return newLeftPercent;
+    }
+    
+    setNewPositionLeft(position: number): void {
+        this.$elem.attr("style", `left: ${position}%`);
+        this.position = position;
+        this.onPositionLeftChanged.trigger();
+    }
+
+    getSliderHandleMaxPosition(): number {
+        let lineWidth = this.line.$elem.outerWidth();
+        let handleWidth = this.$elem.outerWidth();
+        let maxWidth = lineWidth - handleWidth;
+        let maxPosition = (100* maxWidth)/lineWidth;
+        return maxPosition;
+    }
+
+    public get positionLeftChangedEvent(): ILiteEvent<void> {return this.onPositionLeftChanged.expose();}
 }

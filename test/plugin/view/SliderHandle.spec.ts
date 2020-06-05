@@ -6,10 +6,11 @@ import '../../../src/plugin/simpleslider';
 describe('Check SliderHandle',()=>{
     let line = new SliderLine();
     let handle = new SliderHandle(line);
+    $(document.head).append('<link href="http://localhost:8080/style.css" rel="stylesheet">')  
     
-    $(document.body).append('<div class="slider" style="width: 100px"></div>');
-    $(document.head).append('<link href="http://localhost:8080/style.css" rel="stylesheet">')   
-    $('.slider').SimpleSlider(); 
+    // $(document.body).append('<div class="slider" style="width: 100px"></div>');
+    //  
+    // $('.slider').SimpleSlider(); 
        
 
     it('Tag of element must be DIV', () => {
@@ -61,5 +62,10 @@ describe('Check SliderHandle',()=>{
         expect(handle.getNewLeft(-10, offsetLeft, lineWidth, handleWidth)).toEqual(0);
         expect(handle.getNewLeft(20, offsetLeft, lineWidth, handleWidth)).toEqual(20);
         expect(handle.getNewLeft(100, offsetLeft, lineWidth, handleWidth)).toEqual(90);
+    });
+
+    it("The item should move to the specified value to the left", () => {
+        handle.setNewPositionLeft(50);
+        expect(handle.$elem.attr('style')).toBe('left: 50%')
     });
 });
