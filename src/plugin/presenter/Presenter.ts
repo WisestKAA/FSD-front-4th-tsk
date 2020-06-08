@@ -7,9 +7,14 @@ export class Presenter{
     view: View;
 
     constructor(elem: HTMLElement, options?: ISliderOptions){
+        this.init(elem, options)
+        this.addEvents();        
+        if(this.model.options.currentVal != 0) this.setCurrentLeftValue(this.model.options.currentVal);
+    }
+
+    init(elem: HTMLElement, options?: ISliderOptions): void{        
         this.model = new Model(options);
-        this.view = new View(elem, this.model.options.currentVal, this);
-        this.addEvents();
+        this.view = new View(elem, this);
     }
 
     getReadySlider(){
@@ -26,18 +31,11 @@ export class Presenter{
 
     sliderHandleLeftChange(): void {
         let position = this.view.getSliderHandleLeftPosition();
-        let newCurrentVal = this.model.getMaxValue() * this.getCorrectPosition(position, false) / 100;
-        this.model.setCurrentValue(newCurrentVal);
-    }
-
-    sliderCurrentValueChange(): void {
-        let newCurrentVal = this.view.getCurrentValue();
-        let currentVal = this.model.getMaxValue() * this.getCorrectPosition(this.view.getSliderHandleLeftPosition(), false) / 100;
-        if(currentVal != newCurrentVal){
-            //this.setCurrentValueModel(newCurrentVal);            
-            //let newPosition = 100 * newCurrentVal / this.model.getMaxValue();
-            //this.view.setNewSliderHandleLeftPosition(this.getCorrectPosition(newPosition,true));
-        }
+        let maxVal = this.model.getMaxValue();
+        let maxHandlePosition = this.view.getMaxHandlePosition();
+        let correctPosition = this.getCorrectPosition(position, maxHandlePosition, false);
+        let newCurrentVal = maxVal  * correctPosition / 100;
+        this.setCurrentValueModel(newCurrentVal);
     }
 
     setCurrentValueView(currentValue: number): void{
@@ -48,12 +46,17 @@ export class Presenter{
         this.model.setCurrentValue(newCurrentVal);
     }
 
-    getCorrectPosition(position: number, isForView: boolean): number{
-        let maxPosition = this.view.getMaxHandlePosition();
+    getCorrectPosition(position: number, maxHandlePosition: number, isForView: boolean): number{
         if(isForView){
-            return position * maxPosition / 100;
+            return position * maxHandlePosition / 100;
         } else {
-            return 100 * position / maxPosition;
+            return 100 * position / maxHandlePosition;
         }
+    }
+
+    setCurrentLeftValue(currentVal: number, maxValue = this.model.options.maxVal, maxHandlePosition = this.view.getMaxHandlePosition()): void{        
+        let position = (100 * currentVal) / maxValue;
+        position = this.getCorrectPosition(position, maxHandlePosition, true);
+        this.view.setNewSliderHandleLeftPosition(position);
     }
 }

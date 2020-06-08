@@ -3,15 +3,19 @@ import { SliderLine } from "../../../src/plugin/view/SliderLine";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 import '../../../src/plugin/simpleslider';
 
+class MockEventTest {
+    handle: SliderHandle;
+    constructor(handle: SliderHandle){
+        this.handle = handle;
+        this.handle.positionLeftChangedEvent.on(()=>{this.event()});
+    }
+    event(): void {}
+}
+
 describe('Check SliderHandle',()=>{
     let line = new SliderLine();
     let handle = new SliderHandle(line);
-    $(document.head).append('<link href="http://localhost:8080/style.css" rel="stylesheet">')  
-    
-    // $(document.body).append('<div class="slider" style="width: 100px"></div>');
-    //  
-    // $('.slider').SimpleSlider(); 
-       
+    $(document.head).append('<link href="http://localhost:8080/style.css" rel="stylesheet">');        
 
     it('Tag of element must be DIV', () => {
         expect(handle.$elem.get(0).nodeName).toEqual('DIV');
@@ -67,5 +71,16 @@ describe('Check SliderHandle',()=>{
     it("The item should move to the specified value to the left", () => {
         handle.setNewPositionLeft(50);
         expect(handle.$elem.attr('style')).toBe('left: 50%')
+    });    
+
+    it("The getSliderHandleMaxPosition function shuld return the maximum position of the handle", () => {
+        expect(handle.getSliderHandleMaxPosition(100, 16)).toBe(84);
+    });
+
+    it("After the handle has changed position, the positionLeftChangedEvent event should triggered", () => {
+        let mock = new MockEventTest(handle);
+        let spy = spyOn(mock, "event");
+        handle.setNewPositionLeft(handle.position + 1);
+        expect(spy).toHaveBeenCalled();
     });
 });

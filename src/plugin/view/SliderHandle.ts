@@ -82,11 +82,9 @@ export class SliderHandle extends AbstractElement{
         this.onPositionLeftChanged.trigger();
     }
 
-    getSliderHandleMaxPosition(): number {
-        let lineWidth = this.line.$elem.outerWidth();
-        let handleWidth = this.$elem.outerWidth();
-        let maxWidth = lineWidth - handleWidth;
-        let maxPosition = (100* maxWidth)/lineWidth;
+    getSliderHandleMaxPosition(lineWidth: number = this.line.$elem.outerWidth(), handleWidth: number = this.$elem.outerWidth()): number {
+        let maxWidth = lineWidth - handleWidth
+        let maxPosition = (100 * maxWidth)/lineWidth;
         return maxPosition;
     }
 

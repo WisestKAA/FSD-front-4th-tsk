@@ -10,7 +10,10 @@ export class SliderLine extends AbstractElement{
     }
 
     protected init() {
-        let $line: JQuery<HTMLElement> = $('<div>').addClass(StyleClasses.LINE);
-        this.$elem = $line;
+        this.$elem = $('<div>').addClass(StyleClasses.LINE);
+    }
+
+    getLineWidth(): number{
+        return this.$elem.outerWidth();
     }
 }

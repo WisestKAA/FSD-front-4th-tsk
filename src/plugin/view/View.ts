@@ -13,8 +13,8 @@ export class View{
     wrapper: SliderWrapper;
     currentValue: CurrentValue;
 
-    constructor(elem: HTMLElement, currentValue: number, presenter: Presenter){
-        this.currentValue = new CurrentValue(currentValue);
+    constructor(elem: HTMLElement, presenter: Presenter){
+        this.currentValue = new CurrentValue();
         this.presenter = presenter;
         this.init(elem);
         this.addEvents();
@@ -42,18 +42,10 @@ export class View{
         this.handle.positionLeftChangedEvent.on(() => {
             that.sliderHandleLeftChange();
         });
-
-        this.currentValue.currentValueChangedEvent.on(() => {
-            this.currentValueChanged();
-        })
     }
 
     sliderHandleLeftChange(): void {        
         this.presenter.sliderHandleLeftChange();
-    }
-
-    currentValueChanged(): void {
-        this.presenter.sliderCurrentValueChange();
     }
 
     getSliderHandleLeftPosition(): number{
@@ -74,5 +66,9 @@ export class View{
 
     getMaxHandlePosition(): number{
         return this.handle.getSliderHandleMaxPosition();
+    }
+
+    getLineWidth(): number {
+        return this.line.getLineWidth();
     }
 }

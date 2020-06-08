@@ -6,13 +6,11 @@ import { ILiteEvent } from "../LiteEvent/ILiteEvent";
 export class CurrentValue extends AbstractElement {
     $elem: JQuery<HTMLElement>;
     val: number;
-    onCurrentValueChange: LiteEvent<void>;
     
-    constructor(value: number){
+    constructor(){
         super();
-        this.val = value;    
+        this.val = 0;    
         this.init();
-        this.onCurrentValueChange = new LiteEvent<void>();
     }
 
     protected init(): void {
@@ -24,8 +22,5 @@ export class CurrentValue extends AbstractElement {
     setCurrentValue(currentValue: number): void{
         this.val = currentValue;
         this.$elem.html(`${this.val}`);
-        this.onCurrentValueChange.trigger();
     }
-
-    public get currentValueChangedEvent(): ILiteEvent<void> {return this.onCurrentValueChange.expose();}
 }
