@@ -77,12 +77,18 @@ export class Presenter{
     }
 
     getCorrectValWithStep(currentVal: number = this.getCurrentValFromPosition()): number {
-        let correctVal: number;
-
         let step = this.model.options.step;
+        if(currentVal < this.model.options.minVal){
+            return this.model.options.minVal;
+        }
+        if(currentVal > this.model.options.maxVal - this.model.options.maxVal % step){
+            return this.model.options.maxVal;
+        }
+
+        let correctVal: number;
         let shift = step - currentVal % step;
         let middle = step / 2;
-        if(shift > middle){
+        if(shift > middle){            
             correctVal = currentVal - currentVal % step;
         } else {
             correctVal = currentVal + shift;

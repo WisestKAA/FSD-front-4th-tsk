@@ -5,6 +5,6 @@ $(document).ready(() => {
   const sliders = document.querySelectorAll('.slider');
 
   sliders.forEach((val => {
-    $(val).SimpleSlider({currentVal: 50}); 
+    $(val).SimpleSlider({currentVal: 50, step: 30}); 
   }));
 });
