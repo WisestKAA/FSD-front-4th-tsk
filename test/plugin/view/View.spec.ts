@@ -3,13 +3,16 @@ import { Presenter } from "../../../src/plugin/presenter/Presenter";
 import { View } from "../../../src/plugin/view/View";
 
 describe('Check View', () => {
-    let elem = $('<div class="slider" style="width: 100px"></div>');
     let view : View;
 
-    beforeEach(() => {        
+    beforeEach(() => {
+        let elem = $('<div class="slider1" style="width: 100px"></div>');
+        $(document.body).append(elem);        
         let presenter = new Presenter(elem.get(0));
         view = presenter.view;
     });
+
+    afterEach(()=>{$(document.body).html("");});
 
     it('After initialization element must be defined', () => {
         expect(view.slider).toBeDefined();

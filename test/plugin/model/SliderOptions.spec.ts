@@ -6,6 +6,8 @@ describe('Check SliderOptions', () => {
         minVal: 0,
         maxVal: 100,
         currentVal: 0,
+        step: 1,
+        precision: 0,
     });
 
     it('All parametrs must be defined', () => {
@@ -13,5 +15,7 @@ describe('Check SliderOptions', () => {
         expect(sliderOptions.minVal).toBeDefined();
         expect(sliderOptions.maxVal).toBeDefined();
         expect(sliderOptions.currentVal).toBeDefined();
+        expect(sliderOptions.step).toBeDefined();
+        expect(sliderOptions.precision).toBeDefined();
     });
 });

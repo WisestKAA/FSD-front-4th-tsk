@@ -16,7 +16,9 @@ export class Model{
             isHorizontal: true,
             maxVal: 100,
             minVal: 0,
-            currentVal: 0
+            currentVal: 0,
+            step: 1,
+            precision: 0,
         };        
         let currentOptions = $.extend(this.defaultOption, options);
         currentOptions.currentVal = this.checkCurrentVal(currentOptions);

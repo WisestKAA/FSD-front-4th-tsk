@@ -1,13 +1,16 @@
 import { Presenter } from "../../../src/plugin/presenter/Presenter";
 import '../../../src/plugin/simpleslider';
 
-describe('Check Presenter', () => {
-    let elem = $('<div class="slider" style="width: 100px"></div>');
+describe('Check Presenter', () => {    
     let presenter: Presenter; 
 
-    beforeEach(() => {
+    beforeEach(() => {  
+        let elem = $('<div class="slider" style="width: 100px"></div>');
+        $(document.body).append(elem);      
         presenter = new Presenter(elem.get(0));
     });
+
+    afterEach(()=>{ $(document.body).html('');});
 
     it('After initialization model must be defined', () => {
         expect(presenter.model).toBeDefined();
@@ -22,12 +25,13 @@ describe('Check Presenter', () => {
     });
 
     it("Function sliderHandleLeftChange must change current value in model", () => { 
+        presenter.view.handle.setNewPositionLeft(0);
         let befor = presenter.model.options.currentVal;
         presenter.view.handle.setNewPositionLeft(50);
         let after = presenter.model.options.currentVal;
         expect(befor).not.toBe(after);
 
-        let spy = spyOn(presenter, "sliderHandleLeftChange");
+        let spy = spyOn(presenter, "sliderHandleLeftChange"); 
         presenter.view.handle.setNewPositionLeft(60);
         expect(spy).toHaveBeenCalled();
     });
@@ -63,6 +67,17 @@ describe('Check Presenter', () => {
         let beforPosition = presenter.view.getSliderHandleLeftPosition();
         presenter.setCurrentLeftValue(beforPosition+1, 100, 84);
         let afterPosition = presenter.view.getSliderHandleLeftPosition();
-        expect(beforPosition).not.toBe(afterPosition);
+        expect(beforPosition).not.toBe(afterPosition);  
+    });
+
+    it("The getCurrentValFromPosition function shuld calculate the current value from the handle position", () => {
+        presenter.setCurrentLeftValue(10);
+        let calcVal = presenter.getCurrentValFromPosition();
+        expect(calcVal).toBe(10);
+    });
+
+    it("The getCorrectValWithStep function shuld return the correct value with step", () => {
+        let currentVal = 9.4;
+        expect(presenter.getCorrectValWithStep(currentVal)).toBe(9);
     });
 });

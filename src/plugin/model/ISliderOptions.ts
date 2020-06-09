@@ -3,4 +3,6 @@ export interface ISliderOptions {
     minVal?: number;
     maxVal?: number;
     currentVal?: number;
+    step?: number;
+    precision?: number;
 }

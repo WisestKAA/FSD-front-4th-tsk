@@ -30,20 +30,25 @@ export class Presenter{
     }
 
     sliderHandleLeftChange(): void {
-        let position = this.view.getSliderHandleLeftPosition();
-        let maxVal = this.model.getMaxValue();
-        let maxHandlePosition = this.view.getMaxHandlePosition();
-        let correctPosition = this.getCorrectPosition(position, maxHandlePosition, false);
-        let newCurrentVal = maxVal  * correctPosition / 100;
-        this.setCurrentValueModel(newCurrentVal);
+        let correctVal = this.getCorrectValWithStep();
+        this.setCurrentValueModel(correctVal);
+        let currentValFromPosition = this.getCurrentValFromPosition();
+        if(correctVal != currentValFromPosition){
+            this.setCurrentLeftValue(correctVal);
+        }        
     }
 
     setCurrentValueView(currentValue: number): void{
         this.view.setCurrentValue(currentValue);
     }
 
-    setCurrentValueModel(newCurrentVal: number): void{
-        this.model.setCurrentValue(newCurrentVal);
+    setCurrentValueModel(currentVal?: number): void{
+        if(currentVal === null){
+            let newCurrentVal = this.getCurrentValFromPosition();
+            this.model.setCurrentValue(newCurrentVal);
+        }else{
+            this.model.setCurrentValue(currentVal);
+        }        
     }
 
     getCorrectPosition(position: number, maxHandlePosition: number, isForView: boolean): number{
@@ -58,5 +63,30 @@ export class Presenter{
         let position = (100 * currentVal) / maxValue;
         position = this.getCorrectPosition(position, maxHandlePosition, true);
         this.view.setNewSliderHandleLeftPosition(position);
+    }
+
+    getCurrentValFromPosition(): number{
+        let position = this.view.getSliderHandleLeftPosition();
+        let maxVal = this.model.getMaxValue();
+        let maxHandlePosition = this.view.getMaxHandlePosition();
+        let correctPosition = this.getCorrectPosition(position, maxHandlePosition, false);
+        let newCurrentVal = maxVal  * correctPosition / 100;
+        let precision = Math.pow(10, this.model.options.precision);
+        newCurrentVal = Math.round(newCurrentVal * precision) / precision;
+        return newCurrentVal;
+    }
+
+    getCorrectValWithStep(currentVal: number = this.getCurrentValFromPosition()): number {
+        let correctVal: number;
+
+        let step = this.model.options.step;
+        let shift = step - currentVal % step;
+        let middle = step / 2;
+        if(shift > middle){
+            correctVal = currentVal - currentVal % step;
+        } else {
+            correctVal = currentVal + shift;
+        }
+        return correctVal;
     }
 }

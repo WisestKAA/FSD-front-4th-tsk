@@ -6,6 +6,12 @@ describe('Check Model', () => {
 
     it('After initialization options must be defined', () => {
         expect(model.options).toBeDefined();
+        expect(model.options.isHorizontal).toBeDefined();
+        expect(model.options.minVal).toBeDefined();
+        expect(model.options.maxVal).toBeDefined();
+        expect(model.options.currentVal).toBeDefined();
+        expect(model.options.step).toBeDefined();
+        expect(model.options.precision).toBeDefined();        
     });
 
     it('If the options are empty - the model should have default options', () => {
