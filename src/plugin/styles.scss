@@ -3,9 +3,19 @@
     width: 100%;
     display: inline-block; 
 
+    &_vertical{
+        min-width: 40px;
+        width: 100%;
+        min-height: 100px;
+        height: 100%;
+    }
+
     &__wrapper{
         width: 100%;
-        height: min-content;   
+        height: min-content;
+        &_vertical{
+            height: 100%;
+        }   
     }
 
     &__line{
@@ -16,6 +26,13 @@
         border: 1px solid rgba(31,32,65,0.25);
         border-radius: 3px;
         box-sizing: border-box;
+        
+        &_vertical{
+            height: 100%;
+            width: 6px;
+            bottom: 0;
+            left: 5px;            
+        }
     }
 
     &__handle{
@@ -27,5 +44,22 @@
         border-radius: 50%;
         box-sizing: border-box;
         cursor: pointer;
+        &_vertical{
+            bottom: 16px;
+        }
+    }
+
+    &__header{
+        width: 100%;
+    }
+
+    &__current{        
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        text-align: right;
+        text-transform: uppercase;
+        color: rgba(31,32,65,0.5);
     }
 }
