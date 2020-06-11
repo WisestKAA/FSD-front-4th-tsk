@@ -6,8 +6,9 @@ import { CurrentValue } from "./CurrentValue";
 import { Presenter } from "../presenter/Presenter";
 import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
+import { IView } from "./IView";
 
-export class View{
+export class View implements IView{
     presenter: Presenter;
     slider: JQuery<HTMLElement>;
     line: SliderLine;
@@ -74,5 +75,9 @@ export class View{
 
     getLineWidth(): number {
         return this.line.getLineWidth();
+    }
+
+    getReadySlider(): JQuery<HTMLElement>{
+        return this.slider;
     }
 }

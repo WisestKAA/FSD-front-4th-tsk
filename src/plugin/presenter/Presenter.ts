@@ -2,10 +2,11 @@ import { Model } from "../model/Model";
 import { View } from "../view/View";
 import { ISliderOptions } from "../model/ISliderOptions";
 import { SliderDirection } from "../view/SliderDirection";
+import { IView } from "../view/IView";
 
 export class Presenter{
     model: Model;
-    view: View;
+    view: IView;
 
     constructor(elem: HTMLElement, options?: ISliderOptions){
         this.init(elem, options)
@@ -19,7 +20,7 @@ export class Presenter{
     }
 
     getReadySlider(){
-        return this.view.slider;
+        return this.view.getReadySlider();
     }
 
     addEvents(){
