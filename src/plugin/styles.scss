@@ -8,6 +8,7 @@
         width: 100%;
         min-height: 100px;
         height: 100%;
+        position: relative;
     }
 
     &__wrapper{
@@ -15,6 +16,7 @@
         height: min-content;
         &_vertical{
             height: 100%;
+            position: relative;
         }   
     }
 
@@ -44,8 +46,9 @@
         border-radius: 50%;
         box-sizing: border-box;
         cursor: pointer;
-        &_vertical{
-            bottom: 16px;
+        &_vertical{                        
+            position: absolute;
+            bottom: 0;
         }
     }
 

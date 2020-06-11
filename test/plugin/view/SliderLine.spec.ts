@@ -2,10 +2,10 @@ import { SliderLine } from "../../../src/plugin/view/SliderLine";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 
 describe('Check SliderLine', () => {
-    let line = new SliderLine();
+    let line : SliderLine;
 
-    afterEach(()=>{
-        line  = new SliderLine();
+    beforeEach(()=>{
+        line  = new SliderLine(true);
     });
 
     it('After initialization element must be defined', () => {
@@ -18,6 +18,11 @@ describe('Check SliderLine', () => {
 
     it(`Element must have class '${StyleClasses.LINE}'`, () => {
         expect(line.$elem.hasClass(StyleClasses.LINE)).toBeTrue();
+    });
+
+    it(`If the slider have vertical orientation - the element must have class '${StyleClasses.LINEV}'`, () => {
+        let linev = new SliderLine(false);
+        expect(linev.$elem.hasClass(StyleClasses.LINEV)).toBeTrue();
     });
 
     it("The getLineWidth function shuld return line width", () => {

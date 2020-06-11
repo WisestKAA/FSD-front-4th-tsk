@@ -1,5 +1,6 @@
 import { Presenter } from "../../../src/plugin/presenter/Presenter";
 import '../../../src/plugin/simpleslider';
+import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
 
 describe('Check Presenter', () => {    
     let presenter: Presenter; 
@@ -25,14 +26,14 @@ describe('Check Presenter', () => {
     });
 
     it("Function sliderHandleLeftChange must change current value in model", () => { 
-        presenter.view.handle.setNewPositionLeft(0);
+        presenter.view.handle.setNewPosition(0, SliderDirection.LEFT);
         let befor = presenter.model.options.currentVal;
-        presenter.view.handle.setNewPositionLeft(50);
+        presenter.view.handle.setNewPosition(50, SliderDirection.LEFT);
         let after = presenter.model.options.currentVal;
         expect(befor).not.toBe(after);
 
         let spy = spyOn(presenter, "sliderHandleLeftChange"); 
-        presenter.view.handle.setNewPositionLeft(60);
+        presenter.view.handle.setNewPosition(60, SliderDirection.LEFT);
         expect(spy).toHaveBeenCalled();
     });
 

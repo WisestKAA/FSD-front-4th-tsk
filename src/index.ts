@@ -7,4 +7,7 @@ $(document).ready(() => {
   sliders.forEach((val => {
     $(val).SimpleSlider({currentVal: 50, step: 30}); 
   }));
+
+  const sliderV = document.querySelector('.slider-v');
+  $(sliderV).SimpleSlider({isHorizontal: false});
 });

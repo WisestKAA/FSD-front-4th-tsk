@@ -1,6 +1,7 @@
 import { Model } from "../model/Model";
 import { View } from "../view/View";
 import { ISliderOptions } from "../model/ISliderOptions";
+import { SliderDirection } from "../view/SliderDirection";
 
 export class Presenter{
     model: Model;
@@ -14,7 +15,7 @@ export class Presenter{
 
     init(elem: HTMLElement, options?: ISliderOptions): void{        
         this.model = new Model(options);
-        this.view = new View(elem, this);
+        this.view = new View(elem, this, {isHorizontal: this.model.options.isHorizontal});
     }
 
     getReadySlider(){
@@ -62,7 +63,8 @@ export class Presenter{
     setCurrentLeftValue(currentVal: number, maxValue = this.model.options.maxVal, maxHandlePosition = this.view.getMaxHandlePosition()): void{        
         let position = (100 * currentVal) / maxValue;
         position = this.getCorrectPosition(position, maxHandlePosition, true);
-        this.view.setNewSliderHandleLeftPosition(position);
+        let direction = this.model.options.isHorizontal ? SliderDirection.LEFT : SliderDirection.BOTTOM;
+        this.view.setNewSliderHandlePosition(position, direction);
     }
 
     getCurrentValFromPosition(): number{
