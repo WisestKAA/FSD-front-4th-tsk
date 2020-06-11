@@ -80,4 +80,8 @@ export class View implements IView{
     getReadySlider(): JQuery<HTMLElement>{
         return this.slider;
     }
+
+    setInitPosition(position: number, direction: SliderDirection): void {
+        this.handle.setInitPosition(position, direction);
+    }
 }

@@ -35,19 +35,19 @@ describe('Check SliderHandle',()=>{
                 expect(spy).toHaveBeenCalled();
             });
 
-            it('Tee $elem property must be defined', () => {
+            it('The $elem property must be defined', () => {
                 expect(handle.$elem).toBeDefined();
             });
 
-            it('Tee position property must be defined', () => {
+            it('The position property must be defined', () => {
                 expect(handle.position).toBeDefined();
             });
 
-            it('Tee onPositionChanged property must be defined', () => {
+            it('The onPositionChanged property must be defined', () => {
                 expect(handle.onPositionChanged).toBeDefined();
             });            
 
-            it('Tee isHorizontal property must be defined', () => {
+            it('The isHorizontal property must be defined', () => {
                 expect(handle.isHorizontal).toBeDefined();
             });
         });        

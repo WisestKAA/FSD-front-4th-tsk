@@ -89,7 +89,7 @@ export class SliderHandle extends AbstractElement{
     }
 
     getNewBot(clientY: number, offsetTop: number, lineHieght: number, handleHeight: number): number{
-        let newBot = lineHieght - (clientY - offsetTop - this.shiftY);
+        let newBot = lineHieght - (clientY - offsetTop + this.shiftY);
         let newBotPosition = this.getCorrectPosition(newBot, lineHieght, handleHeight);
         return newBotPosition;        
     }
@@ -118,6 +118,11 @@ export class SliderHandle extends AbstractElement{
         let maxWidth = lineSize - handleSize;
         let maxPosition = (100 * maxWidth)/lineSize;
         return maxPosition;
+    }
+
+    setInitPosition(position: number, direction: SliderDirection): void{
+        this.$elem.attr("style", `${direction}: ${position}%`);
+        this.position = position;
     }
 
     public get positionChangedEvent(): ILiteEvent<void> {return this.onPositionChanged.expose();}

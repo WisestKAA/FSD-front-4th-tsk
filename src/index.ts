@@ -9,5 +9,5 @@ $(document).ready(() => {
   }));
 
   const sliderV = document.querySelector('.slider-v');
-  $(sliderV).SimpleSlider({isHorizontal: false});
+  $(sliderV).SimpleSlider({isHorizontal: false, minVal: -100});
 });

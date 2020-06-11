@@ -6,17 +6,19 @@ import { IView } from "../view/IView";
 
 export class Presenter{
     model: Model;
-    view: IView;
+    view: View;
 
     constructor(elem: HTMLElement, options?: ISliderOptions){
         this.init(elem, options)
         this.addEvents();        
-        if(this.model.options.currentVal != 0) this.setCurrentLeftValue(this.model.options.currentVal);
+        //if(this.model.options.currentVal != 0) 
+        this.setCurrentLeftValue(this.model.options.currentVal);
     }
 
     init(elem: HTMLElement, options?: ISliderOptions): void{        
         this.model = new Model(options);
         this.view = new View(elem, this, {isHorizontal: this.model.options.isHorizontal});
+        this.setSliderInitPosition();
     }
 
     getReadySlider(){
@@ -62,7 +64,8 @@ export class Presenter{
     }
 
     setCurrentLeftValue(currentVal: number, maxValue = this.model.options.maxVal, maxHandlePosition = this.view.getMaxHandlePosition()): void{        
-        let position = (100 * currentVal) / maxValue;
+        let position = Math.abs(100 * (this.model.options.minVal + this.model.options.currentVal) / 
+            (Math.abs(this.model.options.minVal) + Math.abs(this.model.options.maxVal)));
         position = this.getCorrectPosition(position, maxHandlePosition, true);
         let direction = this.model.options.isHorizontal ? SliderDirection.LEFT : SliderDirection.BOTTOM;
         this.view.setNewSliderHandlePosition(position, direction);
@@ -70,7 +73,7 @@ export class Presenter{
 
     getCurrentValFromPosition(): number{
         let position = this.view.getSliderHandleLeftPosition();
-        let maxVal = this.model.getMaxValue();
+        let maxVal = Math.abs(this.model.options.minVal) + Math.abs(this.model.options.maxVal);
         let maxHandlePosition = this.view.getMaxHandlePosition();
         let correctPosition = this.getCorrectPosition(position, maxHandlePosition, false);
         let newCurrentVal = maxVal  * correctPosition / 100;
@@ -97,5 +100,13 @@ export class Presenter{
             correctVal = currentVal + shift;
         }
         return correctVal;
+    }
+
+    setSliderInitPosition(): void {
+        let direction = this.model.options.isHorizontal ? SliderDirection.LEFT : SliderDirection.BOTTOM;
+        let position = Math.abs(100 * (this.model.options.minVal + this.model.options.currentVal) / 
+            (Math.abs(this.model.options.minVal) + Math.abs(this.model.options.maxVal)));
+        position = this.getCorrectPosition(position, this.view.getMaxHandlePosition(), true);
+        this.view.setInitPosition(position, direction);
     }
 }
