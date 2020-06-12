@@ -66,15 +66,8 @@ describe('Check Presenter', () => {
         expect(presenter.getCorrectPosition(pos, maxHandlePosition, false)).toBe(50);
     });
 
-    it("The setCurrentHandlePosition function should change the position of handle and the current value", () => {
-        let beforPosition = presenter.view.getSliderHandlePosition();
-        presenter.setCurrentHandlePosition(beforPosition+1, 0, 100, 84);
-        let afterPosition = presenter.view.getSliderHandlePosition();
-        expect(beforPosition).not.toBe(afterPosition);  
-    });
-
     it("The getCurrentValFromPosition function should calculate the current value from the handle position", () => {
-        presenter.setCurrentHandlePosition(10, 0, 100, 84);
+        presenter.setCurrentHandlePosition(10);
         let calcVal = presenter.getCurrentValFromPosition();
         expect(calcVal).toBe(10);
     });
@@ -84,8 +77,8 @@ describe('Check Presenter', () => {
         expect(presenter.getCorrectValWithStep(currentVal)).toBe(9);
     });
 
-    it("The setSliderInitPosition function should change the 'position' property and the 'style' attribute in the SliderHande class", () => {
-        presenter.setSliderInitPosition(1);
+    it("The setCurrentHandlePosition function should change the 'position' property and the 'style' attribute in the SliderHande class", () => {
+        presenter.setCurrentHandlePosition(1);
         let correctPosition = presenter.getCorrectPosition(1, presenter.view.getMaxHandlePosition(), true);
         expect(presenter.view.getSliderHandlePosition()).toBe(correctPosition);
     });

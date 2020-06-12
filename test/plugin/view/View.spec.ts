@@ -86,10 +86,10 @@ describe('Check View', () => {
             expect(view.getCurrentValue()).toBe(view.currentValue.val);
         });
     
-        it("The setNewSliderHandleLeftPosition function shuld change the value of the variable and the contents of the element in the SliderHandle object", () => {
+        it("The setCurrentPosition function shuld change the value of the variable and the contents of the element in the SliderHandle object", () => {
             let beforSliderHandlePositionVal = view.handle.position;
             let beforSliderHandlePositionElem = view.handle.$elem.attr("style");
-            view.setNewSliderHandlePosition(beforSliderHandlePositionVal+1, SliderDirection.LEFT);
+            view.setCurrentPosition(beforSliderHandlePositionVal+1, SliderDirection.LEFT);
             let afterSliderHandlePositionVal = view.handle.position;
             let afterSliderHandlePositionElem = view.handle.$elem.attr("style");
             expect(beforSliderHandlePositionVal).not.toBe(afterSliderHandlePositionVal);

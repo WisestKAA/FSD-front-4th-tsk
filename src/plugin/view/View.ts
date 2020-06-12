@@ -65,9 +65,9 @@ export class View{
         return this.currentValue.val;
     }
     
-    setNewSliderHandlePosition(position: number, direction: SliderDirection): void {
-        this.handle.setNewPosition(position, direction);
-    }
+    // setNewSliderHandlePosition(position: number, direction: SliderDirection): void {
+    //     this.handle.setNewPosition(position, direction);
+    // }
 
     getMaxHandlePosition(): number{
         return this.handle.getSliderHandleMaxPosition();
@@ -81,7 +81,7 @@ export class View{
         return this.slider;
     }
 
-    setInitPosition(position: number, direction: SliderDirection): void {
-        this.handle.setInitPosition(position, direction);
+    setCurrentPosition(position: number, direction: SliderDirection): void {
+        this.handle.setCurrentPosition(position, direction);
     }
 }

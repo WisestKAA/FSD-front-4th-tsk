@@ -108,8 +108,7 @@ export class SliderHandle extends AbstractElement{
     }
     
     setNewPosition(position: number, direction: SliderDirection): void {
-        this.$elem.attr("style", `${direction}: ${position}%`);
-        this.position = position;
+        this.setCurrentPosition(position, direction);
         this.onPositionChanged.trigger();
     }
 
@@ -125,7 +124,7 @@ export class SliderHandle extends AbstractElement{
         }
     }
 
-    setInitPosition(position: number, direction: SliderDirection): void{
+    setCurrentPosition(position: number, direction: SliderDirection): void{
         this.$elem.attr("style", `${direction}: ${position}%`);
         this.position = position;
     }
