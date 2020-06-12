@@ -73,10 +73,11 @@ export class Presenter{
 
     getCurrentValFromPosition(): number{
         let position = this.view.getSliderHandleLeftPosition();
-        let maxVal = Math.abs(this.model.options.minVal) + Math.abs(this.model.options.maxVal);
+        let maxVal = this.model.options.maxVal;
+        let minVal = this.model.options.minVal;
         let maxHandlePosition = this.view.getMaxHandlePosition();
         let correctPosition = this.getCorrectPosition(position, maxHandlePosition, false);
-        let newCurrentVal = maxVal  * correctPosition / 100;
+        let newCurrentVal = ((maxVal - minVal)  * correctPosition / 100) + minVal;
         let precision = Math.pow(10, this.model.options.precision);
         newCurrentVal = Math.round(newCurrentVal * precision) / precision;
         return newCurrentVal;

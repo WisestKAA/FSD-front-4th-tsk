@@ -13,6 +13,7 @@ export class SliderHandle extends AbstractElement{
     private line: SliderLine;
     public onPositionChanged: LiteEvent<void>;
     isHorizontal: boolean;
+    maxPosition: number;
 
     constructor(line: SliderLine, isHorizontal: boolean){
         super();
@@ -113,11 +114,15 @@ export class SliderHandle extends AbstractElement{
     }
 
     getSliderHandleMaxPosition(): number {
-        let lineSize = this.isHorizontal ? this.line.$elem.outerWidth() : this.line.$elem.outerHeight();
-        let handleSize = this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
-        let maxWidth = lineSize - handleSize;
-        let maxPosition = (100 * maxWidth)/lineSize;
-        return maxPosition;
+        if(this.maxPosition === undefined){
+            let lineSize = this.isHorizontal ? this.line.$elem.outerWidth() : this.line.$elem.outerHeight();
+            let handleSize = this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
+            let maxWidth = lineSize - handleSize;
+            this.maxPosition = (100 * maxWidth)/lineSize;
+            return this.maxPosition;
+        } else {
+            return this.maxPosition;
+        }
     }
 
     setInitPosition(position: number, direction: SliderDirection): void{
