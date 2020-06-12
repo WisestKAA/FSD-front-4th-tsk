@@ -39,8 +39,4 @@ describe('Check Model', () => {
         expect(model.options.currentVal).toBe(10);
         expect(spy).toHaveBeenCalled();
     });
-
-    it("Function getMaxValue must return options.maxVal", () => {
-        expect(model.getMaxValue()).toBe(model.options.maxVal);
-    });
 });

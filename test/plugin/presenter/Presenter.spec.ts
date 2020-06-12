@@ -25,14 +25,14 @@ describe('Check Presenter', () => {
         expect(presenter.getReadySlider().get(0).classList.contains('slider')).toBeTrue();
     });
 
-    it("Function sliderHandleLeftChange must change current value in model", () => { 
+    it("Function sliderHandleChangedPosition must change current value in model", () => { 
         presenter.view.handle.setNewPosition(0, SliderDirection.LEFT);
         let befor = presenter.model.options.currentVal;
         presenter.view.handle.setNewPosition(50, SliderDirection.LEFT);
         let after = presenter.model.options.currentVal;
         expect(befor).not.toBe(after);
 
-        let spy = spyOn(presenter, "sliderHandleLeftChange"); 
+        let spy = spyOn(presenter, "sliderHandleChangedPosition"); 
         presenter.view.handle.setNewPosition(60, SliderDirection.LEFT);
         expect(spy).toHaveBeenCalled();
     });
@@ -64,15 +64,15 @@ describe('Check Presenter', () => {
         expect(presenter.getCorrectPosition(pos, maxHandlePosition, false)).toBe(50);
     });
 
-    it("The setCurrentLeftValue function shuld change the position of handle and the current value", () => {
-        let beforPosition = presenter.view.getSliderHandleLeftPosition();
-        presenter.setCurrentLeftValue(beforPosition+1, 100, 84);
-        let afterPosition = presenter.view.getSliderHandleLeftPosition();
+    it("The setCurrentHandlePosition function shuld change the position of handle and the current value", () => {
+        let beforPosition = presenter.view.getSliderHandlePosition();
+        presenter.setCurrentHandlePosition(beforPosition+1, 0, 100, 84);
+        let afterPosition = presenter.view.getSliderHandlePosition();
         expect(beforPosition).not.toBe(afterPosition);  
     });
 
     it("The getCurrentValFromPosition function shuld calculate the current value from the handle position", () => {
-        presenter.setCurrentLeftValue(10);
+        presenter.setCurrentHandlePosition(10, 0, 100, 84);
         let calcVal = presenter.getCurrentValFromPosition();
         expect(calcVal).toBe(10);
     });

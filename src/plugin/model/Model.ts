@@ -39,9 +39,5 @@ export class Model{
         this.onCurrentValueChanged.trigger(newVal);        
     }
 
-    getMaxValue(): number {
-        return this.options.maxVal;
-    }
-
     public get changeCurrentValueEvent(): ILiteEvent<number> {return this.onCurrentValueChanged.expose();}
 }

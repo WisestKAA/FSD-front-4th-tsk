@@ -8,7 +8,7 @@ import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
 import { IView } from "./IView";
 
-export class View implements IView{
+export class View{
     presenter: Presenter;
     slider: JQuery<HTMLElement>;
     line: SliderLine;
@@ -50,10 +50,10 @@ export class View implements IView{
     }
 
     sliderHandleLeftChange(): void {        
-        this.presenter.sliderHandleLeftChange();
+        this.presenter.sliderHandleChangedPosition();
     }
 
-    getSliderHandleLeftPosition(): number{
+    getSliderHandlePosition(): number{
         return this.handle.position;
     }
 
