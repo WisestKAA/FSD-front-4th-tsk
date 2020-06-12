@@ -33,7 +33,7 @@ describe('Check Model', () => {
         expect(model.checkCurrentVal(normalOptions)).toBeLessThanOrEqual(subOptions.maxVal);
     });
 
-    it("Function setCurrentValue should change the current value and trigger event onCurrentValueChanged", () => {
+    it("The setCurrentValue function should change the current value and trigger event onCurrentValueChanged", () => {
         let spy = spyOn(model.onCurrentValueChanged, "trigger");
         model.setCurrentValue(10);
         expect(model.options.currentVal).toBe(10);

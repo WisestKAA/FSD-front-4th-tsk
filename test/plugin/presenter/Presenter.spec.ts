@@ -13,16 +13,18 @@ describe('Check Presenter', () => {
 
     afterEach(()=>{ $(document.body).html('');});
 
-    it('After initialization model must be defined', () => {
-        expect(presenter.model).toBeDefined();
-    });
-
-    it('After initialization iew must be defined', () => {
-        expect(presenter.view).toBeDefined();
-    });
-
-    it("Ready slider must have class 'slider'", () => {
-        expect(presenter.getReadySlider().get(0).classList.contains('slider')).toBeTrue();
+    describe('Check Presenter / init', () => {
+        it('After initialization model must be defined', () => {
+            expect(presenter.model).toBeDefined();
+        });
+    
+        it('After initialization iew must be defined', () => {
+            expect(presenter.view).toBeDefined();
+        });
+    
+        it("Ready slider must have class 'slider'", () => {
+            expect(presenter.getReadySlider().get(0).classList.contains('slider')).toBeTrue();
+        });
     });
 
     it("Function sliderHandleChangedPosition must change current value in model", () => { 
@@ -64,21 +66,27 @@ describe('Check Presenter', () => {
         expect(presenter.getCorrectPosition(pos, maxHandlePosition, false)).toBe(50);
     });
 
-    it("The setCurrentHandlePosition function shuld change the position of handle and the current value", () => {
+    it("The setCurrentHandlePosition function should change the position of handle and the current value", () => {
         let beforPosition = presenter.view.getSliderHandlePosition();
         presenter.setCurrentHandlePosition(beforPosition+1, 0, 100, 84);
         let afterPosition = presenter.view.getSliderHandlePosition();
         expect(beforPosition).not.toBe(afterPosition);  
     });
 
-    it("The getCurrentValFromPosition function shuld calculate the current value from the handle position", () => {
+    it("The getCurrentValFromPosition function should calculate the current value from the handle position", () => {
         presenter.setCurrentHandlePosition(10, 0, 100, 84);
         let calcVal = presenter.getCurrentValFromPosition();
         expect(calcVal).toBe(10);
     });
 
-    it("The getCorrectValWithStep function shuld return the correct value with step", () => {
+    it("The getCorrectValWithStep function should return the correct value with step", () => {
         let currentVal = 9.4;
         expect(presenter.getCorrectValWithStep(currentVal)).toBe(9);
+    });
+
+    it("The setSliderInitPosition function should change the 'position' property and the 'style' attribute in the SliderHande class", () => {
+        presenter.setSliderInitPosition(1);
+        let correctPosition = presenter.getCorrectPosition(1, presenter.view.getMaxHandlePosition(), true);
+        expect(presenter.view.getSliderHandlePosition()).toBe(correctPosition);
     });
 });
