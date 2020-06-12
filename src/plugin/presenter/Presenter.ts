@@ -2,7 +2,6 @@ import { Model } from "../model/Model";
 import { View } from "../view/View";
 import { ISliderOptions } from "../model/ISliderOptions";
 import { SliderDirection } from "../view/SliderDirection";
-import { IView } from "../view/IView";
 
 export class Presenter{
     model: Model;
@@ -40,9 +39,6 @@ export class Presenter{
         this.setCurrentValueModel(correctVal);
         let currentValFromPosition = this.getCurrentValFromPosition();
         if(correctVal != currentValFromPosition){
-            // let maxHandlePosition = this.view.getMaxHandlePosition();
-            // this.setCurrentHandlePosition(correctVal, this.model.options.minVal, 
-            //     this.model.options.maxVal, maxHandlePosition);
             this.setCurrentHandlePosition(correctVal);
         }        
     }
@@ -67,13 +63,6 @@ export class Presenter{
             return 100 * position / maxHandlePosition;
         }
     }
-
-    // setCurrentHandlePosition(currentVal: number, minValue: number, maxValue: number, maxHandlePosition: number): void{        
-    //     let position = Math.abs(100 * (minValue + currentVal) / (Math.abs(minValue) + Math.abs(maxValue)));
-    //     position = this.getCorrectPosition(position, maxHandlePosition, true);
-    //     let direction = this.model.options.isHorizontal ? SliderDirection.LEFT : SliderDirection.BOTTOM;
-    //     this.view.setNewSliderHandlePosition(position, direction);
-    // }
 
     getCurrentValFromPosition(): number{
         let position = this.view.getSliderHandlePosition();

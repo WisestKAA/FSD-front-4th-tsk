@@ -64,10 +64,6 @@ export class View{
     getCurrentValue(): number {
         return this.currentValue.val;
     }
-    
-    // setNewSliderHandlePosition(position: number, direction: SliderDirection): void {
-    //     this.handle.setNewPosition(position, direction);
-    // }
 
     getMaxHandlePosition(): number{
         return this.handle.getSliderHandleMaxPosition();
