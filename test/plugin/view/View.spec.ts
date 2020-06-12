@@ -69,7 +69,7 @@ describe('Check View', () => {
 
     describe('Check View / check function', () => {
         it("The getSliderHandleLeftPosition function shuld return the current hadle position", () => {
-            expect(view.getSliderHandleLeftPosition()).toBe(view.handle.position);
+            expect(view.getSliderHandlePosition()).toBe(view.handle.position);
         });
     
         it("The setCurrentValue function should change the value of the variable and the contents of the element in the CurrentValue object", () => {
