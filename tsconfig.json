@@ -2,7 +2,11 @@
     "compilerOptions": {
       "sourceMap": true,
       "target": "esnext",
-      "removeComments": true
+      "removeComments": true,
+      "module": "commonjs",
+      "declaration": false,
+      "noImplicitAny": true,
+      "experimentalDecorators": true
     },
     "include": ["src/**/*", "test/**/*"],
     "exclude": ["node_modules"],

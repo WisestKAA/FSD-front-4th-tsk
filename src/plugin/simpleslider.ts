@@ -8,14 +8,33 @@ declare global {
     }
     interface JQuery {
         SimpleSlider: (
-        options?: ISliderOptions,
+        options?: ISliderOptions | "setNewOptions",
+        additionalOptions?: ISliderOptions
         ) => JQuery<Element> | JQuery<Object>;
     }
 }
 
-(function ($: JQueryStatic){
-    $.fn.SimpleSlider = function (options?: ISliderOptions){ 
-        const presenter = new Presenter(this, options);
-        return presenter.getReadySlider();
+;(function init($: JQueryStatic){
+    $.fn.SimpleSlider = function start(options?, additionalOptions?: ISliderOptions){ 
+        return this.map((i: number, elem: HTMLElement) => {
+            if(typeof options === 'object' || !options){
+                const presenter = new Presenter(elem, options as ISliderOptions);
+                this.data('presenter', presenter);
+                return this;
+            }
+
+            const presenter: Presenter = this.data('presenter');
+            if(typeof options === "string" && presenter){
+                if(presenter[options]){
+                    return presenter[options].call(presenter, additionalOptions);
+                }
+            }
+
+
+        });
+        
+        
+        
+        //return presenter.getReadySlider();
     }
 }(jQuery));

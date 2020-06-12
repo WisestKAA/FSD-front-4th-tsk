@@ -1,3 +1,4 @@
+import bind from 'bind-decorator';
 import { Model } from "../model/Model";
 import { View } from "../view/View";
 import { ISliderOptions } from "../model/ISliderOptions";
@@ -102,5 +103,10 @@ export class Presenter{
             (Math.abs(this.model.options.minVal) + Math.abs(this.model.options.maxVal)));
         position = this.getCorrectPosition(position, this.view.getMaxHandlePosition(), true);
         this.view.setCurrentPosition(position, direction);
+    }
+
+    @bind 
+    setNewOptions(options: ISliderOptions): void{
+
     }
 }
