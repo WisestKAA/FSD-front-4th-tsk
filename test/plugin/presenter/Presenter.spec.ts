@@ -100,4 +100,8 @@ describe('Check Presenter', () => {
         expect(spyGCVWS).toHaveBeenCalled();
         expect(speSO).toHaveBeenCalled();
     });
+
+    it("The getOptions function should return the current slider options", () => {
+        expect(presenter.getOptions()).toBe(presenter.model.options);
+    });
 });

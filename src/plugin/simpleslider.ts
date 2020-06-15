@@ -8,7 +8,7 @@ declare global {
     }
     interface JQuery {
         SimpleSlider: (
-        options?: ISliderOptions | "setNewOptions",
+        options?: ISliderOptions | "setNewOptions" | "getOptions",
         additionalOptions?: ISliderOptions
         ) => JQuery<Element> | JQuery<Object>;
     }

@@ -110,6 +110,11 @@ export class Presenter{
         this.model.setNewOptions(options);
     }
 
+    @bind
+    getOptions(): ISliderOptions{
+        return this.model.options;
+    }
+
     optionsChanged(): void{
         this.setCurrentValueView(this.model.options.currentVal);
         let correctVal = this.getCorrectValWithStep(this.model.options.currentVal);
