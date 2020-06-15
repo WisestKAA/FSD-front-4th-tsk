@@ -9,7 +9,7 @@ declare global {
     interface JQuery {
         SimpleSlider: (
         options?: ISliderOptions | "setNewOptions" | "getOptions",
-        additionalOptions?: ISliderOptions
+        additionalOptions?: ISliderOptions | Function
         ) => JQuery<Element> | JQuery<Object>;
     }
 }

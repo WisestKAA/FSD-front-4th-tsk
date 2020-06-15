@@ -115,6 +115,13 @@ export class Presenter{
         return this.model.options;
     }
 
+    @bind
+    onCurrentValueChanged(callBack: Function): void{
+        this.model.changeCurrentValueEvent.on((data) => {
+            callBack(data);
+        })
+    }
+
     optionsChanged(): void{
         this.setCurrentValueView(this.model.options.currentVal);
         let correctVal = this.getCorrectValWithStep(this.model.options.currentVal);
