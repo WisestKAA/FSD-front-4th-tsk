@@ -80,4 +80,17 @@ export class View{
     setCurrentPosition(position: number, direction: SliderDirection): void {
         this.handle.setCurrentPosition(position, direction);
     }
+
+    setOrientation(isHorizontal: boolean): void{
+        let mainDiv = this.slider.get(0).firstElementChild;
+        if(isHorizontal){
+            mainDiv.classList.add(StyleClasses.SLIDER)
+        } else {
+            mainDiv.classList.add(StyleClasses.SLIDER, StyleClasses.SLIDERV)
+        }        
+        this.line.changeOrientation(isHorizontal, StyleClasses.LINE, StyleClasses.LINEV);
+        this.wrapper.changeOrientation(isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
+        this.handle.changeOrientation(isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
+        this.handle.isHorizontal = isHorizontal;     
+    }
 }

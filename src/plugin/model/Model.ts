@@ -6,12 +6,18 @@ export class Model{
     options: ISliderOptions;
     defaultOption: ISliderOptions;
     onCurrentValueChanged: LiteEvent<number>;
+    onOptionsChanged: LiteEvent<void>;
 
     constructor(options?: ISliderOptions){
         this.init(options);    
     }
 
     init(options?: ISliderOptions): void{
+        this.initOptions(options);
+        this.initEvents();
+    }
+
+    initOptions(options?: ISliderOptions): void{
         this.defaultOption = {
             isHorizontal: true,
             maxVal: 100,
@@ -23,7 +29,11 @@ export class Model{
         let currentOptions = $.extend(this.defaultOption, options);
         currentOptions.currentVal = this.checkCurrentVal(currentOptions);
         this.options = currentOptions;
+    }
+
+    initEvents(): void {
         this.onCurrentValueChanged = new LiteEvent<number>();
+        this.onOptionsChanged = new LiteEvent<void>();
     }
 
     checkCurrentVal(options: ISliderOptions): number {
@@ -39,5 +49,11 @@ export class Model{
         this.onCurrentValueChanged.trigger(newVal);        
     }
 
+    setNewOptions(options: ISliderOptions): void{
+        this.initOptions(options);
+        this.onOptionsChanged.trigger();
+    }
+
     public get changeCurrentValueEvent(): ILiteEvent<number> {return this.onCurrentValueChanged.expose();}
+    public get changeOptionsEvent(): ILiteEvent<void> {return this.onOptionsChanged.expose();}
 }

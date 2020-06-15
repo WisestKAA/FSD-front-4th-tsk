@@ -18,12 +18,12 @@ describe('Check Presenter', () => {
             expect(presenter.model).toBeDefined();
         });
     
-        it('After initialization iew must be defined', () => {
+        it('After initialization view must be defined', () => {
             expect(presenter.view).toBeDefined();
         });
     
         it("Ready slider must have class 'slider'", () => {
-            expect(presenter.getReadySlider().get(0).classList.contains('slider')).toBeTrue();
+            expect(presenter.view.getReadySlider().get(0).classList.contains('slider')).toBeTrue();
         });
     });
 
@@ -81,5 +81,23 @@ describe('Check Presenter', () => {
         presenter.setCurrentHandlePosition(1);
         let correctPosition = presenter.getCorrectPosition(1, presenter.view.getMaxHandlePosition(), true);
         expect(presenter.view.getSliderHandlePosition()).toBe(correctPosition);
+    });
+
+    it("The setNewOptions function should call the setNewOptions function in the model", () => {
+        let spy = spyOn(presenter.model, "setNewOptions");
+        presenter.setNewOptions({isHorizontal: false});
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it("The optionsChanged function should call next functions: setCurrentValueView, setCurrentHandlePosition, getCorrectValWithStep, view.setOrientation", () => {
+        let spyCV = spyOn(presenter, "setCurrentValueView");
+        let spyCHP = spyOn(presenter, "setCurrentHandlePosition");
+        let spyGCVWS = spyOn(presenter, "getCorrectValWithStep");
+        let speSO = spyOn(presenter.view, "setOrientation");
+        presenter.optionsChanged();
+        expect(spyCV).toHaveBeenCalled();
+        expect(spyCHP).toHaveBeenCalled();
+        expect(spyGCVWS).toHaveBeenCalled();
+        expect(speSO).toHaveBeenCalled();
     });
 });

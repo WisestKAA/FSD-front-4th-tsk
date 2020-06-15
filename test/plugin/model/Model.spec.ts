@@ -14,6 +14,11 @@ describe('Check Model', () => {
         expect(model.options.precision).toBeDefined();        
     });
 
+    it("after ininialization the events must be defined", () => {
+        expect(model.onOptionsChanged).toBeDefined();
+        expect(model.onCurrentValueChanged).toBeDefined();
+    });
+
     it('If the options are empty - the model should have default options', () => {
         expect(model.options).toBe(model.defaultOption);
     });
@@ -33,10 +38,26 @@ describe('Check Model', () => {
         expect(model.checkCurrentVal(normalOptions)).toBeLessThanOrEqual(subOptions.maxVal);
     });
 
-    it("The setCurrentValue function should change the current value and trigger event onCurrentValueChanged", () => {
-        let spy = spyOn(model.onCurrentValueChanged, "trigger");
+    it("The setCurrentValue function should change the current value", () => {
         model.setCurrentValue(10);
         expect(model.options.currentVal).toBe(10);
+    });
+
+    it("The setCurrentValue function should call a trigger from onCurrentValueChanged", () => {
+        let spy = spyOn(model.onCurrentValueChanged, "trigger"); 
+        model.setCurrentValue(10);
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it("The setNewOptions function should reinitialize options", () => {
+        let befor = model.options;
+        model.setNewOptions({step: 123123});
+        expect(befor).not.toBe(model.options);
+    });
+
+    it("The setNewOptions function should call a trigger from onOptionsChanged", () => {
+        let spy = spyOn(model.onOptionsChanged, "trigger");        
+        model.setNewOptions({step: 123123});
         expect(spy).toHaveBeenCalled();
     });
 });

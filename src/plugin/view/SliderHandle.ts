@@ -112,16 +112,12 @@ export class SliderHandle extends AbstractElement{
         this.onPositionChanged.trigger();
     }
 
-    getSliderHandleMaxPosition(): number {
-        if(this.maxPosition === undefined){
-            let lineSize = this.isHorizontal ? this.line.$elem.outerWidth() : this.line.$elem.outerHeight();
-            let handleSize = this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
-            let maxWidth = lineSize - handleSize;
-            this.maxPosition = (100 * maxWidth)/lineSize;
-            return this.maxPosition;
-        } else {
-            return this.maxPosition;
-        }
+    getSliderHandleMaxPosition(): number {        
+        let lineSize = this.isHorizontal ? this.line.$elem.outerWidth() : this.line.$elem.outerHeight();
+        let handleSize = this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
+        let maxWidth = lineSize - handleSize;
+        this.maxPosition = (100 * maxWidth)/lineSize;
+        return this.maxPosition;        
     }
 
     setCurrentPosition(position: number, direction: SliderDirection): void{

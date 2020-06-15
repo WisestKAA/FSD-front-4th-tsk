@@ -22,15 +22,15 @@ export class Presenter{
         this.view.setCurrentValue(correctVal);
     }
 
-    getReadySlider(){
-        return this.view.getReadySlider();
-    }
-
     addEvents(){
         let that = this;
-        
+
         this.model.changeCurrentValueEvent.on((data) => {
             that.setCurrentValueView(data);
+        });
+
+        this.model.changeOptionsEvent.on(() => {
+            that.optionsChanged();
         });
     }
 
@@ -107,6 +107,13 @@ export class Presenter{
 
     @bind 
     setNewOptions(options: ISliderOptions): void{
+        this.model.setNewOptions(options);
+    }
 
+    optionsChanged(): void{
+        this.setCurrentValueView(this.model.options.currentVal);
+        let correctVal = this.getCorrectValWithStep(this.model.options.currentVal);
+        this.setCurrentHandlePosition(correctVal);
+        this.view.setOrientation(this.model.options.isHorizontal);        
     }
 }
