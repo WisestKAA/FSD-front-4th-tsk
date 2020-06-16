@@ -8,8 +8,8 @@ declare global {
     }
     interface JQuery {
         SimpleSlider: (
-        options?: ISliderOptions | "setNewOptions" | "getOptions",
-        additionalOptions?: ISliderOptions | Function
+            options?: ISliderOptions | "setNewOptions" | "getOptions",
+            additionalOptions?: ISliderOptions | Function
         ) => JQuery<Element> | JQuery<Object>;
     }
 }
@@ -29,12 +29,6 @@ declare global {
                     return presenter[options].call(presenter, additionalOptions);
                 }
             }
-
-
         });
-        
-        
-        
-        //return presenter.getReadySlider();
     }
 }(jQuery));

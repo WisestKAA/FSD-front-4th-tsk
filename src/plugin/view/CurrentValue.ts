@@ -1,15 +1,13 @@
 import { AbstractElement } from "./AbstractElement";
 import { StyleClasses } from "./StyleClasses";
-import { LiteEvent } from "../LiteEvent/LiteEvent";
-import { ILiteEvent } from "../LiteEvent/ILiteEvent";
 
 export class CurrentValue extends AbstractElement {
     $elem: JQuery<HTMLElement>;
-    val: number;
+    val: number[];
     
     constructor(){
         super();
-        this.val = 0;    
+        this.val = [0, 0];    
         this.init();
     }
 
@@ -19,8 +17,12 @@ export class CurrentValue extends AbstractElement {
         this.$elem = $val;
     }
 
-    setCurrentValue(currentValue: number): void{
+    setCurrentValue(currentValue: number[], isRange: boolean): void{
+        if(isRange){            
+            this.$elem.html(`${this.val[0]} - ${this.val[1]}`);
+        } else {
+            this.$elem.html(`${this.val[0]}`);
+        }        
         this.val = currentValue;
-        this.$elem.html(`${this.val}`);
     }
 }

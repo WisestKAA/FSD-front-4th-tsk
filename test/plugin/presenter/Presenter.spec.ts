@@ -28,21 +28,21 @@ describe('Check Presenter', () => {
     });
 
     it("Function sliderHandleChangedPosition must change current value in model", () => { 
-        presenter.view.handle.setNewPosition(0, SliderDirection.LEFT);
+        presenter.view.handleFrom.setNewPosition(0, SliderDirection.LEFT);
         let befor = presenter.model.options.currentVal;
-        presenter.view.handle.setNewPosition(50, SliderDirection.LEFT);
+        presenter.view.handleFrom.setNewPosition(50, SliderDirection.LEFT);
         let after = presenter.model.options.currentVal;
         expect(befor).not.toBe(after);
 
         let spy = spyOn(presenter, "sliderHandleChangedPosition"); 
-        presenter.view.handle.setNewPosition(60, SliderDirection.LEFT);
+        presenter.view.handleFrom.setNewPosition(60, SliderDirection.LEFT);
         expect(spy).toHaveBeenCalled();
     });
 
     it("Function setCurrentValueView must change only view level", () => {
         let beforView = presenter.view.currentValue.val;
         let beforModel = presenter.model.options.currentVal;
-        presenter.setCurrentValueView(beforView + 1);
+        presenter.setCurrentValueView([beforView[0] + 1, 0]);
         let afterView = presenter.view.currentValue.val;
         let afterModel = presenter.model.options.currentVal;
         expect(beforView).not.toBe(afterView);
@@ -52,7 +52,7 @@ describe('Check Presenter', () => {
     it("Function setCurrentValueModel must change view & model level", () => {
         let beforView = presenter.view.currentValue.val;
         let beforModel = presenter.model.options.currentVal;
-        presenter.setCurrentValueModel(beforView + 1);
+        presenter.setCurrentValueModel([beforView[0] + 1, 0]);
         let afterView = presenter.view.currentValue.val;
         let afterModel = presenter.model.options.currentVal;
         expect(beforView).not.toBe(afterView);
@@ -67,8 +67,8 @@ describe('Check Presenter', () => {
     });
 
     it("The getCurrentValFromPosition function should calculate the current value from the handle position", () => {
-        presenter.setCurrentHandlePosition(10);
-        let calcVal = presenter.getCurrentValFromPosition();
+        presenter.setCurrentHandlePosition(10, SliderDirection.LEFT);
+        let calcVal = presenter.getCurrentValFromPosition(SliderDirection.LEFT);
         expect(calcVal).toBe(10);
     });
 
@@ -78,9 +78,9 @@ describe('Check Presenter', () => {
     });
 
     it("The setCurrentHandlePosition function should change the 'position' property and the 'style' attribute in the SliderHande class", () => {
-        presenter.setCurrentHandlePosition(1);
+        presenter.setCurrentHandlePosition(1, SliderDirection.LEFT);
         let correctPosition = presenter.getCorrectPosition(1, presenter.view.getMaxHandlePosition(), true);
-        expect(presenter.view.getSliderHandlePosition()).toBe(correctPosition);
+        expect(presenter.view.getSliderHandlePosition(SliderDirection.LEFT)).toBe(correctPosition);
     });
 
     it("The setNewOptions function should call the setNewOptions function in the model", () => {

@@ -5,7 +5,7 @@ import { ILiteEvent } from '../LiteEvent/ILiteEvent';
 export class Model{    
     options: ISliderOptions;
     defaultOption: ISliderOptions;
-    onCurrentValueChanged: LiteEvent<number>;
+    onCurrentValueChanged: LiteEvent<number[]>;
     onOptionsChanged: LiteEvent<void>;
 
     constructor(options?: ISliderOptions){
@@ -22,9 +22,10 @@ export class Model{
             isHorizontal: true,
             maxVal: 100,
             minVal: 0,
-            currentVal: 0,
+            currentVal: new Array(0, 0),
             step: 1,
             precision: 0,
+            isRange: false,
         };        
         let currentOptions = $.extend(this.defaultOption, options);
         currentOptions.currentVal = this.checkCurrentVal(currentOptions);
@@ -32,17 +33,28 @@ export class Model{
     }
 
     initEvents(): void {
-        this.onCurrentValueChanged = new LiteEvent<number>();
+        this.onCurrentValueChanged = new LiteEvent<number[]>();
         this.onOptionsChanged = new LiteEvent<void>();
     }
 
-    checkCurrentVal(options: ISliderOptions): number {
-        let currentVal = options.currentVal < options.minVal ? options.minVal :
-            options.currentVal > options.maxVal ? options.maxVal : options.currentVal;
+    checkCurrentVal(options: ISliderOptions): number[] {
+        let currentVal: number[] = new Array(0,0);
+        if(options.isRange){
+            currentVal[0] = options.currentVal[0] < options.minVal ? 
+                options.minVal : options.currentVal[0] > options.maxVal ? 
+                options.maxVal : options.currentVal[0];
+            currentVal[1] = options.currentVal[1] < options.minVal ? 
+                options.minVal : options.currentVal[1] > options.maxVal ? 
+                options.maxVal : options.currentVal[1];
+        } else {
+            currentVal[0] = options.currentVal[0] < options.minVal ? 
+                options.minVal : options.currentVal[0] > options.maxVal ? 
+                options.maxVal : options.currentVal[0];
+        }
         return currentVal;
     }
     
-    setCurrentValue(newVal: number): void{
+    setCurrentValue(newVal: number[]): void{
         let opt = Object.create(this.options) as ISliderOptions;
         opt.currentVal = newVal;
         this.options.currentVal = this.checkCurrentVal(opt);
@@ -52,8 +64,8 @@ export class Model{
     setNewOptions(options: ISliderOptions): void{
         this.initOptions(options);
         this.onOptionsChanged.trigger();
-    }
+    }   
 
-    public get changeCurrentValueEvent(): ILiteEvent<number> {return this.onCurrentValueChanged.expose();}
+    public get changeCurrentValueEvent(): ILiteEvent<number[]> {return this.onCurrentValueChanged.expose();}
     public get changeOptionsEvent(): ILiteEvent<void> {return this.onOptionsChanged.expose();}
 }

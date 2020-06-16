@@ -25,11 +25,11 @@ describe('Check View', () => {
         });
     
         it('After initialization the handle must be defined', () => {
-            expect(view.handle).toBeDefined();
+            expect(view.handleFrom).toBeDefined();
         });
     
-        it('After initialization the wrapper must be defined', () => {
-            expect(view.wrapper).toBeDefined();
+        it('After initialization the mainWrapper must be defined', () => {
+            expect(view.mainWrapper).toBeDefined();
         });
     
         it('After initialization the currentValue must be defined', () => {
@@ -69,13 +69,13 @@ describe('Check View', () => {
 
     describe('Check View / check function', () => {
         it("The getSliderHandleLeftPosition function should return the current hadle position", () => {
-            expect(view.getSliderHandlePosition()).toBe(view.handle.position);
+            expect(view.getSliderHandlePosition(SliderDirection.LEFT)).toBe(view.handleFrom.position);
         });
     
         it("The setCurrentValue function should change the value of the variable and the contents of the element in the CurrentValue object", () => {
             let beforCurrentValueVal = view.currentValue.val;
             let beforCurrentValueElementContent = view.currentValue.$elem.html();
-            view.setCurrentValue(10);
+            view.setCurrentValue([10,0]);
             let afterCurrentValueVal = view.currentValue.val;
             let afterCurrentValueElementContent = view.currentValue.$elem.html();
             expect(beforCurrentValueVal).not.toBe(afterCurrentValueVal);
@@ -87,11 +87,11 @@ describe('Check View', () => {
         });
     
         it("The setCurrentPosition function should change the value of the variable and the contents of the element in the SliderHandle object", () => {
-            let beforSliderHandlePositionVal = view.handle.position;
-            let beforSliderHandlePositionElem = view.handle.$elem.attr("style");
+            let beforSliderHandlePositionVal = view.handleFrom.position;
+            let beforSliderHandlePositionElem = view.handleFrom.$elem.attr("style");
             view.setCurrentPosition(beforSliderHandlePositionVal+1, SliderDirection.LEFT);
-            let afterSliderHandlePositionVal = view.handle.position;
-            let afterSliderHandlePositionElem = view.handle.$elem.attr("style");
+            let afterSliderHandlePositionVal = view.handleFrom.position;
+            let afterSliderHandlePositionElem = view.handleFrom.$elem.attr("style");
             expect(beforSliderHandlePositionVal).not.toBe(afterSliderHandlePositionVal);
             expect(beforSliderHandlePositionElem).not.toBe(afterSliderHandlePositionElem);
         });
@@ -104,15 +104,15 @@ describe('Check View', () => {
         it("The setOrientation function must change orientation in all elements", () => {
             let mainDiv = view.slider.get(0).firstElementChild.classList.value;
             let line = view.line.$elem.get(0).classList.value;
-            let wrapper = view.wrapper.$elem.get(0).classList.value;
-            let handle = view.handle.$elem.get(0).classList.value;
-            let isHorizontal = view.handle.isHorizontal;
+            let wrapper = view.mainWrapper.$elem.get(0).classList.value;
+            let handle = view.handleFrom.$elem.get(0).classList.value;
+            let isHorizontal = view.handleFrom.isHorizontal;
             view.setOrientation(!isHorizontal);
             expect(mainDiv).not.toEqual(view.slider.get(0).firstElementChild.classList.value);
             expect(line).not.toEqual(view.line.$elem.get(0).classList.value);
-            expect(wrapper).not.toEqual(view.wrapper.$elem.get(0).classList.value);
-            expect(handle).not.toEqual(view.handle.$elem.get(0).classList.value);
-            expect(isHorizontal).not.toEqual(view.handle.isHorizontal);
+            expect(wrapper).not.toEqual(view.mainWrapper.$elem.get(0).classList.value);
+            expect(handle).not.toEqual(view.handleFrom.$elem.get(0).classList.value);
+            expect(isHorizontal).not.toEqual(view.handleFrom.isHorizontal);
         });
     });
 });

@@ -4,9 +4,10 @@ export class SliderOptions implements ISliderOptions{
     isHorizontal: boolean;
     maxVal: number;
     minVal: number;
-    currentVal: number;
+    currentVal: number[];
     step: number;
     precision: number;
+    isRange: boolean;
 
     constructor(options: ISliderOptions){
         this.isHorizontal = options.isHorizontal;
@@ -15,5 +16,6 @@ export class SliderOptions implements ISliderOptions{
         this.currentVal = options.currentVal;
         this.step = options.step;
         this.precision = options.precision;
+        this.isRange = options.isRange;
     }
 }

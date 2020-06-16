@@ -5,9 +5,10 @@ describe('Check SliderOptions', () => {
         isHorizontal: true,
         minVal: 0,
         maxVal: 100,
-        currentVal: 0,
+        currentVal: new Array(0, 0),
         step: 1,
         precision: 0,
+        isRange: true,
     });
 
     it('All parametrs must be defined', () => {
@@ -17,5 +18,6 @@ describe('Check SliderOptions', () => {
         expect(sliderOptions.currentVal).toBeDefined();
         expect(sliderOptions.step).toBeDefined();
         expect(sliderOptions.precision).toBeDefined();
+        expect(sliderOptions.isRange).toBeDefined();
     });
 });

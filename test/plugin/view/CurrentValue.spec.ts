@@ -21,8 +21,8 @@ describe('Check CurrentValue', () => {
     });
 
     it('After changing the current value, the variable $elem & val should be changed to the current', () => {
-        currentValue.setCurrentValue(5);
+        currentValue.setCurrentValue([5,0], false);
         expect(currentValue.$elem.get(0).innerText).toBe('5');
-        expect(currentValue.val).toBe(5);
+        expect(currentValue.val).toBe([5,0]);
     });
 });

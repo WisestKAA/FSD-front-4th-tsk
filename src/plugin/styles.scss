@@ -21,8 +21,7 @@
         }   
     }
 
-    &__line{
-        //position: relative; 
+    &__line{ 
         bottom: -12px;
         height: 6px;
         background: #FFFFFF;
@@ -77,5 +76,10 @@
         background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
         border-radius: 25%;
         height: 100%;
+
+        &_vertical{
+            height: unset;
+            width: 100%;
+        }
     }
 }

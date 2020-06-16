@@ -7,15 +7,19 @@ import { Presenter } from "../presenter/Presenter";
 import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
 import { IView } from "./IView";
+import { SliderRange } from "./SliderRange";
 
 export class View{
     presenter: Presenter;
     slider: JQuery<HTMLElement>;
     line: SliderLine;
-    handle: SliderHandle;
-    wrapper: SliderWrapper;
+    handleFrom: SliderHandle;
+    handleTo: SliderHandle;
+    mainWrapper: SliderWrapper;
+    handleWrapper: SliderWrapper;
     currentValue: CurrentValue;
     options: IViewOptions;
+    range: SliderRange;
 
     constructor(elem: HTMLElement, presenter: Presenter, options: IViewOptions){
         this.presenter = presenter;
@@ -26,13 +30,14 @@ export class View{
 
     protected init(elem: HTMLElement){        
         this.currentValue = new CurrentValue();
+        this.buildLine(this.options.isHorizontal, this.options.isRange);
+        this.buildHandle(this.options.isHorizontal, this.options.isRange);
+        
+        this.mainWrapper = new SliderWrapper(this.options.isHorizontal);
         let $mainDiv = this.options.isHorizontal ? $('<div>').addClass(StyleClasses.SLIDER) :  $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERV]);
+        this.mainWrapper.$elem.append(this.line.$elem, this.handleWrapper.$elem);
         let $header = this.buildHeaderWithStaticCurrentValue();
-        this.line = new SliderLine(this.options.isHorizontal);
-        this.wrapper = new SliderWrapper(this.options.isHorizontal);
-        this.handle = new SliderHandle(this.line, this.options.isHorizontal);
-        this.wrapper.$elem.append(this.line.$elem, this.handle.$elem);
-        $mainDiv.append($header, this.wrapper.$elem);
+        $mainDiv.append($header, this.mainWrapper.$elem);
         this.slider = $(elem).append($mainDiv);
     }
 
@@ -42,31 +47,77 @@ export class View{
         return $header;
     }
 
+    buildLine(isHorizontal: boolean, isRange: boolean): void{
+        if(isRange){
+            this.line = new SliderLine(isHorizontal);
+            this.range = new SliderRange(isHorizontal);
+            this.line.$elem.append(this.range.$elem);
+        } else {
+            this.line = new SliderLine(isHorizontal);
+        }
+    }
+
+    buildHandle(isHorizontal: boolean, isRange: boolean): void{
+        this.handleWrapper = new SliderWrapper(isHorizontal);
+        if(isRange){
+            this.handleFrom = new SliderHandle({
+                isHorizontal: isHorizontal,
+                sliderLine: this.line,
+                isRange: isRange,
+                isFrom: true
+            });
+            this.handleTo = new SliderHandle({
+                isHorizontal: isHorizontal,
+                sliderLine: this.line,
+                isRange: isRange,
+                isFrom: false
+            });
+            this.handleWrapper.$elem.append(this.handleFrom.$elem, this.handleTo.$elem);
+        } else {
+            this.handleFrom = new SliderHandle({
+                sliderLine: this.line, 
+                isHorizontal: isHorizontal, 
+                isRange: isRange,
+                isFrom: true
+            });
+            this.handleWrapper.$elem.append(this.handleFrom.$elem);
+        }
+    }
+
     addEvents(): void {
         let that = this;
-        this.handle.positionChangedEvent.on(() => {
-            that.sliderHandleLeftChange();
+        this.handleFrom.positionChangedEvent.on((data) => {
+            that.sliderHandleLeftChange(data);
         });
+        if(this.options.isRange){
+            this.handleTo.positionChangedEvent.on((data) => {
+                that.sliderHandleLeftChange(data);
+            });
+        }
     }
 
-    sliderHandleLeftChange(): void {        
-        this.presenter.sliderHandleChangedPosition();
+    sliderHandleLeftChange(direction: SliderDirection): void {        
+        this.presenter.sliderHandleChangedPosition(direction);
     }
 
-    getSliderHandlePosition(): number{
-        return this.handle.position;
+    getSliderHandlePosition(direction: SliderDirection): number{
+        if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
+            return this.handleFrom.position;
+        } else {
+            return this.handleTo.position;
+        }        
     }
 
-    setCurrentValue(currentValue: number): void {
-        this.currentValue.setCurrentValue(currentValue);
+    setCurrentValue(currentValue: number[]): void {
+        this.currentValue.setCurrentValue(currentValue, this.options.isRange);
     }
 
-    getCurrentValue(): number {
+    getCurrentValue(): number[] {
         return this.currentValue.val;
     }
 
     getMaxHandlePosition(): number{
-        return this.handle.getSliderHandleMaxPosition();
+        return this.handleFrom.getSliderHandleMaxPosition();
     }
 
     getLineWidth(): number {
@@ -78,7 +129,11 @@ export class View{
     }
 
     setCurrentPosition(position: number, direction: SliderDirection): void {
-        this.handle.setCurrentPosition(position, direction);
+        if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
+            this.handleFrom.setCurrentPosition(position, direction);
+        } else {
+            this.handleTo.setCurrentPosition(position, direction);
+        }        
     }
 
     setOrientation(isHorizontal: boolean): void{
@@ -89,8 +144,9 @@ export class View{
             mainDiv.classList.add(StyleClasses.SLIDER, StyleClasses.SLIDERV)
         }        
         this.line.changeOrientation(isHorizontal, StyleClasses.LINE, StyleClasses.LINEV);
-        this.wrapper.changeOrientation(isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
-        this.handle.changeOrientation(isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
-        this.handle.isHorizontal = isHorizontal;     
+        this.mainWrapper.changeOrientation(isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
+        this.handleWrapper.changeOrientation(isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
+        this.handleFrom.changeOrientation(isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
+        this.handleFrom.isHorizontal = isHorizontal;     
     }
 }

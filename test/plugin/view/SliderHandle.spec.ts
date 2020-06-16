@@ -18,7 +18,7 @@ describe('Check SliderHandle',()=>{
 
     describe('Check SliderHandle / common',()=>{
         let line = new SliderLine(true);
-        let handle = new SliderHandle(line, true);       
+        let handle = new SliderHandle({sliderLine: line, isHorizontal: true, isFrom: true, isRange: false});       
 
         describe('Check SliderHandle / common / init', () => {
             it('Tag of element must be DIV', () => {
@@ -104,7 +104,7 @@ describe('Check SliderHandle',()=>{
 
     describe('Check SliderHandle / horizontal',()=>{
         let line = new SliderLine(true);
-        let handle = new SliderHandle(line, true);
+        let handle = new SliderHandle({sliderLine: line, isHorizontal: true, isFrom: true, isRange: false});
 
         it("The handle should be in line area", () =>{
             handle.shiftX=0;
@@ -124,7 +124,7 @@ describe('Check SliderHandle',()=>{
 
     describe('Check SliderHandle / vertical',()=>{
         let line = new SliderLine(false);        
-        let handle = new SliderHandle(line, false);        
+        let handle = new SliderHandle({sliderLine: line, isHorizontal: false, isFrom: true, isRange: false});        
 
         it("The handle should be in line area", () =>{
             handle.shiftY=0;
