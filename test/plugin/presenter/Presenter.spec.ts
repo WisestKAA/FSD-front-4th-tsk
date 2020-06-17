@@ -62,8 +62,8 @@ describe('Check Presenter', () => {
     it("Function getCorrectPosition must return correct value (TY Cap:))", () => {
         let pos = 50;
         let maxHandlePosition = 100;
-        expect(presenter.getCorrectPosition(pos, maxHandlePosition, true)).toBe(50);
-        expect(presenter.getCorrectPosition(pos, maxHandlePosition, false)).toBe(50);
+        expect(presenter.getCorrectPosition(pos, maxHandlePosition, true, SliderDirection.LEFT)).toBe(50);
+        expect(presenter.getCorrectPosition(pos, maxHandlePosition, false, SliderDirection.LEFT)).toBe(50);
     });
 
     it("The getCurrentValFromPosition function should calculate the current value from the handle position", () => {
@@ -79,7 +79,7 @@ describe('Check Presenter', () => {
 
     it("The setCurrentHandlePosition function should change the 'position' property and the 'style' attribute in the SliderHande class", () => {
         presenter.setCurrentHandlePosition(1, SliderDirection.LEFT);
-        let correctPosition = presenter.getCorrectPosition(1, presenter.view.getMaxHandlePosition(), true);
+        let correctPosition = presenter.getCorrectPosition(1, presenter.view.getMaxHandlePosition(), true, SliderDirection.LEFT);
         expect(presenter.view.getSliderHandlePosition(SliderDirection.LEFT)).toBe(correctPosition);
     });
 

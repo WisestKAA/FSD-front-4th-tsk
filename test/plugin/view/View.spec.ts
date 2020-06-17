@@ -73,10 +73,10 @@ describe('Check View', () => {
         });
     
         it("The setCurrentValue function should change the value of the variable and the contents of the element in the CurrentValue object", () => {
-            let beforCurrentValueVal = view.currentValue.val;
+            let beforCurrentValueVal = view.currentValue.val[0];
             let beforCurrentValueElementContent = view.currentValue.$elem.html();
-            view.setCurrentValue([10,0]);
-            let afterCurrentValueVal = view.currentValue.val;
+            view.setCurrentValue([beforCurrentValueVal + 1,0]);
+            let afterCurrentValueVal = view.currentValue.val[0];
             let afterCurrentValueElementContent = view.currentValue.$elem.html();
             expect(beforCurrentValueVal).not.toBe(afterCurrentValueVal);
             expect(beforCurrentValueElementContent).not.toBe(afterCurrentValueElementContent);

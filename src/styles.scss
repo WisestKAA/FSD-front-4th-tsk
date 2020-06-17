@@ -1,10 +1,13 @@
 @import './plugin/styles.scss';
 
-.slider{
+.slider, 
+.slider-r{
     width: 150px;
 }
 
-.slider-v{
+.slider-v,
+.slider-rv{
     width: min-content;
     height: 150px;
 }
+

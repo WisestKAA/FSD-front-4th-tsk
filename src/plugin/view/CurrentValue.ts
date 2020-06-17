@@ -7,21 +7,21 @@ export class CurrentValue extends AbstractElement {
     
     constructor(){
         super();
-        this.val = [0, 0];    
+        this.val = new Array(0,0);    
         this.init();
     }
 
     protected init(): void {
         let $val: JQuery<HTMLElement> = $('<div>').addClass(StyleClasses.CURRENT);
-        $val.html(`${this.val}`);
+        $val.html(`${this.val[0]}`);
         this.$elem = $val;
     }
 
     setCurrentValue(currentValue: number[], isRange: boolean): void{
         if(isRange){            
-            this.$elem.html(`${this.val[0]} - ${this.val[1]}`);
+            this.$elem.html(`${currentValue[0]} - ${currentValue[1]}`);
         } else {
-            this.$elem.html(`${this.val[0]}`);
+            this.$elem.html(`${currentValue[0]}`);
         }        
         this.val = currentValue;
     }

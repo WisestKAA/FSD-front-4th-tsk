@@ -71,12 +71,20 @@ export class Presenter{
         }        
     }
 
-    getCorrectPosition(position: number, maxHandlePosition: number, isForView: boolean): number{
+    getCorrectPosition(position: number, maxHandlePosition: number, isForView: boolean, direction: SliderDirection): number{
+        let correctPosition: number;
         if(isForView){
-            return position * maxHandlePosition / 100;
+            correctPosition = position * maxHandlePosition / 100;
+            if(direction === SliderDirection.RIGHT || direction === SliderDirection.TOP){
+                correctPosition = maxHandlePosition - correctPosition
+            }
         } else {
-            return 100 * position / maxHandlePosition;
-        }
+            correctPosition = 100 * position / maxHandlePosition;
+            if(direction === SliderDirection.RIGHT || direction === SliderDirection.TOP){
+                correctPosition = 100 - correctPosition
+            }
+        }        
+        return correctPosition;
     }
 
     getCurrentValFromPosition(direction: SliderDirection): number{
@@ -84,7 +92,7 @@ export class Presenter{
         let maxVal = this.model.options.maxVal;
         let minVal = this.model.options.minVal;
         let maxHandlePosition = this.view.getMaxHandlePosition();
-        let correctPosition = this.getCorrectPosition(position, maxHandlePosition, false);
+        let correctPosition = this.getCorrectPosition(position, maxHandlePosition, false, direction);
         let newCurrentVal = ((maxVal - minVal)  * correctPosition / 100) + minVal;
         let precision = Math.pow(10, this.model.options.precision);
         newCurrentVal = Math.round(newCurrentVal * precision) / precision;
@@ -114,7 +122,7 @@ export class Presenter{
     setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
         let position = Math.abs(100 * (this.model.options.minVal + correctValue) / 
             (Math.abs(this.model.options.minVal) + Math.abs(this.model.options.maxVal)));
-        position = this.getCorrectPosition(position, this.view.getMaxHandlePosition(), true);
+        position = this.getCorrectPosition(position, this.view.getMaxHandlePosition(), true, direction);
         this.view.setCurrentPosition(position, direction);
     }
 

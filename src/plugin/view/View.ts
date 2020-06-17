@@ -87,16 +87,20 @@ export class View{
     addEvents(): void {
         let that = this;
         this.handleFrom.positionChangedEvent.on((data) => {
-            that.sliderHandleLeftChange(data);
+            that.sliderHandleChange(data);
         });
         if(this.options.isRange){
             this.handleTo.positionChangedEvent.on((data) => {
-                that.sliderHandleLeftChange(data);
+                that.sliderHandleChange(data);
             });
         }
     }
 
-    sliderHandleLeftChange(direction: SliderDirection): void {        
+    sliderHandleChange(direction: SliderDirection): void {
+        if(this.options.isRange){
+            let maxPosition = this.handleFrom.getSliderHandleMaxPosition();
+            this.range.changeRange(maxPosition, this.handleFrom.position, this.handleTo.position);
+        }
         this.presenter.sliderHandleChangedPosition(direction);
     }
 
@@ -148,5 +152,5 @@ export class View{
         this.handleWrapper.changeOrientation(isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
         this.handleFrom.changeOrientation(isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
         this.handleFrom.isHorizontal = isHorizontal;     
-    }
+    }   
 }

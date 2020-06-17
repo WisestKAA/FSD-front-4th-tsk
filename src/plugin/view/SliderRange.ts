@@ -15,4 +15,11 @@ export class SliderRange extends AbstractElement {
         this.$elem = this.isHorizontal ? $('<div>').addClass(StyleClasses.RANGE) : $('<div>').addClass([StyleClasses.RANGE, StyleClasses.RANGEV]);
     }
 
+    changeRange(maxPosition: number, positionFrom: number, positionTo: number): void{
+        let rangePosition = positionFrom;
+        let rangeSize = 100 - positionTo - positionFrom;
+        let direction = this.isHorizontal ? "left" : "bottom";
+        let wh = this.isHorizontal ? "width" : "height";
+        this.$elem.attr("style", `${direction}: ${rangePosition}%; ${wh}: ${rangeSize}%`);
+    }
 }

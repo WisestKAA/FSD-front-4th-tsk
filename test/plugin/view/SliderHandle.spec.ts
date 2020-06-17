@@ -96,9 +96,9 @@ describe('Check SliderHandle',()=>{
             let maxPosition = 84;
             let lineSize = 100;
             let handleSize = 16;
-            expect(handle.getCorrectPosition(-1, lineSize, handleSize)).toBe(0);
-            expect(handle.getCorrectPosition(50, lineSize, handleSize)).toBe(50);
-            expect(handle.getCorrectPosition(2000, lineSize, handleSize)).toBe(maxPosition);
+            expect(handle.getCorrectPositionFrom(-1, lineSize, handleSize)).toBe(0);
+            expect(handle.getCorrectPositionFrom(50, lineSize, handleSize)).toBe(50);
+            expect(handle.getCorrectPositionFrom(2000, lineSize, handleSize)).toBe(maxPosition);
         });
     });
 

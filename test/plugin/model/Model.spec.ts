@@ -32,15 +32,15 @@ describe('Check Model', () => {
         let overOptions = {isHorizontal: true, minVal: 0, maxVal: 100, currentVal: [over, 0]} as ISliderOptions;
         let normalOptions = {isHorizontal: true, minVal: 0, maxVal: 100, currentVal: [normal, 0]} as ISliderOptions;
         
-        expect(model.checkCurrentVal(subOptions)).toBe([subOptions.minVal, 0]);
-        expect(model.checkCurrentVal(overOptions)).toBe([overOptions.maxVal, 0]);
-        expect(model.checkCurrentVal(normalOptions)).toBeGreaterThanOrEqual(subOptions.minVal);
-        expect(model.checkCurrentVal(normalOptions)).toBeLessThanOrEqual(subOptions.maxVal);
+        expect(model.checkCurrentVal(subOptions)).toEqual([subOptions.minVal, 0]);
+        expect(model.checkCurrentVal(overOptions)).toEqual([overOptions.maxVal, 0]);
+        expect(model.checkCurrentVal(normalOptions)[0]).toBeGreaterThanOrEqual(subOptions.minVal);
+        expect(model.checkCurrentVal(normalOptions)[0]).toBeLessThanOrEqual(subOptions.maxVal);
     });
 
     it("The setCurrentValue function should change the current value", () => {
         model.setCurrentValue([10, 0]);
-        expect(model.options.currentVal).toBe([10, 0]);
+        expect(model.options.currentVal).toEqual([10, 0]);
     });
 
     it("The setCurrentValue function should call a trigger from onCurrentValueChanged", () => {

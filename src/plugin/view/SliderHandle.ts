@@ -9,6 +9,7 @@ import { ISliderHandleOptions } from "./ISliderHandleOptions";
 export class SliderHandle extends AbstractElement{
     public $elem: JQuery<HTMLElement>;
     public shiftX: number;
+    public shiftXR: number;
     public shiftY: number;
     public position: number;
     private line: SliderLine;
@@ -48,6 +49,7 @@ export class SliderHandle extends AbstractElement{
         let that = this;
         event.preventDefault();
         this.shiftX = event.clientX - elem.getBoundingClientRect().left;
+        this.shiftXR = event.clientX - elem.getBoundingClientRect().right;
         this.shiftY = event.clientY - elem.getBoundingClientRect().top;
 
         $(document).on("mousemove", function (event) {
@@ -92,31 +94,44 @@ export class SliderHandle extends AbstractElement{
 
     getNewLeft(clientX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
         let newLeft = clientX - this.shiftX - offsetLeft;
-        let newLeftPosition = this.getCorrectPosition(newLeft, lineWidth, handleWidth);
+        let newLeftPosition = this.getCorrectPositionFrom(newLeft, lineWidth, handleWidth);
         return newLeftPosition;
     }
 
     getNewRight(clientX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
-        return 100 - this.getNewLeft(clientX, offsetLeft, lineWidth, handleWidth);
+        let newRight = clientX - this.shiftXR - offsetLeft;
+        let newRightPosition = this.getCorrectPositionTo(newRight, lineWidth, handleWidth);        
+        return 100 - newRightPosition;
     }
 
     getNewBot(clientY: number, offsetTop: number, lineHieght: number, handleHeight: number): number{
         let newBot = lineHieght - (clientY - offsetTop + this.shiftY);
-        let newBotPosition = this.getCorrectPosition(newBot, lineHieght, handleHeight);
-        return newBotPosition;        
+        let newBotPosition = this.getCorrectPositionFrom(newBot, lineHieght, handleHeight);
+        return newBotPosition;
     }
 
     getNewTop(clientY: number, offsetTop: number, lineHieght: number, handleHeight: number): number {
         return 100 - this.getNewBot(clientY, offsetTop, lineHieght, handleHeight);
     }
 
-    getCorrectPosition(newCoordinate: number, linesize: number, handleSize: number): number{
+    getCorrectPositionFrom(newCoordinate: number, linesize: number, handleSize: number): number{
         if(newCoordinate < 0){
             return 0;
         }
         let edge = linesize - handleSize;
         if(newCoordinate > edge){
             newCoordinate = edge;
+        }
+        let correctPosition = (100 * newCoordinate)/linesize;
+        return correctPosition;
+    }
+
+    getCorrectPositionTo(newCoordinate: number, linesize: number, handleSize: number): number{
+        if(newCoordinate < handleSize){
+            newCoordinate = handleSize; 
+        }
+        if(newCoordinate > linesize){
+            newCoordinate = linesize;
         }
         let correctPosition = (100 * newCoordinate)/linesize;
         return correctPosition;
