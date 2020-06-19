@@ -30,7 +30,7 @@ export class View{
 
     protected init(elem: HTMLElement){        
         this.currentValue = new CurrentValue();
-        this.buildLine(this.options.isHorizontal, this.options.isRange);
+        this.buildLine(this.options.isHorizontal, this.options.isRangeLineEnabled);
         this.buildHandle(this.options.isHorizontal, this.options.isRange);
         
         this.mainWrapper = new SliderWrapper(this.options.isHorizontal);
@@ -47,8 +47,8 @@ export class View{
         return $header;
     }
 
-    buildLine(isHorizontal: boolean, isRange: boolean): void{
-        if(isRange){
+    buildLine(isHorizontal: boolean, isRangeLineEnabled: boolean): void{
+        if(isRangeLineEnabled){
             this.line = new SliderLine(isHorizontal);
             this.range = new SliderRange(isHorizontal);
             this.line.$elem.append(this.range.$elem);
@@ -87,20 +87,18 @@ export class View{
     addEvents(): void {
         let that = this;
         this.handleFrom.positionChangedEvent.on((data) => {
-            that.sliderHandleChange(data);
+            that.sliderHandleChanged(data);
         });
         if(this.options.isRange){
             this.handleTo.positionChangedEvent.on((data) => {
-                that.sliderHandleChange(data);
+                that.sliderHandleChanged(data);
             });
         }
     }
 
-    sliderHandleChange(direction: SliderDirection): void {
-        if(this.options.isRange){
-            let maxPosition = this.handleFrom.getSliderHandleMaxPosition();
-            this.range.changeRange(maxPosition, this.handleFrom.position, this.handleTo.position);
-        }
+    sliderHandleChanged(direction: SliderDirection): void {
+        this.setRange(this.options.isRangeLineEnabled);
+        if(this.options.isRange && this.checkHandleIntersection(this.handleFrom.position, this.handleTo.position, direction)){return;}  
         this.presenter.sliderHandleChangedPosition(direction);
     }
 
@@ -137,9 +135,11 @@ export class View{
             this.handleFrom.setCurrentPosition(position, direction);
         } else {
             this.handleTo.setCurrentPosition(position, direction);
-        }        
+        }
+        this.setRange(this.options.isRangeLineEnabled);
     }
 
+    //допилить с учетом range and rangeLine
     setOrientation(isHorizontal: boolean): void{
         let mainDiv = this.slider.get(0).firstElementChild;
         if(isHorizontal){
@@ -152,5 +152,31 @@ export class View{
         this.handleWrapper.changeOrientation(isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
         this.handleFrom.changeOrientation(isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
         this.handleFrom.isHorizontal = isHorizontal;     
-    }   
+    } 
+    
+    setRange(isRangeLineEnabled: boolean): void{
+        if(isRangeLineEnabled){
+            if(this.options.isRange){
+                this.range.changeRangeLineTwo(this.handleFrom.position, this.handleTo.position);
+            } else {
+                let maxHandlePosition = this.getMaxHandlePosition();
+                this.range.changeRangeLineOne(this.handleFrom.position, maxHandlePosition);
+            }            
+        } 
+    }
+
+    //включить в тесты
+    checkHandleIntersection(positionFrom: number, positionTo: number, direction: SliderDirection): boolean{
+        let maxPos = this.getMaxHandlePosition();
+        if(positionFrom > maxPos - positionTo){
+            if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
+                this.setCurrentPosition(maxPos - positionTo, direction);
+            } else {
+                this.setCurrentPosition(maxPos - positionFrom, direction);
+            }
+            return false;
+        } else {
+            return false;
+        }        
+    }
 }

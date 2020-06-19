@@ -23,9 +23,10 @@ export class Model{
             maxVal: 100,
             minVal: 0,
             currentVal: new Array(0, 0),
-            step: 1,
-            precision: 0,
+            step: 1, // <maxval
+            precision: 0, // >0
             isRange: false,
+            isRangeLineEnabled: false,
         };        
         let currentOptions = $.extend(this.defaultOption, options);
         currentOptions.currentVal = this.checkCurrentVal(currentOptions);
@@ -46,6 +47,9 @@ export class Model{
             currentVal[1] = options.currentVal[1] < options.minVal ? 
                 options.minVal : options.currentVal[1] > options.maxVal ? 
                 options.maxVal : options.currentVal[1];
+            if(currentVal[0]>currentVal[1]){
+                throw new TypeError("Invalid input values. minVal must be less than maxVal");
+            }
         } else {
             currentVal[0] = options.currentVal[0] < options.minVal ? 
                 options.minVal : options.currentVal[0] > options.maxVal ? 
@@ -55,9 +59,9 @@ export class Model{
     }
     
     setCurrentValue(newVal: number[]): void{
-        let opt = Object.create(this.options) as ISliderOptions;
-        opt.currentVal = newVal;
-        this.options.currentVal = this.checkCurrentVal(opt);
+        let options: ISliderOptions = {currentVal: newVal};
+        options = $.extend(this.options, options);
+        this.options.currentVal = this.checkCurrentVal(options);
         this.onCurrentValueChanged.trigger(newVal);        
     }
 

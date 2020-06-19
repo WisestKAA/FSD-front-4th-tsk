@@ -11,6 +11,7 @@ export class SliderHandle extends AbstractElement{
     public shiftX: number;
     public shiftXR: number;
     public shiftY: number;
+    public shiftYT: number;
     public position: number;
     private line: SliderLine;
     public onPositionChanged: LiteEvent<SliderDirection>;
@@ -32,6 +33,10 @@ export class SliderHandle extends AbstractElement{
     protected init(): void {
         this.$elem =  this.isHorizontal ? $('<div>').addClass(StyleClasses.HANDLE) : $('<div>').addClass([StyleClasses.HANDLE, StyleClasses.HANDLEV]);
         this.position = 0;
+        this.shiftX = 0;
+        this.shiftXR = 0;
+        this.shiftY = 0;
+        this.shiftYT = 0;
         this.onPositionChanged = new LiteEvent<SliderDirection>();
     }
 
@@ -51,6 +56,7 @@ export class SliderHandle extends AbstractElement{
         this.shiftX = event.clientX - elem.getBoundingClientRect().left;
         this.shiftXR = event.clientX - elem.getBoundingClientRect().right;
         this.shiftY = event.clientY - elem.getBoundingClientRect().top;
+        this.shiftYT = event.clientY - elem.getBoundingClientRect().bottom;
 
         $(document).on("mousemove", function (event) {
             if(that.isHorizontal){
@@ -67,22 +73,28 @@ export class SliderHandle extends AbstractElement{
 
     onMouseMoveX(event: JQuery.MouseMoveEvent): void {
         let lineHTMLElement = this.line.$elem;
+        let offset = lineHTMLElement.offset().left;
+        let lineWidth = lineHTMLElement.outerWidth();
+        let handleWidth = this.$elem.outerWidth();
         if(this.isFrom){
-            let newLeft = this.getNewLeft(event.clientX, lineHTMLElement.offset().left, lineHTMLElement.outerWidth(), this.$elem.outerWidth()); 
+            let newLeft = this.getNewLeft(event.pageX, offset, lineWidth, handleWidth); 
             this.setNewPosition(newLeft, SliderDirection.LEFT);
         } else {
-            let newRight = this.getNewRight(event.clientX, lineHTMLElement.offset().left, lineHTMLElement.outerWidth(), this.$elem.outerWidth()); 
+            let newRight = this.getNewRight(event.pageX, offset, lineWidth, handleWidth); 
             this.setNewPosition(newRight, SliderDirection.RIGHT);
         }        
     }
 
     onMouseMoveY(event: JQuery.MouseMoveEvent): void {
         let lineHTMLElement = this.line.$elem;
+        let offset = lineHTMLElement.offset().top;
+        let lineHieght = lineHTMLElement.outerHeight();
+        let handleHeight = this.$elem.outerHeight();
         if(this.isFrom){
-            let newBot = this.getNewBot(event.clientY, lineHTMLElement.offset().top, lineHTMLElement.outerHeight(), this.$elem.outerHeight()); 
+            let newBot = this.getNewBot(event.pageY, offset, lineHieght, handleHeight); 
             this.setNewPosition(newBot, SliderDirection.BOTTOM);
         } else {
-            let newTop = this.getNewTop(event.clientY, lineHTMLElement.offset().top, lineHTMLElement.outerHeight(), this.$elem.outerHeight()); 
+            let newTop = this.getNewTop(event.pageY, offset, lineHieght, handleHeight); 
             this.setNewPosition(newTop, SliderDirection.TOP);
         }
     }
@@ -92,26 +104,28 @@ export class SliderHandle extends AbstractElement{
         $(document).off("mouseup");
     }
 
-    getNewLeft(clientX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
-        let newLeft = clientX - this.shiftX - offsetLeft;
+    getNewLeft(pageX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
+        let newLeft = pageX - this.shiftX - offsetLeft;
         let newLeftPosition = this.getCorrectPositionFrom(newLeft, lineWidth, handleWidth);
         return newLeftPosition;
     }
 
-    getNewRight(clientX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
-        let newRight = clientX - this.shiftXR - offsetLeft;
+    getNewRight(pageX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
+        let newRight = pageX - this.shiftXR - offsetLeft;
         let newRightPosition = this.getCorrectPositionTo(newRight, lineWidth, handleWidth);        
         return 100 - newRightPosition;
     }
 
-    getNewBot(clientY: number, offsetTop: number, lineHieght: number, handleHeight: number): number{
-        let newBot = lineHieght - (clientY - offsetTop + this.shiftY);
+    getNewBot(pageY: number, offsetTop: number, lineHieght: number, handleHeight: number): number{
+        let newBot = lineHieght - (pageY - offsetTop - this.shiftYT); 
         let newBotPosition = this.getCorrectPositionFrom(newBot, lineHieght, handleHeight);
         return newBotPosition;
     }
 
-    getNewTop(clientY: number, offsetTop: number, lineHieght: number, handleHeight: number): number {
-        return 100 - this.getNewBot(clientY, offsetTop, lineHieght, handleHeight);
+    getNewTop(pageY: number, offsetTop: number, lineHieght: number, handleHeight: number): number {
+        let newTop = lineHieght - (pageY - offsetTop - this.shiftY);
+        let newBTopPosition = this.getCorrectPositionTo(newTop, lineHieght, handleHeight);
+        return 100 - newBTopPosition;
     }
 
     getCorrectPositionFrom(newCoordinate: number, linesize: number, handleSize: number): number{

@@ -13,7 +13,7 @@ describe('Check View', () => {
         view = presenter.view;
     });
 
-    afterEach(()=>{$(document.body).html("");});
+    afterAll(()=>{$(document.body).html("");});
 
     describe('Check View / check inint property', () => {
         it('After initialization the element must be defined', () => {
@@ -65,6 +65,44 @@ describe('Check View', () => {
         it(`Element must have class '${StyleClasses.SLIDERV}'`, () => {
             expect(viewv.slider.get(0).firstElementChild.classList.contains(StyleClasses.SLIDERV)).toBeTrue();
         });
+    });
+
+    describe('Check View / check inint range', () => {
+        let el = $('<div class="slider" style="width: 100px"></div>');
+        $(document.body).append(el);        
+        let presenterv = new Presenter(el.get(0), {isHorizontal: true, isRange: true});
+        let view = presenterv.view;
+
+        it("After initialization with option 'isRange' propertys handleFrom and handleTo must be defined", () => {
+            expect(view.handleTo).toBeDefined();
+            expect(view.handleFrom).toBeDefined();
+        });        
+        
+    });
+
+    describe('Check View / check inint range line', () => {
+        let el = $('<div class="slider" style="width: 100px"></div>');
+        $(document.body).append(el);        
+        let presenterv = new Presenter(el.get(0), {isHorizontal: true, isRangeLineEnabled: true, isRange: true});
+        let view = presenterv.view;
+
+        it("After initialization with option 'isRangeLineEnabled' propertys range must be defined", () => {
+            expect(view.range).toBeDefined();
+        });
+        
+        it("The setRange function must call the changeRangeLineOne function: ", () => {            
+            let spy = spyOn(view.range, "changeRangeLineOne")
+            view.options.isRange = false;
+            view.setRange(true);
+            expect(spy).toHaveBeenCalled();      
+        });
+
+        it("The setRange function must call the changeRangeLineTwo function: ", () => {            
+            let spy = spyOn(view.range, "changeRangeLineTwo")
+            view.options.isRange = true;
+            view.setRange(true);
+            expect(spy).toHaveBeenCalled();      
+        }); 
     });
 
     describe('Check View / check function', () => {

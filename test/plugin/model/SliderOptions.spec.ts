@@ -9,6 +9,7 @@ describe('Check SliderOptions', () => {
         step: 1,
         precision: 0,
         isRange: true,
+        isRangeLineEnabled: false
     });
 
     it('All parametrs must be defined', () => {
@@ -19,5 +20,6 @@ describe('Check SliderOptions', () => {
         expect(sliderOptions.step).toBeDefined();
         expect(sliderOptions.precision).toBeDefined();
         expect(sliderOptions.isRange).toBeDefined();
+        expect(sliderOptions.isRangeLineEnabled).toBeDefined();
     });
 });

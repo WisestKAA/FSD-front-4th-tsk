@@ -1,4 +1,5 @@
 export interface IViewOptions{
-    isHorizontal?: boolean;
-    isRange?: boolean;
+    isHorizontal: boolean;
+    isRange: boolean;
+    isRangeLineEnabled: boolean;
 }

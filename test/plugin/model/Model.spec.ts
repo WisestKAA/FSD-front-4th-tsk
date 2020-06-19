@@ -4,6 +4,10 @@ import { ISliderOptions } from "../../../src/plugin/model/ISliderOptions";
 describe('Check Model', () => {
     let model = new Model();
 
+    afterEach(()=>{
+        model = new Model();
+    });
+
     it('After initialization options must be defined', () => {
         expect(model.options).toBeDefined();
         expect(model.options.isHorizontal).toBeDefined();
@@ -11,7 +15,9 @@ describe('Check Model', () => {
         expect(model.options.maxVal).toBeDefined();
         expect(model.options.currentVal).toBeDefined();
         expect(model.options.step).toBeDefined();
-        expect(model.options.precision).toBeDefined();        
+        expect(model.options.precision).toBeDefined();
+        expect(model.options.isRange).toBeDefined();   
+        expect(model.options.isRangeLineEnabled).toBeDefined();
     });
 
     it("after ininialization the events must be defined", () => {
@@ -39,8 +45,10 @@ describe('Check Model', () => {
     });
 
     it("The setCurrentValue function should change the current value", () => {
-        model.setCurrentValue([10, 0]);
-        expect(model.options.currentVal).toEqual([10, 0]);
+        let currentVal = [10, 50];
+        model.options.isRange = true;
+        model.setCurrentValue(currentVal);
+        expect(model.options.currentVal).toEqual(currentVal);
     });
 
     it("The setCurrentValue function should call a trigger from onCurrentValueChanged", () => {
@@ -51,7 +59,7 @@ describe('Check Model', () => {
 
     it("The setNewOptions function should reinitialize options", () => {
         let befor = model.options;
-        model.setNewOptions({step: 123123});
+        model.setNewOptions({step: 2});
         expect(befor).not.toBe(model.options);
     });
 
@@ -59,5 +67,11 @@ describe('Check Model', () => {
         let spy = spyOn(model.onOptionsChanged, "trigger");        
         model.setNewOptions({step: 123123});
         expect(spy).toHaveBeenCalled();
+    });
+
+    it("If minVal is greater than maxVal, then the checkCurrentVal function should cause an error", () => {
+        let currentVal: ISliderOptions = {currentVal: new Array(model.options.maxVal, model.options.minVal), isRange: true};
+        let options = $.extend(model.defaultOption, currentVal)
+        expect(function() {model.checkCurrentVal(options)}).toThrowError("Invalid input values. minVal must be less than maxVal");
     });
 });

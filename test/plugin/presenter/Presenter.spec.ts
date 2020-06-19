@@ -1,6 +1,7 @@
 import { Presenter } from "../../../src/plugin/presenter/Presenter";
 import '../../../src/plugin/simpleslider';
 import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
+import { ISliderOptions } from "../../../src/plugin/model/ISliderOptions";
 
 describe('Check Presenter', () => {    
     let presenter: Presenter; 
@@ -11,7 +12,7 @@ describe('Check Presenter', () => {
         presenter = new Presenter(elem.get(0));
     });
 
-    afterEach(()=>{ $(document.body).html('');});
+    afterAll(()=>{ $(document.body).html('');});
 
     describe('Check Presenter / init', () => {
         it('After initialization model must be defined', () => {
@@ -66,7 +67,7 @@ describe('Check Presenter', () => {
         expect(presenter.getCorrectPosition(pos, maxHandlePosition, false, SliderDirection.LEFT)).toBe(50);
     });
 
-    it("The getCurrentValFromPosition function should calculate the current value from the handle position", () => {
+    it("The getCurrentValFromPosition function should calculate the current value from the handle position", () => {        
         presenter.setCurrentHandlePosition(10, SliderDirection.LEFT);
         let calcVal = presenter.getCurrentValFromPosition(SliderDirection.LEFT);
         expect(calcVal).toBe(10);
@@ -83,25 +84,70 @@ describe('Check Presenter', () => {
         expect(presenter.view.getSliderHandlePosition(SliderDirection.LEFT)).toBe(correctPosition);
     });
 
-    it("The setNewOptions function should call the setNewOptions function in the model", () => {
-        let spy = spyOn(presenter.model, "setNewOptions");
-        presenter.setNewOptions({isHorizontal: false});
-        expect(spy).toHaveBeenCalled();
+    it("The setNewOptions function should change options in model and view components", () => {
+        let elem = $('<div class="slider" style="width: 100px"></div>');
+        let presenter = new Presenter(elem.get(0), {isRange: true, isRangeLineEnabled: true})
+        presenter.view.handleFrom.position = 10;
+        presenter.view.handleTo.position = 15;
+        presenter.view.currentValue.val = new Array(2, 15);
+        presenter.view.range.changeRangeLineTwo(2, 15);
+
+        
+        let optionsBefor = presenter.model.options;
+        let handleFromProsition = presenter.view.handleFrom.position;
+        let handleToProsition = presenter.view.handleTo.position;
+        let viewCurrentVal = presenter.view.getCurrentValue();
+        let rangeLineStyle = presenter.view.range.$elem.attr("style");
+        let options: ISliderOptions = {
+            currentVal: new Array(-1,20), 
+            isHorizontal: true,
+            isRange: true,
+            isRangeLineEnabled: true,
+            maxVal: 150,
+            minVal: -10,
+            precision: 2,
+            step: 0.1
+        };
+        presenter.setNewOptions(options);
+        expect(presenter.model.options).not.toEqual(optionsBefor);
+        expect(presenter.view.handleFrom.position).not.toEqual(handleFromProsition);
+        expect(presenter.view.handleTo.position).not.toBe(handleToProsition);
+        expect(presenter.view.getCurrentValue()).not.toBe(viewCurrentVal);
+        expect(presenter.view.range.$elem.attr("style")).not.toBe(rangeLineStyle);
+        expect(presenter.model.options).toEqual(options);
     });
 
-    it("The optionsChanged function should call next functions: setCurrentValueView, setCurrentHandlePosition, getCorrectValWithStep, view.setOrientation", () => {
-        let spyCV = spyOn(presenter, "setCurrentValueView");
-        let spyCHP = spyOn(presenter, "setCurrentHandlePosition");
-        let spyGCVWS = spyOn(presenter, "getCorrectValWithStep");
+    it("The optionsChanged function should call next functions: initViewComponents, view.setOrientation", () => {
+        let spyIC = spyOn(presenter, "initViewComponents");
         let speSO = spyOn(presenter.view, "setOrientation");
         presenter.optionsChanged();
-        expect(spyCV).toHaveBeenCalled();
-        expect(spyCHP).toHaveBeenCalled();
-        expect(spyGCVWS).toHaveBeenCalled();
+        expect(spyIC).toHaveBeenCalled();
         expect(speSO).toHaveBeenCalled();
     });
 
     it("The getOptions function should return the current slider options", () => {
         expect(presenter.getOptions()).toBe(presenter.model.options);
+    });
+
+    it("The onCurrentValueChanged function should add an event listener with the passed function and triggered when currentValue changed", () => {
+        class mock {func = function(data: number) {console.log(data);};}
+        let mockObj = new mock;
+        let spy = spyOn(mockObj, 'func');
+        presenter.onCurrentValueChanged(mockObj.func);
+        presenter.setCurrentValueModel(new Array(5, 5));
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it("The getCorrectCurrentVal function should set value in currentValue array correct", () => {
+        presenter.model.options.isRange = false;
+        let correctVal = 10;
+        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.LEFT)).toEqual([10, 0]);
+        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.BOTTOM)).toEqual([10, 0]);
+        presenter.model.options.isRange = true;
+        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.LEFT)).toEqual([10, 0]);
+        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.BOTTOM)).toEqual([10, 0]);
+        presenter.model.options.isRange = true;
+        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.RIGHT)).toEqual([10, 10]);
+        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.TOP)).toEqual([10, 10]);
     });
 });

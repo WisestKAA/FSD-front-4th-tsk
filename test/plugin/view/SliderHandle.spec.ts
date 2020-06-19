@@ -50,6 +50,14 @@ describe('Check SliderHandle',()=>{
             it('The isHorizontal property must be defined', () => {
                 expect(handle.isHorizontal).toBeDefined();
             });
+
+            it('The isRange property must be defined', () => {
+                expect(handle.isRange).toBeDefined();
+            });
+
+            it('The isFrom property must be defined', () => {
+                expect(handle.isFrom).toBeDefined();
+            });
         });        
 
         it('After the onmousedown element event, the document should call the event handler function for onmousemove and onmouseup', () =>{
@@ -104,10 +112,9 @@ describe('Check SliderHandle',()=>{
 
     describe('Check SliderHandle / horizontal',()=>{
         let line = new SliderLine(true);
-        let handle = new SliderHandle({sliderLine: line, isHorizontal: true, isFrom: true, isRange: false});
+        let handle = new SliderHandle({sliderLine: line, isHorizontal: true, isFrom: true, isRange: true});
 
         it("The handle should be in line area", () =>{
-            handle.shiftX=0;
             let offsetLeft = 0;
             let lineWidth = 100;
             let handleWidth = 10;
@@ -116,28 +123,84 @@ describe('Check SliderHandle',()=>{
             expect(handle.getNewLeft(100, offsetLeft, lineWidth, handleWidth)).toEqual(90);
         });
     
-        it("The item should move to the specified value to the left", () => {
+        it("The setNewPosition function should call the setCurrentPosition function and trigered the onPositionChanged event", () => {
+            let spy = spyOn(handle, "setCurrentPosition");
+            let spyT = spyOn(handle.onPositionChanged, "trigger");
+            handle.setNewPosition(50, SliderDirection.LEFT);
+            expect(spy).toHaveBeenCalled();
+            expect(spyT).toHaveBeenCalled();
+        });
+        
+        it("The setNewPosition function should set position to teh HTML element and to the property position", () =>{
             handle.setNewPosition(50, SliderDirection.LEFT);
             expect(handle.$elem.attr('style')).toBe('left: 50%')
-        }); 
+            handle.setNewPosition(50, SliderDirection.RIGHT);            
+            expect(handle.$elem.attr('style')).toBe('right: 50%')
+        });
+
+        it("The getNewRight function should retern new right position", () => {
+            let offsetLeft = 5;          
+            let lineWidth = 100;
+            let handleWidth = 5;
+            expect(handle.getNewRight(25, offsetLeft, lineWidth, handleWidth)).toBe(80);
+            expect(handle.getNewRight(0, offsetLeft, lineWidth, handleWidth)).toBe(95);
+            expect(handle.getNewRight(100, offsetLeft, lineWidth, handleWidth)).toBe(5);
+        });
+
+
     });
 
     describe('Check SliderHandle / vertical',()=>{
         let line = new SliderLine(false);        
-        let handle = new SliderHandle({sliderLine: line, isHorizontal: false, isFrom: true, isRange: false});        
+        let handle = new SliderHandle({sliderLine: line, isHorizontal: false, isFrom: true, isRange: true});        
 
-        it("The handle should be in line area", () =>{
-            handle.shiftY=0;
+        it("The handle should be in line area (bottom)", () =>{
+            let li = new SliderLine(false);        
+            let h = new SliderHandle({sliderLine: li, isHorizontal: false, isFrom: true, isRange: true}); 
             let offsetBot = 0;
             let lineHeight = 100;
             let handleHeight = 10;
-            expect(handle.getNewBot(110, offsetBot, lineHeight, handleHeight)).toEqual(0);
-            expect(handle.getNewBot(80, offsetBot, lineHeight, handleHeight)).toEqual(20);
-            expect(handle.getNewBot(0, offsetBot, lineHeight, handleHeight)).toEqual(90);
+            expect(h.getNewBot(110, offsetBot, lineHeight, handleHeight)).toEqual(0);
+            expect(h.getNewBot(80, offsetBot, lineHeight, handleHeight)).toEqual(20);
+            expect(h.getNewBot(0, offsetBot, lineHeight, handleHeight)).toEqual(90);
         });
 
-        it("The item should move to the specified value to the left", () => {
-            handle.setNewPosition(50, SliderDirection.BOTTOM);
+        it("The handle should be in line area (top)", () =>{
+            let l = new SliderLine(false);        
+            let hand = new SliderHandle({sliderLine: l, isHorizontal: false, isFrom: false, isRange: true});
+            let offsetTop = 0;
+            let lineHeight = 100;
+            let handleHeight = 10;
+            expect(hand.getNewTop(110, offsetTop, lineHeight, handleHeight)).toEqual(90);
+            expect(hand.getNewTop(80, offsetTop, lineHeight, handleHeight)).toEqual(80);
+            expect(hand.getNewTop(0, offsetTop, lineHeight, handleHeight)).toEqual(0);
+        });
+
+        it('After the onmousedown element event, the document should call the event handler function for onmousemove and onmouseup', () =>{
+            let spyMouseMove = spyOn(handle, 'onMouseMoveY');
+            let spyMouseUp = spyOn(handle, 'onMouseUp');
+            handle.$elem.mousedown();
+            $(document).mousemove();
+            $(document).mouseup();
+            expect(spyMouseMove).toHaveBeenCalled();
+            expect(spyMouseUp).toHaveBeenCalled();
+        });
+
+        it('After the onmouseup document event, the document should\'t call the event handler function for onmousemove and onmouseup', () =>{
+            handle.$elem.mousedown();
+            $(document).mouseup();
+            let spyMouseMove = spyOn(handle, 'onMouseMoveY');
+            let spyMouseUp = spyOn(handle, 'onMouseUp');
+            $(document).mousemove();
+            $(document).mouseup();
+            expect(spyMouseMove).not.toHaveBeenCalled();
+            expect(spyMouseUp).not.toHaveBeenCalled();
+        });        
+        
+        it("The setNewPosition function should set position to teh HTML element and to the property position", () =>{
+            handle.setNewPosition(50, SliderDirection.TOP);
+            expect(handle.$elem.attr('style')).toBe('top: 50%')
+            handle.setNewPosition(50, SliderDirection.BOTTOM);            
             expect(handle.$elem.attr('style')).toBe('bottom: 50%')
         });
 
@@ -148,6 +211,15 @@ describe('Check SliderHandle',()=>{
             $(document).mouseup();
             expect(spyMouseMove).toHaveBeenCalled();
         });
+
+        it("The getCorrectPositionTo function shuld return position from handleSize to 100", () => {          
+            let lineSize = 100;
+            let handleSize = 16;
+            expect(handle.getCorrectPositionTo(0, lineSize, handleSize)).toBe(handleSize);
+            expect(handle.getCorrectPositionTo(50, lineSize, handleSize)).toBe(50);
+            expect(handle.getCorrectPositionTo(2000, lineSize, handleSize)).toBe(lineSize);
+        });
     });
-    
+
+        
 });

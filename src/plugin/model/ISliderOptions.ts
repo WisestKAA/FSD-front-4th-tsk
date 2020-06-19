@@ -6,4 +6,5 @@ export interface ISliderOptions {
     step?: number;
     precision?: number;
     isRange?: boolean;
+    isRangeLineEnabled?: boolean;
 }

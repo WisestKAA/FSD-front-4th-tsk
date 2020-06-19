@@ -19,9 +19,13 @@ export class Presenter{
             {
                 isHorizontal: this.model.options.isHorizontal,
                 isRange: this.model.options.isRange,
+                isRangeLineEnabled: this.model.options.isRangeLineEnabled
             }
-        );
-        
+        );        
+        this.initViewComponents();
+    }
+
+    initViewComponents(): void{
         let direction = this.model.options.isHorizontal ? SliderDirection.LEFT : SliderDirection.BOTTOM;
         let correctValFrom = this.getCorrectValWithStep(this.model.options.currentVal[0]);
         this.setCurrentHandlePosition(correctValFrom,  direction);
@@ -120,8 +124,7 @@ export class Presenter{
     }
 
     setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
-        let position = Math.abs(100 * (this.model.options.minVal + correctValue) / 
-            (Math.abs(this.model.options.minVal) + Math.abs(this.model.options.maxVal)));
+        let position = (100*(correctValue - this.model.options.minVal))/(this.model.options.maxVal-this.model.options.minVal);
         position = this.getCorrectPosition(position, this.view.getMaxHandlePosition(), true, direction);
         this.view.setCurrentPosition(position, direction);
     }
@@ -144,16 +147,7 @@ export class Presenter{
     }
 
     optionsChanged(): void{
-        this.setCurrentValueView(this.model.options.currentVal);
-        
-        let correctVal = this.getCorrectValWithStep(this.model.options.currentVal[0]);
-        let direction = this.model.options.isHorizontal ? SliderDirection.LEFT : SliderDirection.BOTTOM;
-        this.setCurrentHandlePosition(correctVal, direction);
-        if(this.model.options.isRange){
-            correctVal = this.getCorrectValWithStep(this.model.options.currentVal[1]);
-            direction = this.model.options.isHorizontal ? SliderDirection.RIGHT : SliderDirection.TOP;
-            this.setCurrentHandlePosition(correctVal, direction);
-        }
+        this.initViewComponents();
         this.view.setOrientation(this.model.options.isHorizontal);        
     }
 

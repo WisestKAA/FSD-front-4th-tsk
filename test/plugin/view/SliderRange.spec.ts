@@ -20,4 +20,18 @@ describe("Check SliderRange", () => {
         let rangev = new SliderRange(false);
         expect(rangev.$elem.hasClass(StyleClasses.RANGEV)).toBeTrue();
     });
+
+    it("The changeRangeLineTwo function should set size and position of the range line in the range", () =>{
+        let postionFrom = 10;
+        let positionTo = 50;
+        range.changeRangeLineTwo(postionFrom, positionTo);
+        expect(range.$elem.attr("style")).toBe("left: 10%; width: 40%")
+    })
+
+    it("The changeRangeLineOne function should set size and position of the range line in the range", () =>{
+        let postionFrom = 10;
+        let maxHandlePosition = 90;
+        range.changeRangeLineOne(postionFrom, maxHandlePosition);
+        expect(range.$elem.attr("style")).toBe("left: 0%; width: 15%")
+    })
 });
