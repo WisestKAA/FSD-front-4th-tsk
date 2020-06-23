@@ -148,7 +148,11 @@ export class Presenter{
 
     optionsChanged(): void{
         this.initViewComponents();
-        this.view.setOrientation(this.model.options.isHorizontal);        
+        this.view.setOrientation({
+            isHorizontal: this.model.options.isHorizontal, 
+            isRange: this.model.options.isRange,
+            isRangeLineEnabled: this.model.options.isRangeLineEnabled
+        });        
     }
 
     getCorrectCurrentVal(correctValue: number, direction: SliderDirection): number[]{

@@ -71,6 +71,7 @@ describe('Check SliderHandle',()=>{
         });
 
         it('After the onmouseup document event, the document should\'t call the event handler function for onmousemove and onmouseup', () =>{
+            handle.isFrom = false;
             handle.$elem.mousedown();
             $(document).mouseup();
             let spyMouseMove = spyOn(handle, 'onMouseMoveX');
@@ -79,9 +80,10 @@ describe('Check SliderHandle',()=>{
             $(document).mouseup();
             expect(spyMouseMove).not.toHaveBeenCalled();
             expect(spyMouseUp).not.toHaveBeenCalled();
+            handle.isFrom = true;
         });
 
-        it('After the onmousemove document event, element must have attribute "style"', () => {
+        it('After the onmousemove document event, element must have attribute "style"', () => {            
             handle.$elem.mousedown();
             $(document).mousemove(); 
             expect(handle.$elem.attr('style')).toBeDefined();
@@ -219,7 +221,5 @@ describe('Check SliderHandle',()=>{
             expect(handle.getCorrectPositionTo(50, lineSize, handleSize)).toBe(50);
             expect(handle.getCorrectPositionTo(2000, lineSize, handleSize)).toBe(lineSize);
         });
-    });
-
-        
+    });        
 });

@@ -98,7 +98,9 @@ export class View{
 
     sliderHandleChanged(direction: SliderDirection): void {
         this.setRange(this.options.isRangeLineEnabled);
-        if(this.options.isRange && this.checkHandleIntersection(this.handleFrom.position, this.handleTo.position, direction)){return;}  
+        if(this.options.isRange){
+            this.checkHandleIntersection(this.handleFrom.position, this.handleTo.position, direction);
+        }  
         this.presenter.sliderHandleChangedPosition(direction);
     }
 
@@ -139,19 +141,26 @@ export class View{
         this.setRange(this.options.isRangeLineEnabled);
     }
 
-    //допилить с учетом range and rangeLine
-    setOrientation(isHorizontal: boolean): void{
+    setOrientation(option: IViewOptions): void{
         let mainDiv = this.slider.get(0).firstElementChild;
-        if(isHorizontal){
+        if(option.isHorizontal){
             mainDiv.classList.add(StyleClasses.SLIDER)
         } else {
             mainDiv.classList.add(StyleClasses.SLIDER, StyleClasses.SLIDERV)
         }        
-        this.line.changeOrientation(isHorizontal, StyleClasses.LINE, StyleClasses.LINEV);
-        this.mainWrapper.changeOrientation(isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
-        this.handleWrapper.changeOrientation(isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
-        this.handleFrom.changeOrientation(isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
-        this.handleFrom.isHorizontal = isHorizontal;     
+        this.line.changeOrientation(option.isHorizontal, StyleClasses.LINE, StyleClasses.LINEV);
+        this.mainWrapper.changeOrientation(option.isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
+        this.handleWrapper.changeOrientation(option.isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
+        this.handleFrom.changeOrientation(option.isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
+        this.handleFrom.isHorizontal = option.isHorizontal;
+        if(option.isRange){
+            this.handleTo.changeOrientation(option.isRange, StyleClasses.HANDLE, StyleClasses.HANDLEV);
+            this.handleTo.isHorizontal = option.isHorizontal;
+        }
+        if(option.isRangeLineEnabled){
+            this.range.changeOrientation(option.isHorizontal, StyleClasses.RANGE, StyleClasses.RANGEV);
+            this.range.isHorizontal = option.isHorizontal;
+        }
     } 
     
     setRange(isRangeLineEnabled: boolean): void{
@@ -174,7 +183,6 @@ export class View{
             } else {
                 this.setCurrentPosition(maxPos - positionFrom, direction);
             }
-            return false;
         } else {
             return false;
         }        

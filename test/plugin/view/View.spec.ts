@@ -145,12 +145,24 @@ describe('Check View', () => {
             let wrapper = view.mainWrapper.$elem.get(0).classList.value;
             let handle = view.handleFrom.$elem.get(0).classList.value;
             let isHorizontal = view.handleFrom.isHorizontal;
-            view.setOrientation(!isHorizontal);
+            view.setOrientation({isHorizontal: !isHorizontal, isRange: false, isRangeLineEnabled: false});
             expect(mainDiv).not.toEqual(view.slider.get(0).firstElementChild.classList.value);
             expect(line).not.toEqual(view.line.$elem.get(0).classList.value);
             expect(wrapper).not.toEqual(view.mainWrapper.$elem.get(0).classList.value);
             expect(handle).not.toEqual(view.handleFrom.$elem.get(0).classList.value);
             expect(isHorizontal).not.toEqual(view.handleFrom.isHorizontal);
+        });        
+
+        it("The checkHandleIntersection function must call the setCurrentPosition and not to be true if positionFrom > maxPos - positionTo", () => {
+            let spy = spyOn(view, "setCurrentPosition");
+            expect(view.checkHandleIntersection(100, 5, SliderDirection.LEFT)).not.toBe(true);
+            expect(spy).toHaveBeenCalled();
+            expect(view.checkHandleIntersection(100, 5, SliderDirection.TOP)).not.toBe(true);
+
+        });
+
+        it("The checkHandleIntersection function must return false if positionFrom < maxPos - positionTo", () => {
+            expect(view.checkHandleIntersection(-10, 5, SliderDirection.LEFT)).toBe(false);
         });
     });
 });

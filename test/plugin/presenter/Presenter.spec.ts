@@ -60,11 +60,21 @@ describe('Check Presenter', () => {
         expect(beforModel).not.toBe(afterModel);
     });
 
+    it("Function setCurrentValueModel must change view & model level (without number)", () => {
+        let beforView = presenter.view.currentValue.val;
+        let beforModel = presenter.model.options.currentVal;
+        presenter.setCurrentValueModel(null, SliderDirection.LEFT);
+        let afterView = presenter.view.currentValue.val;
+        let afterModel = presenter.model.options.currentVal;
+        expect(beforView).not.toBe(afterView);
+        expect(beforModel).not.toBe(afterModel);
+    });
+
     it("Function getCorrectPosition must return correct value (TY Cap:))", () => {
         let pos = 50;
         let maxHandlePosition = 100;
         expect(presenter.getCorrectPosition(pos, maxHandlePosition, true, SliderDirection.LEFT)).toBe(50);
-        expect(presenter.getCorrectPosition(pos, maxHandlePosition, false, SliderDirection.LEFT)).toBe(50);
+        expect(presenter.getCorrectPosition(pos, maxHandlePosition, false, SliderDirection.RIGHT)).toBe(50);
     });
 
     it("The getCurrentValFromPosition function should calculate the current value from the handle position", () => {        
@@ -76,6 +86,9 @@ describe('Check Presenter', () => {
     it("The getCorrectValWithStep function should return the correct value with step", () => {
         let currentVal = 9.4;
         expect(presenter.getCorrectValWithStep(currentVal)).toBe(9);
+        expect(presenter.getCorrectValWithStep(-5)).toBe(presenter.model.options.minVal);      
+        
+        expect(presenter.getCorrectValWithStep(1000)).toBe(100);   
     });
 
     it("The setCurrentHandlePosition function should change the 'position' property and the 'style' attribute in the SliderHande class", () => {
