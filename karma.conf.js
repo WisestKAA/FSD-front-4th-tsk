@@ -1,32 +1,31 @@
-const webpackConfig = require('./webpack.testconfig');
+const webpackConfig = require("./webpack.testconfig");
+const path = require('path');
 
-module.exports = function(config) {
-    config.set({
-        basePath: '',
-        plugins: ['@metahub/karma-jasmine-jquery', 'karma-*'],
-        frameworks: ['jasmine-jquery', 'jasmine'],
-        files: ['test/*.ts', 
-            'test/*.js', 
-            './node_modules/jquery/dist/jquery.js',
-            "test/**/*.ts"],
-        exclude: [],
-        preprocessors: {
-            'test/**/*.ts': ['webpack'],
-            'test/**/*.js': ['webpack'],
-        },
-        webpack: {
-            module: webpackConfig.module,
-            resolve: webpackConfig.resolve,
-            mode: webpackConfig.mode,
-            devtool: 'inline-source-map',
-        },
-        reporters: ['spec'],
-        port: 9876,
-        colors: true,
-        logLevel: config.LOG_INFO,
-        autoWatch: true,
-        browsers: ['Chrome'],
-        singleRun: false,
-        concurrency: Infinity,
-    }); 
-}
+delete webpackConfig.entry
+
+module.exports = (config) => {
+  config.set({
+    browsers: ["Chrome"],
+    plugins: ['@metahub/karma-jasmine-jquery', 'karma-*'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
+    reporters: ["spec", 'coverage-istanbul'],
+    files: [
+      "test/**/*.ts"
+    ],
+    preprocessors: {
+        "test/**/*.ts": ["webpack"],
+    },
+    webpack: webpackConfig,
+    webpackMiddleware: {
+      noInfo: true
+    },
+    coverageIstanbulReporter: {
+      reports: [ 'html', 'text-summary', 'lcovonly' ],
+      dir: path.join(__dirname, 'coverage'),
+      fixWebpackSourcePaths: true,
+      'report-config': {
+        html: { outdir: 'html' }
+      }
+    }
+  })
+};
