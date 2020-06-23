@@ -2,7 +2,7 @@ import { CurrentValue } from "../../../src/plugin/view/CurrentValue";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 
 describe('Check CurrentValue', () => {
-    let currentValue = new CurrentValue();
+    let currentValue = new CurrentValue(true, true);
 
     it('Tag of element must be DIV', () => {
         expect(currentValue.$elem.get(0).nodeName).toEqual('DIV');
@@ -21,7 +21,7 @@ describe('Check CurrentValue', () => {
     });
 
     it('After changing the current value, the variable $elem & val should be changed to the current', () => {
-        let currentValue = new CurrentValue();
+        let currentValue = new CurrentValue(true, true);
         currentValue.setCurrentValue([5,0], false);
         expect(currentValue.$elem.html()).toBe('5');
         expect(currentValue.val).toEqual([5,0]);

@@ -4,10 +4,14 @@ import { StyleClasses } from "./StyleClasses";
 export class CurrentValue extends AbstractElement {
     $elem: JQuery<HTMLElement>;
     val: number[];
+    isFrom: boolean;
+    isHorizontal: boolean;
     
-    constructor(){
+    constructor(isFrom: boolean, isHorizontal: boolean){
         super();
-        this.val = new Array(0,0);    
+        this.val = new Array(0,0);
+        this.isFrom = isFrom;
+        this.isHorizontal = isHorizontal;    
         this.init();
     }
 

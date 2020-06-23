@@ -4,21 +4,24 @@
     display: inline-block; 
 
     &_vertical{
-        min-width: 40px;
+        min-width: 34px;
         width: 100%;
         min-height: 100px;
         height: 100%;
         position: relative;
+        display: flex;
+        flex-direction: row-reverse;
     }
 
     &__wrapper{
         width: 100%;
         position: relative;
         height: min-content;
+        
         &_vertical{
             height: 100%;
             min-height: 100px;
-        }   
+        }
     }
 
     &__line{ 
@@ -83,4 +86,57 @@
             position: absolute;
         }
     }
+
+    &__current-value{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+         
+        &_vertical{
+            flex-direction: row-reverse;
+            width: max-content;
+        }
+        
+        &-wrapper{
+            position: relative;
+            width: 100%;
+            height: 18px;
+
+            &_vertical{
+                height: 100%;
+                width: max-content;
+            }
+        }
+
+        &-text{
+            width: max-content;
+            padding: 0px 2px;
+            border-radius: 3px;
+            background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
+            text-align: center;
+            font-size: 12px;
+            line-height: 15px;
+            text-align: right;
+            text-transform: uppercase;
+            color: white;
+            z-index: 100;
+        }
+
+        &-arrow{
+            z-index: -1;
+            width: 6px;
+            height: 6px;
+            bottom: -3px;
+            background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
+            transform: rotate(45deg);
+            margin-top: -4px;
+
+            &_vertical{
+                margin-top: 0;
+                margin-right: -4px;
+            }
+        }
+    }    
 }

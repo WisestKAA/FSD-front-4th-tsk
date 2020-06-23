@@ -29,7 +29,7 @@ export class View{
     }
 
     protected init(elem: HTMLElement){        
-        this.currentValue = new CurrentValue();
+        this.currentValue = new CurrentValue(true, this.options.isHorizontal);
         this.buildLine(this.options.isHorizontal, this.options.isRangeLineEnabled);
         this.buildHandle(this.options.isHorizontal, this.options.isRange);
         
@@ -173,8 +173,7 @@ export class View{
             }            
         } 
     }
-
-    //включить в тесты
+    
     checkHandleIntersection(positionFrom: number, positionTo: number, direction: SliderDirection): boolean{
         let maxPos = this.getMaxHandlePosition();
         if(positionFrom > maxPos - positionTo){

@@ -2,27 +2,35 @@ doctype html
 html
     head
     body
-        .slider
-        br
-        .slider-v
-        br
-        .slider-r
-        br
-        .slider-rv
+        //- .slider
+        //- br
+        //- .slider-v
+        //- br
+        //- .slider-r
+        //- br
+        //- .slider-rv
 
-        //- .sl(style="width: 100px;")
-        //-     .simpleslider
-        //-         .simpleslider__header
-        //-         .simpleslider__wrapper
-        //-             .simpleslider__line
-        //-                 .simpleslider__range(style="left: 20%; width: 60%;")
-        //-             .simpleslider__wrapper
-        //-                 .simpleslider__handle(style="left: 20%;")
-        //-                 .simpleslider__handle(style="right: 20%;")
+        .sl(style="width: 100px;")
+            .simpleslider
+                .simpleslider__header
+                    .simpleslider__current-value-wrapper
+                        .simpleslider__current-value
+                            .simpleslider__current-value-text=20
+                            .simpleslider__current-value-arrow
+                .simpleslider__wrapper
+                    .simpleslider__line
+                        .simpleslider__range(style="left: 20%; width: 60%;")
+                    .simpleslider__wrapper
+                        .simpleslider__handle(style="left: 20%;")
+                        .simpleslider__handle(style="right: 20%;")
 
-        //- .sl(style="width: min-content; height: 100px;")
-        //-     .simpleslider.simpleslider_vertical
-        //-         .simpleslider__header
-        //-         .simpleslider__wrapper.simpleslider__wrapper_vertical
-        //-             .simpleslider__line.simpleslider__line_vertical
-        //-             .simpleslider__handle.simpleslider__handle_vertical
+        .sl(style="width: min-content; height: 100px;")
+            .simpleslider.simpleslider_vertical
+                .simpleslider__header
+                    .simpleslider__current-value-wrapper.simpleslider__current-value-wrapper_vertical
+                        .simpleslider__current-value.simpleslider__current-value_vertical
+                            .simpleslider__current-value-text=20
+                            .simpleslider__current-value-arrow.simpleslider__current-value-arrow_vertical
+                .simpleslider__wrapper.simpleslider__wrapper_vertical
+                    .simpleslider__line.simpleslider__line_vertical
+                    .simpleslider__handle.simpleslider__handle_vertical
