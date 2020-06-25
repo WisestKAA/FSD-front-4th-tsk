@@ -7,4 +7,5 @@ export interface ISliderOptions {
     precision?: number;
     isRange?: boolean;
     isRangeLineEnabled?: boolean;
+    isVisibleCurrentValue?: boolean;
 }

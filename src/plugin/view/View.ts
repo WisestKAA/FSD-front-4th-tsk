@@ -6,8 +6,8 @@ import { CurrentValue } from "./CurrentValue";
 import { Presenter } from "../presenter/Presenter";
 import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
-import { IView } from "./IView";
 import { SliderRange } from "./SliderRange";
+import { CurrentValueWrapper } from "./CurrentValueWrapper";
 
 export class View{
     presenter: Presenter;
@@ -17,7 +17,9 @@ export class View{
     handleTo: SliderHandle;
     mainWrapper: SliderWrapper;
     handleWrapper: SliderWrapper;
-    currentValue: CurrentValue;
+    currentValueFrom: CurrentValue;
+    currentValueTo: CurrentValue;
+    currentValueWrapper: CurrentValueWrapper;
     options: IViewOptions;
     range: SliderRange;
 
@@ -29,21 +31,24 @@ export class View{
     }
 
     protected init(elem: HTMLElement){        
-        this.currentValue = new CurrentValue(true, this.options.isHorizontal);
+        this.buildCurrentValue(this.options.isHorizontal, this.options.isRange);
         this.buildLine(this.options.isHorizontal, this.options.isRangeLineEnabled);
         this.buildHandle(this.options.isHorizontal, this.options.isRange);
         
         this.mainWrapper = new SliderWrapper(this.options.isHorizontal);
         let $mainDiv = this.options.isHorizontal ? $('<div>').addClass(StyleClasses.SLIDER) :  $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERV]);
         this.mainWrapper.$elem.append(this.line.$elem, this.handleWrapper.$elem);
-        let $header = this.buildHeaderWithStaticCurrentValue();
+        let $header = this.buildHeader();
         $mainDiv.append($header, this.mainWrapper.$elem);
         this.slider = $(elem).append($mainDiv);
     }
 
-    buildHeaderWithStaticCurrentValue(): JQuery<HTMLElement>{
+    buildHeader(): JQuery<HTMLElement>{
         let $header = $('<div>').addClass(StyleClasses.HEADER);
-        $header.append(this.currentValue.$elem);
+        if(!this.options.isVisibleCurrentValue){
+            $header.attr("style", "display: none;");
+        }
+        $header.append(this.currentValueWrapper.$elem);
         return $header;
     }
 
@@ -84,14 +89,26 @@ export class View{
         }
     }
 
+    buildCurrentValue(isHorizontal: boolean, isRange: boolean): void{
+        this.currentValueFrom = new CurrentValue(true, isHorizontal);
+        if(isRange){
+            this.currentValueTo = new CurrentValue(false, isHorizontal);
+            this.currentValueWrapper = new CurrentValueWrapper(isHorizontal, this.currentValueFrom, this.currentValueTo);
+        } else {
+            this.currentValueWrapper = new CurrentValueWrapper(isHorizontal, this.currentValueFrom);
+        }
+    }
+
     addEvents(): void {
         let that = this;
         this.handleFrom.positionChangedEvent.on((data) => {
             that.sliderHandleChanged(data);
+            that.setCurrentValuePosition(that.handleFrom.position, data);
         });
         if(this.options.isRange){
             this.handleTo.positionChangedEvent.on((data) => {
                 that.sliderHandleChanged(data);
+                that.setCurrentValuePosition(that.handleTo.position, data);
             });
         }
     }
@@ -113,11 +130,19 @@ export class View{
     }
 
     setCurrentValue(currentValue: number[]): void {
-        this.currentValue.setCurrentValue(currentValue, this.options.isRange);
+        this.currentValueFrom.setCurrentValue(currentValue[0]);
+        if(this.options.isRange){
+            this.currentValueTo.setCurrentValue(currentValue[1]);
+        }
     }
 
     getCurrentValue(): number[] {
-        return this.currentValue.val;
+        let val = new Array(0,0);
+        val[0] = this.currentValueFrom.val;
+        if(this.options.isRange){
+            val[1] = this.currentValueTo.val;
+        }
+        return val;
     }
 
     getMaxHandlePosition(): number{
@@ -138,7 +163,35 @@ export class View{
         } else {
             this.handleTo.setCurrentPosition(position, direction);
         }
-        this.setRange(this.options.isRangeLineEnabled);
+        this.setCurrentValuePosition(position, direction);
+        this.setRange(this.options.isRangeLineEnabled);        
+    }
+
+    setCurrentValuePosition(position: number, direction: SliderDirection): void {
+        switch(direction){
+            case SliderDirection.LEFT:{
+                let maxPosition = this.getMaxHandlePosition();
+                let handlePercent = 100 - maxPosition;
+                let lineWidth = this.line.$elem.outerWidth();
+                this.currentValueFrom.setPosition(position, direction, handlePercent, lineWidth);
+                break;
+            }
+            case SliderDirection.BOTTOM:{
+                this.currentValueFrom.setPosition(position, direction);
+                break;
+            }
+            case SliderDirection.RIGHT:{
+                let maxPosition = this.getMaxHandlePosition();
+                let handlePercent = 100 - maxPosition;
+                let lineWidth = this.line.$elem.outerWidth();
+                this.currentValueTo.setPosition(position, direction, handlePercent, lineWidth);
+                break;
+            }
+            case SliderDirection.TOP:{
+                this.currentValueTo.setPosition(position, direction);
+                break;
+            }
+        }
     }
 
     setOrientation(option: IViewOptions): void{

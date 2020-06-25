@@ -27,6 +27,7 @@ export class Model{
             precision: 0, // >0
             isRange: false,
             isRangeLineEnabled: false,
+            isVisibleCurrentValue: true,
         };        
         let currentOptions = $.extend(this.defaultOption, options);
         currentOptions.currentVal = this.checkCurrentVal(currentOptions);

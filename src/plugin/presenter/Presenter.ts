@@ -19,7 +19,8 @@ export class Presenter{
             {
                 isHorizontal: this.model.options.isHorizontal,
                 isRange: this.model.options.isRange,
-                isRangeLineEnabled: this.model.options.isRangeLineEnabled
+                isRangeLineEnabled: this.model.options.isRangeLineEnabled,
+                isVisibleCurrentValue: this.model.options.isVisibleCurrentValue,
             }
         );        
         this.initViewComponents();
@@ -28,13 +29,13 @@ export class Presenter{
     initViewComponents(): void{
         let direction = this.model.options.isHorizontal ? SliderDirection.LEFT : SliderDirection.BOTTOM;
         let correctValFrom = this.getCorrectValWithStep(this.model.options.currentVal[0]);
-        this.setCurrentHandlePosition(correctValFrom,  direction);
         this.view.setCurrentValue([correctValFrom, 0]);
+        this.setCurrentHandlePosition(correctValFrom,  direction);
         if(this.model.options.isRange){
             direction = this.model.options.isHorizontal ? SliderDirection.RIGHT : SliderDirection.TOP;
             let correctValTo = this.getCorrectValWithStep(this.model.options.currentVal[1]);
-            this.setCurrentHandlePosition(correctValTo,  direction);
             this.view.setCurrentValue([correctValFrom, correctValTo]);
+            this.setCurrentHandlePosition(correctValTo,  direction);
         }
     }
 
@@ -151,7 +152,8 @@ export class Presenter{
         this.view.setOrientation({
             isHorizontal: this.model.options.isHorizontal, 
             isRange: this.model.options.isRange,
-            isRangeLineEnabled: this.model.options.isRangeLineEnabled
+            isRangeLineEnabled: this.model.options.isRangeLineEnabled,
+            isVisibleCurrentValue: this.model.options.isVisibleCurrentValue,
         });        
     }
 

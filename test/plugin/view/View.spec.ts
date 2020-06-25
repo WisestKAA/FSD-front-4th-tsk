@@ -33,7 +33,7 @@ describe('Check View', () => {
         });
     
         it('After initialization the currentValue must be defined', () => {
-            expect(view.currentValue).toBeDefined();
+            expect(view.currentValueFrom).toBeDefined();
         });
     
         it('After initialization the presenter must be defined', () => {
@@ -50,10 +50,10 @@ describe('Check View', () => {
             expect(view.slider.get(0).firstElementChild.classList.contains(StyleClasses.SLIDER)).toBeTrue();
         });
     
-        it(`Header with static current value must have element with class ${StyleClasses.CURRENT}`, () => {
-            let $header = view.buildHeaderWithStaticCurrentValue();
-            expect($header.get(0).firstElementChild.classList.contains(StyleClasses.CURRENT)).toBeTrue();
-        });
+        // it(`Header with static current value must have element with class ${StyleClasses.CURRENT}`, () => {
+        //     let $header = view.buildHeader();
+        //     expect($header.get(0).firstElementChild.classList.contains(StyleClasses.CURRENT)).toBeTrue();
+        // });
     });    
 
     describe('Check View / check inint vertical', () => {
@@ -110,19 +110,19 @@ describe('Check View', () => {
             expect(view.getSliderHandlePosition(SliderDirection.LEFT)).toBe(view.handleFrom.position);
         });
     
-        it("The setCurrentValue function should change the value of the variable and the contents of the element in the CurrentValue object", () => {
-            let beforCurrentValueVal = view.currentValue.val[0];
-            let beforCurrentValueElementContent = view.currentValue.$elem.html();
-            view.setCurrentValue([beforCurrentValueVal + 1,0]);
-            let afterCurrentValueVal = view.currentValue.val[0];
-            let afterCurrentValueElementContent = view.currentValue.$elem.html();
-            expect(beforCurrentValueVal).not.toBe(afterCurrentValueVal);
-            expect(beforCurrentValueElementContent).not.toBe(afterCurrentValueElementContent);
-        });
+        // it("The setCurrentValue function should change the value of the variable and the contents of the element in the CurrentValue object", () => {
+        //     let beforCurrentValueVal = view.currentValueFrom.val;
+        //     let beforCurrentValueElementContent = view.currentValueFrom.$elem.html();
+        //     view.setCurrentValue([beforCurrentValueVal + 1,0]);
+        //     let afterCurrentValueVal = view.currentValueFrom.val;
+        //     let afterCurrentValueElementContent = view.currentValueFrom.$elem.html();
+        //     expect(beforCurrentValueVal).not.toBe(afterCurrentValueVal);
+        //     expect(beforCurrentValueElementContent).not.toBe(afterCurrentValueElementContent);
+        // });
     
-        it("The getCurrentValue function should return current value", () => {
-            expect(view.getCurrentValue()).toBe(view.currentValue.val);
-        });
+        // it("The getCurrentValue function should return current value", () => {
+        //     expect(view.getCurrentValue()).toBe(view.currentValue.val);
+        // });
     
         it("The setCurrentPosition function should change the value of the variable and the contents of the element in the SliderHandle object", () => {
             let beforSliderHandlePositionVal = view.handleFrom.position;
@@ -145,7 +145,7 @@ describe('Check View', () => {
             let wrapper = view.mainWrapper.$elem.get(0).classList.value;
             let handle = view.handleFrom.$elem.get(0).classList.value;
             let isHorizontal = view.handleFrom.isHorizontal;
-            view.setOrientation({isHorizontal: !isHorizontal, isRange: false, isRangeLineEnabled: false});
+            view.setOrientation({isHorizontal: !isHorizontal, isRange: false, isRangeLineEnabled: false, isVisibleCurrentValue: true});
             expect(mainDiv).not.toEqual(view.slider.get(0).firstElementChild.classList.value);
             expect(line).not.toEqual(view.line.$elem.get(0).classList.value);
             expect(wrapper).not.toEqual(view.mainWrapper.$elem.get(0).classList.value);

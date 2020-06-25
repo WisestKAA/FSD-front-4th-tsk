@@ -11,4 +11,11 @@ export enum StyleClasses {
      CURRENT = "simpleslider__current",
      RANGE = "simpleslider__range",
      RANGEV = "simpleslider__range_vertical",
+     CURRENTVAL = "simpleslider__current-value",
+     CURRENTVALV = "simpleslider__current-value_vertical",
+     CURRENTVALWRAPPER = "simpleslider__current-value-wrapper",
+     CURRENTVALWRAPPERV = "simpleslider__current-value-wrapper_vertical",
+     CURRENTVALTEXT = "simpleslider__current-value-text",
+     CURRENTVALARROW = "simpleslider__current-value-arrow",
+     CURRENTVALARROWV = "simpleslider__current-value-arrow_vertical",
 }

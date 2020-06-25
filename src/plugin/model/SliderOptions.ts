@@ -9,6 +9,7 @@ export class SliderOptions implements ISliderOptions{
     precision: number;
     isRange: boolean;
     isRangeLineEnabled: boolean;
+    isVisibleCurrentValue: boolean;
 
     constructor(options: ISliderOptions){
         this.isHorizontal = options.isHorizontal;
@@ -19,5 +20,6 @@ export class SliderOptions implements ISliderOptions{
         this.precision = options.precision;
         this.isRange = options.isRange;
         this.isRangeLineEnabled = options.isRangeLineEnabled;
+        this.isVisibleCurrentValue = options.isVisibleCurrentValue;
     }
 }
