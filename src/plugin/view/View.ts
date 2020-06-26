@@ -149,10 +149,6 @@ export class View{
         return this.handleFrom.getSliderHandleMaxPosition();
     }
 
-    getLineWidth(): number {
-        return this.line.getLineWidth();
-    }
-
     getReadySlider(): JQuery<HTMLElement>{
         return this.slider;
     }
@@ -173,24 +169,28 @@ export class View{
                 let maxPosition = this.getMaxHandlePosition();
                 let handlePercent = 100 - maxPosition;
                 let lineWidth = this.line.$elem.outerWidth();
-                this.currentValueFrom.setPosition(position, direction, handlePercent, lineWidth);
+                this.currentValueFrom.setPosition(position, handlePercent, lineWidth);
                 break;
             }
             case SliderDirection.BOTTOM:{
-                this.currentValueFrom.setPosition(position, direction);
+                this.currentValueFrom.setPosition(position);
                 break;
             }
             case SliderDirection.RIGHT:{
                 let maxPosition = this.getMaxHandlePosition();
                 let handlePercent = 100 - maxPosition;
                 let lineWidth = this.line.$elem.outerWidth();
-                this.currentValueTo.setPosition(position, direction, handlePercent, lineWidth);
+                this.currentValueTo.setPosition(position, handlePercent, lineWidth);
                 break;
             }
             case SliderDirection.TOP:{
-                this.currentValueTo.setPosition(position, direction);
+                this.currentValueTo.setPosition(position);
                 break;
             }
+        }
+
+        if(this.options.isRange){
+            this.checkCurrentValueIntersection();
         }
     }
 
@@ -238,5 +238,26 @@ export class View{
         } else {
             return false;
         }        
+    }
+
+    checkCurrentValueIntersection(): void{
+        let lineSize = this.line.getLineSize();
+        let currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
+        let currentValueToSize = this.currentValueTo.getCurrentValueSize();
+        let maxSize = lineSize - currentValueFromSize - currentValueToSize;
+        let maxSizePercent = maxSize * 100 / lineSize;
+        let sumPosition = this.currentValueFrom.position + this.currentValueTo.position;
+        let precision = Math.pow(10, 10);
+        maxSizePercent = Math.round(maxSizePercent * precision) / precision;
+        sumPosition = Math.round(sumPosition * precision) / precision;
+        if(sumPosition >= maxSizePercent){
+            let shiftMiddlePosition = (100 - this.handleFrom.position - this.handleTo.position) / 2;
+            let currentValueFromPercent = currentValueFromSize * 100 / lineSize;
+            let currentValueToPercent = currentValueToSize * 100 / lineSize;
+            let currentPositionValueFrom = this.handleFrom.position + shiftMiddlePosition - currentValueFromPercent;
+            let currentPositionValueTo = this.handleTo.position + shiftMiddlePosition - currentValueToPercent;
+            this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
+            this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
+        }
     }
 }

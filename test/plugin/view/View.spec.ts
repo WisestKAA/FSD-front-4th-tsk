@@ -134,10 +134,10 @@ describe('Check View', () => {
             expect(beforSliderHandlePositionElem).not.toBe(afterSliderHandlePositionElem);
         });
     
-        it("The getLineWidth function should return the line width", () => {
-            view.line.$elem.attr("style", "width: 100px;");
-            expect(view.getLineWidth()).toBe(100);
-        });
+        // it("The getLineWidth function should return the line width", () => {
+        //     view.line.$elem.attr("style", "width: 100px;");
+        //     expect(view.getLineWidth()).toBe(100);
+        // });
 
         it("The setOrientation function must change orientation in all elements", () => {
             let mainDiv = view.slider.get(0).firstElementChild.classList.value;

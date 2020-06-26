@@ -15,7 +15,7 @@ export class SliderLine extends AbstractElement{
         this.$elem = this.isHorizontal ? $('<div>').addClass(StyleClasses.LINE) : $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINEV]);
     }
 
-    getLineWidth(): number{
-        return this.$elem.outerWidth();
+    getLineSize(): number{
+        return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
     }
 }

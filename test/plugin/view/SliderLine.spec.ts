@@ -25,8 +25,8 @@ describe('Check SliderLine', () => {
         expect(linev.$elem.hasClass(StyleClasses.LINEV)).toBeTrue();
     });
 
-    it("The getLineWidth function shuld return line width", () => {
+    it("The getLineSize function shuld return line width", () => {
         line.$elem.attr('style', 'width: 100px;')
-        expect(line.getLineWidth()).toBe(100);
+        expect(line.getLineSize()).toBe(100);
     });
 });
