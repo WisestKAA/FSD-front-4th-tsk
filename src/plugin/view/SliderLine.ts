@@ -1,5 +1,5 @@
 import { StyleClasses } from "./StyleClasses";
-import { AbstractElement } from "./AbstractElement";
+import { AbstractElement } from "./AbstractElement/AbstractElement";
 
 export class SliderLine extends AbstractElement{    
     $elem: JQuery<HTMLElement>;

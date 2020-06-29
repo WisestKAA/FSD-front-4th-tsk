@@ -2,12 +2,14 @@ import { StyleClasses } from "./StyleClasses";
 import { SliderLine } from "./SliderLine";
 import { SliderHandle } from "./SliderHandle";
 import { SliderWrapper } from "./SliderWrapper";
-import { CurrentValue } from "./CurrentValue";
+import { CurrentValue } from "./CurrentValue/CurrentValue";
 import { Presenter } from "../presenter/Presenter";
 import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
 import { SliderRange } from "./SliderRange";
-import { CurrentValueWrapper } from "./CurrentValueWrapper";
+import { CurrentValueWrapper } from "./CurrentValueWrapper/CurrentValueWrapper";
+import { ICurrentValue } from "./CurrentValue/ICurrentValue";
+import { ICurrentValueWrapper } from "./CurrentValueWrapper/ICurrentValueWrapper";
 
 export class View{
     presenter: Presenter;
@@ -17,9 +19,9 @@ export class View{
     handleTo: SliderHandle;
     mainWrapper: SliderWrapper;
     handleWrapper: SliderWrapper;
-    currentValueFrom: CurrentValue;
-    currentValueTo: CurrentValue;
-    currentValueWrapper: CurrentValueWrapper;
+    protected currentValueFrom: ICurrentValue;
+    protected currentValueTo: ICurrentValue;
+    currentValueWrapper: ICurrentValueWrapper;
     options: IViewOptions;
     range: SliderRange;
 
@@ -30,7 +32,7 @@ export class View{
         this.addEvents();
     }
 
-    protected init(elem: HTMLElement){        
+    protected init(elem: HTMLElement){
         this.buildCurrentValue(this.options.isHorizontal, this.options.isRange);
         this.buildLine(this.options.isHorizontal, this.options.isRangeLineEnabled);
         this.buildHandle(this.options.isHorizontal, this.options.isRange);
@@ -138,9 +140,9 @@ export class View{
 
     getCurrentValue(): number[] {
         let val = new Array(0,0);
-        val[0] = this.currentValueFrom.val;
+        val[0] = this.currentValueFrom.getCurrentValue();
         if(this.options.isRange){
-            val[1] = this.currentValueTo.val;
+            val[1] = this.currentValueTo.getCurrentValue();
         }
         return val;
     }
@@ -163,35 +165,16 @@ export class View{
         this.setRange(this.options.isRangeLineEnabled);        
     }
 
-    setCurrentValuePosition(position: number, direction: SliderDirection): void {
-        switch(direction){
-            case SliderDirection.LEFT:{
-                let maxPosition = this.getMaxHandlePosition();
-                let handlePercent = 100 - maxPosition;
-                let lineWidth = this.line.$elem.outerWidth();
-                this.currentValueFrom.setPosition(position, handlePercent, lineWidth);
-                break;
-            }
-            case SliderDirection.BOTTOM:{
-                this.currentValueFrom.setPosition(position);
-                break;
-            }
-            case SliderDirection.RIGHT:{
-                let maxPosition = this.getMaxHandlePosition();
-                let handlePercent = 100 - maxPosition;
-                let lineWidth = this.line.$elem.outerWidth();
-                this.currentValueTo.setPosition(position, handlePercent, lineWidth);
-                break;
-            }
-            case SliderDirection.TOP:{
-                this.currentValueTo.setPosition(position);
-                break;
-            }
-        }
-
-        if(this.options.isRange){
-            this.checkCurrentValueIntersection();
-        }
+    setCurrentValuePosition(position: number, direction: SliderDirection): void{
+        let handleToPosition = !this.options.isRange ? null : this.handleTo.position;        
+        this.currentValueWrapper.setCurrentValuePosition({
+            position: position,
+            direction: direction,
+            handleFromPosition: this.handleFrom.position,
+            handleToPosition: handleToPosition,
+            lineSize: this.line.getLineSize(),
+            maxHandlePosition: this.getMaxHandlePosition()
+        })
     }
 
     setOrientation(option: IViewOptions): void{
@@ -238,26 +221,5 @@ export class View{
         } else {
             return false;
         }        
-    }
-
-    checkCurrentValueIntersection(): void{
-        let lineSize = this.line.getLineSize();
-        let currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
-        let currentValueToSize = this.currentValueTo.getCurrentValueSize();
-        let maxSize = lineSize - currentValueFromSize - currentValueToSize;
-        let maxSizePercent = maxSize * 100 / lineSize;
-        let sumPosition = this.currentValueFrom.position + this.currentValueTo.position;
-        let precision = Math.pow(10, 10);
-        maxSizePercent = Math.round(maxSizePercent * precision) / precision;
-        sumPosition = Math.round(sumPosition * precision) / precision;
-        if(sumPosition >= maxSizePercent){
-            let shiftMiddlePosition = (100 - this.handleFrom.position - this.handleTo.position) / 2;
-            let currentValueFromPercent = currentValueFromSize * 100 / lineSize;
-            let currentValueToPercent = currentValueToSize * 100 / lineSize;
-            let currentPositionValueFrom = this.handleFrom.position + shiftMiddlePosition - currentValueFromPercent;
-            let currentPositionValueTo = this.handleTo.position + shiftMiddlePosition - currentValueToPercent;
-            this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
-            this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
-        }
     }
 }

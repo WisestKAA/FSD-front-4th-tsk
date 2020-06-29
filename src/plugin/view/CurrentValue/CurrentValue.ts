@@ -1,15 +1,16 @@
-import { AbstractElement } from "./AbstractElement";
-import { StyleClasses } from "./StyleClasses";
-import { SliderDirection } from "./SliderDirection";
+import { AbstractElement } from "../AbstractElement/AbstractElement";
+import { StyleClasses } from "../StyleClasses";
+import { SliderDirection } from "../SliderDirection";
+import { ICurrentValue } from "./ICurrentValue";
 
-export class CurrentValue extends AbstractElement {
+export class CurrentValue extends AbstractElement implements ICurrentValue{
     $elem: JQuery<HTMLElement>;
-    $text: JQuery<HTMLElement>;
-    $arrow: JQuery<HTMLElement>;
-    val: number;
-    isFrom: boolean;
-    isHorizontal: boolean;
-    position: number;
+    protected $text: JQuery<HTMLElement>;
+    protected $arrow: JQuery<HTMLElement>;
+    protected val: number;
+    protected isFrom: boolean;
+    protected isHorizontal: boolean;
+    protected position: number;
     
     constructor(isFrom: boolean, isHorizontal: boolean){
         super();
@@ -17,7 +18,7 @@ export class CurrentValue extends AbstractElement {
         this.isFrom = isFrom;
         this.isHorizontal = isHorizontal;    
         this.init();
-    }
+    }    
 
     protected init(): void {        
         this.$text = $("<div>").addClass(StyleClasses.CURRENTVALTEXT);
@@ -32,30 +33,38 @@ export class CurrentValue extends AbstractElement {
         this.$elem = $mainDiv;        
     }
 
-    setCurrentValue(currentValue: number): void{
+    public setCurrentValue(currentValue: number): void{
         this.$text.html(`${currentValue}`);
         this.val = currentValue;
     }
 
-    setPosition(position: number, handlePercent?: number, lineWidth?: number, isCorrect?: boolean): void{
+    public setPosition(position: number, handlePercent?: number, lineWidth?: number, isCorrect?: boolean): void{
         let correctPosition = this.isHorizontal && !isCorrect ? this.getCorrectPosition(position, handlePercent, lineWidth) : position;
         this.position = correctPosition;
         let direction = SliderDirection.getDiraction(this.isFrom, this.isHorizontal);
         this.$elem.attr("style", `${direction}: ${correctPosition}%;`);
     }
 
-    getCorrectPosition(position: number, handlePercent: number, lineWidth: number): number {
+    protected getCorrectPosition(position: number, handlePercent: number, lineWidth: number): number {
         let currentPercent = this.$elem.outerWidth() * 100 / lineWidth;
         let shiftPosition = (currentPercent - handlePercent) / 2;
         let currentPosition = position - shiftPosition;
         return currentPosition;
     }
 
-    getCurrentValueSize(): number{
+    public getCurrentValueSize(): number{
         if(this.isHorizontal){
             return this.$elem.outerWidth();
         } else {
             return this.$elem.outerHeight();
         }
     }
+
+    public getCurrentValue(): number{
+        return this.val;
+    }
+
+    public getCurrentValuePosition(): number {
+        return this.position;
+     }
 }

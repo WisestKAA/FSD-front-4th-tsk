@@ -1,4 +1,4 @@
-import { StyleClasses } from "./StyleClasses";
+import { StyleClasses } from "../StyleClasses";
 
 export abstract class AbstractElement{
     abstract $elem: JQuery<HTMLElement>;

@@ -1,4 +1,4 @@
-import { AbstractElement } from "./AbstractElement";
+import { AbstractElement } from "./AbstractElement/AbstractElement";
 import { StyleClasses } from "./StyleClasses";
 
 export class SliderRange extends AbstractElement {

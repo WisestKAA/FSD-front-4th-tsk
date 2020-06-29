@@ -1,4 +1,4 @@
-import { AbstractElement } from "./AbstractElement";
+import { AbstractElement } from "./AbstractElement/AbstractElement";
 import { StyleClasses } from "./StyleClasses";
 import { SliderLine } from "./SliderLine";
 import { LiteEvent } from "../LiteEvent/LiteEvent";
