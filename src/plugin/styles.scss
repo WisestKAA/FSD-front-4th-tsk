@@ -13,7 +13,9 @@
         flex-direction: row-reverse;
     }
 
-    &__wrapper{
+    &__wrapper,
+    &__main-wrapper,
+    &__handle-wrapper{
         width: 100%;
         position: relative;
         height: min-content;

@@ -1,9 +1,10 @@
-import { AbstractElement } from "./AbstractElement/AbstractElement";
-import { StyleClasses } from "./StyleClasses";
+import { AbstractElement } from "../AbstractElement/AbstractElement";
+import { StyleClasses } from "../StyleClasses";
+import { ISliderRange } from "./ISliderRange";
 
-export class SliderRange extends AbstractElement {
-    $elem: JQuery<HTMLElement>;
-    isHorizontal: boolean;
+export class SliderRange extends AbstractElement implements ISliderRange{
+    public $elem: JQuery<HTMLElement>;
+    protected isHorizontal: boolean;
 
     constructor(isHorizontal: boolean){
         super();
@@ -15,7 +16,7 @@ export class SliderRange extends AbstractElement {
         this.$elem = this.isHorizontal ? $('<div>').addClass(StyleClasses.RANGE) : $('<div>').addClass([StyleClasses.RANGE, StyleClasses.RANGEV]);
     }
 
-    changeRangeLineTwo(positionFrom: number, positionTo: number): void{
+    public changeRangeLineTwo(positionFrom: number, positionTo: number): void{
         let rangePosition = positionFrom;
         let rangeSize = 100 - positionTo - positionFrom;
         let direction = this.isHorizontal ? "left" : "bottom";
@@ -23,7 +24,7 @@ export class SliderRange extends AbstractElement {
         this.$elem.attr("style", `${direction}: ${rangePosition}%; ${wh}: ${rangeSize}%`);
     }
 
-    changeRangeLineOne(positionFrom: number, maxHandlePosition: number): void{
+    public changeRangeLineOne(positionFrom: number, maxHandlePosition: number): void{
         let size = (100 - maxHandlePosition) / 2 + positionFrom
         let direction = this.isHorizontal ? "left" : "bottom";
         let wh = this.isHorizontal ? "width" : "height";

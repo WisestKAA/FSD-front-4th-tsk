@@ -1,4 +1,4 @@
-import { SliderRange } from "../../../src/plugin/view/SliderRange";
+import { SliderRange } from "../../../src/plugin/view/SliderRange/SliderRange";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 
 describe("Check SliderRange", () => {

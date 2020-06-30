@@ -1,5 +1,5 @@
-import { SliderHandle } from "../../../src/plugin/view/SliderHandle";
-import { SliderLine } from "../../../src/plugin/view/SliderLine";
+import { SliderHandle } from "../../../src/plugin/view/SliderHandle/SliderHandle";
+import { SliderLine } from "../../../src/plugin/view/SliderLine/SliderLine";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 import '../../../src/plugin/simpleslider';
 import { SliderDirection } from "../../../src/plugin/view/SliderDirection";

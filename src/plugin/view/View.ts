@@ -1,24 +1,30 @@
 import { StyleClasses } from "./StyleClasses";
-import { SliderLine } from "./SliderLine";
-import { SliderHandle } from "./SliderHandle";
+import { SliderLine } from "./SliderLine/SliderLine";
+import { SliderHandle } from "./SliderHandle/SliderHandle";
 import { SliderWrapper } from "./SliderWrapper";
 import { CurrentValue } from "./CurrentValue/CurrentValue";
 import { Presenter } from "../presenter/Presenter";
 import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
-import { SliderRange } from "./SliderRange";
+import { SliderRange } from "./SliderRange/SliderRange";
 import { CurrentValueWrapper } from "./CurrentValueWrapper/CurrentValueWrapper";
 import { ICurrentValueWrapper } from "./CurrentValueWrapper/ICurrentValueWrapper";
+import { ISliderMainWrapper } from "./SliderMainWrapper/ISliderMainWrapper";
+import { ISliderLine } from "./SliderLine/ISliderLine";
+import { ISliderHandleWrapper } from "./SliderHandleWrapper/ISliderHandleWrapper";
+import { SliderHandleWrapper } from "./SliderHandleWrapper/SliderHandleWrapper";
+import { SliderMainWrapper } from "./SliderMainWrapper/SliderMainWrapper";
 
 export class View{
     presenter: Presenter;
     slider: JQuery<HTMLElement>;
-    line: SliderLine;
-    handleFrom: SliderHandle;
-    handleTo: SliderHandle;
-    mainWrapper: SliderWrapper;
-    handleWrapper: SliderWrapper;
+    //line: SliderLine;
+    //handleFrom: SliderHandle;
+    //handleTo: SliderHandle;
+    //mainWrapper: SliderWrapper;
+    //handleWrapper: SliderWrapper;
     currentValueWrapper: ICurrentValueWrapper;
+    mainWrapper: ISliderMainWrapper;
     options: IViewOptions;
     range: SliderRange;
 
@@ -31,62 +37,47 @@ export class View{
 
     protected init(elem: HTMLElement){
         this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isHorizontal, this.options.isRange);
-        this.buildLine(this.options.isHorizontal, this.options.isRangeLineEnabled);
-        this.buildHandle(this.options.isHorizontal, this.options.isRange);
+        this.mainWrapper = this.buildMainWrapper(
+            this.options.isHorizontal,
+            this.options.isRangeLineEnabled,
+            this.options.isRange 
+        );
         
-        this.mainWrapper = new SliderWrapper(this.options.isHorizontal);
         let $mainDiv = this.options.isHorizontal ? $('<div>').addClass(StyleClasses.SLIDER) :  $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERV]);
-        this.mainWrapper.$elem.append(this.line.$elem, this.handleWrapper.$elem);
-        let $header = this.buildHeader();
-        $mainDiv.append($header, this.mainWrapper.$elem);
+        $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
         this.slider = $(elem).append($mainDiv);
     }
 
-    buildHeader(): JQuery<HTMLElement>{
-        let $header = $('<div>').addClass(StyleClasses.HEADER);
-        if(!this.options.isVisibleCurrentValue){
-            $header.attr("style", "display: none;");
-        }
-        $header.append(this.currentValueWrapper.$elem);
-        return $header;
-    }
-
-    buildLine(isHorizontal: boolean, isRangeLineEnabled: boolean): void{
+    buildMainWrapper(isHorizontal: boolean, isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper{
+        let line: ISliderLine;
         if(isRangeLineEnabled){
-            this.line = new SliderLine(isHorizontal);
-            this.range = new SliderRange(isHorizontal);
-            this.line.$elem.append(this.range.$elem);
+            let range = new SliderRange(isHorizontal);
+            line = new SliderLine(isHorizontal, range);
         } else {
-            this.line = new SliderLine(isHorizontal);
+            line = new SliderLine(isHorizontal);
         }
-    }
-
-    buildHandle(isHorizontal: boolean, isRange: boolean): void{
-        this.handleWrapper = new SliderWrapper(isHorizontal);
+        
+        let handleWrapper: ISliderHandleWrapper;
+        let handleFrom = new SliderHandle({
+            isHorizontal: isHorizontal,
+            isRange: isRange,
+            sliderLine: line,
+            isFrom: true
+        });
         if(isRange){
-            this.handleFrom = new SliderHandle({
+            let handleTo = new SliderHandle({
                 isHorizontal: isHorizontal,
-                sliderLine: this.line,
                 isRange: isRange,
-                isFrom: true
-            });
-            this.handleTo = new SliderHandle({
-                isHorizontal: isHorizontal,
-                sliderLine: this.line,
-                isRange: isRange,
+                sliderLine: line,
                 isFrom: false
             });
-            this.handleWrapper.$elem.append(this.handleFrom.$elem, this.handleTo.$elem);
+            handleWrapper = new SliderHandleWrapper(isHorizontal, handleFrom, handleTo);
         } else {
-            this.handleFrom = new SliderHandle({
-                sliderLine: this.line, 
-                isHorizontal: isHorizontal, 
-                isRange: isRange,
-                isFrom: true
-            });
-            this.handleWrapper.$elem.append(this.handleFrom.$elem);
-        }
-    }
+            handleWrapper = new SliderHandleWrapper(isHorizontal, handleFrom);
+        } 
+
+        return new SliderMainWrapper(isHorizontal, line, handleWrapper);
+    }    
 
     buildCurrentValueWrapper(isHorizontal: boolean, isRange: boolean): ICurrentValueWrapper{
         let currentValueFrom = new CurrentValue(true, isHorizontal);
@@ -101,33 +92,36 @@ export class View{
     }
 
     addEvents(): void {
-        let that = this;
-        this.handleFrom.positionChangedEvent.on((data) => {
-            that.sliderHandleChanged(data);
-            that.setCurrentValuePosition(that.handleFrom.position, data);
+        this.mainWrapper.handlePositionChangedToCurrentValueEvent.on((options) =>{
+            this.currentValueWrapper.setCurrentValuePosition(options);
         });
-        if(this.options.isRange){
-            this.handleTo.positionChangedEvent.on((data) => {
-                that.sliderHandleChanged(data);
-                that.setCurrentValuePosition(that.handleTo.position, data);
-            });
-        }
+        this.mainWrapper.handlePositionChangedToPresenterEvent.on((direction) => {
+            this.presenter.sliderHandleChangedPosition(direction);
+        });
+        
+        // let that = this;
+        // this.handleFrom.positionChangedEvent.on((data) => {
+        //     that.sliderHandleChanged(data);
+        //     that.setCurrentValuePosition(that.handleFrom.getPosition(), data);
+        // });
+        // if(this.options.isRange){
+        //     this.handleTo.positionChangedEvent.on((data) => {
+        //         that.sliderHandleChanged(data);
+        //         that.setCurrentValuePosition(that.handleTo.getPosition(), data);
+        //     });
+        // }
     }
 
-    sliderHandleChanged(direction: SliderDirection): void {
-        this.setRange(this.options.isRangeLineEnabled);
-        if(this.options.isRange){
-            this.checkHandleIntersection(this.handleFrom.position, this.handleTo.position, direction);
-        }  
-        this.presenter.sliderHandleChangedPosition(direction);
-    }
+    // sliderHandleChanged(direction: SliderDirection): void {
+    //     this.setRange(this.options.isRangeLineEnabled);
+    //     if(this.options.isRange){
+    //         this.checkHandleIntersection(this.handleFrom.getPosition(), this.handleTo.getPosition(), direction);
+    //     }  
+    //     this.presenter.sliderHandleChangedPosition(direction);
+    // }
 
     getSliderHandlePosition(direction: SliderDirection): number{
-        if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
-            return this.handleFrom.position;
-        } else {
-            return this.handleTo.position;
-        }        
+        return this.mainWrapper.getSliderHandlePosition(direction);    
     }
 
     setCurrentValue(currentValue: number[]): void {
@@ -139,78 +133,52 @@ export class View{
     }
 
     getMaxHandlePosition(): number{
-        return this.handleFrom.getSliderHandleMaxPosition();
-    }
-
-    getReadySlider(): JQuery<HTMLElement>{
-        return this.slider;
+        return this.mainWrapper.getMaxHandlePosition();
     }
 
     setHandlePosition(position: number, direction: SliderDirection): void {
-        if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
-            this.handleFrom.setCurrentPosition(position, direction);
-        } else {
-            this.handleTo.setCurrentPosition(position, direction);
-        }
-        this.setCurrentValuePosition(position, direction);
-        this.setRange(this.options.isRangeLineEnabled);        
+        this.mainWrapper.setHandlePosition(position, direction);
+        
+        
+        // if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
+        //     this.handleFrom.setCurrentPosition(position, direction);
+        // } else {
+        //     this.handleTo.setCurrentPosition(position, direction);
+        // }
+        // this.setCurrentValuePosition(position, direction); // не убирать!!!!
+        // this.setRange(this.options.isRangeLineEnabled);  // не убирать!!!!      
     }
 
     setCurrentValuePosition(position: number, direction: SliderDirection): void{
-        let handleToPosition = !this.options.isRange ? null : this.handleTo.position;        
         this.currentValueWrapper.setCurrentValuePosition({
             position: position,
             direction: direction,
-            handleFromPosition: this.handleFrom.position,
-            handleToPosition: handleToPosition,
-            lineSize: this.line.getLineSize(),
+            handleFromPosition: this.mainWrapper.getHandleFromPosition(),
+            handleToPosition: this.mainWrapper.getHandleToPosition(),
+            lineSize: this.mainWrapper.getLineSize(),
             maxHandlePosition: this.getMaxHandlePosition()
         })
     }
 
     setOrientation(option: IViewOptions): void{
-        let mainDiv = this.slider.get(0).firstElementChild;
-        if(option.isHorizontal){
-            mainDiv.classList.add(StyleClasses.SLIDER)
-        } else {
-            mainDiv.classList.add(StyleClasses.SLIDER, StyleClasses.SLIDERV)
-        }        
-        this.line.changeOrientation(option.isHorizontal, StyleClasses.LINE, StyleClasses.LINEV);
-        this.mainWrapper.changeOrientation(option.isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
-        this.handleWrapper.changeOrientation(option.isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
-        this.handleFrom.changeOrientation(option.isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
-        this.handleFrom.isHorizontal = option.isHorizontal;
-        if(option.isRange){
-            this.handleTo.changeOrientation(option.isRange, StyleClasses.HANDLE, StyleClasses.HANDLEV);
-            this.handleTo.isHorizontal = option.isHorizontal;
-        }
-        if(option.isRangeLineEnabled){
-            this.range.changeOrientation(option.isHorizontal, StyleClasses.RANGE, StyleClasses.RANGEV);
-            this.range.isHorizontal = option.isHorizontal;
-        }
-    } 
-    
-    setRange(isRangeLineEnabled: boolean): void{
-        if(isRangeLineEnabled){
-            if(this.options.isRange){
-                this.range.changeRangeLineTwo(this.handleFrom.position, this.handleTo.position);
-            } else {
-                let maxHandlePosition = this.getMaxHandlePosition();
-                this.range.changeRangeLineOne(this.handleFrom.position, maxHandlePosition);
-            }            
-        } 
-    }
-    
-    checkHandleIntersection(positionFrom: number, positionTo: number, direction: SliderDirection): boolean{
-        let maxPos = this.getMaxHandlePosition();
-        if(positionFrom > maxPos - positionTo){
-            if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
-                this.setHandlePosition(maxPos - positionTo, direction);
-            } else {
-                this.setHandlePosition(maxPos - positionFrom, direction);
-            }
-        } else {
-            return false;
-        }        
+        // let mainDiv = this.slider.get(0).firstElementChild;
+        // if(option.isHorizontal){
+        //     mainDiv.classList.add(StyleClasses.SLIDER)
+        // } else {
+        //     mainDiv.classList.add(StyleClasses.SLIDER, StyleClasses.SLIDERV)
+        // }        
+        // this.line.changeOrientation(option.isHorizontal, StyleClasses.LINE, StyleClasses.LINEV);
+        // this.mainWrapper.changeOrientation(option.isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
+        // this.handleWrapper.changeOrientation(option.isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
+        // this.handleFrom.changeOrientation(option.isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
+        // //this.handleFrom.isHorizontal = option.isHorizontal;
+        // if(option.isRange){
+        //     this.handleTo.changeOrientation(option.isRange, StyleClasses.HANDLE, StyleClasses.HANDLEV);
+        //     //this.handleTo.isHorizontal = option.isHorizontal;
+        // }
+        // if(option.isRangeLineEnabled){
+        //     this.range.changeOrientation(option.isHorizontal, StyleClasses.RANGE, StyleClasses.RANGEV);
+        //     //this.range.isHorizontal = option.isHorizontal;
+        // }
     }
 }
