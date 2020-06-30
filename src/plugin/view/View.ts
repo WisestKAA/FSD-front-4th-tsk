@@ -8,7 +8,6 @@ import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
 import { SliderRange } from "./SliderRange";
 import { CurrentValueWrapper } from "./CurrentValueWrapper/CurrentValueWrapper";
-import { ICurrentValue } from "./CurrentValue/ICurrentValue";
 import { ICurrentValueWrapper } from "./CurrentValueWrapper/ICurrentValueWrapper";
 
 export class View{
@@ -19,8 +18,6 @@ export class View{
     handleTo: SliderHandle;
     mainWrapper: SliderWrapper;
     handleWrapper: SliderWrapper;
-    // protected currentValueFrom: ICurrentValue;
-    // protected currentValueTo: ICurrentValue;
     currentValueWrapper: ICurrentValueWrapper;
     options: IViewOptions;
     range: SliderRange;
@@ -33,7 +30,7 @@ export class View{
     }
 
     protected init(elem: HTMLElement){
-        this.buildCurrentValue(this.options.isHorizontal, this.options.isRange);
+        this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isHorizontal, this.options.isRange);
         this.buildLine(this.options.isHorizontal, this.options.isRangeLineEnabled);
         this.buildHandle(this.options.isHorizontal, this.options.isRange);
         
@@ -91,14 +88,16 @@ export class View{
         }
     }
 
-    buildCurrentValue(isHorizontal: boolean, isRange: boolean): void{
+    buildCurrentValueWrapper(isHorizontal: boolean, isRange: boolean): ICurrentValueWrapper{
         let currentValueFrom = new CurrentValue(true, isHorizontal);
+        let currentValueWrapper: ICurrentValueWrapper;
         if(isRange){
             let currentValueTo = new CurrentValue(false, isHorizontal);
-            this.currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom, currentValueTo);
+            currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom, currentValueTo);
         } else {
-            this.currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom);
+            currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom);
         }
+        return currentValueWrapper;
     }
 
     addEvents(): void {
@@ -147,7 +146,7 @@ export class View{
         return this.slider;
     }
 
-    setCurrentPosition(position: number, direction: SliderDirection): void {
+    setHandlePosition(position: number, direction: SliderDirection): void {
         if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
             this.handleFrom.setCurrentPosition(position, direction);
         } else {
@@ -206,9 +205,9 @@ export class View{
         let maxPos = this.getMaxHandlePosition();
         if(positionFrom > maxPos - positionTo){
             if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
-                this.setCurrentPosition(maxPos - positionTo, direction);
+                this.setHandlePosition(maxPos - positionTo, direction);
             } else {
-                this.setCurrentPosition(maxPos - positionFrom, direction);
+                this.setHandlePosition(maxPos - positionFrom, direction);
             }
         } else {
             return false;

@@ -127,7 +127,7 @@ export class Presenter{
     setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
         let position = (100*(correctValue - this.model.options.minVal))/(this.model.options.maxVal-this.model.options.minVal);
         position = this.getCorrectPosition(position, this.view.getMaxHandlePosition(), true, direction);
-        this.view.setCurrentPosition(position, direction);
+        this.view.setHandlePosition(position, direction);
     }
 
     @bind 
