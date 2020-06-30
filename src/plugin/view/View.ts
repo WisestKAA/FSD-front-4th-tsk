@@ -19,8 +19,8 @@ export class View{
     handleTo: SliderHandle;
     mainWrapper: SliderWrapper;
     handleWrapper: SliderWrapper;
-    protected currentValueFrom: ICurrentValue;
-    protected currentValueTo: ICurrentValue;
+    // protected currentValueFrom: ICurrentValue;
+    // protected currentValueTo: ICurrentValue;
     currentValueWrapper: ICurrentValueWrapper;
     options: IViewOptions;
     range: SliderRange;
@@ -92,12 +92,12 @@ export class View{
     }
 
     buildCurrentValue(isHorizontal: boolean, isRange: boolean): void{
-        this.currentValueFrom = new CurrentValue(true, isHorizontal);
+        let currentValueFrom = new CurrentValue(true, isHorizontal);
         if(isRange){
-            this.currentValueTo = new CurrentValue(false, isHorizontal);
-            this.currentValueWrapper = new CurrentValueWrapper(isHorizontal, this.currentValueFrom, this.currentValueTo);
+            let currentValueTo = new CurrentValue(false, isHorizontal);
+            this.currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom, currentValueTo);
         } else {
-            this.currentValueWrapper = new CurrentValueWrapper(isHorizontal, this.currentValueFrom);
+            this.currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom);
         }
     }
 
@@ -132,19 +132,11 @@ export class View{
     }
 
     setCurrentValue(currentValue: number[]): void {
-        this.currentValueFrom.setCurrentValue(currentValue[0]);
-        if(this.options.isRange){
-            this.currentValueTo.setCurrentValue(currentValue[1]);
-        }
+        this.currentValueWrapper.setCurrentValue(currentValue);
     }
 
     getCurrentValue(): number[] {
-        let val = new Array(0,0);
-        val[0] = this.currentValueFrom.getCurrentValue();
-        if(this.options.isRange){
-            val[1] = this.currentValueTo.getCurrentValue();
-        }
-        return val;
+        return this.currentValueWrapper.getCurrentValue();
     }
 
     getMaxHandlePosition(): number{

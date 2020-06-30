@@ -3,5 +3,6 @@ import { ISetCurrentValuePositionOptions } from "./ISetCurrentValuePositionOptio
 
 export interface ICurrentValueWrapper extends IElement{
     setCurrentValuePosition(setCurrentValuePositionOptions: ISetCurrentValuePositionOptions): void;
-    checkCurrentValueIntersection(lineSize: number, handleFromPosition: number, handleToPosition: number): void;
+    setCurrentValue(currentValue: number[]): void;
+    getCurrentValue(): number[];
 }

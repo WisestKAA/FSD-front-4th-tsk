@@ -6,10 +6,10 @@ import { ISetCurrentValuePositionOptions } from "./ISetCurrentValuePositionOptio
 
 export class CurrentValueWrapper extends AbstractElement{
     $elem: JQuery<HTMLElement>;
-    currentValueFrom: ICurrentValue;
-    currentValueTo: ICurrentValue;
-    isHorizontal: boolean;
-    isRange: boolean;
+    protected currentValueFrom: ICurrentValue;
+    protected currentValueTo: ICurrentValue;
+    protected isHorizontal: boolean;
+    protected isRange: boolean;
 
     constructor(isHorizontal: boolean, valFrom: ICurrentValue, valTo?: ICurrentValue){
         super();
@@ -35,7 +35,7 @@ export class CurrentValueWrapper extends AbstractElement{
         this.$elem = $wrapper;
     }
 
-    setCurrentValuePosition(setCurrentValuePositionOptions: ISetCurrentValuePositionOptions): void {
+    public setCurrentValuePosition(setCurrentValuePositionOptions: ISetCurrentValuePositionOptions): void {
         switch(setCurrentValuePositionOptions.direction){
             case SliderDirection.LEFT:{
                 let maxPosition = setCurrentValuePositionOptions.maxHandlePosition;
@@ -68,7 +68,7 @@ export class CurrentValueWrapper extends AbstractElement{
         }
     }
 
-    checkCurrentValueIntersection(lineSize: number, handleFromPosition: number, handleToPosition: number): void{
+    protected checkCurrentValueIntersection(lineSize: number, handleFromPosition: number, handleToPosition: number): void{
         let currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
         let currentValueToSize = this.currentValueTo.getCurrentValueSize();
         let maxSize = lineSize - currentValueFromSize - currentValueToSize;
@@ -86,5 +86,21 @@ export class CurrentValueWrapper extends AbstractElement{
             this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
             this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
         }
+    }
+
+    public setCurrentValue(currentValue: number[]): void{
+        this.currentValueFrom.setCurrentValue(currentValue[0]);
+        if(this.isRange){
+            this.currentValueTo.setCurrentValue(currentValue[1]);
+        }
+    }
+
+    public getCurrentValue(): number[]{
+        let val = new Array();
+        val.push(this.currentValueFrom.getCurrentValue());
+        if(this.isRange){
+            val.push(this.currentValueTo.getCurrentValue());
+        }
+        return val;
     }
 }
