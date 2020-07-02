@@ -87,20 +87,15 @@ export class SliderHandleWrapper extends AbstractElement implements ISliderHandl
 
     protected onHandlePositionChangedTriggerToCurrentValue(direction: SliderDirection, position: number): void{  
         let options: ISetCurrentValuePositionOptions;
-        if(this.isRange){
-            options = {
-                direction: direction,
-                position: position,
-                handleFromPosition: this.handleFrom.getPosition(),
-                handleToPosition: this.handleTo.getPosition(),
-                maxHandlePosition: this.getMaxHandlePosition()
-            }
-        } else {
-            options = {
-                direction: direction,
-                position: position                
-            }
+        options = {direction: direction, position: position};        
+        if(SliderDirection.isFrom(direction)){
+            options.maxHandlePosition = this.getMaxHandlePosition();            
         }
+        if(this.isRange){
+            options.handleFromPosition = this.handleFrom.getPosition();
+            options.handleToPosition = this.handleTo.getPosition();
+        }
+
         this.onHandlePositionChangedToCurrentValue.trigger(options);
     }
 

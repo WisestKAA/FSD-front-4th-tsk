@@ -39,7 +39,7 @@ export class SliderMainWrapper extends AbstractElement implements ISliderMainWra
             this.handlePositionChangedToRange(options);
         });
         this.sliderHandleWrapper.handlePositionChangedToCurrentValueEvent.on((options) => {
-            options = $.extend(options, {lineSize: this.getLineSize()} as ISetCurrentValuePositionOptions)
+            options.lineSize = this.getLineSize();
             this.handlePositionChangedToCurrentValue(options);
         });
         this.sliderHandleWrapper.handlePositionChangedToPresenterEvent.on((direction) => {
