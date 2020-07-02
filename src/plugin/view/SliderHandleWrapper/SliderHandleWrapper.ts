@@ -5,8 +5,6 @@ import { ISliderHandle } from "../SliderHandle/ISliderHandle";
 import { SliderDirection } from "../SliderDirection";
 import { LiteEvent } from "../../LiteEvent/LiteEvent";
 import { ILiteEvent } from "../../LiteEvent/ILiteEvent";
-import { ISetRangeOptions } from "../SliderLine/ISetRangeOptions";
-import { ISetCurrentValuePositionOptions } from "../CurrentValueWrapper/ISetCurrentValuePositionOptions";
 
 export class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrapper{
     public $elem: JQuery<HTMLElement>;
@@ -14,9 +12,7 @@ export class SliderHandleWrapper extends AbstractElement implements ISliderHandl
     protected handleFrom: ISliderHandle;
     protected handleTo: ISliderHandle;
     protected isRange: boolean;
-    protected onHandlePositionChangedToRange: LiteEvent<ISetRangeOptions>;
-    protected onHandlePositionChangedToCurrentValue: LiteEvent<ISetCurrentValuePositionOptions>;
-    protected onHandlePositionChangedToPresenter: LiteEvent<SliderDirection>;
+    protected onHandlePositionChanged: LiteEvent<SliderDirection>;
     
     constructor(isHorizontal: boolean, handleFrom: ISliderHandle, handleTo?: ISliderHandle){
         super();
@@ -40,21 +36,19 @@ export class SliderHandleWrapper extends AbstractElement implements ISliderHandl
         } else {
             this.$elem.append(this.handleFrom.$elem);
         }
-
-        this.onHandlePositionChangedToRange = new LiteEvent<ISetRangeOptions>();
-        this.onHandlePositionChangedToCurrentValue = new LiteEvent<ISetCurrentValuePositionOptions>();
-        this.onHandlePositionChangedToPresenter = new LiteEvent<SliderDirection>();
+        
+        this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
     }
 
     protected addEvents(): void{
         this.handleFrom.positionChangedEvent.on((direction) => {
             this.sliderHandlePositionChanged(direction); 
-            this.onHandlePositionChangedTriggerToCurrentValue(direction, this.handleFrom.getPosition()); 
+            this.onHandlePositionChanged.trigger(direction);
         });
         if(this.isRange){
             this.handleTo.positionChangedEvent.on((direction) => {
                 this.sliderHandlePositionChanged(direction);
-                this.onHandlePositionChangedTriggerToCurrentValue(direction, this.handleTo.getPosition());
+                this.onHandlePositionChanged.trigger(direction);
             });
         }
     }
@@ -63,40 +57,6 @@ export class SliderHandleWrapper extends AbstractElement implements ISliderHandl
         if(this.isRange){
             this.checkHandleIntersection(this.handleFrom.getPosition(), this.handleTo.getPosition(), direction);
         }
-        this.onHandlePositionChangedTriggerToRange();
-        this.onHandlePositionChangedToPresenter.trigger(direction);
-    }
-
-    protected onHandlePositionChangedTriggerToRange(): void{        
-        let options: ISetRangeOptions;
-        if(this.isRange){
-            options = {
-                isRange: this.isRange, 
-                handleFromPosition: this.handleFrom.getPosition(),
-                handleToPosition: this.handleTo.getPosition() 
-            }
-        } else {
-            options = {
-                isRange: this.isRange, 
-                handleFromPosition: this.handleFrom.getPosition(), 
-                maxHandlePosition: this.getMaxHandlePosition()
-            };
-        }
-        this.onHandlePositionChangedToRange.trigger(options);
-    }
-
-    protected onHandlePositionChangedTriggerToCurrentValue(direction: SliderDirection, position: number): void{  
-        let options: ISetCurrentValuePositionOptions;
-        options = {direction: direction, position: position};        
-        if(SliderDirection.isFrom(direction)){
-            options.maxHandlePosition = this.getMaxHandlePosition();            
-        }
-        if(this.isRange){
-            options.handleFromPosition = this.handleFrom.getPosition();
-            options.handleToPosition = this.handleTo.getPosition();
-        }
-
-        this.onHandlePositionChangedToCurrentValue.trigger(options);
     }
 
     protected checkHandleIntersection(positionFrom: number, positionTo: number, direction: SliderDirection): boolean{
@@ -127,9 +87,8 @@ export class SliderHandleWrapper extends AbstractElement implements ISliderHandl
             this.handleFrom.setCurrentPosition(position, direction);
         } else {
             this.handleTo.setCurrentPosition(position, direction);
-        }      
-        this.onHandlePositionChangedTriggerToCurrentValue(direction, position);
-        this.onHandlePositionChangedTriggerToRange();
+        } 
+        this.onHandlePositionChanged.trigger(direction);
     }
 
     public getSliderHandlePosition(direction: SliderDirection): number{
@@ -148,9 +107,9 @@ export class SliderHandleWrapper extends AbstractElement implements ISliderHandl
         return !this.isRange ? null : this.handleTo.getPosition();
     }
 
-    public get handlePositionChangedToRangeEvent(): ILiteEvent<ISetRangeOptions> {return this.onHandlePositionChangedToRange.expose();}
+    public getIsRange(): boolean{
+        return this.isRange;
+    }
 
-    public get handlePositionChangedToCurrentValueEvent(): ILiteEvent<ISetCurrentValuePositionOptions> {return this.onHandlePositionChangedToCurrentValue.expose();}
-
-    public get handlePositionChangedToPresenterEvent(): ILiteEvent<SliderDirection> {return this.onHandlePositionChangedToPresenter.expose()}
+    public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {return this.onHandlePositionChanged.expose()}
 }

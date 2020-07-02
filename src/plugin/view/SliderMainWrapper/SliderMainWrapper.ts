@@ -6,7 +6,6 @@ import { ISliderHandleWrapper } from "../SliderHandleWrapper/ISliderHandleWrappe
 import { LiteEvent } from "../../LiteEvent/LiteEvent";
 import { ILiteEvent } from "../../LiteEvent/ILiteEvent";
 import { ISetRangeOptions } from "../SliderLine/ISetRangeOptions";
-import { ISetCurrentValuePositionOptions } from "../CurrentValueWrapper/ISetCurrentValuePositionOptions";
 import { SliderDirection } from "../SliderDirection";
 
 export class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper{
@@ -14,8 +13,7 @@ export class SliderMainWrapper extends AbstractElement implements ISliderMainWra
     protected isHorizontal: boolean;
     protected sliderLine: ISliderLine;
     protected sliderHandleWrapper: ISliderHandleWrapper;
-    protected onHandlePositionChangedToCurrentValue: LiteEvent<ISetCurrentValuePositionOptions>;
-    protected onHandlePositionChangedToPresenter: LiteEvent<SliderDirection>;
+    protected onHandlePositionChanged: LiteEvent<SliderDirection>;
 
     constructor(isHorizontal: boolean, sliderLine: ISliderLine, sliderHandleWrapper: ISliderHandleWrapper){
         super();
@@ -30,33 +28,33 @@ export class SliderMainWrapper extends AbstractElement implements ISliderMainWra
         this.$elem = $('<div>');
         this.changeOrientation(this.isHorizontal, StyleClasses.MAINWRAPPER, StyleClasses.MAINWRAPPERV);
         this.$elem.append([this.sliderLine.$elem, this.sliderHandleWrapper.$elem])
-        this.onHandlePositionChangedToCurrentValue = new LiteEvent<ISetCurrentValuePositionOptions>();
-        this.onHandlePositionChangedToPresenter = new LiteEvent<SliderDirection>();
+        this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
     }
 
     protected addEvents(): void{
-        this.sliderHandleWrapper.handlePositionChangedToRangeEvent.on((options) => {
-            this.handlePositionChangedToRange(options);
-        });
-        this.sliderHandleWrapper.handlePositionChangedToCurrentValueEvent.on((options) => {
-            options.lineSize = this.getLineSize();
-            this.handlePositionChangedToCurrentValue(options);
-        });
-        this.sliderHandleWrapper.handlePositionChangedToPresenterEvent.on((direction) => {
-            this.handlePositionChangedToPresenter(direction);
+        this.sliderHandleWrapper.handlePositionChangedEvent.on((direction) => {
+            this.setRange();
+            this.onHandlePositionChanged.trigger(direction);
         });
     }
 
-    protected handlePositionChangedToRange(options: ISetRangeOptions): void{
+    protected setRange(): void{
+        let options: ISetRangeOptions;
+        let isRange = this.sliderHandleWrapper.getIsRange();
+        if(isRange){
+            options = {
+                isRange: isRange, 
+                handleFromPosition: this.getHandleFromPosition(),
+                handleToPosition: this.getHandleToPosition() 
+            }
+        } else {
+            options = {
+                isRange: isRange, 
+                handleFromPosition: this.getHandleFromPosition(), 
+                maxHandlePosition: this.getMaxHandlePosition()
+            };
+        }
         this.sliderLine.setRange(options);
-    }
-
-    protected handlePositionChangedToCurrentValue(options: ISetCurrentValuePositionOptions): void{
-        this.onHandlePositionChangedToCurrentValue.trigger(options);
-    }
-
-    protected handlePositionChangedToPresenter(direction: SliderDirection){
-        this.onHandlePositionChangedToPresenter.trigger(direction);
     }
 
     public getSliderHandlePosition(direction: SliderDirection): number{
@@ -82,8 +80,6 @@ export class SliderMainWrapper extends AbstractElement implements ISliderMainWra
     public getLineSize(): number{
         return this.sliderLine.getLineSize();
     }
-    
-    public get handlePositionChangedToCurrentValueEvent(): ILiteEvent<ISetCurrentValuePositionOptions> {return this.onHandlePositionChangedToCurrentValue.expose();}
 
-    public get handlePositionChangedToPresenterEvent(): ILiteEvent<SliderDirection> {return this.onHandlePositionChangedToPresenter.expose();}
+    public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {return this.onHandlePositionChanged.expose();}
 }

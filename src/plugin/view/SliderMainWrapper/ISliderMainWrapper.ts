@@ -1,6 +1,5 @@
 import { IElement } from "../AbstractElement/IElement";
 import { ILiteEvent } from "../../LiteEvent/ILiteEvent";
-import { ISetCurrentValuePositionOptions } from "../CurrentValueWrapper/ISetCurrentValuePositionOptions";
 import { SliderDirection } from "../SliderDirection";
 
 export interface ISliderMainWrapper extends IElement{
@@ -10,6 +9,5 @@ export interface ISliderMainWrapper extends IElement{
     getHandleFromPosition(): number;
     getHandleToPosition(): number | null;
     getLineSize(): number;
-    handlePositionChangedToCurrentValueEvent: ILiteEvent<ISetCurrentValuePositionOptions>;
-    handlePositionChangedToPresenterEvent: ILiteEvent<SliderDirection>;
+    handlePositionChangedEvent: ILiteEvent<SliderDirection>;
 }

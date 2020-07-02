@@ -1,7 +1,6 @@
 import { StyleClasses } from "./StyleClasses";
 import { SliderLine } from "./SliderLine/SliderLine";
 import { SliderHandle } from "./SliderHandle/SliderHandle";
-import { SliderWrapper } from "./SliderWrapper";
 import { CurrentValue } from "./CurrentValue/CurrentValue";
 import { Presenter } from "../presenter/Presenter";
 import { IViewOptions } from "./IViewOptions";
@@ -18,11 +17,6 @@ import { SliderMainWrapper } from "./SliderMainWrapper/SliderMainWrapper";
 export class View{
     presenter: Presenter;
     slider: JQuery<HTMLElement>;
-    //line: SliderLine;
-    //handleFrom: SliderHandle;
-    //handleTo: SliderHandle;
-    //mainWrapper: SliderWrapper;
-    //handleWrapper: SliderWrapper;
     currentValueWrapper: ICurrentValueWrapper;
     mainWrapper: ISliderMainWrapper;
     options: IViewOptions;
@@ -92,33 +86,11 @@ export class View{
     }
 
     addEvents(): void {
-        this.mainWrapper.handlePositionChangedToCurrentValueEvent.on((options) =>{
-            this.currentValueWrapper.setCurrentValuePosition(options);
-        });
-        this.mainWrapper.handlePositionChangedToPresenterEvent.on((direction) => {
+        this.mainWrapper.handlePositionChangedEvent.on((direction) => {
+            this.setCurrentValuePosition(direction);
             this.presenter.sliderHandleChangedPosition(direction);
         });
-        
-        // let that = this;
-        // this.handleFrom.positionChangedEvent.on((data) => {
-        //     that.sliderHandleChanged(data);
-        //     that.setCurrentValuePosition(that.handleFrom.getPosition(), data);
-        // });
-        // if(this.options.isRange){
-        //     this.handleTo.positionChangedEvent.on((data) => {
-        //         that.sliderHandleChanged(data);
-        //         that.setCurrentValuePosition(that.handleTo.getPosition(), data);
-        //     });
-        // }
     }
-
-    // sliderHandleChanged(direction: SliderDirection): void {
-    //     this.setRange(this.options.isRangeLineEnabled);
-    //     if(this.options.isRange){
-    //         this.checkHandleIntersection(this.handleFrom.getPosition(), this.handleTo.getPosition(), direction);
-    //     }  
-    //     this.presenter.sliderHandleChangedPosition(direction);
-    // }
 
     getSliderHandlePosition(direction: SliderDirection): number{
         return this.mainWrapper.getSliderHandlePosition(direction);    
@@ -137,19 +109,12 @@ export class View{
     }
 
     setHandlePosition(position: number, direction: SliderDirection): void {
-        this.mainWrapper.setHandlePosition(position, direction);
-        
-        
-        // if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
-        //     this.handleFrom.setCurrentPosition(position, direction);
-        // } else {
-        //     this.handleTo.setCurrentPosition(position, direction);
-        // }
-        // this.setCurrentValuePosition(position, direction); // не убирать!!!!
-        // this.setRange(this.options.isRangeLineEnabled);  // не убирать!!!!      
+        this.mainWrapper.setHandlePosition(position, direction);    
     }
 
-    setCurrentValuePosition(position: number, direction: SliderDirection): void{
+    setCurrentValuePosition(direction: SliderDirection): void{
+        let position = SliderDirection.isFrom(direction) ? 
+            this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
         this.currentValueWrapper.setCurrentValuePosition({
             position: position,
             direction: direction,
