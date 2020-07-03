@@ -1,5 +1,5 @@
-import { ISliderOptions } from'./model/ISliderOptions';
 import { Presenter } from './presenter/Presenter';
+import { ISliderSettings } from './model/ISliderSettings';
 
 
 declare global {
@@ -8,17 +8,17 @@ declare global {
     }
     interface JQuery {
         SimpleSlider: (
-            options?: ISliderOptions | "setNewOptions" | "getOptions",
-            additionalOptions?: ISliderOptions | Function
+            options?: ISliderSettings | "setNewOptions" | "getOptions",
+            additionalOptions?: ISliderSettings | Function
         ) => JQuery<Element> | JQuery<Object>;
     }
 }
 
 ;(function init($: JQueryStatic){
-    $.fn.SimpleSlider = function start(options?, additionalOptions?: ISliderOptions){ 
+    $.fn.SimpleSlider = function start(options?, additionalOptions?: ISliderSettings){ 
         return this.map((i: number, elem: HTMLElement) => {
             if(typeof options === 'object' || !options){
-                const presenter = new Presenter(elem, options as ISliderOptions);
+                const presenter = new Presenter(elem, options as ISliderSettings);
                 this.data('presenter', presenter);
                 return this;
             }

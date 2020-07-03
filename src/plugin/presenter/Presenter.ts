@@ -1,40 +1,44 @@
 import bind from 'bind-decorator';
 import { Model } from "../model/Model";
 import { View } from "../view/View";
-import { ISliderOptions } from "../model/ISliderOptions";
 import { SliderDirection } from "../view/SliderDirection";
 import { IView } from '../view/IView';
+import { IPresenter } from './IPresenter';
+import { ISliderSettings } from '../model/ISliderSettings';
+import { IModel } from '../model/IModel';
 
-export class Presenter{
-    protected model: Model;
+export class Presenter implements IPresenter{
+    protected model: IModel;
     protected view: IView;
 
-    constructor(elem: HTMLElement, options?: ISliderOptions){
+    constructor(elem: HTMLElement, options?: ISliderSettings){
         this.init(elem, options)
         this.addEvents(); 
     }
 
-    protected init(elem: HTMLElement, options?: ISliderOptions): void{        
+    protected init(elem: HTMLElement, options?: ISliderSettings): void{        
         this.model = new Model(options);
+        let currentOptions = this.model.getOptions();
         this.view = new View(elem, this, 
             {
-                isHorizontal: this.model.options.isHorizontal,
-                isRange: this.model.options.isRange,
-                isRangeLineEnabled: this.model.options.isRangeLineEnabled,
-                isVisibleCurrentValue: this.model.options.isVisibleCurrentValue,
+                isHorizontal: currentOptions.isHorizontal,
+                isRange: currentOptions.isRange,
+                isRangeLineEnabled: currentOptions.isRangeLineEnabled,
+                isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
             }
         );        
         this.initViewComponents();
     }
 
     protected initViewComponents(): void{
-        let direction = SliderDirection.getDiraction(true, this.model.options.isHorizontal);
-        let correctValFrom = this.model.getCorrectValWithStep(this.model.options.currentVal[0]);
+        let options = this.model.getOptions();
+        let direction = SliderDirection.getDiraction(true, options.isHorizontal);
+        let correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
         this.view.setCurrentValue([correctValFrom, 0]);
         this.setCurrentHandlePosition(correctValFrom,  direction);
-        if(this.model.options.isRange){
-            direction = SliderDirection.getDiraction(false, this.model.options.isHorizontal);
-            let correctValTo = this.model.getCorrectValWithStep(this.model.options.currentVal[1]);
+        if(options.isRange){
+            direction = SliderDirection.getDiraction(false, options.isHorizontal);
+            let correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
             this.view.setCurrentValue([correctValFrom, correctValTo]);
             this.setCurrentHandlePosition(correctValTo,  direction);
         }
@@ -86,8 +90,9 @@ export class Presenter{
     }
 
     protected getCurrentValFromPosition(direction: SliderDirection): number{
-        let maxVal = this.model.options.maxVal;
-        let minVal = this.model.options.minVal;
+        let options = this.model.getOptions();
+        let maxVal = options.maxVal;
+        let minVal = options.minVal;
         let correctPosition = this.getCorrectPosition({
             position: this.view.getSliderHandlePosition(direction), 
             maxHandlePosition: this.view.getMaxHandlePosition(), 
@@ -96,13 +101,14 @@ export class Presenter{
         });
         
         let newCurrentVal = ((maxVal - minVal)  * correctPosition / 100) + minVal;
-        let precision = Math.pow(10, this.model.options.precision);
+        let precision = Math.pow(10, options.precision);
         newCurrentVal = Math.round(newCurrentVal * precision) / precision;
         return newCurrentVal;
     }
 
     protected setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
-        let position = (100*(correctValue - this.model.options.minVal))/(this.model.options.maxVal-this.model.options.minVal);
+        let options = this.model.getOptions();
+        let position = (100*(correctValue - options.minVal))/(options.maxVal-options.minVal);
         position = this.getCorrectPosition({
             position: position,
             maxHandlePosition: this.view.getMaxHandlePosition(),
@@ -112,19 +118,21 @@ export class Presenter{
         this.view.setHandlePosition(position, direction);
     }
 
-    protected optionsChanged(): void{        
+    protected optionsChanged(): void{
+        let options = this.model.getOptions(); 
         this.view.reinitialization({
-            isHorizontal: this.model.options.isHorizontal,
-            isRange: this.model.options.isRange,
-            isRangeLineEnabled: this.model.options.isRangeLineEnabled,
-            isVisibleCurrentValue: this.model.options.isVisibleCurrentValue,
+            isHorizontal: options.isHorizontal,
+            isRange: options.isRange,
+            isRangeLineEnabled: options.isRangeLineEnabled,
+            isVisibleCurrentValue: options.isVisibleCurrentValue,
         });
         this.initViewComponents();
     }
 
     protected getCorrectCurrentVal(correctValue: number, direction: SliderDirection): number[]{
-        let current = this.model.options.currentVal;
-        if(this.model.options.isRange){
+        let options = this.model.getOptions();
+        let current = options.currentVal;
+        if(options.isRange){
             if(SliderDirection.isFrom(direction)){
                 current[0] = correctValue;
             } else {
@@ -148,13 +156,13 @@ export class Presenter{
     }
 
     @bind 
-    public setNewOptions(options: ISliderOptions): void{
+    public setNewOptions(options: ISliderSettings): void{
         this.model.setNewOptions(options);
     }
 
     @bind
-    public getOptions(): ISliderOptions{
-        return this.model.options;
+    public getOptions(): ISliderSettings{
+        return this.model.getOptions();
     }
 
     @bind
