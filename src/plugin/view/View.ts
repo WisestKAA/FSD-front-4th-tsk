@@ -2,7 +2,6 @@ import { StyleClasses } from "./StyleClasses";
 import { SliderLine } from "./SliderLine/SliderLine";
 import { SliderHandle } from "./SliderHandle/SliderHandle";
 import { CurrentValue } from "./CurrentValue/CurrentValue";
-import { Presenter } from "../presenter/Presenter";
 import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
 import { SliderRange } from "./SliderRange/SliderRange";
@@ -13,16 +12,17 @@ import { ISliderLine } from "./SliderLine/ISliderLine";
 import { ISliderHandleWrapper } from "./SliderHandleWrapper/ISliderHandleWrapper";
 import { SliderHandleWrapper } from "./SliderHandleWrapper/SliderHandleWrapper";
 import { SliderMainWrapper } from "./SliderMainWrapper/SliderMainWrapper";
+import { IPresenter } from "../presenter/IPresenter";
 
 export class View{
-    protected presenter: Presenter;
+    protected presenter: IPresenter;
     protected slider: JQuery<HTMLElement>;
     protected currentValueWrapper: ICurrentValueWrapper;
     protected mainWrapper: ISliderMainWrapper;
     protected options: IViewOptions;
     protected elem: HTMLElement;
 
-    constructor(elem: HTMLElement, presenter: Presenter, options: IViewOptions){
+    constructor(elem: HTMLElement, presenter: IPresenter, options: IViewOptions){
         this.presenter = presenter;
         this.options = options;
         this.elem = elem;
