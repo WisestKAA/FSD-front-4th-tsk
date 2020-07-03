@@ -1,4 +1,4 @@
-import { SliderOptions } from "../../../src/plugin/model/SliderOptions";
+import { SliderOptions } from "../../../src/plugin/model/SliderOptions/SliderOptions";
 
 describe('Check SliderOptions', () => {
     const sliderOptions = new SliderOptions({

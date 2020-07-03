@@ -1,7 +1,7 @@
 import { Presenter } from "../../../src/plugin/presenter/Presenter";
 import '../../../src/plugin/simpleslider';
 import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
-import { ISliderOptions } from "../../../src/plugin/model/ISliderOptions";
+import { ISliderOptions } from "../../../src/plugin/model/SliderOptions/ISliderOptions";
 
 describe('Check Presenter', () => {    
     let presenter: Presenter; 

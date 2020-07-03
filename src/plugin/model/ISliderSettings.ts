@@ -1,4 +1,4 @@
-export interface ISliderOptions {
+export interface ISliderSettings {
     isHorizontal?: boolean;
     minVal?: number;
     maxVal?: number;

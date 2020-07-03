@@ -1,5 +1,5 @@
 import { Model } from "../../../src/plugin/model/Model";
-import { ISliderOptions } from "../../../src/plugin/model/ISliderOptions";
+import { ISliderOptions } from "../../../src/plugin/model/SliderOptions/ISliderOptions";
 
 describe('Check Model', () => {
     let model = new Model();
