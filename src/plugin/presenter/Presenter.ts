@@ -3,17 +3,18 @@ import { Model } from "../model/Model";
 import { View } from "../view/View";
 import { ISliderOptions } from "../model/ISliderOptions";
 import { SliderDirection } from "../view/SliderDirection";
+import { IView } from '../view/IView';
 
 export class Presenter{
-    model: Model;
-    view: View;
+    protected model: Model;
+    protected view: IView;
 
     constructor(elem: HTMLElement, options?: ISliderOptions){
         this.init(elem, options)
         this.addEvents(); 
     }
 
-    init(elem: HTMLElement, options?: ISliderOptions): void{        
+    protected init(elem: HTMLElement, options?: ISliderOptions): void{        
         this.model = new Model(options);
         this.view = new View(elem, this, 
             {
@@ -26,7 +27,7 @@ export class Presenter{
         this.initViewComponents();
     }
 
-    initViewComponents(): void{
+    protected initViewComponents(): void{
         let direction = this.model.options.isHorizontal ? SliderDirection.LEFT : SliderDirection.BOTTOM;
         let correctValFrom = this.getCorrectValWithStep(this.model.options.currentVal[0]);
         this.view.setCurrentValue([correctValFrom, 0]);
@@ -130,6 +131,30 @@ export class Presenter{
         this.view.setHandlePosition(position, direction);
     }
 
+    optionsChanged(): void{        
+        this.view.reinitialization({
+            isHorizontal: this.model.options.isHorizontal,
+            isRange: this.model.options.isRange,
+            isRangeLineEnabled: this.model.options.isRangeLineEnabled,
+            isVisibleCurrentValue: this.model.options.isVisibleCurrentValue,
+        });
+        this.initViewComponents();
+    }
+
+    getCorrectCurrentVal(correctValue: number, direction: SliderDirection): number[]{
+        let current = this.model.options.currentVal;
+        if(this.model.options.isRange){
+            if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
+                current[0] = correctValue;
+            } else {
+                current[1] = correctValue;
+            }
+        } else {
+            current[0] = correctValue;
+        }
+        return current;
+    }
+
     @bind 
     setNewOptions(options: ISliderOptions): void{
         this.model.setNewOptions(options);
@@ -145,29 +170,5 @@ export class Presenter{
         this.model.changeCurrentValueEvent.on((data) => {
             callBack(data);
         })
-    }
-
-    optionsChanged(): void{
-        this.initViewComponents();
-        this.view.setOrientation({
-            isHorizontal: this.model.options.isHorizontal, 
-            isRange: this.model.options.isRange,
-            isRangeLineEnabled: this.model.options.isRangeLineEnabled,
-            isVisibleCurrentValue: this.model.options.isVisibleCurrentValue,
-        });        
-    }
-
-    getCorrectCurrentVal(correctValue: number, direction: SliderDirection): number[]{
-        let current = this.model.options.currentVal;
-        if(this.model.options.isRange){
-            if(direction === SliderDirection.LEFT || direction === SliderDirection.BOTTOM){
-                current[0] = correctValue;
-            } else {
-                current[1] = correctValue;
-            }
-        } else {
-            current[0] = correctValue;
-        }
-        return current;
     }
 }

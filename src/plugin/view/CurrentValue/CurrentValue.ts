@@ -1,9 +1,8 @@
-import { AbstractElement } from "../AbstractElement/AbstractElement";
 import { StyleClasses } from "../StyleClasses";
 import { SliderDirection } from "../SliderDirection";
 import { ICurrentValue } from "./ICurrentValue";
 
-export class CurrentValue extends AbstractElement implements ICurrentValue{
+export class CurrentValue implements ICurrentValue{
     $elem: JQuery<HTMLElement>;
     protected $text: JQuery<HTMLElement>;
     protected $arrow: JQuery<HTMLElement>;
@@ -13,24 +12,22 @@ export class CurrentValue extends AbstractElement implements ICurrentValue{
     protected position: number;
     
     constructor(isFrom: boolean, isHorizontal: boolean){
-        super();
         this.val = 0;
         this.isFrom = isFrom;
         this.isHorizontal = isHorizontal;    
-        this.init();
+        this.init(isHorizontal);
     }    
 
-    protected init(): void {        
+    protected init(isHorizontal: boolean): void {        
         this.$text = $("<div>").addClass(StyleClasses.CURRENTVALTEXT);
         this.$text.html(`${this.val}`);
         
-        let arrowStyleClass = this.isHorizontal ? StyleClasses.CURRENTVALARROW : [StyleClasses.CURRENTVALARROW, StyleClasses.CURRENTVALARROWV];
-        this.$arrow = $("<div>").addClass(arrowStyleClass);
+        this.$arrow = $("<div>");
+        this.changeOrientation(isHorizontal, this.$arrow, StyleClasses.CURRENTVALARROW, StyleClasses.CURRENTVALARROWV);
 
-        let mainDivStyleClass = this.isHorizontal ? StyleClasses.CURRENTVAL : [StyleClasses.CURRENTVAL, StyleClasses.CURRENTVALV]
-        let $mainDiv = $("<div>").addClass(mainDivStyleClass);
-        $mainDiv.append(this.$text, this.$arrow);
-        this.$elem = $mainDiv;        
+        this.$elem = $("<div>");
+        this.changeOrientation(isHorizontal, this.$elem, StyleClasses.CURRENTVAL, StyleClasses.CURRENTVALV);
+        this.$elem.append(this.$text, this.$arrow);  
     }
 
     public setCurrentValue(currentValue: number): void{
@@ -66,5 +63,15 @@ export class CurrentValue extends AbstractElement implements ICurrentValue{
 
     public getCurrentValuePosition(): number {
         return this.position;
-     }
+    }
+
+    public changeOrientation(isHorizontal: boolean, $elem: JQuery<HTMLElement>, horizontalClass: StyleClasses, verticalClass: StyleClasses): void{        
+        let elem = $elem.get(0);
+        elem.classList.remove(horizontalClass, verticalClass);
+        if(isHorizontal){
+            elem.classList.add(horizontalClass)
+        } else {
+            elem.classList.add(horizontalClass, verticalClass)
+        }
+    }
 }

@@ -15,34 +15,34 @@ import { SliderHandleWrapper } from "./SliderHandleWrapper/SliderHandleWrapper";
 import { SliderMainWrapper } from "./SliderMainWrapper/SliderMainWrapper";
 
 export class View{
-    presenter: Presenter;
-    slider: JQuery<HTMLElement>;
-    currentValueWrapper: ICurrentValueWrapper;
-    mainWrapper: ISliderMainWrapper;
-    options: IViewOptions;
-    range: SliderRange;
+    protected presenter: Presenter;
+    protected slider: JQuery<HTMLElement>;
+    protected currentValueWrapper: ICurrentValueWrapper;
+    protected mainWrapper: ISliderMainWrapper;
+    protected options: IViewOptions;
+    protected elem: HTMLElement;
 
     constructor(elem: HTMLElement, presenter: Presenter, options: IViewOptions){
         this.presenter = presenter;
         this.options = options;
-        this.init(elem);
+        this.elem = elem;
+        this.init();
         this.addEvents();
     }
 
-    protected init(elem: HTMLElement){
+    protected init(){
         this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isHorizontal, this.options.isRange);
         this.mainWrapper = this.buildMainWrapper(
             this.options.isHorizontal,
             this.options.isRangeLineEnabled,
             this.options.isRange 
-        );
-        
+        );        
         let $mainDiv = this.options.isHorizontal ? $('<div>').addClass(StyleClasses.SLIDER) :  $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERV]);
         $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
-        this.slider = $(elem).append($mainDiv);
+        this.slider = $(this.elem).append($mainDiv);
     }
 
-    buildMainWrapper(isHorizontal: boolean, isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper{
+    protected buildMainWrapper(isHorizontal: boolean, isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper{
         let line: ISliderLine;
         if(isRangeLineEnabled){
             let range = new SliderRange(isHorizontal);
@@ -73,7 +73,7 @@ export class View{
         return new SliderMainWrapper(isHorizontal, line, handleWrapper);
     }    
 
-    buildCurrentValueWrapper(isHorizontal: boolean, isRange: boolean): ICurrentValueWrapper{
+    protected buildCurrentValueWrapper(isHorizontal: boolean, isRange: boolean): ICurrentValueWrapper{
         let currentValueFrom = new CurrentValue(true, isHorizontal);
         let currentValueWrapper: ICurrentValueWrapper;
         if(isRange){
@@ -85,34 +85,14 @@ export class View{
         return currentValueWrapper;
     }
 
-    addEvents(): void {
+    protected addEvents(): void {
         this.mainWrapper.handlePositionChangedEvent.on((direction) => {
             this.setCurrentValuePosition(direction);
             this.presenter.sliderHandleChangedPosition(direction);
         });
     }
 
-    getSliderHandlePosition(direction: SliderDirection): number{
-        return this.mainWrapper.getSliderHandlePosition(direction);    
-    }
-
-    setCurrentValue(currentValue: number[]): void {
-        this.currentValueWrapper.setCurrentValue(currentValue);
-    }
-
-    getCurrentValue(): number[] {
-        return this.currentValueWrapper.getCurrentValue();
-    }
-
-    getMaxHandlePosition(): number{
-        return this.mainWrapper.getMaxHandlePosition();
-    }
-
-    setHandlePosition(position: number, direction: SliderDirection): void {
-        this.mainWrapper.setHandlePosition(position, direction);    
-    }
-
-    setCurrentValuePosition(direction: SliderDirection): void{
+    protected setCurrentValuePosition(direction: SliderDirection): void{
         let position = SliderDirection.isFrom(direction) ? 
             this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
         this.currentValueWrapper.setCurrentValuePosition({
@@ -122,28 +102,33 @@ export class View{
             handleToPosition: this.mainWrapper.getHandleToPosition(),
             lineSize: this.mainWrapper.getLineSize(),
             maxHandlePosition: this.getMaxHandlePosition()
-        })
+        });
     }
 
-    setOrientation(option: IViewOptions): void{
-        // let mainDiv = this.slider.get(0).firstElementChild;
-        // if(option.isHorizontal){
-        //     mainDiv.classList.add(StyleClasses.SLIDER)
-        // } else {
-        //     mainDiv.classList.add(StyleClasses.SLIDER, StyleClasses.SLIDERV)
-        // }        
-        // this.line.changeOrientation(option.isHorizontal, StyleClasses.LINE, StyleClasses.LINEV);
-        // this.mainWrapper.changeOrientation(option.isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
-        // this.handleWrapper.changeOrientation(option.isHorizontal, StyleClasses.WRAPPER, StyleClasses.WRAPPERV);
-        // this.handleFrom.changeOrientation(option.isHorizontal, StyleClasses.HANDLE, StyleClasses.HANDLEV);   
-        // //this.handleFrom.isHorizontal = option.isHorizontal;
-        // if(option.isRange){
-        //     this.handleTo.changeOrientation(option.isRange, StyleClasses.HANDLE, StyleClasses.HANDLEV);
-        //     //this.handleTo.isHorizontal = option.isHorizontal;
-        // }
-        // if(option.isRangeLineEnabled){
-        //     this.range.changeOrientation(option.isHorizontal, StyleClasses.RANGE, StyleClasses.RANGEV);
-        //     //this.range.isHorizontal = option.isHorizontal;
-        // }
+    public getSliderHandlePosition(direction: SliderDirection): number{
+        return this.mainWrapper.getSliderHandlePosition(direction);    
+    }
+
+    public setCurrentValue(currentValue: number[]): void {
+        this.currentValueWrapper.setCurrentValue(currentValue);
+    }
+
+    public getCurrentValue(): number[] {
+        return this.currentValueWrapper.getCurrentValue();
+    }
+
+    public getMaxHandlePosition(): number{
+        return this.mainWrapper.getMaxHandlePosition();
+    }
+
+    public setHandlePosition(position: number, direction: SliderDirection): void {
+        this.mainWrapper.setHandlePosition(position, direction);    
+    }
+
+    public reinitialization(option: IViewOptions): void{
+        this.slider.html("");
+        this.options = option;
+        this.init();
+        this.addEvents();
     }
 }

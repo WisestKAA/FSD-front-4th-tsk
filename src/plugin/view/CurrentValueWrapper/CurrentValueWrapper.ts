@@ -24,15 +24,14 @@ export class CurrentValueWrapper extends AbstractElement{
         this.init();
     }
 
-    protected init(): void {
-        let wrapperStyleClass = this.isHorizontal ? StyleClasses.CURRENTVALWRAPPER : 
-            [StyleClasses.CURRENTVALWRAPPER, StyleClasses.CURRENTVALWRAPPERV];
-        let $wrapper = $("<div>").addClass(wrapperStyleClass);
-        $wrapper.append(this.currentValueFrom.$elem);
+    protected init(): void {        
+        this.$elem = $("<div>");
+        this.changeOrientation(this.isHorizontal, StyleClasses.CURRENTVALWRAPPER, StyleClasses.CURRENTVALWRAPPERV);
+        
+        this.$elem.append(this.currentValueFrom.$elem);
         if(this.isRange){
-            $wrapper.append(this.currentValueTo.$elem);
+            this.$elem.append(this.currentValueTo.$elem);
         }
-        this.$elem = $wrapper;
     }
 
     public setCurrentValuePosition(setCurrentValuePositionOptions: ISetCurrentValuePositionOptions): void {
