@@ -82,6 +82,9 @@ export class View{
         } else {
             currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom);
         }
+        if (!this.options.isVisibleCurrentValue){
+            currentValueWrapper.$elem.attr("style", "display: none");
+        }
         return currentValueWrapper;
     }
 
