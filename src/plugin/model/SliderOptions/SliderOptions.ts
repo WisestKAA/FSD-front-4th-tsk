@@ -56,7 +56,7 @@ export class SliderOptions implements ISliderOptions{
                 minVal : currentVal[1] > maxVal ? 
                 maxVal : currentVal[1];
             if(curVal[0]>curVal[1]){
-                throw new TypeError("Invalid input values. The first number in currentVal must be less than the second number in currentVal");
+                curVal[1] = curVal[0];
             }
         } else {
             curVal[0] = currentVal[0] < minVal ? 
@@ -94,6 +94,6 @@ export class SliderOptions implements ISliderOptions{
 
     public setNewOptions(options: ISliderSettings): void{
         this.options = $.extend(this.options, options);
-        this.options = this.checkOptions(options);
+        this.options = this.checkOptions(this.options);
     }
 }
