@@ -69,8 +69,29 @@ export class Model{
     setNewOptions(options: ISliderOptions): void{
         this.initOptions(options);
         this.onOptionsChanged.trigger();
-    }   
+    } 
+    
+    getCorrectValWithStep(currentVal: number): number {
+        let step = this.options.step;
+        if(currentVal < this.options.minVal){
+            return this.options.minVal;
+        }
+        if(currentVal > this.options.maxVal - this.options.maxVal % step){
+            return this.options.maxVal;
+        }
+
+        let correctVal: number;
+        let shift = step - currentVal % step;
+        let middle = step / 2;
+        if(shift > middle){            
+            correctVal = currentVal - currentVal % step;
+        } else {
+            correctVal = currentVal + shift;
+        }
+        return correctVal;
+    }
 
     public get changeCurrentValueEvent(): ILiteEvent<number[]> {return this.onCurrentValueChanged.expose();}
+
     public get changeOptionsEvent(): ILiteEvent<void> {return this.onOptionsChanged.expose();}
 }
