@@ -1,4 +1,4 @@
-import { SliderLine } from "../../../src/plugin/view/SliderLine";
+import { SliderLine } from "../../../src/plugin/view/SliderLine/SliderLine";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 
 describe('Check SliderLine', () => {

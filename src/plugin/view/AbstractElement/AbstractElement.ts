@@ -1,7 +1,8 @@
-import { StyleClasses } from "./StyleClasses";
+import { StyleClasses } from "../StyleClasses";
 
 export abstract class AbstractElement{
-    abstract $elem: JQuery<HTMLElement>;
+    public abstract $elem: JQuery<HTMLElement>;
+    protected abstract isHorizontal: boolean;
 
     constructor(){
     }
@@ -16,5 +17,6 @@ export abstract class AbstractElement{
         } else {
             elem.classList.add(horizontalClass, verticalClass)
         }
+        this.isHorizontal = isHorizontal;
     }
 }

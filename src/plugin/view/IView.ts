@@ -1,9 +1,11 @@
 import { SliderDirection } from "./SliderDirection";
+import { IViewOptions } from "./IViewOptions";
 
 export interface IView {
-    getReadySlider(): JQuery<HTMLElement>;
-    getSliderHandleLeftPosition(): number;
+    getSliderHandlePosition(direction: SliderDirection): number;
+    setCurrentValue(currentValue: number[]): void;
+    getCurrentValue(): number[];
     getMaxHandlePosition(): number;
-    setCurrentValue(currentValue: number): void;
-    setNewSliderHandlePosition(position: number, direction: SliderDirection): void; 
+    setHandlePosition(position: number, direction: SliderDirection): void;
+    reinitialization(option: IViewOptions): void;  
 }

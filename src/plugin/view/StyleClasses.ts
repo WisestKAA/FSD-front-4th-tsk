@@ -8,7 +8,6 @@ export enum StyleClasses {
      HANDLE = "simpleslider__handle",
      HANDLEV = "simpleslider__handle_vertical",
      HEADER = "simpleslider__header",
-     CURRENT = "simpleslider__current",
      RANGE = "simpleslider__range",
      RANGEV = "simpleslider__range_vertical",
      CURRENTVAL = "simpleslider__current-value",
@@ -18,4 +17,8 @@ export enum StyleClasses {
      CURRENTVALTEXT = "simpleslider__current-value-text",
      CURRENTVALARROW = "simpleslider__current-value-arrow",
      CURRENTVALARROWV = "simpleslider__current-value-arrow_vertical",
+     MAINWRAPPER = "simpleslider__main-wrapper",
+     MAINWRAPPERV = "simpleslider__main-wrapper_vertical",
+     HANDLEWRAPPER = "simpleslider__handle-wrapper",
+     HANDLEWRAPPERV = "simpleslider__handle-wrapper_vertical",
 }

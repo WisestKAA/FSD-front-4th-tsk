@@ -1,4 +1,4 @@
-import { CurrentValue } from "../../../src/plugin/view/CurrentValue";
+import { CurrentValue } from "../../../src/plugin/view/CurrentValue/CurrentValue";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 
 describe('Check CurrentValue', () => {
@@ -13,7 +13,7 @@ describe('Check CurrentValue', () => {
     // });
 
     it('Value must be defined', () => {
-        expect(currentValue.val).toBeDefined();
+        expect(currentValue.getCurrentValue()).toBeDefined();
     });
 
     // it('After initialization, the current value must be inside the element', () => {

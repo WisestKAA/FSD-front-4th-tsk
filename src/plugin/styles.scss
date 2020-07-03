@@ -4,7 +4,7 @@
     display: inline-block; 
 
     &_vertical{
-        min-width: 34px;
+        min-width: 17px;
         width: 100%;
         min-height: 100px;
         height: 100%;
@@ -13,7 +13,9 @@
         flex-direction: row-reverse;
     }
 
-    &__wrapper{
+    &__wrapper,
+    &__main-wrapper,
+    &__handle-wrapper{
         width: 100%;
         position: relative;
         height: min-content;
