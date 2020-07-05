@@ -44,6 +44,8 @@ export class Model implements IModel{
         } else {
             correctVal = currentVal + shift;
         }
+        let precision = Math.pow(10, options.precision);
+        correctVal = Math.round(correctVal * precision) / precision;
         return correctVal;
     }
 
