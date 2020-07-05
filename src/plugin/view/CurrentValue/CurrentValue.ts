@@ -10,6 +10,9 @@ export class CurrentValue implements ICurrentValue{
     protected isFrom: boolean;
     protected isHorizontal: boolean;
     protected position: number;
+    protected outerWidth: number;
+    protected outerHeight: number;
+    protected resizeSensor: any;
     
     constructor(isFrom: boolean, isHorizontal: boolean){
         this.val = 0;
@@ -23,10 +26,20 @@ export class CurrentValue implements ICurrentValue{
         this.$text.html(`${this.val}`);
         
         this.$arrow = $("<div>");
-        this.changeOrientation(isHorizontal, this.$arrow, StyleClasses.CURRENTVALARROW, StyleClasses.CURRENTVALARROWV);
+        this.changeOrientation({
+            isHorizontal: isHorizontal,
+            $elem: this.$arrow,
+            horizontalClass: StyleClasses.CURRENTVALARROW,
+            verticalClass: StyleClasses.CURRENTVALARROWV
+        });
 
         this.$elem = $("<div>");
-        this.changeOrientation(isHorizontal, this.$elem, StyleClasses.CURRENTVAL, StyleClasses.CURRENTVALV);
+        this.changeOrientation({
+            isHorizontal: isHorizontal, 
+            $elem: this.$elem, 
+            horizontalClass: StyleClasses.CURRENTVAL, 
+            verticalClass: StyleClasses.CURRENTVALV
+        });
         this.$elem.append(this.$text, this.$arrow);  
     }
 
@@ -42,18 +55,18 @@ export class CurrentValue implements ICurrentValue{
         this.$elem.attr("style", `${direction}: ${correctPosition}%;`);
     }
 
-    protected getCorrectPosition(position: number, handlePercent: number, lineWidth: number): number {
-        let currentPercent = this.$elem.outerWidth() * 100 / lineWidth;
+    protected getCorrectPosition(position: number, handlePercent: number, lineWidth: number): number {        
+        let currentPercent = this.$elem.get(0).offsetWidth * 100 / lineWidth;
         let shiftPosition = (currentPercent - handlePercent) / 2;
         let currentPosition = position - shiftPosition;
         return currentPosition;
     }
 
-    public getCurrentValueSize(): number{
+    public getCurrentValueSize(): number{        
         if(this.isHorizontal){
-            return this.$elem.outerWidth();
+            return this.$elem.get(0).offsetWidth;
         } else {
-            return this.$elem.outerHeight();
+            return this.$elem.get(0).offsetHeight;
         }
     }
 
@@ -65,7 +78,13 @@ export class CurrentValue implements ICurrentValue{
         return this.position;
     }
 
-    public changeOrientation(isHorizontal: boolean, $elem: JQuery<HTMLElement>, horizontalClass: StyleClasses, verticalClass: StyleClasses): void{        
+    public changeOrientation(options: {
+        isHorizontal: boolean, 
+        $elem: JQuery<HTMLElement>, 
+        horizontalClass: StyleClasses, 
+        verticalClass: StyleClasses
+    }): void{        
+        const {isHorizontal, $elem, horizontalClass, verticalClass} = options;
         let elem = $elem.get(0);
         elem.classList.remove(horizontalClass, verticalClass);
         if(isHorizontal){
