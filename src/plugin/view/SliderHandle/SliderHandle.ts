@@ -75,8 +75,8 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     protected onMouseMoveX(event: JQuery.MouseMoveEvent): void {
         let lineHTMLElement = this.line.$elem;
         let offset = lineHTMLElement.offset().left;
-        let lineWidth = lineHTMLElement.get(0).offsetWidth;
-        let handleWidth = this.$elem.get(0).offsetWidth;
+        let lineWidth = lineHTMLElement.outerWidth();
+        let handleWidth = this.$elem.outerWidth();
         if(this.isFrom){
             let newLeft = this.getNewLeft(event.pageX, offset, lineWidth, handleWidth); 
             this.setNewPosition(newLeft, SliderDirection.LEFT);
@@ -89,8 +89,8 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     protected onMouseMoveY(event: JQuery.MouseMoveEvent): void {
         let lineHTMLElement = this.line.$elem;
         let offset = lineHTMLElement.offset().top;
-        let lineHieght = lineHTMLElement.get(0).offsetHeight;
-        let handleHeight = this.$elem.get(0).offsetHeight;
+        let lineHieght = lineHTMLElement.outerHeight();
+        let handleHeight = this.$elem.outerHeight();
         if(this.isFrom){
             let newBot = this.getNewBot(event.pageY, offset, lineHieght, handleHeight); 
             this.setNewPosition(newBot, SliderDirection.BOTTOM);
@@ -158,7 +158,7 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     }
 
     public getSliderHandleMaxPosition(): number {        
-        let lineSize = this.isHorizontal ? this.line.$elem.get(0).offsetWidth : this.line.$elem.get(0).offsetHeight;
+        let lineSize = this.isHorizontal ? this.line.$elem.outerWidth() : this.line.$elem.outerHeight();
         let handleSize = this.getHandleSize();
         let maxWidth = lineSize - handleSize;
         this.maxPosition = (100 * maxWidth)/lineSize;
@@ -175,7 +175,7 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     }
 
     public getHandleSize(): number{
-        return this.isHorizontal ? this.$elem.get(0).offsetWidth : this.$elem.get(0).offsetHeight;
+        return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
     }
 
     public getPosition(): number{

@@ -66,8 +66,9 @@ export class CurrentValueWrapper extends AbstractElement{
             );
         }
     }
-
-    protected checkCurrentValueIntersection(lineSize: number, handleFromPosition: number, handleToPosition: number): void{
+    
+    //зачем туту handleFromPosition и handleToPosition?
+    protected checkCurrentValueIntersection(lineSize: number, handleFromPosition: number, handleToPosition: number): void{ 
         let currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
         let currentValueToSize = this.currentValueTo.getCurrentValueSize();
         let maxSize = lineSize - currentValueFromSize - currentValueToSize;
