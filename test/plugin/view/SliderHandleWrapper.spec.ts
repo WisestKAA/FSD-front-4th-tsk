@@ -12,8 +12,9 @@ class MockHandle implements ISliderHandle{
     size: number = 10;
     protected onPositionChanged: LiteEvent<SliderDirection>;
     public get positionChangedEvent(): ILiteEvent<SliderDirection> {return this.onPositionChanged.expose();}
-    constructor(){
-        this.$elem = $("div");
+    constructor(isHorizontal?: boolean){
+        this.$elem = isHorizontal ? $("<div>").attr("class", StyleClasses.HANDLE):
+            $("<div>").attr("class", `${StyleClasses.HANDLE} ${StyleClasses.HANDLEV}`);
         this.onPositionChanged = new LiteEvent<SliderDirection>();
     }
     setNewPosition(position: number, direction: SliderDirection): void {
@@ -65,6 +66,16 @@ describe("Test SliderHandleWrapper", () => {
         it(`The element must have classes ${StyleClasses.HANDLEWRAPPER} and ${StyleClasses.HANDLEWRAPPERV} if the isHorizontal property is false`, () => {
             wrapper = new SliderHandleWrapper(false, new MockHandle(), new MockHandle());
             expect(wrapper.$elem.attr("class")).toBe(`${StyleClasses.HANDLEWRAPPER} ${StyleClasses.HANDLEWRAPPERV}`);
+        });
+
+        it(`The element must have subelement with class ${StyleClasses.HANDLE} if the isHorizontal property is true`, () => {
+            wrapper = new SliderHandleWrapper(true, new MockHandle(true), new MockHandle(true));
+            expect(wrapper.$elem.find(`.${StyleClasses.HANDLE}`).attr("class")).toBe(StyleClasses.HANDLE);
+        });
+
+        it(`The element must have subelement with classes ${StyleClasses.HANDLE} and ${StyleClasses.HANDLEV} if the isHorizontal property is false`, () => {
+            wrapper = new SliderHandleWrapper(false, new MockHandle(), new MockHandle(false));
+            expect(wrapper.$elem.find(`.${StyleClasses.HANDLE}`).attr("class")).toBe(`${StyleClasses.HANDLE} ${StyleClasses.HANDLEV}`);
         });
     });
 
