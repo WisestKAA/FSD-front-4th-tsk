@@ -16,7 +16,7 @@ import { IPresenter } from "../presenter/IPresenter";
 
 export class View{
     protected presenter: IPresenter;
-    protected slider: JQuery<HTMLElement>;
+    public slider: JQuery<HTMLElement>;
     protected currentValueWrapper: ICurrentValueWrapper;
     protected mainWrapper: ISliderMainWrapper;
     protected options: IViewOptions;
