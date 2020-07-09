@@ -6,6 +6,7 @@ import { IView } from '../view/IView';
 import { IPresenter } from './IPresenter';
 import { ISliderSettings } from '../model/ISliderSettings';
 import { IModel } from '../model/IModel';
+import { SliderOptionsFactory } from '../model/SliderOptions/SliderOptionsFactory';
 
 export class Presenter implements IPresenter{
     protected model: IModel;
@@ -17,7 +18,7 @@ export class Presenter implements IPresenter{
     }
 
     protected init(elem: HTMLElement, options?: ISliderSettings): void{        
-        this.model = new Model(options);
+        this.model = new Model(new SliderOptionsFactory(options));
         let currentOptions = this.model.getOptions();
         this.view = new View(elem, this, 
             {
