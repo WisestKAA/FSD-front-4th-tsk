@@ -1,24 +1,23 @@
 import bind from 'bind-decorator';
-import { Model } from "../model/Model";
 import { View } from "../view/View";
 import { SliderDirection } from "../view/SliderDirection";
 import { IView } from '../view/IView';
 import { IPresenter } from './IPresenter';
 import { ISliderSettings } from '../model/ISliderSettings';
 import { IModel } from '../model/IModel';
-import { SliderOptionsFactory } from '../model/SliderOptions/SliderOptionsFactory';
+import { IModelFactory } from '../model/ModelFactory';
 
 export class Presenter implements IPresenter{
     protected model: IModel;
     protected view: IView;
 
-    constructor(elem: HTMLElement, options?: ISliderSettings){
-        this.init(elem, options)
+    constructor(elem: HTMLElement, modelFactory: IModelFactory){
+        this.init(elem, modelFactory)
         this.addEvents(); 
     }
 
-    protected init(elem: HTMLElement, options?: ISliderSettings): void{        
-        this.model = new Model(new SliderOptionsFactory(options));
+    protected init(elem: HTMLElement, modelFactory: IModelFactory): void{        
+        this.model = modelFactory.build();
         let currentOptions = this.model.getOptions();
         this.view = new View(elem, this, 
             {
