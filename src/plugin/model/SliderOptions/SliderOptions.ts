@@ -15,7 +15,7 @@ export class SliderOptions implements ISliderOptions{
     }
     protected options: ISliderSettings;
 
-    constructor(options: ISliderSettings){
+    constructor(options?: ISliderSettings){
         this.options = $.extend(this.defaultOption, options);
         this.options = this.checkOptions(this.options);
     }
@@ -29,7 +29,7 @@ export class SliderOptions implements ISliderOptions{
             minVal: options.minVal
         });
         this.checkStep({maxVal: options.maxVal, minVal: options.minVal, step: options.step});
-
+        this.checkPrecision(options.precision);
 
         return options;
     }
