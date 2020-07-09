@@ -107,10 +107,6 @@ describe("Test Model", () => {
         });
 
         it("The getOptions function must return options", () => {
-            
-        });
-
-        it("", () => {
             let factory = new MockOptionsFactory();
             let options = factory.options;
             model = new Model(factory);
