@@ -6,20 +6,21 @@ import { IPresenter } from './IPresenter';
 import { ISliderSettings } from '../model/ISliderSettings';
 import { IModel } from '../model/IModel';
 import { IModelFactory } from '../model/ModelFactory';
+import { IViewFactory } from '../view/ViewFactory';
 
 export class Presenter implements IPresenter{
     protected model: IModel;
     protected view: IView;
 
-    constructor(elem: HTMLElement, modelFactory: IModelFactory){
-        this.init(elem, modelFactory)
+    constructor(viewFactory: IViewFactory, modelFactory: IModelFactory){
+        this.init(viewFactory, modelFactory)
         this.addEvents(); 
     }
 
-    protected init(elem: HTMLElement, modelFactory: IModelFactory): void{        
+    protected init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{        
         this.model = modelFactory.build();
         let currentOptions = this.model.getOptions();
-        this.view = new View(elem, this, 
+        this.view = viewFactory.build(this, 
             {
                 isHorizontal: currentOptions.isHorizontal,
                 isRange: currentOptions.isRange,

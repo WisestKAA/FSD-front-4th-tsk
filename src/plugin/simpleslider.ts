@@ -2,6 +2,7 @@ import { Presenter } from './presenter/Presenter';
 import { ISliderSettings } from './model/ISliderSettings';
 import { ModelFactory } from './model/ModelFactory';
 import { SliderOptionsFactory } from './model/SliderOptions/SliderOptionsFactory';
+import { ViewFactory } from './view/ViewFactory';
 
 
 declare global {
@@ -22,7 +23,8 @@ declare global {
             if(typeof options === 'object' || !options){               
                 let sliderOptionsFactory = new SliderOptionsFactory(options as ISliderSettings);
                 let modelFactory = new ModelFactory(sliderOptionsFactory); 
-                const presenter = new Presenter(elem, modelFactory);
+                let viewFactory = new ViewFactory(elem);
+                const presenter = new Presenter(viewFactory, modelFactory);
                 this.data('presenter', presenter);
                 return this;
             }
