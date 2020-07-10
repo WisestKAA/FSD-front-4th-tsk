@@ -121,6 +121,7 @@ export class View{
     public reinitialization(option: IViewOptions): void{
         this.slider.html("");
         this.options = option;
+        this.elementsFactory.setNewOptions(option);
         this.init();
         this.addEvents();
     }
