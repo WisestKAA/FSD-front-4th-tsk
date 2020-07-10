@@ -7,6 +7,8 @@ import { ISliderSettings } from '../model/ISliderSettings';
 import { IModel } from '../model/IModel';
 import { IModelFactory } from '../model/ModelFactory';
 import { IViewFactory } from '../view/ViewFactory';
+import { IViewOptions } from '../view/IViewOptions';
+import { ElementsFactory } from '../view/ElementsFactory';
 
 export class Presenter implements IPresenter{
     protected model: IModel;
@@ -20,14 +22,13 @@ export class Presenter implements IPresenter{
     protected init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{        
         this.model = modelFactory.build();
         let currentOptions = this.model.getOptions();
-        this.view = viewFactory.build(this, 
-            {
-                isHorizontal: currentOptions.isHorizontal,
-                isRange: currentOptions.isRange,
-                isRangeLineEnabled: currentOptions.isRangeLineEnabled,
-                isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
-            }
-        );        
+        let viewOptions: IViewOptions ={
+            isHorizontal: currentOptions.isHorizontal,
+            isRange: currentOptions.isRange,
+            isRangeLineEnabled: currentOptions.isRangeLineEnabled,
+            isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
+        };
+        this.view = viewFactory.build(this, viewOptions, new ElementsFactory(viewOptions));        
         this.initViewComponents();
     }
 

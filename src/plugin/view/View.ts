@@ -1,18 +1,12 @@
 import { StyleClasses } from "./StyleClasses";
-import { SliderLine } from "./SliderLine/SliderLine";
-import { SliderHandle } from "./SliderHandle/SliderHandle";
-import { CurrentValue } from "./CurrentValue/CurrentValue";
 import { IViewOptions } from "./IViewOptions";
 import { SliderDirection } from "./SliderDirection";
-import { SliderRange } from "./SliderRange/SliderRange";
-import { CurrentValueWrapper } from "./CurrentValueWrapper/CurrentValueWrapper";
 import { ICurrentValueWrapper } from "./CurrentValueWrapper/ICurrentValueWrapper";
 import { ISliderMainWrapper } from "./SliderMainWrapper/ISliderMainWrapper";
 import { ISliderLine } from "./SliderLine/ISliderLine";
 import { ISliderHandleWrapper } from "./SliderHandleWrapper/ISliderHandleWrapper";
-import { SliderHandleWrapper } from "./SliderHandleWrapper/SliderHandleWrapper";
-import { SliderMainWrapper } from "./SliderMainWrapper/SliderMainWrapper";
 import { IPresenter } from "../presenter/IPresenter";
+import { IElementsFactory } from "./ElementsFactory";
 
 export class View{
     protected presenter: IPresenter;
@@ -21,19 +15,26 @@ export class View{
     protected mainWrapper: ISliderMainWrapper;
     protected options: IViewOptions;
     protected elem: HTMLElement;
+    protected elementsFactory: IElementsFactory;
 
-    constructor(elem: HTMLElement, presenter: IPresenter, options: IViewOptions){
+    constructor(viewOptions: {
+        elem: HTMLElement, 
+        presenter: IPresenter, 
+        options: IViewOptions,
+        elementsFactory: IElementsFactory
+    }){
+        const{elem, presenter, options, elementsFactory} = viewOptions;
         this.presenter = presenter;
         this.options = options;
         this.elem = elem;
+        this.elementsFactory = elementsFactory;
         this.init();
         this.addEvents();
     }
 
     protected init(){
-        this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isHorizontal, this.options.isRange);
+        this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isRange);
         this.mainWrapper = this.buildMainWrapper(
-            this.options.isHorizontal,
             this.options.isRangeLineEnabled,
             this.options.isRange 
         );        
@@ -42,45 +43,34 @@ export class View{
         this.slider = $(this.elem).append($mainDiv);
     }
 
-    protected buildMainWrapper(isHorizontal: boolean, isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper{
+    protected buildMainWrapper(isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper{
         let line: ISliderLine;
         if(isRangeLineEnabled){
-            let range = new SliderRange(isHorizontal);
-            line = new SliderLine(isHorizontal, range);
+            let range = this.elementsFactory.buildRange();
+            line = this.elementsFactory.buildLine(range);
         } else {
-            line = new SliderLine(isHorizontal);
+            line = this.elementsFactory.buildLine();
         }
         
         let handleWrapper: ISliderHandleWrapper;
-        let handleFrom = new SliderHandle({
-            isHorizontal: isHorizontal,
-            isRange: isRange,
-            sliderLine: line,
-            isFrom: true
-        });
+        let handleFrom = this.elementsFactory.buildHandle(line, true);
         if(isRange){
-            let handleTo = new SliderHandle({
-                isHorizontal: isHorizontal,
-                isRange: isRange,
-                sliderLine: line,
-                isFrom: false
-            });
-            handleWrapper = new SliderHandleWrapper(isHorizontal, handleFrom, handleTo);
+            let handleTo = this.elementsFactory.buildHandle(line, false);
+            handleWrapper = this.elementsFactory.buildHandleWrapper(handleFrom, handleTo);
         } else {
-            handleWrapper = new SliderHandleWrapper(isHorizontal, handleFrom);
+            handleWrapper = this.elementsFactory.buildHandleWrapper(handleFrom);
         } 
-
-        return new SliderMainWrapper(isHorizontal, line, handleWrapper);
+        return this.elementsFactory.buildMainWrapper(line, handleWrapper);
     }    
 
-    protected buildCurrentValueWrapper(isHorizontal: boolean, isRange: boolean): ICurrentValueWrapper{
-        let currentValueFrom = new CurrentValue(true, isHorizontal);
+    protected buildCurrentValueWrapper(isRange: boolean): ICurrentValueWrapper{
+        let currentValueFrom = this.elementsFactory.buildCurrentValue(true);
         let currentValueWrapper: ICurrentValueWrapper;
         if(isRange){
-            let currentValueTo = new CurrentValue(false, isHorizontal);
-            currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom, currentValueTo);
+            let currentValueTo = this.elementsFactory.buildCurrentValue(false);
+            currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(currentValueFrom, currentValueTo);
         } else {
-            currentValueWrapper = new CurrentValueWrapper(isHorizontal, currentValueFrom);
+            currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(currentValueFrom);
         }
         if (!this.options.isVisibleCurrentValue){
             currentValueWrapper.$elem.attr("style", "display: none");
