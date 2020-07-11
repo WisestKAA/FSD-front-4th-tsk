@@ -1,5 +1,4 @@
 import bind from 'bind-decorator';
-import { View } from "../view/View";
 import { SliderDirection } from "../view/SliderDirection";
 import { IView } from '../view/IView';
 import { IPresenter } from './IPresenter';
@@ -36,12 +35,12 @@ export class Presenter implements IPresenter{
         let options = this.model.getOptions();
         let direction = SliderDirection.getDiraction(true, options.isHorizontal);
         let correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
-        this.view.setCurrentValue([correctValFrom, 0]);
+        this.setCurrentValueView([correctValFrom, 0]);
         this.setCurrentHandlePosition(correctValFrom,  direction);
         if(options.isRange){
             direction = SliderDirection.getDiraction(false, options.isHorizontal);
             let correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
-            this.view.setCurrentValue([correctValFrom, correctValTo]);
+            this.setCurrentValueView([correctValFrom, correctValTo]);
             this.setCurrentHandlePosition(correctValTo,  direction);
         }
     }
@@ -59,14 +58,8 @@ export class Presenter implements IPresenter{
         this.view.setCurrentValue(currentValue);
     }
 
-    protected setCurrentValueModel(currentVal?: number[], direction?: SliderDirection): void{
-        if(currentVal === null){   
-            let newCurrentVal = this.getCurrentValFromPosition(direction);
-            let current = this.getCorrectCurrentVal(newCurrentVal, direction);
-            this.model.setCurrentValue(current);
-        }else{
-            this.model.setCurrentValue(currentVal);
-        }        
+    protected setCurrentValueModel(currentVal?: number[], direction?: SliderDirection): void{       
+        this.model.setCurrentValue(currentVal);                
     }
 
     protected getCorrectPosition(option: {
