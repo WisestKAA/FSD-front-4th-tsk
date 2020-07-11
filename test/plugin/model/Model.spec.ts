@@ -1,77 +1,116 @@
 import { Model } from "../../../src/plugin/model/Model";
 import { ISliderOptions } from "../../../src/plugin/model/SliderOptions/ISliderOptions";
+import { ISliderSettings } from "../../../src/plugin/model/ISliderSettings";
+import { ISliderOptionsFactory } from "../../../src/plugin/model/SliderOptions/SliderOptionsFactory";
+import { IModel } from "../../../src/plugin/model/IModel";
 
-describe('Check Model', () => {
-    let model = new Model();
+class MockSliderOptions implements ISliderOptions{
+    defaultOption: ISliderSettings = {
+        isHorizontal: true,
+        maxVal: 100,
+        minVal: 0,
+        currentVal: new Array(0, 0),
+        step: 1,
+        precision: 0,
+        isRange: false,
+        isRangeLineEnabled: false,
+        isVisibleCurrentValue: true,
+    }
+    constructor(){}    
+    getOptions(): ISliderSettings {
+        return this.defaultOption;
+    }
+    setCurrentValue(currentVal: number[]): void {}
+    setNewOptions(options: ISliderSettings): void {}
+}
 
-    afterEach(()=>{
-        model = new Model();
+class MockOptionsFactory implements ISliderOptionsFactory{
+    options: ISliderOptions;
+    constructor(){
+        this.options = new MockSliderOptions();
+    }
+    build(): ISliderOptions {
+        return this.options;
+    }
+}
+
+class MockEvent{
+    model: IModel;
+    constructor(model: IModel){
+        this.model = model;
+        this.model.changeCurrentValueEvent.on((currentVal) => {
+            this.changeCurrentValue(currentVal);
+        });
+        this.model.changeOptionsEvent.on(() => {
+            this.changeOptions();
+        })
+    }
+    changeCurrentValue(currentVal: number[]): void{}
+    changeOptions(): void{}
+}
+
+describe("Test Model", () => {
+    let model: Model;
+
+    describe("Test Model / init", () => {
+        it("When the model is initialized, the build  function from the Mock OptionsFactors should be called", () => {
+            let factory = new MockOptionsFactory();
+            let spy = spyOn(factory, "build");
+            model = new Model(factory);
+            expect(spy).toHaveBeenCalled();
+        });
     });
 
-    it('After initialization options must be defined', () => {
-        expect(model.options).toBeDefined();
-        expect(model.options.isHorizontal).toBeDefined();
-        expect(model.options.minVal).toBeDefined();
-        expect(model.options.maxVal).toBeDefined();
-        expect(model.options.currentVal).toBeDefined();
-        expect(model.options.step).toBeDefined();
-        expect(model.options.precision).toBeDefined();
-        expect(model.options.isRange).toBeDefined();   
-        expect(model.options.isRangeLineEnabled).toBeDefined();
-    });
+    describe("Test Model / functions", () => {
+        it("The setCurrentValue function must set the current value for the options and trigger the onCurrentValueChanged event", () => {
+            let factory = new MockOptionsFactory();
+            let options = factory.options;
+            model = new Model(factory);
+            let spyCurrentValue = spyOn(options, "setCurrentValue");
+            let event = new MockEvent(model);
+            let spyEvent = spyOn(event, "changeCurrentValue");
+            model.setCurrentValue([0, 0])
+            expect(spyCurrentValue).toHaveBeenCalledWith([0, 0]);
+            expect(spyEvent).toHaveBeenCalledWith([0, 0]);
+        });
 
-    it("after ininialization the events must be defined", () => {
-        expect(model.onOptionsChanged).toBeDefined();
-        expect(model.onCurrentValueChanged).toBeDefined();
-    });
+        it("The setNewOptions function must set the new options for the options and trigger the onOptionsChanged event", () => {
+            let factory = new MockOptionsFactory();
+            let options = factory.options;
+            model = new Model(factory);
+            let spyNewOptions = spyOn(options, "setNewOptions");
+            let event = new MockEvent(model);
+            let spyEvent = spyOn(event, "changeOptions");
+            model.setNewOptions({currentVal: [0, 0]})
+            expect(spyNewOptions).toHaveBeenCalledWith({currentVal: [0, 0]});
+            expect(spyEvent).toHaveBeenCalled();
+        });
 
-    it('If the options are empty - the model should have default options', () => {
-        expect(model.options).toBe(model.defaultOption);
-    });
-
-    it('The current value must be between the minimum value and the maximum value', () => {
-        let sub = model.defaultOption.minVal - 1;
-        let over = model.defaultOption.maxVal + 1;
-        let normal = Math.max(model.defaultOption.minVal, model.defaultOption.maxVal) / 2;
-
-        let subOptions = {isHorizontal: true, minVal: 0, maxVal: 100, currentVal: [sub, 0]} as ISliderOptions;
-        let overOptions = {isHorizontal: true, minVal: 0, maxVal: 100, currentVal: [over, 0]} as ISliderOptions;
-        let normalOptions = {isHorizontal: true, minVal: 0, maxVal: 100, currentVal: [normal, 0]} as ISliderOptions;
+        it("The getCorrectValWithStep function must return the correct current value taking into account the step (2.5)", () => {
+            model = new Model(new MockOptionsFactory());
+            expect(model.getCorrectValWithStep(2.5)).toBe(3);
+        });
         
-        expect(model.checkCurrentVal(subOptions)).toEqual([subOptions.minVal, 0]);
-        expect(model.checkCurrentVal(overOptions)).toEqual([overOptions.maxVal, 0]);
-        expect(model.checkCurrentVal(normalOptions)[0]).toBeGreaterThanOrEqual(subOptions.minVal);
-        expect(model.checkCurrentVal(normalOptions)[0]).toBeLessThanOrEqual(subOptions.maxVal);
-    });
+        it("The getCorrectValWithStep function must return the correct current value taking into account the step (2.4)", () => {
+            model = new Model(new MockOptionsFactory());
+            expect(model.getCorrectValWithStep(2.4)).toBe(2);
+        });
+        
+        it("The getCorrectValWithStep function must return minVal if newCurrentVal is less than minVal", () => {
+            model = new Model(new MockOptionsFactory());
+            expect(model.getCorrectValWithStep(-1)).toBe(0);
+        });
 
-    it("The setCurrentValue function should change the current value", () => {
-        let currentVal = [10, 50];
-        model.options.isRange = true;
-        model.setCurrentValue(currentVal);
-        expect(model.options.currentVal).toEqual(currentVal);
-    });
+        it("The getCorrectValWithStep function must return minVal if newCurrentVal is greater than maxVal", () => {
+            model = new Model(new MockOptionsFactory());
+            expect(model.getCorrectValWithStep(101)).toBe(100);
+        });
 
-    it("The setCurrentValue function should call a trigger from onCurrentValueChanged", () => {
-        let spy = spyOn(model.onCurrentValueChanged, "trigger"); 
-        model.setCurrentValue([10, 0]);
-        expect(spy).toHaveBeenCalled();
-    });
-
-    it("The setNewOptions function should reinitialize options", () => {
-        let befor = model.options;
-        model.setNewOptions({step: 2});
-        expect(befor).not.toBe(model.options);
-    });
-
-    it("The setNewOptions function should call a trigger from onOptionsChanged", () => {
-        let spy = spyOn(model.onOptionsChanged, "trigger");        
-        model.setNewOptions({step: 123123});
-        expect(spy).toHaveBeenCalled();
-    });
-
-    it("If minVal is greater than maxVal, then the checkCurrentVal function should cause an error", () => {
-        let currentVal: ISliderOptions = {currentVal: new Array(model.options.maxVal, model.options.minVal), isRange: true};
-        let options = $.extend(model.defaultOption, currentVal)
-        expect(function() {model.checkCurrentVal(options)}).toThrowError("Invalid input values. minVal must be less than maxVal");
+        it("The getOptions function must return options", () => {
+            let factory = new MockOptionsFactory();
+            let options = factory.options;
+            model = new Model(factory);
+            expect(model.getOptions()).toEqual(options.getOptions());
+        });
     });
 });

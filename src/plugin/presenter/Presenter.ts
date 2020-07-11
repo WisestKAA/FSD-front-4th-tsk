@@ -1,32 +1,33 @@
 import bind from 'bind-decorator';
-import { Model } from "../model/Model";
-import { View } from "../view/View";
 import { SliderDirection } from "../view/SliderDirection";
 import { IView } from '../view/IView';
 import { IPresenter } from './IPresenter';
 import { ISliderSettings } from '../model/ISliderSettings';
 import { IModel } from '../model/IModel';
+import { IModelFactory } from '../model/ModelFactory';
+import { IViewFactory } from '../view/ViewFactory';
+import { IViewOptions } from '../view/IViewOptions';
+import { ElementsFactory } from '../view/ElementsFactory';
 
 export class Presenter implements IPresenter{
     protected model: IModel;
     protected view: IView;
 
-    constructor(elem: HTMLElement, options?: ISliderSettings){
-        this.init(elem, options)
+    constructor(viewFactory: IViewFactory, modelFactory: IModelFactory){
+        this.init(viewFactory, modelFactory)
         this.addEvents(); 
     }
 
-    protected init(elem: HTMLElement, options?: ISliderSettings): void{        
-        this.model = new Model(options);
+    protected init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{        
+        this.model = modelFactory.build();
         let currentOptions = this.model.getOptions();
-        this.view = new View(elem, this, 
-            {
-                isHorizontal: currentOptions.isHorizontal,
-                isRange: currentOptions.isRange,
-                isRangeLineEnabled: currentOptions.isRangeLineEnabled,
-                isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
-            }
-        );        
+        let viewOptions: IViewOptions ={
+            isHorizontal: currentOptions.isHorizontal,
+            isRange: currentOptions.isRange,
+            isRangeLineEnabled: currentOptions.isRangeLineEnabled,
+            isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
+        };
+        this.view = viewFactory.build(this, viewOptions, new ElementsFactory(viewOptions));        
         this.initViewComponents();
     }
 
@@ -34,12 +35,12 @@ export class Presenter implements IPresenter{
         let options = this.model.getOptions();
         let direction = SliderDirection.getDiraction(true, options.isHorizontal);
         let correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
-        this.view.setCurrentValue([correctValFrom, 0]);
+        this.setCurrentValueView([correctValFrom, 0]);
         this.setCurrentHandlePosition(correctValFrom,  direction);
         if(options.isRange){
             direction = SliderDirection.getDiraction(false, options.isHorizontal);
             let correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
-            this.view.setCurrentValue([correctValFrom, correctValTo]);
+            this.setCurrentValueView([correctValFrom, correctValTo]);
             this.setCurrentHandlePosition(correctValTo,  direction);
         }
     }
@@ -57,14 +58,8 @@ export class Presenter implements IPresenter{
         this.view.setCurrentValue(currentValue);
     }
 
-    protected setCurrentValueModel(currentVal?: number[], direction?: SliderDirection): void{
-        if(currentVal === null){   
-            let newCurrentVal = this.getCurrentValFromPosition(direction);
-            let current = this.getCorrectCurrentVal(newCurrentVal, direction);
-            this.model.setCurrentValue(current);
-        }else{
-            this.model.setCurrentValue(currentVal);
-        }        
+    protected setCurrentValueModel(currentVal?: number[], direction?: SliderDirection): void{       
+        this.model.setCurrentValue(currentVal);                
     }
 
     protected getCorrectPosition(option: {

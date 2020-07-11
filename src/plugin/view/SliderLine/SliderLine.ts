@@ -30,7 +30,7 @@ export class SliderLine extends AbstractElement implements ISliderLine{
     }
 
     public getLineSize(): number{
-        return this.isHorizontal ? this.$elem.get(0).offsetWidth : this.$elem.get(0).offsetHeight;
+        return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
     }    
 
     public setRange(setRangeOptions: ISetRangeOptions): void{

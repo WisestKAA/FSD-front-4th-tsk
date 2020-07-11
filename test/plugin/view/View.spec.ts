@@ -1,168 +1,309 @@
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { Presenter } from "../../../src/plugin/presenter/Presenter";
 import { View } from "../../../src/plugin/view/View";
+import { IPresenter } from "../../../src/plugin/presenter/IPresenter";
 import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
+import { IViewOptions } from "../../../src/plugin/view/IViewOptions";
+import { ICurrentValueWrapper } from "../../../src/plugin/view/CurrentValueWrapper/ICurrentValueWrapper";
+import { ISliderMainWrapper } from "../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper";
+import { IElementsFactory } from "../../../src/plugin/view/ElementsFactory";
+import { ISliderRange } from "../../../src/plugin/view/SliderRange/ISliderRange";
+import { ISliderLine } from "../../../src/plugin/view/SliderLine/ISliderLine";
+import { ISliderHandle } from "../../../src/plugin/view/SliderHandle/ISliderHandle";
+import { ISliderHandleWrapper } from "../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper";
+import { ICurrentValue } from "../../../src/plugin/view/CurrentValue/ICurrentValue";
+import { ISetRangeOptions } from "../../../src/plugin/view/SliderLine/ISetRangeOptions";
+import { ILiteEvent } from "../../../src/plugin/LiteEvent/ILiteEvent";
+import { ISetCurrentValuePositionOptions } from "../../../src/plugin/view/CurrentValueWrapper/ISetCurrentValuePositionOptions";
+import { AbstractElement } from "../../../src/plugin/view/AbstractElement/AbstractElement";
+import { LiteEvent } from "../../../src/plugin/LiteEvent/LiteEvent";
 
-describe('Check View', () => {
-    let view : View;
+class MockPresenter implements IPresenter{
+    constructor(){}
+    sliderHandleChangedPosition(direction: SliderDirection): void {}    
+}
 
-    beforeEach(() => {
-        let elem = $('<div class="slider1" style="width: 100px"></div>');
-        $(document.body).append(elem);        
-        let presenter = new Presenter(elem.get(0));
-        view = presenter.view;
-    });
-
-    afterAll(()=>{$(document.body).html("");});
-
-    describe('Check View / check inint property', () => {
-        it('After initialization the element must be defined', () => {
-            expect(view.slider).toBeDefined();
-        });
-    
-        it('After initialization the line must be defined', () => {
-            expect(view.line).toBeDefined();
-        });
-    
-        it('After initialization the handle must be defined', () => {
-            expect(view.handleFrom).toBeDefined();
-        });
-    
-        it('After initialization the mainWrapper must be defined', () => {
-            expect(view.mainWrapper).toBeDefined();
-        });
-    
-        it('After initialization the currentValue must be defined', () => {
-            expect(view.currentValueFrom).toBeDefined();
-        });
-    
-        it('After initialization the presenter must be defined', () => {
-            expect(view.presenter).toBeDefined();
-        });
-    });
-
-    describe('Check View / check inint horizontal', () => {
-        it('Tag of element must be DIV', () => {
-            expect(view.slider.get(0).nodeName).toEqual('DIV');
-        });
-    
-        it(`Element must have class '${StyleClasses.SLIDER}'`, () => {
-            expect(view.slider.get(0).firstElementChild.classList.contains(StyleClasses.SLIDER)).toBeTrue();
-        });
-    
-        // it(`Header with static current value must have element with class ${StyleClasses.CURRENT}`, () => {
-        //     let $header = view.buildHeader();
-        //     expect($header.get(0).firstElementChild.classList.contains(StyleClasses.CURRENT)).toBeTrue();
-        // });
-    });    
-
-    describe('Check View / check inint vertical', () => {
-        let el = $('<div class="sliderv" style="width: 100px"></div>');
-        $(document.body).append(el);        
-        let presenterv = new Presenter(el.get(0), {isHorizontal: false});
-        let viewv = presenterv.view;
-
-        it(`Element must have class '${StyleClasses.SLIDERV}'`, () => {
-            expect(viewv.slider.get(0).firstElementChild.classList.contains(StyleClasses.SLIDERV)).toBeTrue();
-        });
-    });
-
-    describe('Check View / check inint range', () => {
-        let el = $('<div class="slider" style="width: 100px"></div>');
-        $(document.body).append(el);        
-        let presenterv = new Presenter(el.get(0), {isHorizontal: true, isRange: true});
-        let view = presenterv.view;
-
-        it("After initialization with option 'isRange' propertys handleFrom and handleTo must be defined", () => {
-            expect(view.handleTo).toBeDefined();
-            expect(view.handleFrom).toBeDefined();
+class MockView extends View{
+    constructor(elem: HTMLElement, presenter: IPresenter, options: IViewOptions){
+        super({
+            elem: elem,
+            presenter: presenter,
+            options: options,
+            elementsFactory: new MockElementsFactory(options)
         });        
-        
+    }
+    getCurrentValueWrapper(): ICurrentValueWrapper{return this.currentValueWrapper;}
+    getMainWrapper(): ISliderMainWrapper{return this.mainWrapper;}
+    getOptions():IViewOptions{return this.options;}
+    init(){super.init();}
+    addEvents(){super.addEvents();}
+}
+
+class MockElementsFactory implements IElementsFactory{
+    options: IViewOptions;
+    constructor(options: IViewOptions){this.setNewOptions(options);}
+    buildRange(): ISliderRange {return new MockRange();}
+    buildLine(range?: ISliderRange): ISliderLine {return new MockLine();}
+    buildHandle(line: ISliderLine, isFrom: boolean): ISliderHandle {return new MockHandle()}
+    buildHandleWrapper(handleFrom: ISliderHandle, handleTo?: ISliderHandle): ISliderHandleWrapper {return new MockHandleWrapper();}
+    buildMainWrapper(sliderLine: ISliderLine, sliderHandleWrapper: ISliderHandleWrapper): ISliderMainWrapper {return new MockMainWrapper(this.options.isHorizontal);}
+    buildCurrentValue(isFrom: boolean): ICurrentValue {return new MockCurrentValue()}
+    buildCurrentValueWrapper(valueFrom: ICurrentValue, valueTo?: ICurrentValue): ICurrentValueWrapper {return new MockCurrentValueWrapper(this.options.isHorizontal);}
+    setNewOptions(options: IViewOptions): void {this.options = options;}
+}
+
+class MockRange implements ISliderRange{
+    $elem: JQuery<HTMLElement> = $("<div>");   
+    changeRangeLineTwo(positionFrom: number, positionTo: number): void {}
+    changeRangeLineOne(positionFrom: number, maxHandlePosition: number): void {}
+    changeOrientation(isHorizontal: boolean, horizontalClass: StyleClasses, verticalClass: StyleClasses): void {}
+}
+
+class MockLine implements ISliderLine{
+    changeOrientation(isHorizontal: boolean, horizontalClass: StyleClasses, verticalClass: StyleClasses): void {}
+    public $elem: JQuery<HTMLElement> = $("<div>");     
+    getLineSize(): number {return 100;}
+    setRange(setRangeOptions: ISetRangeOptions): void {}    
+}
+
+class MockHandle implements ISliderHandle{
+    setNewPosition(position: number, direction: SliderDirection): void {}
+    getSliderHandleMaxPosition(): number {return 0;}
+    setCurrentPosition(position: number, direction: SliderDirection): void {}
+    getHandleSize(): number {return 10;}
+    getPosition(): number {return 0;}
+    positionChangedEvent: ILiteEvent<SliderDirection>;
+    $elem: JQuery<HTMLElement> = $("<div>"); 
+    changeOrientation(isHorizontal: boolean, horizontalClass: StyleClasses, verticalClass: StyleClasses): void {}
+}
+
+class MockHandleWrapper implements ISliderHandleWrapper{
+    protected onHandlePositionChanged: LiteEvent<SliderDirection>;
+    constructor(){this.onHandlePositionChanged = new LiteEvent<SliderDirection>();}
+    getMaxHandlePosition(): number {return 90;}
+    setHandlePosition(position: number, direction: SliderDirection): void {}
+    getSliderHandlePosition(direction: SliderDirection): number {return 0}
+    getHandleFromPosition(): number {return 0;}
+    getHandleToPosition(): number {return 0;}
+    getIsRange(): boolean {return false;}
+    public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {return this.onHandlePositionChanged.expose();}
+    $elem: JQuery<HTMLElement> = $("<div>"); 
+    changeOrientation(isHorizontal: boolean, horizontalClass: StyleClasses, verticalClass: StyleClasses): void {}
+}
+
+class MockMainWrapper extends AbstractElement implements ISliderMainWrapper{
+    protected isHorizontal: boolean;
+    protected onHandlePositionChanged: LiteEvent<SliderDirection>;
+    constructor(isHorizontal: boolean){
+        super();
+        this.isHorizontal = isHorizontal;
+        this.init();
+    }
+    protected init(): void {
+       this.$elem  = $("<div>");
+       this.changeOrientation(this.isHorizontal, StyleClasses.MAINWRAPPER, StyleClasses.MAINWRAPPERV);
+       this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
+    }
+    getSliderHandlePosition(direction: SliderDirection): number {return 0;}
+    getMaxHandlePosition(): number {return 90;}
+    setHandlePosition(position: number, direction: SliderDirection): void {this.onHandlePositionChanged.trigger(direction);}
+    getHandleFromPosition(): number {return 0;}
+    getHandleToPosition(): number {return 0;}
+    getLineSize(): number {return 100;}
+    public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {return this.onHandlePositionChanged.expose();}
+    $elem: JQuery<HTMLElement>; 
+}
+
+class MockCurrentValue implements ICurrentValue{
+    $elem: JQuery<HTMLElement>;
+    setCurrentValue(currentValue: number): void {}
+    getCurrentValue(): number {return 0;}
+    setPosition(position: number, handlePercent?: number, lineWidth?: number, isCorrect?: boolean): void {}
+    getCurrentValueSize(): number {return 5;}
+    getCurrentValuePosition(): number {return 0;}
+}
+
+class MockCurrentValueWrapper extends AbstractElement implements ICurrentValueWrapper{
+    protected isHorizontal: boolean;
+    constructor(isHorizontal: boolean){
+        super();
+        this.isHorizontal = isHorizontal;
+        this.init();
+    }
+    protected init(): void {
+       this.$elem  = $("<div>");
+       this.changeOrientation(this.isHorizontal, StyleClasses.CURRENTVALWRAPPER, StyleClasses.CURRENTVALWRAPPERV);
+    }
+    setCurrentValuePosition(setCurrentValuePositionOptions: ISetCurrentValuePositionOptions): void {}
+    setCurrentValue(currentValue: number[]): void {}
+    getCurrentValue(): number[] {return [0, 0];}
+    $elem: JQuery<HTMLElement> = $("<div>"); 
+}
+
+describe("Test View", () => {
+    let view: View;    
+    let presenter: MockPresenter;
+
+    describe("Test View / init", () => {
+        it(`The element must have class ${StyleClasses.SLIDER} if the isHorizontal property is true`, () => {
+            let elem = $("<div>").get(0);
+            let options: IViewOptions = {isHorizontal: true, isRange: false, isRangeLineEnabled: false, isVisibleCurrentValue: false}
+            view = new View({
+                elem: elem,
+                options: options,
+                presenter: new MockPresenter(),
+                elementsFactory: new MockElementsFactory(options)
+            });
+            expect(view.slider.find(`.${StyleClasses.SLIDER}`).attr("class")).toBe(StyleClasses.SLIDER);
+        });
+
+        it(`The element must have classes ${StyleClasses.SLIDER} and ${StyleClasses.SLIDERV} if the isHorizontal property is false`, () => {
+            let elem = $("<div>").get(0);
+            let options: IViewOptions = {isHorizontal: false, isRange: false, isRangeLineEnabled: false, isVisibleCurrentValue: false};
+            view = new View({
+                elem: elem,
+                options: options,
+                presenter: new MockPresenter(),
+                elementsFactory: new MockElementsFactory(options)
+            });
+            expect(view.slider.find(`.${StyleClasses.SLIDER}`).attr("class")).toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDERV}`);
+        });
+
+        it(`The element must have have subelement with class ${StyleClasses.CURRENTVALWRAPPER} if the isHorizontal property is true`, () => {
+            let elem = $("<div>").get(0);
+            let options: IViewOptions = {isHorizontal: true, isRange: true, isRangeLineEnabled: false, isVisibleCurrentValue: false};
+            view = new View({
+                elem: elem,
+                options: options,
+                presenter: new MockPresenter(),
+                elementsFactory: new MockElementsFactory(options)
+            });
+            expect(view.slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr("class")).toBe(StyleClasses.CURRENTVALWRAPPER);
+        });
+
+        it(`The element must have have subelement with classes ${StyleClasses.CURRENTVALWRAPPER} and ${StyleClasses.CURRENTVALWRAPPERV} if the isHorizontal property is false`, () => {
+            let elem = $("<div>").get(0);
+            let options: IViewOptions = {isHorizontal: false, isRange: false, isRangeLineEnabled: true, isVisibleCurrentValue: false};
+            view = new View({
+                elem: elem,
+                options: options,
+                presenter: new MockPresenter(),
+                elementsFactory: new MockElementsFactory(options)
+            });
+            expect(view.slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr("class")).toBe(`${StyleClasses.CURRENTVALWRAPPER} ${StyleClasses.CURRENTVALWRAPPERV}`);
+        });
+
+        it(`The element must have have subelement with class ${StyleClasses.MAINWRAPPER} if the isHorizontal property is true`, () => {
+            let elem = $("<div>").get(0);
+            let options: IViewOptions = {isHorizontal: true, isRange: true, isRangeLineEnabled: false, isVisibleCurrentValue: false};
+            view = new View({
+                elem: elem,
+                options: options,
+                presenter: new MockPresenter(),
+                elementsFactory: new MockElementsFactory(options)
+            });
+            expect(view.slider.find(`.${StyleClasses.MAINWRAPPER}`).attr("class")).toBe(StyleClasses.MAINWRAPPER);
+        });
+
+        it(`The element must have have subelement with classes ${StyleClasses.MAINWRAPPER} and ${StyleClasses.MAINWRAPPERV} if the isHorizontal property is false`, () => {
+            let elem = $("<div>").get(0);
+            let options: IViewOptions = {isHorizontal: false, isRange: false, isRangeLineEnabled: true, isVisibleCurrentValue: false};
+            view = new View({
+                elem: elem,
+                options: options,
+                presenter: new MockPresenter(),
+                elementsFactory: new MockElementsFactory(options)
+            });
+            expect(view.slider.find(`.${StyleClasses.MAINWRAPPER}`).attr("class")).toBe(`${StyleClasses.MAINWRAPPER} ${StyleClasses.MAINWRAPPERV}`);
+        });
     });
 
-    describe('Check View / check inint range line', () => {
-        let el = $('<div class="slider" style="width: 100px"></div>');
-        $(document.body).append(el);        
-        let presenterv = new Presenter(el.get(0), {isHorizontal: true, isRangeLineEnabled: true, isRange: true});
-        let view = presenterv.view;
-
-        it("After initialization with option 'isRangeLineEnabled' propertys range must be defined", () => {
-            expect(view.range).toBeDefined();
-        });
-        
-        it("The setRange function must call the changeRangeLineOne function: ", () => {            
-            let spy = spyOn(view.range, "changeRangeLineOne")
-            view.options.isRange = false;
-            view.setRange(true);
-            expect(spy).toHaveBeenCalled();      
+    describe("Test View / functions", () => {
+        it("The getSliderHandlePosition function must call the getSliderHandlePosition function from mainWrapper", () => {
+            let elem = $("<div>").get(0);
+            let view = new MockView(elem, new MockPresenter(), {isHorizontal: false, isRange: false, isRangeLineEnabled: true, isVisibleCurrentValue: false});
+            let mainWrapper = view.getMainWrapper();
+            let spy = spyOn(mainWrapper, "getSliderHandlePosition");
+            view.getSliderHandlePosition(SliderDirection.BOTTOM);
+            expect(spy).toHaveBeenCalledWith(SliderDirection.BOTTOM);
         });
 
-        it("The setRange function must call the changeRangeLineTwo function: ", () => {            
-            let spy = spyOn(view.range, "changeRangeLineTwo")
-            view.options.isRange = true;
-            view.setRange(true);
-            expect(spy).toHaveBeenCalled();      
-        }); 
-    });
-
-    describe('Check View / check function', () => {
-        it("The getSliderHandleLeftPosition function should return the current hadle position", () => {
-            expect(view.getSliderHandlePosition(SliderDirection.LEFT)).toBe(view.handleFrom.position);
+        it("The setCurrentValue function must call the setCurrentValue function from currentValueWrapper", () => {
+            let elem = $("<div>").get(0);
+            let view = new MockView(elem, new MockPresenter(), {isHorizontal: false, isRange: false, isRangeLineEnabled: true, isVisibleCurrentValue: false});
+            let currentValueWrapper = view.getCurrentValueWrapper();
+            let spy = spyOn(currentValueWrapper, "setCurrentValue");
+            view.setCurrentValue([0, 0]);
+            expect(spy).toHaveBeenCalledWith([0, 0]);
         });
-    
-        // it("The setCurrentValue function should change the value of the variable and the contents of the element in the CurrentValue object", () => {
-        //     let beforCurrentValueVal = view.currentValueFrom.val;
-        //     let beforCurrentValueElementContent = view.currentValueFrom.$elem.html();
-        //     view.setCurrentValue([beforCurrentValueVal + 1,0]);
-        //     let afterCurrentValueVal = view.currentValueFrom.val;
-        //     let afterCurrentValueElementContent = view.currentValueFrom.$elem.html();
-        //     expect(beforCurrentValueVal).not.toBe(afterCurrentValueVal);
-        //     expect(beforCurrentValueElementContent).not.toBe(afterCurrentValueElementContent);
-        // });
-    
-        // it("The getCurrentValue function should return current value", () => {
-        //     expect(view.getCurrentValue()).toBe(view.currentValue.val);
-        // });
-    
-        it("The setCurrentPosition function should change the value of the variable and the contents of the element in the SliderHandle object", () => {
-            let beforSliderHandlePositionVal = view.handleFrom.position;
-            let beforSliderHandlePositionElem = view.handleFrom.$elem.attr("style");
-            view.setCurrentPosition(beforSliderHandlePositionVal+1, SliderDirection.LEFT);
-            let afterSliderHandlePositionVal = view.handleFrom.position;
-            let afterSliderHandlePositionElem = view.handleFrom.$elem.attr("style");
-            expect(beforSliderHandlePositionVal).not.toBe(afterSliderHandlePositionVal);
-            expect(beforSliderHandlePositionElem).not.toBe(afterSliderHandlePositionElem);
-        });
-    
-        // it("The getLineWidth function should return the line width", () => {
-        //     view.line.$elem.attr("style", "width: 100px;");
-        //     expect(view.getLineWidth()).toBe(100);
-        // });
 
-        it("The setOrientation function must change orientation in all elements", () => {
-            let mainDiv = view.slider.get(0).firstElementChild.classList.value;
-            let line = view.line.$elem.get(0).classList.value;
-            let wrapper = view.mainWrapper.$elem.get(0).classList.value;
-            let handle = view.handleFrom.$elem.get(0).classList.value;
-            let isHorizontal = view.handleFrom.isHorizontal;
-            view.setOrientation({isHorizontal: !isHorizontal, isRange: false, isRangeLineEnabled: false, isVisibleCurrentValue: true});
-            expect(mainDiv).not.toEqual(view.slider.get(0).firstElementChild.classList.value);
-            expect(line).not.toEqual(view.line.$elem.get(0).classList.value);
-            expect(wrapper).not.toEqual(view.mainWrapper.$elem.get(0).classList.value);
-            expect(handle).not.toEqual(view.handleFrom.$elem.get(0).classList.value);
-            expect(isHorizontal).not.toEqual(view.handleFrom.isHorizontal);
-        });        
-
-        it("The checkHandleIntersection function must call the setCurrentPosition and not to be true if positionFrom > maxPos - positionTo", () => {
-            let spy = spyOn(view, "setCurrentPosition");
-            expect(view.checkHandleIntersection(100, 5, SliderDirection.LEFT)).not.toBe(true);
+        it("The getCurrentValue function must call the getCurrentValue function from currentValueWrapper", () => {
+            let elem = $("<div>").get(0);
+            let view = new MockView(elem, new MockPresenter(), {isHorizontal: false, isRange: false, isRangeLineEnabled: true, isVisibleCurrentValue: false});
+            let currentValueWrapper = view.getCurrentValueWrapper();
+            let spy = spyOn(currentValueWrapper, "getCurrentValue");
+            view.getCurrentValue();
             expect(spy).toHaveBeenCalled();
-            expect(view.checkHandleIntersection(100, 5, SliderDirection.TOP)).not.toBe(true);
-
         });
 
-        it("The checkHandleIntersection function must return false if positionFrom < maxPos - positionTo", () => {
-            expect(view.checkHandleIntersection(-10, 5, SliderDirection.LEFT)).toBe(false);
+        it("The getMaxHandlePosition function must call the getMaxHandlePosition function from mainWrapper", () => {
+            let elem = $("<div>").get(0);
+            let view = new MockView(elem, new MockPresenter(), {isHorizontal: false, isRange: false, isRangeLineEnabled: true, isVisibleCurrentValue: false});
+            let mainWrapper = view.getMainWrapper();
+            let spy = spyOn(mainWrapper, "getMaxHandlePosition");
+            view.getMaxHandlePosition();
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("The setHandlePosition function must call the setHandlePosition function from mainWrapper", () => {
+            let elem = $("<div>").get(0);
+            let view = new MockView(elem, new MockPresenter(), {isHorizontal: false, isRange: false, isRangeLineEnabled: true, isVisibleCurrentValue: false});
+            let mainWrapper = view.getMainWrapper();
+            let spy = spyOn(mainWrapper, "setHandlePosition");
+            view.setHandlePosition(0, SliderDirection.BOTTOM);
+            expect(spy).toHaveBeenCalledWith(0, SliderDirection.BOTTOM);
+        });
+
+        it("When the handle position changed the View must call the sliderHandleChangedPosition function from presenter", () => {
+            let elem = $("<div>").get(0);
+            presenter = new MockPresenter();
+            let view = new MockView(elem, presenter, {isHorizontal: true, isRange: false, isRangeLineEnabled: true, isVisibleCurrentValue: false});
+            let spy = spyOn(presenter, "sliderHandleChangedPosition");
+            view.setHandlePosition(1000, SliderDirection.LEFT);
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("When the handle position changed the View must call the setCurrentValuePosition function from currentValueWrapper", () => {
+            let elem = $("<div>").get(0);
+            let view = new MockView(elem, new MockPresenter(), {isHorizontal: true, isRange: true, isRangeLineEnabled: true, isVisibleCurrentValue: false});
+            let currentValueWrapper = view.getCurrentValueWrapper();
+            let spy = spyOn(currentValueWrapper, "setCurrentValuePosition");
+            view.setHandlePosition(1000, SliderDirection.RIGHT);
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("The reinitialization function must clear slider, change options and call next functions: init and addEvents", () => {
+            let elem = $("<div>").get(0);
+            let oldOptions: IViewOptions = {
+                isHorizontal: true,
+                isRange: false,
+                isRangeLineEnabled: false,
+                isVisibleCurrentValue: true
+            };
+            let newOptions: IViewOptions = {
+                isHorizontal: false,
+                isRange: false,
+                isRangeLineEnabled: true,
+                isVisibleCurrentValue: true
+            };
+            let view = new MockView(elem, new MockPresenter(), oldOptions);
+            let spySlider = spyOn(view.slider, "html");
+            let spyInit = spyOn(view, "init");
+            let spyAddEvents = spyOn(view, "addEvents");
+            view.reinitialization(newOptions);
+            expect(view.getOptions()).toEqual(newOptions);
+            expect(spySlider).toHaveBeenCalled();
+            expect(spyInit).toHaveBeenCalled();
+            expect(spyAddEvents).toHaveBeenCalled();
         });
     });
 });

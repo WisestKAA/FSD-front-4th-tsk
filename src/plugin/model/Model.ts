@@ -3,15 +3,15 @@ import { LiteEvent } from '../LiteEvent/LiteEvent';
 import { ILiteEvent } from '../LiteEvent/ILiteEvent';
 import { IModel } from './IModel';
 import { ISliderSettings } from './ISliderSettings';
-import { SliderOptions } from './SliderOptions/SliderOptions';
+import { ISliderOptionsFactory } from './SliderOptions/SliderOptionsFactory';
 
 export class Model implements IModel{  
     private sliderOptions: ISliderOptions;
     private onCurrentValueChanged: LiteEvent<number[]>;
     private onOptionsChanged: LiteEvent<void>;
 
-    constructor(options?: ISliderSettings){
-        this.sliderOptions = new SliderOptions(options); 
+    constructor(optionsFactory: ISliderOptionsFactory){
+        this.sliderOptions = optionsFactory.build(); 
         this.onCurrentValueChanged = new LiteEvent<number[]>();
         this.onOptionsChanged = new LiteEvent<void>();
     }

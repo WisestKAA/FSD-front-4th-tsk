@@ -1,168 +1,261 @@
 import { Presenter } from "../../../src/plugin/presenter/Presenter";
-import '../../../src/plugin/simpleslider';
+import { IViewFactory } from "../../../src/plugin/view/ViewFactory";
+import { IPresenter } from "../../../src/plugin/presenter/IPresenter";
+import { IViewOptions } from "../../../src/plugin/view/IViewOptions";
+import { IElementsFactory } from "../../../src/plugin/view/ElementsFactory";
+import { IView } from "../../../src/plugin/view/IView";
 import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
-import { ISliderOptions } from "../../../src/plugin/model/SliderOptions/ISliderOptions";
+import { IModelFactory, ModelFactory } from "../../../src/plugin/model/ModelFactory";
+import { IModel } from "../../../src/plugin/model/IModel";
+import { ISliderSettings } from "../../../src/plugin/model/ISliderSettings";
+import { ILiteEvent } from "../../../src/plugin/LiteEvent/ILiteEvent";
+import { LiteEvent } from "../../../src/plugin/LiteEvent/LiteEvent";
 
-describe('Check Presenter', () => {    
-    let presenter: Presenter; 
+class MockViewFactory implements IViewFactory{
+    view = new MockView(); 
+    build(presenter?: IPresenter, option?: IViewOptions, elementsFactory?: IElementsFactory): IView {
+        return this.view;
+    }
+}
 
-    beforeEach(() => {  
-        let elem = $('<div class="slider" style="width: 100px"></div>');
-        $(document.body).append(elem);      
-        presenter = new Presenter(elem.get(0));
-    });
+class MockView implements IView{
+    currentValue: number[];
+    handleFromPosition: number;
+    handleToPosition: number;
+    getSliderHandlePosition(direction: SliderDirection): number {
+        return SliderDirection.isFrom(direction) ? this.handleFromPosition : this.handleToPosition;
+    }
+    setCurrentValue(currentValue: number[]): void {this.currentValue = currentValue;}
+    getCurrentValue(): number[] {return this.currentValue;}
+    getMaxHandlePosition(): number {return 90;}
+    setHandlePosition(position: number, direction: SliderDirection): void {
+        if(SliderDirection.isFrom(direction)){
+            this.handleFromPosition = position;
+        } else {
+            this.handleToPosition = position;
+        }
+    }
+    reinitialization(option: IViewOptions): void {}
+}
 
-    afterAll(()=>{ $(document.body).html('');});
+class MockModelFactory implements IModelFactory{
+    model: IModel;
+    options?: ISliderSettings
+    constructor(options?: ISliderSettings){
+        this.options = options;
+        this.model = new MockModel(this.options); 
+    }
+    build(): IModel {
+        return this.model;
+    }
+}
 
-    describe('Check Presenter / init', () => {
-        it('After initialization model must be defined', () => {
-            expect(presenter.model).toBeDefined();
-        });
-    
-        it('After initialization view must be defined', () => {
-            expect(presenter.view).toBeDefined();
-        });
-    
-        it("Ready slider must have class 'slider'", () => {
-            expect(presenter.view.getReadySlider().get(0).classList.contains('slider')).toBeTrue();
-        });
-    });
-
-    it("Function sliderHandleChangedPosition must change current value in model", () => { 
-        presenter.view.handleFrom.setNewPosition(0, SliderDirection.LEFT);
-        let befor = presenter.model.options.currentVal;
-        presenter.view.handleFrom.setNewPosition(50, SliderDirection.LEFT);
-        let after = presenter.model.options.currentVal;
-        expect(befor).not.toBe(after);
-
-        let spy = spyOn(presenter, "sliderHandleChangedPosition"); 
-        presenter.view.handleFrom.setNewPosition(60, SliderDirection.LEFT);
-        expect(spy).toHaveBeenCalled();
-    });
-
-    it("Function setCurrentValueView must change only view level", () => {
-        let beforView = presenter.view.currentValueFrom.val;
-        let beforModel = presenter.model.options.currentVal;
-        presenter.setCurrentValueView([beforView + 1, 0]);
-        let afterView = presenter.view.currentValueFrom.val;
-        let afterModel = presenter.model.options.currentVal;
-        expect(beforView).not.toBe(afterView);
-        expect(beforModel).toBe(afterModel);
-    });
-
-    it("Function setCurrentValueModel must change view & model level", () => {
-        let beforView = presenter.view.currentValueFrom.val;
-        let beforModel = presenter.model.options.currentVal;
-        presenter.setCurrentValueModel([beforView + 1, 0]);
-        let afterView = presenter.view.currentValueFrom.val;
-        let afterModel = presenter.model.options.currentVal;
-        expect(beforView).not.toBe(afterView);
-        expect(beforModel).not.toBe(afterModel);
-    });
-
-    // it("Function setCurrentValueModel must change view & model level (without number)", () => {
-    //     let beforView = presenter.view.currentValueFrom.val;
-    //     let beforModel = presenter.model.options.currentVal;
-    //     presenter.setCurrentValueModel(null, SliderDirection.LEFT);
-    //     let afterView = presenter.view.currentValueFrom.val;
-    //     let afterModel = presenter.model.options.currentVal;
-    //     expect(beforView).not.toBe(afterView);
-    //     expect(beforModel).not.toBe(afterModel);
-    // });
-
-    it("Function getCorrectPosition must return correct value (TY Cap:))", () => {
-        let pos = 50;
-        let maxHandlePosition = 100;
-        expect(presenter.getCorrectPosition(pos, maxHandlePosition, true, SliderDirection.LEFT)).toBe(50);
-        expect(presenter.getCorrectPosition(pos, maxHandlePosition, false, SliderDirection.RIGHT)).toBe(50);
-    });
-
-    it("The getCurrentValFromPosition function should calculate the current value from the handle position", () => {        
-        presenter.setCurrentHandlePosition(10, SliderDirection.LEFT);
-        let calcVal = presenter.getCurrentValFromPosition(SliderDirection.LEFT);
-        expect(calcVal).toBe(10);
-    });
-
-    it("The getCorrectValWithStep function should return the correct value with step", () => {
-        let currentVal = 9.4;
-        expect(presenter.getCorrectValWithStep(currentVal)).toBe(9);
-        expect(presenter.getCorrectValWithStep(-5)).toBe(presenter.model.options.minVal);      
-        
-        expect(presenter.getCorrectValWithStep(1000)).toBe(100);   
-    });
-
-    it("The setCurrentHandlePosition function should change the 'position' property and the 'style' attribute in the SliderHande class", () => {
-        presenter.setCurrentHandlePosition(1, SliderDirection.LEFT);
-        let correctPosition = presenter.getCorrectPosition(1, presenter.view.getMaxHandlePosition(), true, SliderDirection.LEFT);
-        expect(presenter.view.getSliderHandlePosition(SliderDirection.LEFT)).toBe(correctPosition);
-    });
-
-    it("The setNewOptions function should change options in model and view components", () => {
-        let elem = $('<div class="slider" style="width: 100px"></div>');
-        let presenter = new Presenter(elem.get(0), {isRange: true, isRangeLineEnabled: true})
-        presenter.view.handleFrom.position = 10;
-        presenter.view.handleTo.position = 15;
-        presenter.view.currentValueFrom.val = 2;
-        presenter.view.currentValueTo.val = 15;
-        presenter.view.range.changeRangeLineTwo(2, 15);
-
-        
-        let optionsBefor = presenter.model.options;
-        let handleFromProsition = presenter.view.handleFrom.position;
-        let handleToProsition = presenter.view.handleTo.position;
-        let viewCurrentVal = presenter.view.getCurrentValue();
-        let rangeLineStyle = presenter.view.range.$elem.attr("style");
-        let options: ISliderOptions = {
-            currentVal: new Array(-1,20), 
+class MockModel implements IModel{ 
+    private sliderOptions: ISliderSettings
+    private onCurrentValueChanged: LiteEvent<number[]>;
+    private onOptionsChanged: LiteEvent<void>;
+    constructor(sliderOptions?: ISliderSettings){
+        this.onCurrentValueChanged = new LiteEvent<number[]>();
+        this.onOptionsChanged = new LiteEvent<void>();
+        this.sliderOptions =  {
             isHorizontal: true,
-            isRange: true,
-            isRangeLineEnabled: true,
-            maxVal: 150,
-            minVal: -10,
-            precision: 2,
-            step: 0.1,
-            isVisibleCurrentValue: false,
+            maxVal: 100,
+            minVal: 0,
+            currentVal: new Array(0, 0),
+            step: 1,
+            precision: 0,
+            isRange: false,
+            isRangeLineEnabled: false,
+            isVisibleCurrentValue: true,
         };
-        presenter.setNewOptions(options);
-        expect(presenter.model.options).not.toEqual(optionsBefor);
-        expect(presenter.view.handleFrom.position).not.toEqual(handleFromProsition);
-        expect(presenter.view.handleTo.position).not.toBe(handleToProsition);
-        expect(presenter.view.getCurrentValue()).not.toBe(viewCurrentVal);
-        expect(presenter.view.range.$elem.attr("style")).not.toBe(rangeLineStyle);
-        expect(presenter.model.options).toEqual(options);
+        this.sliderOptions = $.extend(this.sliderOptions, sliderOptions);
+    }
+    setCurrentValue(newVal: number[]): void {this.onCurrentValueChanged.trigger(newVal);}
+    setNewOptions(options: ISliderSettings): void {
+        this.sliderOptions = $.extend(this.sliderOptions, options);
+        this.onOptionsChanged.trigger();
+    }
+    getCorrectValWithStep(currentVal: number): number {
+        let options = this.getOptions();
+        let step = options.step;
+        if(currentVal < options.minVal){
+            return options.minVal;
+        }
+        if(currentVal > options.maxVal - options.maxVal % step){
+            return options.maxVal;
+        }
+
+        let correctVal: number;
+        let shift = step - currentVal % step;
+        let middle = step / 2;
+        if(shift > middle){            
+            correctVal = currentVal - currentVal % step;
+        } else {
+            correctVal = currentVal + shift;
+        }
+        let precision = Math.pow(10, options.precision);
+        correctVal = Math.round(correctVal * precision) / precision;
+        return correctVal;
+    }
+    getOptions(): ISliderSettings {return this.sliderOptions;}
+    public get changeCurrentValueEvent(): ILiteEvent<number[]> {return this.onCurrentValueChanged.expose();}
+    public get changeOptionsEvent(): ILiteEvent<void> {return this.onOptionsChanged.expose();}
+}
+
+class MockPresenter extends Presenter{
+    constructor(viewFactory: IViewFactory, modelFactory: IModelFactory){
+        super(viewFactory, modelFactory)
+    }
+    getView(): IView{return this.view;}
+    getModel(): IModel{return this.model;}
+}
+
+describe("Test Presenter", () => {
+    let presenter: Presenter;
+    
+    describe("Test Presenter / init", () => {
+        it("After initialization view must be defined", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory();
+            let view = viewFactory.view;
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(view).toBeDefined();
+        });  
+        
+        it("After initialization model must be defined", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: true});
+            let model = modelFactory.model;
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(model).toBeDefined();
+        });
+
+        it("After initialization the currentValue from the view must be equal the currentValue from the model", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: true, currentVal: [1,1]});
+            let view = viewFactory.view;
+            let model = modelFactory.model;
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(view.getCurrentValue()).toEqual(model.getOptions().currentVal);
+        });
+
+        it("When initializing the presenter, he must once call the setHandlePosition function from the view if the isRange property is false", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: false});
+            let view = viewFactory.view;
+            let spy = spyOn(view, "setHandlePosition");
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(spy).toHaveBeenCalledTimes(1);
+        });
+
+        it("When initializing the presenter, he must twice call the setHandlePosition function from the view if the isRange property is true", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: false});
+            let view = viewFactory.view;
+            let spy = spyOn(view, "setHandlePosition");
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(spy).toHaveBeenCalledTimes(1);
+        });
+
+        it("When initializing the presenter, he must once call the getCorrectValWithStep function from the model if the isRange property is false", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: false});
+            let model = modelFactory.model;
+            let spy = spyOn(model, "getCorrectValWithStep");
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(spy).toHaveBeenCalledTimes(1);
+        });
+
+        it("When initializing the presenter, he must twice call the getCorrectValWithStep function from the model if the isRange property is true", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: true});
+            let model = modelFactory.model;
+            let spy = spyOn(model, "getCorrectValWithStep");
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(spy).toHaveBeenCalledTimes(2);
+        });
     });
 
-    it("The optionsChanged function should call next functions: initViewComponents, view.setOrientation", () => {
-        let spyIC = spyOn(presenter, "initViewComponents");
-        let speSO = spyOn(presenter.view, "setOrientation");
-        presenter.optionsChanged();
-        expect(spyIC).toHaveBeenCalled();
-        expect(speSO).toHaveBeenCalled();
-    });
+    describe("Test Presenter / functions", () => {
+        it("The sliderHandleChangedPosition function must calculate the new current value and set it for the model and view (isRange=false)", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: false});
+            presenter = new Presenter(viewFactory, modelFactory);
 
-    it("The getOptions function should return the current slider options", () => {
-        expect(presenter.getOptions()).toBe(presenter.model.options);
-    });
+            let view = viewFactory.view;
+            let oldCurValView = view.getCurrentValue();
+            let model = modelFactory.model;
+            
+            view.setHandlePosition(10, SliderDirection.LEFT);
+            presenter.sliderHandleChangedPosition(SliderDirection.LEFT);
 
-    it("The onCurrentValueChanged function should add an event listener with the passed function and triggered when currentValue changed", () => {
-        class mock {func = function(data: number) {console.log(data);};}
-        let mockObj = new mock;
-        let spy = spyOn(mockObj, 'func');
-        presenter.onCurrentValueChanged(mockObj.func);
-        presenter.setCurrentValueModel(new Array(5, 5));
-        expect(spy).toHaveBeenCalled();
-    });
+            expect(view.getCurrentValue()).not.toEqual(oldCurValView);
+            expect(view.getCurrentValue()).toEqual(model.getOptions().currentVal);
+        });
 
-    it("The getCorrectCurrentVal function should set value in currentValue array correct", () => {
-        presenter.model.options.isRange = false;
-        let correctVal = 10;
-        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.LEFT)).toEqual([10, 0]);
-        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.BOTTOM)).toEqual([10, 0]);
-        presenter.model.options.isRange = true;
-        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.LEFT)).toEqual([10, 0]);
-        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.BOTTOM)).toEqual([10, 0]);
-        presenter.model.options.isRange = true;
-        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.RIGHT)).toEqual([10, 10]);
-        expect(presenter.getCorrectCurrentVal(correctVal, SliderDirection.TOP)).toEqual([10, 10]);
+        it("The sliderHandleChangedPosition function must calculate the new current value and set it for the model and view (isRange=true)", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: true, step: 20});
+            presenter = new Presenter(viewFactory, modelFactory);
+
+            let view = viewFactory.view;
+            let oldCurValView = view.getCurrentValue();
+            let model = modelFactory.model;
+            
+            view.setHandlePosition(10, SliderDirection.RIGHT);
+            presenter.sliderHandleChangedPosition(SliderDirection.RIGHT);
+
+            expect(view.getCurrentValue()).not.toEqual(oldCurValView);
+            expect(view.getCurrentValue()).toEqual(model.getOptions().currentVal);
+        }); 
+        
+        it("The sliderHandleChangedPosition function must calculate the new current value and set it for the model and view (isRange=true)", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: true});
+            presenter = new Presenter(viewFactory, modelFactory);
+
+            let view = viewFactory.view;
+            let oldCurValView = view.getCurrentValue();
+            let model = modelFactory.model;
+            
+            view.setHandlePosition(10, SliderDirection.LEFT);
+            presenter.sliderHandleChangedPosition(SliderDirection.LEFT);
+
+            expect(view.getCurrentValue()).not.toEqual(oldCurValView);
+            expect(view.getCurrentValue()).toEqual(model.getOptions().currentVal);
+        }); 
+
+        it("The getOptions function must return options from model", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: true});
+            presenter = new Presenter(viewFactory, modelFactory);
+            let modelOptions = modelFactory.model.getOptions();
+            expect(presenter.getOptions()).toEqual(modelOptions);
+        });
+
+        it("The setNewOptions function must set new options for the model and reinitialize the view", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory();
+            presenter = new Presenter(viewFactory, modelFactory);
+            let model = modelFactory.model;
+            let view = viewFactory.view;
+            let reinitSpy = spyOn(view, "reinitialization");
+            presenter.setNewOptions({currentVal: [100, 500]});
+            expect(reinitSpy).toHaveBeenCalled();
+            expect(model.getOptions().currentVal).toEqual([100, 500]);
+        });   
+
+        it("The onCurrentValueChanged function takes as a parameter a callback function that is called with the parameter as a new current value when it changes", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory();
+            presenter = new Presenter(viewFactory, modelFactory);
+
+            let outerObject = {callBack: function (val: number[]){}}
+            let callBackSpy = spyOn(outerObject, "callBack");
+
+            presenter.onCurrentValueChanged(outerObject.callBack);
+            modelFactory.model.setCurrentValue([100,500]);
+            expect(callBackSpy).toHaveBeenCalledWith([100,500]);
+        });   
     });
 });

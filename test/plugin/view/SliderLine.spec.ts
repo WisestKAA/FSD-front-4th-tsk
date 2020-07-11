@@ -1,32 +1,67 @@
 import { SliderLine } from "../../../src/plugin/view/SliderLine/SliderLine";
+import { ISliderRange } from "../../../src/plugin/view/SliderRange/ISliderRange";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
 
-describe('Check SliderLine', () => {
-    let line : SliderLine;
+class MockRange implements ISliderRange{
+    $elem: JQuery<HTMLElement>;
+    constructor(){
 
-    beforeEach(()=>{
-        line  = new SliderLine(true);
+    }
+    changeRangeLineTwo(positionFrom: number, positionTo: number): void {
+        
+    }
+    changeRangeLineOne(positionFrom: number, maxHandlePosition: number): void {
+        
+    }
+    changeOrientation(isHorizontal: boolean, horizontalClass: StyleClasses, verticalClass: StyleClasses): void {
+       
+    }
+}
+
+
+
+describe("Test SliderLine", () => {
+    let line: SliderLine;
+
+    describe("Test SliderLine / init", () => {
+        it(`The element must have class ${StyleClasses.LINE} if the isHorizontal property is true`, () => {
+            line = new SliderLine(true, new MockRange());
+            expect(line.$elem.attr("class")).toBe(StyleClasses.LINE);
+        });
+
+        it(`The element must have classes ${StyleClasses.LINE} and ${StyleClasses.LINEV} if the isHorizontal property is false`, () => {
+            line = new SliderLine(false);
+            expect(line.$elem.attr("class")).toBe(`${StyleClasses.LINE} ${StyleClasses.LINEV}`);
+        });
     });
 
-    it('After initialization element must be defined', () => {
-        expect(line.$elem).toBeDefined();
-    });
+    describe("Test SliderLine / function", () => {
+        it("The getLineSize function must return the offsetWidth of element if the isHorizontal property is true", () => {
+            line = new SliderLine(true);
+            line.$elem.outerWidth(100);
+            expect(line.getLineSize()).toBe(100);
+        });
 
-    it('Tag of element must be DIV', () => {
-        expect(line.$elem.get(0).nodeName).toEqual('DIV');
-    });
+        it("The getLineSize function must return the offsetHeight of element if the isHorizontal property is false", () => {
+            line = new SliderLine(false);
+            line.$elem.outerHeight(100);
+            expect(line.getLineSize()).toBe(100);
+        });
 
-    it(`Element must have class '${StyleClasses.LINE}'`, () => {
-        expect(line.$elem.hasClass(StyleClasses.LINE)).toBeTrue();
-    });
+        it("The setRange function must call the changeRangeLineTwo function from the range if the isRangeLineEnabled property is true and is range", () => {
+            let range = new MockRange();
+            line = new SliderLine(true, range);
+            let spy = spyOn(range, "changeRangeLineTwo");
+            line.setRange({handleFromPosition: 10, isRange: true});
+            expect(spy).toHaveBeenCalled();
+        });
 
-    it(`If the slider have vertical orientation - the element must have class '${StyleClasses.LINEV}'`, () => {
-        let linev = new SliderLine(false);
-        expect(linev.$elem.hasClass(StyleClasses.LINEV)).toBeTrue();
-    });
-
-    it("The getLineSize function shuld return line width", () => {
-        line.$elem.attr('style', 'width: 100px;')
-        expect(line.getLineSize()).toBe(100);
+        it("The setRange function must call the changeRangeLineOne function from the range if the isRangeLineEnabled property is false and is range", () => {
+            let range = new MockRange();
+            line = new SliderLine(true, range);
+            let spy = spyOn(range, "changeRangeLineOne");
+            line.setRange({handleFromPosition: 10, isRange: false});
+            expect(spy).toHaveBeenCalled();
+        });
     });
 });
