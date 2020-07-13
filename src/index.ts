@@ -5,7 +5,7 @@ $(document).ready(() => {
   const sliders = document.querySelectorAll('.slider');
 
   sliders.forEach((val => {
-    $(val).SimpleSlider({currentVal: [50,0], step: 30, isRangeLineEnabled: true}); 
+    $(val).SimpleSlider({currentVal: [50,0], step: 10, isRangeLineEnabled: true}); 
   }));
 
   const sliderV = document.querySelector('.slider-v');
