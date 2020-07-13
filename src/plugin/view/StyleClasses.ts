@@ -21,4 +21,11 @@ export enum StyleClasses {
      MAINWRAPPERV = "simpleslider__main-wrapper_vertical",
      HANDLEWRAPPER = "simpleslider__handle-wrapper",
      HANDLEWRAPPERV = "simpleslider__handle-wrapper_vertical",
+     SCALEWRAPPER = "simpleslider__scale-wrapper",
+     SCALEWRAPPERV = "simpleslider__scale-wrapper_vertical",
+     SCALEITEM = "simpleslider__scale-item",
+     SCALEITEMV = "simpleslider__scale-item_vertical",
+     SCALEMARK = "simpleslider__scale-mark",
+     SCALEMARKV = "simpleslider__scale-mark_vertical",
+     SCALETEXT = "simpleslider__scale-text"
 }

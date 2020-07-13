@@ -8,4 +8,6 @@ export interface ISliderSettings {
     isRange?: boolean;
     isRangeLineEnabled?: boolean;
     isVisibleCurrentValue?: boolean;
+    isScaleEnabled?: boolean;
+    numberOfScaleMarks?: number;
 }

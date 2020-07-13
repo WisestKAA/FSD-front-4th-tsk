@@ -12,6 +12,8 @@ export class SliderOptions implements ISliderOptions{
         isRange: false,
         isRangeLineEnabled: false,
         isVisibleCurrentValue: true,
+        isScaleEnabled: false,
+        numberOfScaleMarks: 2,
     }
     protected options: ISliderSettings;
 
@@ -30,6 +32,7 @@ export class SliderOptions implements ISliderOptions{
         });
         this.checkStep({maxVal: options.maxVal, minVal: options.minVal, step: options.step});
         this.checkPrecision(options.precision);
+        this.checkNumberOfScaleMarks(options.numberOfScaleMarks)
 
         return options;
     }
@@ -81,6 +84,13 @@ export class SliderOptions implements ISliderOptions{
         let mod = precision % 1;
         if(precision < 0 || mod != 0){
             throw new TypeError("Invalid input values. Precision must be greater than or equal to zero and be an integer");
+        }
+    }
+
+    protected checkNumberOfScaleMarks(numberOfScaleMarks: number): void{
+        let mod = numberOfScaleMarks % 1;
+        if(numberOfScaleMarks < 0 || mod != 0){
+            throw new TypeError("Invalid input values. numberOfScaleMarks must be greater than or equal to zero and be an integer");
         }
     }
 
