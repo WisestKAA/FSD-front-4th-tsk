@@ -13,6 +13,10 @@ import { ICurrentValue } from "./CurrentValue/ICurrentValue";
 import { CurrentValue } from "./CurrentValue/CurrentValue";
 import { ICurrentValueWrapper } from "./CurrentValueWrapper/ICurrentValueWrapper";
 import { CurrentValueWrapper } from "./CurrentValueWrapper/CurrentValueWrapper";
+import { IScaleItem } from "./ScaleItem/IScaleItem";
+import { ScaleItem } from "./ScaleItem/ScaleItem";
+import { IScaleWrapper } from "./ScaleWrapper/IScaleWrapper";
+import { ScaleWrapper } from "./ScaleWrapper/ScaleWrapper";
 
 export class ElementsFactory implements IElementsFactory{
     protected options: IViewOptions;
@@ -56,6 +60,14 @@ export class ElementsFactory implements IElementsFactory{
 
     public buildCurrentValueWrapper(valueFrom: ICurrentValue, valueTo?: ICurrentValue): ICurrentValueWrapper{
         return new CurrentValueWrapper(this.options.isHorizontal, valueFrom, valueTo);
+    }
+
+    public buildScaleItem(value: number): IScaleItem{
+        return new ScaleItem(this.options.isHorizontal, value);
+    }
+
+    public buildScaleWrapper(scaleItems: IScaleItem[]): IScaleWrapper{
+        return new ScaleWrapper(this.options.isHorizontal, scaleItems);
     }
 }
 
