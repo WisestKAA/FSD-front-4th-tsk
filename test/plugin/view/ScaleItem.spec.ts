@@ -1,5 +1,17 @@
 import { ScaleItem } from "../../../src/plugin/view/ScaleItem/ScaleItem";
 import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
+import { IScaleItem } from "../../../src/plugin/view/ScaleItem/IScaleItem";
+
+class MockEvent{
+    scaleItem: IScaleItem;
+    constructor(scaleItem: IScaleItem){
+        this.scaleItem = scaleItem;
+        this.scaleItem.scaleItemClickedEvent.on((value) => {
+            this.eventHandler(value);
+        });
+    }
+    eventHandler(val: number): void{};
+}
 
 describe("Test ScaleItem", () => {
     let scaleItem: ScaleItem;
@@ -36,7 +48,13 @@ describe("Test ScaleItem", () => {
         });
     });
 
-    // describe("Test ScaleItem / functions", () => {
-    
-    // });
+    describe("Test ScaleItem / functions", () => {
+        it("When user cliced on element, he must call scaleItemClickedEvent", () => {
+            scaleItem = new ScaleItem(true, 0);
+            let mockEvent = new MockEvent(scaleItem);
+            let clickSpy = spyOn(mockEvent, "eventHandler");
+            scaleItem.$elem.click();
+            expect(clickSpy).toHaveBeenCalledWith(0);
+        });
+    });
 });
