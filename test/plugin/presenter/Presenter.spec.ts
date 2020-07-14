@@ -13,7 +13,8 @@ import { LiteEvent } from "../../../src/plugin/LiteEvent/LiteEvent";
 
 class MockViewFactory implements IViewFactory{
     view = new MockView(); 
-    build(presenter?: IPresenter, option?: IViewOptions, elementsFactory?: IElementsFactory): IView {
+    build(presenter?: IPresenter, option?: IViewOptions, elementsFactory?: IElementsFactory, scaleValues?: number[]): IView {
+        this.view.setOptions(presenter, option, elementsFactory, scaleValues)
         return this.view;
     }
 }
@@ -22,6 +23,8 @@ class MockView implements IView{
     currentValue: number[];
     handleFromPosition: number;
     handleToPosition: number;
+    scaleValues?: number[];
+    constructor(){};
     getSliderHandlePosition(direction: SliderDirection): number {
         return SliderDirection.isFrom(direction) ? this.handleFromPosition : this.handleToPosition;
     }
@@ -36,6 +39,9 @@ class MockView implements IView{
         }
     }
     reinitialization(option: IViewOptions): void {}
+    setOptions(presenter?: IPresenter, option?: IViewOptions, elementsFactory?: IElementsFactory, scaleValues?: number[]):void{
+        this.scaleValues = scaleValues;
+    }
 }
 
 class MockModelFactory implements IModelFactory{
@@ -67,6 +73,8 @@ class MockModel implements IModel{
             isRange: false,
             isRangeLineEnabled: false,
             isVisibleCurrentValue: true,
+            isScaleEnabled: false,
+            numberOfScaleMarks: 2
         };
         this.sliderOptions = $.extend(this.sliderOptions, sliderOptions);
     }
@@ -100,14 +108,6 @@ class MockModel implements IModel{
     getOptions(): ISliderSettings {return this.sliderOptions;}
     public get changeCurrentValueEvent(): ILiteEvent<number[]> {return this.onCurrentValueChanged.expose();}
     public get changeOptionsEvent(): ILiteEvent<void> {return this.onOptionsChanged.expose();}
-}
-
-class MockPresenter extends Presenter{
-    constructor(viewFactory: IViewFactory, modelFactory: IModelFactory){
-        super(viewFactory, modelFactory)
-    }
-    getView(): IView{return this.view;}
-    getModel(): IModel{return this.model;}
 }
 
 describe("Test Presenter", () => {
@@ -173,6 +173,20 @@ describe("Test Presenter", () => {
             let spy = spyOn(model, "getCorrectValWithStep");
             presenter = new Presenter(viewFactory, modelFactory);
             expect(spy).toHaveBeenCalledTimes(2);
+        });
+
+        it("If the isScaleEnabled propertys is true after initialization the scaleValues property in the view must be defined", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: false, isScaleEnabled: true});            
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(viewFactory.view.scaleValues).toBeDefined();
+        });
+
+        it("If the isScaleEnabled propertys is true and the numberOfScaleMarks property more than 2 after initialization the scaleValues property must have more than 2 values", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isRange: false, isScaleEnabled: true, numberOfScaleMarks: 3});            
+            presenter = new Presenter(viewFactory, modelFactory);
+            expect(viewFactory.view.scaleValues).toEqual([0, 50, 100]);
         });
     });
 
@@ -256,6 +270,42 @@ describe("Test Presenter", () => {
             presenter.onCurrentValueChanged(outerObject.callBack);
             modelFactory.model.setCurrentValue([100,500]);
             expect(callBackSpy).toHaveBeenCalledWith([100,500]);
-        });   
+        });  
+        
+        it("The scaleClicked function must call the setCurrentValue function from model and the setHandlePosition function from view (isRange=false)", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isScaleEnabled: true});
+            presenter = new Presenter(viewFactory, modelFactory);            
+            let spyView = spyOn(viewFactory.view, "setHandlePosition");
+            let spyModel = spyOn(modelFactory.model, "setCurrentValue");
+            presenter.scaleClicked(10);
+            
+            expect(spyModel).toHaveBeenCalledWith([10,0]);
+            expect(spyView).toHaveBeenCalledWith(9 , SliderDirection.LEFT);
+        });
+
+        it("The scaleClicked function must call the setCurrentValue function from model and the setHandlePosition function from view (isRange=true, clicked left)", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isScaleEnabled: true, isRange: true, currentVal: [5, 50]});
+            presenter = new Presenter(viewFactory, modelFactory);            
+            let spyView = spyOn(viewFactory.view, "setHandlePosition");
+            let spyModel = spyOn(modelFactory.model, "setCurrentValue");
+            presenter.scaleClicked(10);
+            
+            expect(spyModel).toHaveBeenCalledWith([10,50]);
+            expect(spyView).toHaveBeenCalledWith(9 , SliderDirection.LEFT);
+        });
+
+        it("The scaleClicked function must call the setCurrentValue function from model and the setHandlePosition function from view (isRange=true, clicked right)", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isScaleEnabled: true, isRange: true, currentVal: [5, 50]});
+            presenter = new Presenter(viewFactory, modelFactory);            
+            let spyView = spyOn(viewFactory.view, "setHandlePosition");
+            let spyModel = spyOn(modelFactory.model, "setCurrentValue");
+            presenter.scaleClicked(40);
+            
+            expect(spyModel).toHaveBeenCalledWith([5, 40]);
+            expect(spyView).toHaveBeenCalledWith(54 , SliderDirection.RIGHT);
+        });
     });
 });
