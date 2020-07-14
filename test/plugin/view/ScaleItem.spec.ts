@@ -37,7 +37,7 @@ describe("Test ScaleItem", () => {
             expect(scaleItem.$elem.find(`.${StyleClasses.SCALEMARK}`).attr("class")).toBe(`${StyleClasses.SCALEMARK} ${StyleClasses.SCALEMARKV}`);
         });
 
-        it(`The element must have class ${StyleClasses.SCALETEXT} if the isHorizontal property is true`, () => {
+        it(`The element must have subelement with class ${StyleClasses.SCALETEXT}`, () => {
             scaleItem = new ScaleItem(true, 0);
             expect(scaleItem.$elem.find(`.${StyleClasses.SCALETEXT}`).attr("class")).toBe(StyleClasses.SCALETEXT);
         });
