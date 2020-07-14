@@ -89,8 +89,8 @@ export class SliderOptions implements ISliderOptions{
 
     protected checkNumberOfScaleMarks(numberOfScaleMarks: number): void{
         let mod = numberOfScaleMarks % 1;
-        if(numberOfScaleMarks < 0 || mod != 0){
-            throw new TypeError("Invalid input values. numberOfScaleMarks must be greater than or equal to zero and be an integer");
+        if(numberOfScaleMarks < 2 || mod != 0){
+            throw new TypeError("Invalid input values. numberOfScaleMarks must be greater than or equal to two and be an integer");
         }
     }
 
