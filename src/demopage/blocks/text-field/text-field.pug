@@ -1,0 +1,7 @@
+mixin text-field({placeholder, text,}={})
+    input(
+        type="text"
+        placeholder=placeholder
+        class=`text-field${maskedMod}${addPadding}`
+        value=text
+    )
