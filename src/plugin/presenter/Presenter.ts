@@ -119,13 +119,28 @@ export class Presenter implements IPresenter{
     }
 
     protected optionsChanged(): void{
-        let options = this.model.getOptions(); 
-        this.view.reinitialization({
-            isHorizontal: options.isHorizontal,
-            isRange: options.isRange,
-            isRangeLineEnabled: options.isRangeLineEnabled,
-            isVisibleCurrentValue: options.isVisibleCurrentValue,
-        });
+        let options = this.model.getOptions();
+        if(options.isScaleEnabled){
+            let scaleValues = this.getValuesForScale({
+                minVal: options.minVal,
+                maxVal: options.maxVal,
+                numberOfScaleMarks: options.numberOfScaleMarks
+            });
+            this.view.reinitialization({
+                isHorizontal: options.isHorizontal,
+                isRange: options.isRange,
+                isRangeLineEnabled: options.isRangeLineEnabled,
+                isVisibleCurrentValue: options.isVisibleCurrentValue,
+
+            }, scaleValues);
+        } else {
+            this.view.reinitialization({
+                isHorizontal: options.isHorizontal,
+                isRange: options.isRange,
+                isRangeLineEnabled: options.isRangeLineEnabled,
+                isVisibleCurrentValue: options.isVisibleCurrentValue,
+            });
+        }
         this.initViewComponents();
     }
 

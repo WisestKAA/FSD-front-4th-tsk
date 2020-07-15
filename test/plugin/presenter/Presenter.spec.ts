@@ -259,6 +259,18 @@ describe("Test Presenter", () => {
             expect(model.getOptions().currentVal).toEqual([100, 500]);
         });   
 
+        it("The setNewOptions function must set new options for the model and reinitialize the view (isScaleEnabled=true)", () => {
+            let viewFactory = new MockViewFactory();
+            let modelFactory = new MockModelFactory({isScaleEnabled: true});
+            presenter = new Presenter(viewFactory, modelFactory);
+            let model = modelFactory.model;
+            let view = viewFactory.view;
+            let reinitSpy = spyOn(view, "reinitialization");
+            presenter.setNewOptions({currentVal: [100, 500]});
+            expect(reinitSpy).toHaveBeenCalled();
+            expect(model.getOptions().currentVal).toEqual([100, 500]);
+        });   
+
         it("The onCurrentValueChanged function takes as a parameter a callback function that is called with the parameter as a new current value when it changes", () => {
             let viewFactory = new MockViewFactory();
             let modelFactory = new MockModelFactory();
