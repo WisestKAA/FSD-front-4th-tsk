@@ -19,55 +19,57 @@ import { IScaleWrapper } from "./ScaleWrapper/IScaleWrapper";
 import { ScaleWrapper } from "./ScaleWrapper/ScaleWrapper";
 
 export class ElementsFactory implements IElementsFactory{
-    protected options: IViewOptions;
+    protected isHorizontal: boolean;
+    protected isRange: boolean;
     
-    constructor(options: IViewOptions){
-        this.setNewOptions(options);
+    constructor(isHorizontal: boolean, isRange: boolean){
+        this.setNewOptions(isHorizontal, isRange);
     }
 
-    public setNewOptions(options: IViewOptions): void{
-        this.options = options;
+    public setNewOptions(isHorizontal: boolean, isRange: boolean): void{
+        this.isHorizontal = isHorizontal;
+        this.isRange = isRange;
     }
 
     public buildRange(): ISliderRange{
-        return new SliderRange(this.options.isHorizontal);
+        return new SliderRange(this.isHorizontal);
     }
 
     public buildLine(range?: ISliderRange): ISliderLine{
-        return new SliderLine(this.options.isHorizontal, range);
+        return new SliderLine(this.isHorizontal, range);
     }
 
     public buildHandle(line: ISliderLine, isFrom: boolean): ISliderHandle{
         return new SliderHandle({
-            isHorizontal: this.options.isHorizontal,
-            isRange: this.options.isRange,
+            isHorizontal: this.isHorizontal,
+            isRange: this.isRange,
             sliderLine: line,
             isFrom: isFrom
         });
     }
 
     public buildHandleWrapper(handleFrom: ISliderHandle, handleTo?: ISliderHandle): ISliderHandleWrapper{
-        return new SliderHandleWrapper(this.options.isHorizontal, handleFrom, handleTo);
+        return new SliderHandleWrapper(this.isHorizontal, handleFrom, handleTo);
     }
 
     public buildMainWrapper(sliderLine: ISliderLine, sliderHandleWrapper: ISliderHandleWrapper): ISliderMainWrapper{
-        return new SliderMainWrapper(this.options.isHorizontal, sliderLine, sliderHandleWrapper);
+        return new SliderMainWrapper(this.isHorizontal, sliderLine, sliderHandleWrapper);
     }
 
     public buildCurrentValue(isFrom: boolean): ICurrentValue{
-        return new CurrentValue(isFrom, this.options.isHorizontal);
+        return new CurrentValue(isFrom, this.isHorizontal);
     }
 
     public buildCurrentValueWrapper(valueFrom: ICurrentValue, valueTo?: ICurrentValue): ICurrentValueWrapper{
-        return new CurrentValueWrapper(this.options.isHorizontal, valueFrom, valueTo);
+        return new CurrentValueWrapper(this.isHorizontal, valueFrom, valueTo);
     }
 
     public buildScaleItem(value: number): IScaleItem{
-        return new ScaleItem(this.options.isHorizontal, value);
+        return new ScaleItem(this.isHorizontal, value);
     }
 
     public buildScaleWrapper(scaleItems: IScaleItem[]): IScaleWrapper{
-        return new ScaleWrapper(this.options.isHorizontal, scaleItems);
+        return new ScaleWrapper(this.isHorizontal, scaleItems);
     }
 }
 
@@ -79,5 +81,7 @@ export interface IElementsFactory{
     buildMainWrapper(sliderLine: ISliderLine, sliderHandleWrapper: ISliderHandleWrapper): ISliderMainWrapper;
     buildCurrentValue(isFrom: boolean): ICurrentValue;
     buildCurrentValueWrapper(valueFrom: ICurrentValue, valueTo?: ICurrentValue): ICurrentValueWrapper;
-    setNewOptions(options: IViewOptions): void;
+    buildScaleItem(value: number): IScaleItem;
+    buildScaleWrapper(scaleItems: IScaleItem[]): IScaleWrapper;
+    setNewOptions(isHorizontal: boolean, isRange: boolean): void;
 }

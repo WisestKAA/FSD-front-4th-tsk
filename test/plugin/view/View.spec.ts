@@ -16,19 +16,23 @@ import { ILiteEvent } from "../../../src/plugin/LiteEvent/ILiteEvent";
 import { ISetCurrentValuePositionOptions } from "../../../src/plugin/view/CurrentValueWrapper/ISetCurrentValuePositionOptions";
 import { AbstractElement } from "../../../src/plugin/view/AbstractElement/AbstractElement";
 import { LiteEvent } from "../../../src/plugin/LiteEvent/LiteEvent";
+import { IScaleItem } from "../../../src/plugin/view/ScaleItem/IScaleItem";
+import { IScaleWrapper } from "../../../src/plugin/view/ScaleWrapper/IScaleWrapper";
 
 class MockPresenter implements IPresenter{
     constructor(){}
+    scaleClicked(value: number): void {}
     sliderHandleChangedPosition(direction: SliderDirection): void {}    
 }
 
 class MockView extends View{
-    constructor(elem: HTMLElement, presenter: IPresenter, options: IViewOptions){
+    constructor(elem: HTMLElement, presenter: IPresenter, options: IViewOptions, scaleValues?: number[]){
         super({
             elem: elem,
             presenter: presenter,
             options: options,
-            elementsFactory: new MockElementsFactory(options)
+            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+            scaleValues: scaleValues
         });        
     }
     getCurrentValueWrapper(): ICurrentValueWrapper{return this.currentValueWrapper;}
@@ -36,19 +40,27 @@ class MockView extends View{
     getOptions():IViewOptions{return this.options;}
     init(){super.init();}
     addEvents(){super.addEvents();}
+    getScaleWrapper():IScaleWrapper{return this.scaleWrapper}
 }
 
 class MockElementsFactory implements IElementsFactory{
-    options: IViewOptions;
-    constructor(options: IViewOptions){this.setNewOptions(options);}
+    isHorizontal: boolean;
+    isRange: boolean;
+    constructor(isHorizontal: boolean, isRange: boolean){this.setNewOptions(isHorizontal, isRange);}
+    
+    buildScaleItem(value: number): IScaleItem {return new MockScaleItem}
+    buildScaleWrapper(scaleItems: IScaleItem[]): IScaleWrapper {return new MockScaleWrapper(this.isHorizontal);}
     buildRange(): ISliderRange {return new MockRange();}
     buildLine(range?: ISliderRange): ISliderLine {return new MockLine();}
     buildHandle(line: ISliderLine, isFrom: boolean): ISliderHandle {return new MockHandle()}
     buildHandleWrapper(handleFrom: ISliderHandle, handleTo?: ISliderHandle): ISliderHandleWrapper {return new MockHandleWrapper();}
-    buildMainWrapper(sliderLine: ISliderLine, sliderHandleWrapper: ISliderHandleWrapper): ISliderMainWrapper {return new MockMainWrapper(this.options.isHorizontal);}
+    buildMainWrapper(sliderLine: ISliderLine, sliderHandleWrapper: ISliderHandleWrapper): ISliderMainWrapper {return new MockMainWrapper(this.isHorizontal);}
     buildCurrentValue(isFrom: boolean): ICurrentValue {return new MockCurrentValue()}
-    buildCurrentValueWrapper(valueFrom: ICurrentValue, valueTo?: ICurrentValue): ICurrentValueWrapper {return new MockCurrentValueWrapper(this.options.isHorizontal);}
-    setNewOptions(options: IViewOptions): void {this.options = options;}
+    buildCurrentValueWrapper(valueFrom: ICurrentValue, valueTo?: ICurrentValue): ICurrentValueWrapper {return new MockCurrentValueWrapper(this.isHorizontal);}
+    setNewOptions(isHorizontal: boolean, isRange: boolean): void {
+        this.isHorizontal = isHorizontal;
+        this.isRange = isRange;
+    }
 }
 
 class MockRange implements ISliderRange{
@@ -139,6 +151,29 @@ class MockCurrentValueWrapper extends AbstractElement implements ICurrentValueWr
     $elem: JQuery<HTMLElement> = $("<div>"); 
 }
 
+class MockScaleItem implements IScaleItem{
+    protected onScaleItemClicked: LiteEvent<number>;
+    scaleItemClickedEvent: ILiteEvent<number>;
+    $elem: JQuery<HTMLElement>;
+    changeOrientation(isHorizontal: boolean, horizontalClass: StyleClasses, verticalClass: StyleClasses): void {
+        throw new Error("Method not implemented.");
+    }    
+}
+
+class MockScaleWrapper implements IScaleWrapper{
+    protected onScaleItemClicked: LiteEvent<number>;
+    isHorizontal: boolean;
+    $elem: JQuery<HTMLElement>;
+    constructor(isHorizontal: boolean){
+        this.isHorizontal = isHorizontal;
+        this.onScaleItemClicked = new LiteEvent<number>();
+        this.$elem = this.isHorizontal ? $("<div>").addClass(StyleClasses.SCALEWRAPPER) : $("<div>").addClass([StyleClasses.SCALEWRAPPER, StyleClasses.SCALEWRAPPERV]);
+        this.$elem.click(() => {this.onScaleItemClicked.trigger(0)});
+    }
+    public get scaleItemClickedEvent(): ILiteEvent<number> {return this.onScaleItemClicked.expose();}
+    changeOrientation(isHorizontal: boolean, horizontalClass: StyleClasses, verticalClass: StyleClasses): void {}
+}
+
 describe("Test View", () => {
     let view: View;    
     let presenter: MockPresenter;
@@ -151,7 +186,7 @@ describe("Test View", () => {
                 elem: elem,
                 options: options,
                 presenter: new MockPresenter(),
-                elementsFactory: new MockElementsFactory(options)
+                elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
             });
             expect(view.slider.find(`.${StyleClasses.SLIDER}`).attr("class")).toBe(StyleClasses.SLIDER);
         });
@@ -163,7 +198,7 @@ describe("Test View", () => {
                 elem: elem,
                 options: options,
                 presenter: new MockPresenter(),
-                elementsFactory: new MockElementsFactory(options)
+                elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
             });
             expect(view.slider.find(`.${StyleClasses.SLIDER}`).attr("class")).toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDERV}`);
         });
@@ -175,7 +210,7 @@ describe("Test View", () => {
                 elem: elem,
                 options: options,
                 presenter: new MockPresenter(),
-                elementsFactory: new MockElementsFactory(options)
+                elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
             });
             expect(view.slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr("class")).toBe(StyleClasses.CURRENTVALWRAPPER);
         });
@@ -187,7 +222,7 @@ describe("Test View", () => {
                 elem: elem,
                 options: options,
                 presenter: new MockPresenter(),
-                elementsFactory: new MockElementsFactory(options)
+                elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
             });
             expect(view.slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr("class")).toBe(`${StyleClasses.CURRENTVALWRAPPER} ${StyleClasses.CURRENTVALWRAPPERV}`);
         });
@@ -199,7 +234,7 @@ describe("Test View", () => {
                 elem: elem,
                 options: options,
                 presenter: new MockPresenter(),
-                elementsFactory: new MockElementsFactory(options)
+                elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
             });
             expect(view.slider.find(`.${StyleClasses.MAINWRAPPER}`).attr("class")).toBe(StyleClasses.MAINWRAPPER);
         });
@@ -211,9 +246,35 @@ describe("Test View", () => {
                 elem: elem,
                 options: options,
                 presenter: new MockPresenter(),
-                elementsFactory: new MockElementsFactory(options)
+                elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
             });
             expect(view.slider.find(`.${StyleClasses.MAINWRAPPER}`).attr("class")).toBe(`${StyleClasses.MAINWRAPPER} ${StyleClasses.MAINWRAPPERV}`);
+        });
+
+        it(`The element must have have subelement with class ${StyleClasses.SCALEWRAPPER} if the isHorizontal property is true and the scaleValues is not null/undefined`, () => {
+            let elem = $("<div>").get(0);
+            let options: IViewOptions = {isHorizontal: true, isRange: true, isRangeLineEnabled: false, isVisibleCurrentValue: false};
+            view = new View({
+                elem: elem,
+                options: options,
+                presenter: new MockPresenter(),
+                elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+                scaleValues: [0, 100]
+            });
+            expect(view.slider.find(`.${StyleClasses.SCALEWRAPPER}`).attr("class")).toBe(StyleClasses.SCALEWRAPPER);
+        });
+
+        it(`The element must have have subelement with classes ${StyleClasses.SCALEWRAPPER} and ${StyleClasses.SCALEWRAPPERV} if the isHorizontal property is false`, () => {
+            let elem = $("<div>").get(0);
+            let options: IViewOptions = {isHorizontal: false, isRange: true, isRangeLineEnabled: false, isVisibleCurrentValue: false};
+            view = new View({
+                elem: elem,
+                options: options,
+                presenter: new MockPresenter(),
+                elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+                scaleValues: [0, 100]
+            });
+            expect(view.slider.find(`.${StyleClasses.SCALEWRAPPER}`).attr("class")).toBe(`${StyleClasses.SCALEWRAPPER} ${StyleClasses.SCALEWRAPPERV}`);
         });
     });
 
@@ -304,6 +365,20 @@ describe("Test View", () => {
             expect(spySlider).toHaveBeenCalled();
             expect(spyInit).toHaveBeenCalled();
             expect(spyAddEvents).toHaveBeenCalled();
+        });
+
+        it("When user clicked on element from ScaleWrapper, the View must call scaleClicked whith a value from presenter", () => {
+            let options: IViewOptions = {
+                isHorizontal: false,
+                isRange: false,
+                isRangeLineEnabled: true,
+                isVisibleCurrentValue: true,                
+            };
+            let presenter = new MockPresenter();
+            let view = new MockView($("<div>").get(0), presenter, options, [0, 100]);
+            let presenterSpy = spyOn(presenter, "scaleClicked");
+            view.getScaleWrapper().$elem.click();
+            expect(presenterSpy).toHaveBeenCalledWith(0);
         });
     });
 });

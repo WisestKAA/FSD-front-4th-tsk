@@ -7,8 +7,11 @@ import { ISliderLine } from "./SliderLine/ISliderLine";
 import { ISliderHandleWrapper } from "./SliderHandleWrapper/ISliderHandleWrapper";
 import { IPresenter } from "../presenter/IPresenter";
 import { IElementsFactory } from "./ElementsFactory";
+import { IScaleWrapper } from "./ScaleWrapper/IScaleWrapper";
+import { IScaleItem } from "./ScaleItem/IScaleItem";
+import { IView } from "./IView";
 
-export class View{
+export class View implements IView{
     protected presenter: IPresenter;
     public slider: JQuery<HTMLElement>;
     protected currentValueWrapper: ICurrentValueWrapper;
@@ -16,18 +19,22 @@ export class View{
     protected options: IViewOptions;
     protected elem: HTMLElement;
     protected elementsFactory: IElementsFactory;
+    protected scaleWrapper: IScaleWrapper;
+    protected scaleValues?: number[] = null;
 
     constructor(viewOptions: {
         elem: HTMLElement, 
         presenter: IPresenter, 
         options: IViewOptions,
-        elementsFactory: IElementsFactory
+        elementsFactory: IElementsFactory,
+        scaleValues?: number[]
     }){
-        const{elem, presenter, options, elementsFactory} = viewOptions;
+        const{elem, presenter, options, elementsFactory, scaleValues} = viewOptions;
         this.presenter = presenter;
         this.options = options;
         this.elem = elem;
         this.elementsFactory = elementsFactory;
+        this.scaleValues = scaleValues;
         this.init();
         this.addEvents();
     }
@@ -39,7 +46,12 @@ export class View{
             this.options.isRange 
         );        
         let $mainDiv = this.options.isHorizontal ? $('<div>').addClass(StyleClasses.SLIDER) :  $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERV]);
-        $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
+        if(this.scaleValues === null || this.scaleValues === undefined){
+            $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
+        } else {
+            this.scaleWrapper = this.buildScaleWrapper();
+            $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem, this.scaleWrapper.$elem]);
+        }
         this.slider = $(this.elem).append($mainDiv);
     }
 
@@ -78,11 +90,27 @@ export class View{
         return currentValueWrapper;
     }
 
+    protected buildScaleWrapper(): IScaleWrapper{        
+        let scaleItems = new Array<IScaleItem>();
+        if(!this.options.isHorizontal){
+            this.scaleValues.reverse();
+        }
+        this.scaleValues.forEach((value) => {
+            scaleItems.push(this.elementsFactory.buildScaleItem(value));
+        });        
+        return this.elementsFactory.buildScaleWrapper(scaleItems);
+    }
+
     protected addEvents(): void {
         this.mainWrapper.handlePositionChangedEvent.on((direction) => {
             this.setCurrentValuePosition(direction);
             this.presenter.sliderHandleChangedPosition(direction);
         });
+        if(this.scaleValues !== null && this.scaleValues !== undefined){
+            this.scaleWrapper.scaleItemClickedEvent.on((number) => {
+                this.presenter.scaleClicked(number);
+            });
+        }
     }
 
     protected setCurrentValuePosition(direction: SliderDirection): void{
@@ -118,10 +146,11 @@ export class View{
         this.mainWrapper.setHandlePosition(position, direction);    
     }
 
-    public reinitialization(option: IViewOptions): void{
+    public reinitialization(option: IViewOptions, scaleValues?: number[]): void{
         this.slider.html("");
         this.options = option;
-        this.elementsFactory.setNewOptions(option);
+        this.scaleValues = scaleValues;
+        this.elementsFactory.setNewOptions(option.isHorizontal, option.isRange);
         this.init();
         this.addEvents();
     }
