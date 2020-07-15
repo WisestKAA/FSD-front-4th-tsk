@@ -98,7 +98,8 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: center;        
+        user-select: none;
          
         &_vertical{
             flex-direction: row-reverse;
@@ -164,6 +165,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            cursor: pointer;
+            user-select: none;
 
             &_vertical{
                 flex-direction: row-reverse;
@@ -190,7 +193,7 @@
             font-size: 12px;
             line-height: 15px;
             text-align: right;
-            color: rgba(31,32,65,0.25);
+            color: rgba(31,32,65,0.75);
         }
     }
 }
