@@ -12,10 +12,6 @@ export class SliderDirection{
         }
     }
 
-    static isHorizontal(direction: SliderDirection): boolean{
-        return direction === this.LEFT || direction === this.RIGHT ? true : false;
-    }
-
     static isFrom(direction: SliderDirection): boolean{
         return direction === this.LEFT || direction === this.BOTTOM ? true : false;
     }

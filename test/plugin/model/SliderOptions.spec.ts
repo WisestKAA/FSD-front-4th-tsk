@@ -13,6 +13,8 @@ describe("Test SliderOptions", () => {
         isRange: false,
         isRangeLineEnabled: false,
         isVisibleCurrentValue: true,
+        isScaleEnabled: false,
+        numberOfScaleMarks: 2,
     }
     
     describe("Test SliderOptions / init", () => {
@@ -77,6 +79,11 @@ describe("Test SliderOptions", () => {
         it("If the precision is not intager or subzero, then initialization must throw error", () => {
             let opt: ISliderSettings = {precision: 0.5};
             expect(() => {options = new SliderOptions(opt);}).toThrowError("Invalid input values. Precision must be greater than or equal to zero and be an integer");
+        });
+
+        it("If the numberOfScaleMarks is not intager or less than two, then initialization must throw error", () => {
+            let opt: ISliderSettings = {numberOfScaleMarks: 0.5};
+            expect(() => {options = new SliderOptions(opt);}).toThrowError("Invalid input values. numberOfScaleMarks must be greater than or equal to two and be an integer");
         });
     });
 

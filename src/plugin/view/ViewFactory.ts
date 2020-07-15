@@ -11,16 +11,17 @@ export class ViewFactory implements IViewFactory{
         this.elem = elem;
     }
 
-    public build(presenter: IPresenter, option: IViewOptions, elementsFactory: IElementsFactory): IView{
+    public build(presenter: IPresenter, option: IViewOptions, elementsFactory: IElementsFactory, scaleValues?: number[]): IView{
         return new View({
             elem: this.elem, 
             presenter: presenter,
             options: option,
-            elementsFactory: elementsFactory
+            elementsFactory: elementsFactory,
+            scaleValues: scaleValues
         });
     }
 }
 
 export interface IViewFactory{
-    build(presenter: IPresenter, option: IViewOptions, elementsFactory: IElementsFactory): IView;
+    build(presenter: IPresenter, option: IViewOptions, elementsFactory: IElementsFactory, scaleValues?: number[]): IView;
 }

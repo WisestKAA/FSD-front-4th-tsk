@@ -27,7 +27,12 @@ export class Presenter implements IPresenter{
             isRangeLineEnabled: currentOptions.isRangeLineEnabled,
             isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
         };
-        this.view = viewFactory.build(this, viewOptions, new ElementsFactory(viewOptions));        
+        let valuesForeScale = currentOptions.isScaleEnabled ? this.getValuesForScale({
+                maxVal: currentOptions.maxVal,
+                minVal: currentOptions.minVal,
+                numberOfScaleMarks: currentOptions.numberOfScaleMarks
+            }) : null;
+        this.view = viewFactory.build(this, viewOptions, new ElementsFactory(viewOptions.isHorizontal, viewOptions.isRange), valuesForeScale);
         this.initViewComponents();
     }
 
@@ -58,8 +63,8 @@ export class Presenter implements IPresenter{
         this.view.setCurrentValue(currentValue);
     }
 
-    protected setCurrentValueModel(currentVal?: number[], direction?: SliderDirection): void{       
-        this.model.setCurrentValue(currentVal);                
+    protected setCurrentValueModel(currentVal?: number[]): void{       
+        this.model.setCurrentValue(currentVal);            
     }
 
     protected getCorrectPosition(option: {
@@ -114,13 +119,28 @@ export class Presenter implements IPresenter{
     }
 
     protected optionsChanged(): void{
-        let options = this.model.getOptions(); 
-        this.view.reinitialization({
-            isHorizontal: options.isHorizontal,
-            isRange: options.isRange,
-            isRangeLineEnabled: options.isRangeLineEnabled,
-            isVisibleCurrentValue: options.isVisibleCurrentValue,
-        });
+        let options = this.model.getOptions();
+        if(options.isScaleEnabled){
+            let scaleValues = this.getValuesForScale({
+                minVal: options.minVal,
+                maxVal: options.maxVal,
+                numberOfScaleMarks: options.numberOfScaleMarks
+            });
+            this.view.reinitialization({
+                isHorizontal: options.isHorizontal,
+                isRange: options.isRange,
+                isRangeLineEnabled: options.isRangeLineEnabled,
+                isVisibleCurrentValue: options.isVisibleCurrentValue,
+
+            }, scaleValues);
+        } else {
+            this.view.reinitialization({
+                isHorizontal: options.isHorizontal,
+                isRange: options.isRange,
+                isRangeLineEnabled: options.isRangeLineEnabled,
+                isVisibleCurrentValue: options.isVisibleCurrentValue,
+            });
+        }
         this.initViewComponents();
     }
 
@@ -137,6 +157,26 @@ export class Presenter implements IPresenter{
             current[0] = correctValue;
         }
         return current;
+    }    
+
+    protected getValuesForScale(options: {
+        minVal: number,
+        maxVal: number,
+        numberOfScaleMarks: number
+    }): number[]{
+        const {minVal, maxVal, numberOfScaleMarks} = options;
+        let scaleValues = new Array<number>();
+        scaleValues.push(minVal);
+        if(numberOfScaleMarks === 2){
+            scaleValues.push(maxVal);
+        } else {
+            let step = (maxVal - minVal) / (numberOfScaleMarks - 1);
+            for(let i = 0; i < numberOfScaleMarks - 2; i++){
+                scaleValues.push(scaleValues[i] + step);
+            }
+            scaleValues.push(maxVal);
+        }
+        return scaleValues;
     }
 
     public sliderHandleChangedPosition(direction: SliderDirection): void {
@@ -148,6 +188,25 @@ export class Presenter implements IPresenter{
         if(correctVal != currentValFromPosition){
             this.setCurrentHandlePosition(correctVal, direction);
         }        
+    }
+
+    public scaleClicked(value: number): void{
+        let options = this.model.getOptions();
+        value = this.model.getCorrectValWithStep(value);
+
+        if(!options.isRange){
+            this.setCurrentValueModel([value, 0]);
+            this.setCurrentHandlePosition(value, SliderDirection.getDiraction(true, options.isHorizontal));
+            return;
+        }
+
+        if(value < options.currentVal[0] || value - options.currentVal[0] < options.currentVal[1] - value){
+            this.setCurrentValueModel([value, options.currentVal[1]]);
+            this.setCurrentHandlePosition(value, SliderDirection.getDiraction(true, options.isHorizontal));
+        } else {
+            this.setCurrentValueModel([options.currentVal[0], value]);
+            this.setCurrentHandlePosition(value, SliderDirection.getDiraction(false, options.isHorizontal));
+        }
     }
 
     @bind 
