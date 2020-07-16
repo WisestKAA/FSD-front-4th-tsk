@@ -1,1 +1,27 @@
-mixin slider-card
+include ../radio-buttons/radio-buttons.pug 
+include ../checkbox-button/checkbox-button.pug 
+include ../text-field/text-field.pug
+include ../label/label.pug
+
+mixin slider-card({ textFields = [], radioButtons = [], checkBoxes = []}={})
+    .slider-card
+        .slider-card__slider-wrapper
+            .slider-card__slider
+        .slider-card__menu-wrapper
+            .slider-card__menu-text-fields
+                each textField in  textFields
+                    - const {text, value} = textField                        
+                    .slider-card__menu-item-wrapper
+                        +label({text: text, marginBottom: 3})
+                        +text-field({placeholder: text, text: value})            
+            .slider-card__menu-radio-buttons
+                each radioButton in radioButtons
+                    - const {name, buttons} = radioButton
+                    .slider-card__menu-item-wrapper
+                        +label({text: name, marginBottom: 3})
+                        +radio-buttons({name: name, radioButtons: buttons}) 
+            .slider-card__menu-checkboxes
+                each checkBox in checkBoxes
+                    - const {text, name} = checkBox
+                    .slider-card__menu-item-wrapper
+                        +checkbox-button({text: text, name: name})

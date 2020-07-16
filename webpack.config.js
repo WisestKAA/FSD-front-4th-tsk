@@ -74,6 +74,10 @@ module.exports = (env, options) => {
                 jQuery: 'jquery',
                 'window.jQuery': 'jquery'
             }),
+            new HtmlWebpackPlugin({
+                template: `./src/demopage/index.pug`,
+                filename: './demo.html',
+            }),
         ],
     }
 };
