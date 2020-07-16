@@ -1,6 +1,7 @@
 .radio-buttons {
     display: inline-block;
-    widows: auto;
+    widows: auto;    
+    user-select: none;
 
     &__label{
         display: inline-block;
