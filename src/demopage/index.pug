@@ -8,35 +8,5 @@ html(lang='en')
     body(bgcolor="#F4F4F6", style="margin: 0; box-sizing: border-box;")
         .demo
             .demo-wrapper
-                +slider-card({
-                    textFields: [
-                        { text: "Current value", value: 50 },
-                        { text: "Minimum value", value: 0 },
-                        { text: "Maximum value", value: 100 },
-                        { text: "Step", value: 1 },
-                        { text: "Decimal precision", value: 0 },
-                        { text: "Number of scale marks", value: 2 },
-                    ],
-                    radioButtons: [
-                        {
-                            name: "Orientation", 
-                            buttons: [
-                                {text: "Horizontal", value: "horizontal", isChecked: true},
-                                {text: "Vertical", value: "vertical", isChecked: false},
-                            ],
-                        },
-                        {                           
-                            name: "Range", 
-                            buttons: [
-                                {text: "One value", value: "oneValue", isChecked: true},
-                                {text: "Two values", value: "twoValues", isChecked: false},
-                            ],
-                        }
-                    ],
-                    checkBoxes: [
-                        {text: "Range line", name: "rangeLine"},
-                        {text: "Visible current value", name: "visibleCurrentValue"},
-                        {text: "Scale", name: "scale"},
-                    ]
-                })
+                +slider-card()
                 +slider-card()
