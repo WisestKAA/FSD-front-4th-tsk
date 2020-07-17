@@ -1,5 +1,6 @@
 import './styles.scss';
 import './plugin/simpleslider';
+import './demopage/index'
 
 $(document).ready(() => {  
   const sliders = document.querySelectorAll('.slider');

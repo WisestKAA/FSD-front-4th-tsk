@@ -1,0 +1,1 @@
+import "./blocks/slider-card/slider-card"
