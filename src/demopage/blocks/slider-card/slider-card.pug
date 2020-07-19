@@ -3,9 +3,13 @@ include ../text-field/text-field.pug
 include ../label/label.pug
 
 mixin slider-card({ currentValue=0,  minVal=0, maxVal=100, step=1, precision=0, numOfScaleMark=2, isHorizontal=true, isRange=false, isCurrentValueVisible=true, isRangeLineEnabled=false, isScaleEnabled=false}={})
+    - let vertical = ""
+    if(!isHorizontal)
+        - vertical = "slider-card__slider_vertical"
+    
     .slider-card
         .slider-card__slider-wrapper
-            .slider-card__slider
+            .slider-card__slider(class = vertical)
         form.slider-card__form               
             .slider-card__form-item-wrapper
                 +label({text: "Current value", marginBottom: 3})
