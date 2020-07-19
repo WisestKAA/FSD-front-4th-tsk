@@ -85,16 +85,8 @@ export class SliderCard{
                 }
             });
         }); 
-        this.formInputs.precision.focusout(() => {
-            this.inputValidation("Invalid input values. The precision must be a number, greater than or equal to zero and be an integer", this.formInputs.precision, () => {
-                let precision = this.getNumInputValue(this.formInputs.precision);
-                if(precision !== this.options.precision){
-                    this.optionsChanged({precision: precision});
-                }
-            });
-        }); 
         this.formInputs.numberOfScaleMarks.focusout(() => {
-            this.inputValidation("Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer", this.formInputs.precision, () => {
+            this.inputValidation("Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer", this.formInputs.numberOfScaleMarks, () => {
                 let numberOfScaleMarks = this.getNumInputValue(this.formInputs.numberOfScaleMarks);
                 if(numberOfScaleMarks !== this.options.numberOfScaleMarks){
                     this.optionsChanged({numberOfScaleMarks: numberOfScaleMarks});
@@ -115,7 +107,6 @@ export class SliderCard{
                 maxVal: this.getNumInputValue(this.formInputs.maxVal),
                 currentVal: currentValue,
                 step: this.getNumInputValue(this.formInputs.step),
-                precision: this.getNumInputValue(this.formInputs.precision),
                 isRange: isRange,
                 isRangeLineEnabled: this.formInputs.isRangeLineEnabled.checked,
                 isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked,
@@ -166,7 +157,6 @@ export class SliderCard{
             maxVal: form.find("input[name=maxVal]"),
             currentVal: form.find("input[name=currentValue]"),
             step: form.find("input[name=step]"),
-            precision: form.find("input[name=precision]"),
             isRange: <HTMLInputElement>form.find("input[name=range]").get(0),
             isRangeLineEnabled: <HTMLInputElement>form.find("input[name=rangeLine]").get(0),
             isVisibleCurrentValue: <HTMLInputElement>form.find("input[name=visibleCurrentValue]").get(0),

@@ -4,7 +4,6 @@ export interface ISliderSettings {
     maxVal: number;
     currentVal: number[];
     step: number;
-    precision: number;
     isRange: boolean;
     isRangeLineEnabled: boolean;
     isVisibleCurrentValue: boolean;

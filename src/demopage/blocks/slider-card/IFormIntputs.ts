@@ -4,7 +4,6 @@ export interface IFormIntputs{
     maxVal: JQuery<HTMLElement>,
     currentVal: JQuery<HTMLElement>,
     step: JQuery<HTMLElement>,
-    precision: JQuery<HTMLElement>,
     isRange: HTMLInputElement,
     isRangeLineEnabled: HTMLInputElement,
     isVisibleCurrentValue: HTMLInputElement,

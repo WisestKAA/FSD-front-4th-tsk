@@ -1,4 +1,3 @@
-include ../radio-buttons/radio-buttons.pug 
 include ../checkbox-button/checkbox-button.pug 
 include ../text-field/text-field.pug
 include ../label/label.pug
@@ -19,10 +18,7 @@ mixin slider-card({ currentValue=0,  minVal=0, maxVal=100, step=1, precision=0, 
                 +text-field({placeholder: "Maximum value", text: maxVal, name: "maxVal"})
             .slider-card__form-item-wrapper
                 +label({text: "Step", marginBottom: 3})
-                +text-field({placeholder: "Step", text: step, name: "step"})
-            .slider-card__form-item-wrapper
-                +label({text: "Decimal precision", marginBottom: 3})
-                +text-field({placeholder: "Decimal precision", text: precision, name: "precision"})
+                +text-field({placeholder: "Step", text: step, name: "step"})           
             .slider-card__form-item-wrapper
                 +label({text: "Number of scale marks", marginBottom: 3})
                 +text-field({placeholder: "Number of scale marks", text: numOfScaleMark, name: "numOfScaleMark"})
