@@ -76,14 +76,15 @@ describe("Test SliderOptions", () => {
             expect(() => {options = new SliderOptions(opt);}).toThrowError("Invalid input values. The step must be less than maxVal - minVal");
         });
 
-        it("If the precision is not intager or subzero, then initialization must throw error", () => {
-            let opt: ISliderSettings = {precision: 0.5};
-            expect(() => {options = new SliderOptions(opt);}).toThrowError("Invalid input values. Precision must be greater than or equal to zero and be an integer");
-        });
-
         it("If the numberOfScaleMarks is not intager or less than two, then initialization must throw error", () => {
             let opt: ISliderSettings = {numberOfScaleMarks: 0.5};
             expect(() => {options = new SliderOptions(opt);}).toThrowError("Invalid input values. numberOfScaleMarks must be greater than or equal to two and be an integer");
+        });
+
+        it("If the step is a fractional number, then the precision option must be equal to the number of decimal places", () => {
+            let opt: ISliderSettings = {step: 0.001};
+            options = new SliderOptions(opt);
+            expect(options.getOptions().precision).toBe(3);
         });
     });
 
