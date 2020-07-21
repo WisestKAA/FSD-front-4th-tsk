@@ -1,16 +1,45 @@
-@import './plugin/styles.scss';
-@import "./demopage/styles.scss";
+
+$dark100: #1F2041;
+$dark75: rgba(31, 32, 65, 0.75);
+$dark50: rgba(31, 32, 65, 0.50);
+$dark25: rgba(31, 32, 65, 0.25);
+$dark10: rgba(31, 32, 65, 0.1);
+$dark05: rgba(31, 32, 65, 0.05);
+$purple: #BC9CFF;
+$green: #6FCF97;
+
+//@import './plugin/styles.scss';
 @import "./demopage/fonts/materialicons/material-icons.css";
 @import "./demopage/fonts/montserrat/Montserrat.css";
+@import "./demopage/blocks/checkbox-button/checkbox-button.scss";
+@import "./demopage/blocks/label/label.scss";
+@import "./demopage/blocks/material-icons/material-icons.scss";
+@import "./demopage/blocks/slider-card/slider-card.scss";
+@import "./demopage/blocks/text-field/text-field.scss";
+@import "./plugin/styles.scss";
 
-.slider, 
-.slider-r{
-    width: 150px;
+
+.h3 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 15px;
+    text-transform: uppercase;
+    color: $dark100;
 }
 
-.slider-v,
-.slider-rv{
-    width: max-content;
-    height: 150px;
-}
+.demo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
 
+    &-wrapper{
+        max-width: 1440px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+}
