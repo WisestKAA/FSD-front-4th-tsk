@@ -1,0 +1,38 @@
+include ../checkbox-button/checkbox-button.pug 
+include ../text-field/text-field.pug
+include ../label/label.pug
+
+mixin slider-card({ currentValue=0,  minVal=0, maxVal=100, step=1, precision=0, numOfScaleMark=2, isHorizontal=true, isRange=false, isCurrentValueVisible=true, isRangeLineEnabled=false, isScaleEnabled=false}={})
+    - let vertical = ""
+    if(!isHorizontal)
+        - vertical = "slider-card__slider_vertical"
+    
+    .slider-card
+        .slider-card__slider-wrapper
+            .slider-card__slider(class = vertical)
+        form.slider-card__form               
+            .slider-card__form-item-wrapper
+                +label({text: "Current value", marginBottom: 3})
+                +text-field({placeholder: "Current value", text: currentValue, name: "currentValue"})           
+            .slider-card__form-item-wrapper
+                +label({text: "Minimum value", marginBottom: 3})
+                +text-field({placeholder: "Minimum value", text: minVal, name: "minVal"}) 
+            .slider-card__form-item-wrapper
+                +label({text: "Maximum value", marginBottom: 3})
+                +text-field({placeholder: "Maximum value", text: maxVal, name: "maxVal"})
+            .slider-card__form-item-wrapper
+                +label({text: "Step", marginBottom: 3})
+                +text-field({placeholder: "Step", text: step, name: "step"})           
+            .slider-card__form-item-wrapper
+                +label({text: "Number of scale marks", marginBottom: 3})
+                +text-field({placeholder: "Number of scale marks", text: numOfScaleMark, name: "numOfScaleMark"})
+            .slider-card__form-item-wrapper
+                +checkbox-button({text: "Horizontal", name: "horizontal", isChecked: isHorizontal})
+            .slider-card__form-item-wrapper
+                +checkbox-button({text: "Range", name: "range", isChecked: isRange})
+            .slider-card__form-item-wrapper
+                +checkbox-button({text: "Visible current value", name: "visibleCurrentValue", isChecked: isCurrentValueVisible})
+            .slider-card__form-item-wrapper
+                +checkbox-button({text: "Range line", name: "rangeLine", isChecked: isRangeLineEnabled})
+            .slider-card__form-item-wrapper
+                +checkbox-button({text: "Scale", name: "scale", isChecked: isScaleEnabled})

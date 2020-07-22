@@ -3,7 +3,7 @@ import { ISliderSettings } from './model/ISliderSettings';
 import { ModelFactory } from './model/ModelFactory';
 import { SliderOptionsFactory } from './model/SliderOptions/SliderOptionsFactory';
 import { ViewFactory } from './view/ViewFactory';
-
+import "./styles.scss";
 
 declare global {
     interface Window {
@@ -17,7 +17,7 @@ declare global {
     }
 }
 
-;(function init($: JQueryStatic){
+;(function ($: JQueryStatic){
     $.fn.SimpleSlider = function start(options?, additionalOptions?: ISliderSettings){ 
         return this.map((i: number, elem: HTMLElement) => {
             if(typeof options === 'object' || !options){               

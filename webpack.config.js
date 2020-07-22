@@ -4,16 +4,18 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require ('webpack');
 
 module.exports = (env, options) => {
+    const production = options.mode === 'production';
+    const publicDir = production ? 'https://wisestkaa.github.io/FSD-front-4nd-tsk/' : '/';
+
     return{  
         watch: true,
         entry: './src/index',
-        devtool: 'inline-source-map',
-        mode: 'development',
+        devtool: production ? false : 'inline-source-map',
+        mode: options.mode,
         module: {
             rules: [
                 {
                     test: /\.ts$/,
-                    //use: 'ts-loader',
                     loader: 'babel-loader',
                     exclude: /(node_modules|bower_components|\.spec.ts)/,                    
                 },
@@ -55,6 +57,7 @@ module.exports = (env, options) => {
         output: {
             filename: 'bundle.js',
             path: path.resolve(__dirname, './dist'),
+            publicPath: publicDir,
         },
         devServer: {
             contentBase: path.join(__dirname, './dist'),

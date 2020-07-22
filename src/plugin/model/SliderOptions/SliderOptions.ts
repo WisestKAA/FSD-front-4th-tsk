@@ -31,8 +31,8 @@ export class SliderOptions implements ISliderOptions{
             minVal: options.minVal
         });
         this.checkStep({maxVal: options.maxVal, minVal: options.minVal, step: options.step});
-        this.checkPrecision(options.precision);
         this.checkNumberOfScaleMarks(options.numberOfScaleMarks)
+        options.precision = this.getPrecision(options.step);
 
         return options;
     }
@@ -80,17 +80,19 @@ export class SliderOptions implements ISliderOptions{
         }
     }
 
-    protected checkPrecision(precision: number): void{
-        let mod = precision % 1;
-        if(precision < 0 || mod != 0){
-            throw new TypeError("Invalid input values. Precision must be greater than or equal to zero and be an integer");
-        }
-    }
-
     protected checkNumberOfScaleMarks(numberOfScaleMarks: number): void{
         let mod = numberOfScaleMarks % 1;
         if(numberOfScaleMarks < 2 || mod != 0){
             throw new TypeError("Invalid input values. numberOfScaleMarks must be greater than or equal to two and be an integer");
+        }
+    }
+
+    protected getPrecision(step: number): number{
+        let dotIndex = step.toString().indexOf(".");
+        if(dotIndex === -1){
+            return 0;
+        } else {
+            return step.toString().substring(dotIndex).length - 1;
         }
     }
 
