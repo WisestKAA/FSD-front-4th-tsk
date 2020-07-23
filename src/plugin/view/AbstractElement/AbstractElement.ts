@@ -10,7 +10,7 @@ export abstract class AbstractElement{
     protected abstract init(): void ;
 
     public changeOrientation(isHorizontal: boolean, horizontalClass: StyleClasses, verticalClass: StyleClasses): void{
-        let elem = this.$elem.get(0);
+        const elem = this.$elem.get(0);
         elem.classList.remove(horizontalClass, verticalClass);
         if(isHorizontal){
             elem.classList.add(horizontalClass)

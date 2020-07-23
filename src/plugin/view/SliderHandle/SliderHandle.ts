@@ -42,7 +42,7 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     }
 
     protected addEvents(): void {
-        let that = this;
+        const that = this;
 
         this.$elem.on("mousedown", function (event){
             that.onMouseDown(this, event);
@@ -52,7 +52,7 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     }
 
     protected onMouseDown(elem: HTMLElement, event: JQuery.MouseDownEvent): void {
-        let that = this;
+        const that = this;
         event.preventDefault();
         this.shiftX = event.clientX - elem.getBoundingClientRect().left;
         this.shiftXR = event.clientX - elem.getBoundingClientRect().right;
@@ -73,29 +73,29 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     }
 
     protected onMouseMoveX(event: JQuery.MouseMoveEvent): void {
-        let lineHTMLElement = this.line.$elem;
-        let offset = lineHTMLElement.offset().left;
-        let lineWidth = lineHTMLElement.outerWidth();
-        let handleWidth = this.$elem.outerWidth();
+        const lineHTMLElement = this.line.$elem;
+        const offset = lineHTMLElement.offset().left;
+        const lineWidth = lineHTMLElement.outerWidth();
+        const handleWidth = this.$elem.outerWidth();
         if(this.isFrom){
-            let newLeft = this.getNewLeft(event.pageX, offset, lineWidth, handleWidth); 
+            const newLeft = this.getNewLeft(event.pageX, offset, lineWidth, handleWidth); 
             this.setNewPosition(newLeft, SliderDirection.LEFT);
         } else {
-            let newRight = this.getNewRight(event.pageX, offset, lineWidth, handleWidth); 
+            const newRight = this.getNewRight(event.pageX, offset, lineWidth, handleWidth); 
             this.setNewPosition(newRight, SliderDirection.RIGHT);
         }        
     }
 
     protected onMouseMoveY(event: JQuery.MouseMoveEvent): void {
-        let lineHTMLElement = this.line.$elem;
-        let offset = lineHTMLElement.offset().top;
-        let lineHieght = lineHTMLElement.outerHeight();
-        let handleHeight = this.$elem.outerHeight();
+        const lineHTMLElement = this.line.$elem;
+        const offset = lineHTMLElement.offset().top;
+        const lineHieght = lineHTMLElement.outerHeight();
+        const handleHeight = this.$elem.outerHeight();
         if(this.isFrom){
-            let newBot = this.getNewBot(event.pageY, offset, lineHieght, handleHeight); 
+            const newBot = this.getNewBot(event.pageY, offset, lineHieght, handleHeight); 
             this.setNewPosition(newBot, SliderDirection.BOTTOM);
         } else {
-            let newTop = this.getNewTop(event.pageY, offset, lineHieght, handleHeight); 
+            const newTop = this.getNewTop(event.pageY, offset, lineHieght, handleHeight); 
             this.setNewPosition(newTop, SliderDirection.TOP);
         }
     }
@@ -106,26 +106,26 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     }
 
     protected getNewLeft(pageX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
-        let newLeft = pageX - this.shiftX - offsetLeft;
-        let newLeftPosition = this.getCorrectPositionFrom(newLeft, lineWidth, handleWidth);
+        const newLeft = pageX - this.shiftX - offsetLeft;
+        const newLeftPosition = this.getCorrectPositionFrom(newLeft, lineWidth, handleWidth);
         return newLeftPosition;
     }
 
     protected getNewRight(pageX: number, offsetLeft: number, lineWidth: number, handleWidth: number): number {
-        let newRight = pageX - this.shiftXR - offsetLeft;
-        let newRightPosition = this.getCorrectPositionTo(newRight, lineWidth, handleWidth);        
+        const newRight = pageX - this.shiftXR - offsetLeft;
+        const newRightPosition = this.getCorrectPositionTo(newRight, lineWidth, handleWidth);        
         return 100 - newRightPosition;
     }
 
     protected getNewBot(pageY: number, offsetTop: number, lineHieght: number, handleHeight: number): number{
-        let newBot = lineHieght - (pageY - offsetTop - this.shiftYT); 
-        let newBotPosition = this.getCorrectPositionFrom(newBot, lineHieght, handleHeight);
+        const newBot = lineHieght - (pageY - offsetTop - this.shiftYT); 
+        const newBotPosition = this.getCorrectPositionFrom(newBot, lineHieght, handleHeight);
         return newBotPosition;
     }
 
     protected getNewTop(pageY: number, offsetTop: number, lineHieght: number, handleHeight: number): number {
-        let newTop = lineHieght - (pageY - offsetTop - this.shiftY);
-        let newBTopPosition = this.getCorrectPositionTo(newTop, lineHieght, handleHeight);
+        const newTop = lineHieght - (pageY - offsetTop - this.shiftY);
+        const newBTopPosition = this.getCorrectPositionTo(newTop, lineHieght, handleHeight);
         return 100 - newBTopPosition;
     }
 
@@ -133,11 +133,11 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
         if(newCoordinate < 0){
             return 0;
         }
-        let edge = linesize - handleSize;
+        const edge = linesize - handleSize;
         if(newCoordinate > edge){
             newCoordinate = edge;
         }
-        let correctPosition = (100 * newCoordinate)/linesize;
+        const correctPosition = (100 * newCoordinate)/linesize;
         return correctPosition;
     }
 
@@ -148,7 +148,7 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
         if(newCoordinate > linesize){
             newCoordinate = linesize;
         }
-        let correctPosition = (100 * newCoordinate)/linesize;
+        const correctPosition = (100 * newCoordinate)/linesize;
         return correctPosition;
     }
     
@@ -158,9 +158,9 @@ export class SliderHandle extends AbstractElement implements ISliderHandle{
     }
 
     public getSliderHandleMaxPosition(): number {        
-        let lineSize = this.isHorizontal ? this.line.$elem.outerWidth() : this.line.$elem.outerHeight();
-        let handleSize = this.getHandleSize();
-        let maxWidth = lineSize - handleSize;
+        const lineSize = this.isHorizontal ? this.line.$elem.outerWidth() : this.line.$elem.outerHeight();
+        const handleSize = this.getHandleSize();
+        const maxWidth = lineSize - handleSize;
         this.maxPosition = (100 * maxWidth)/lineSize;
         return this.maxPosition;        
     }

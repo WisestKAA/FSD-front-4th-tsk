@@ -14,15 +14,15 @@ export class SliderCard{
     }
 
     protected init(): void{
-        let form = this.$elem.find("form");
+        const form = this.$elem.find("form");
         this.initFormInputs(form);
         this.options = this.getSliderSettings();
-        let sliderDiv = this.$elem.find(".slider-card__slider");
+        const sliderDiv = this.$elem.find(".slider-card__slider");
         this.initSlider(sliderDiv.get(0), this.options);
     }
 
     protected addEvents(): void{
-        let that = this;
+        const that = this;
         this.slider.data("presenter").onCurrentValueChanged((val: number[]) => {
             if(this.formInputs.isRange.checked){
                 (<HTMLInputElement>this.formInputs.currentVal.get(0)).value = `${val[0]} ${val[1]}`;
@@ -55,7 +55,7 @@ export class SliderCard{
 
         this.formInputs.minVal.focusout(() => {            
             this.inputValidation("Invalid input! The minimum value must be a number", this.formInputs.minVal, this.options.minVal.toString(), () => {
-                let minVal = this.getNumInputValue(this.formInputs.minVal);
+                const minVal = this.getNumInputValue(this.formInputs.minVal);
                 if(minVal !== this.options.minVal){
                     this.optionsChanged({minVal: minVal});
                 }
@@ -63,7 +63,7 @@ export class SliderCard{
         });   
         this.formInputs.maxVal.focusout(() => {
             this.inputValidation("Invalid input! The maximum value must be a number", this.formInputs.maxVal, this.options.maxVal.toString(), () => {
-                let maxVal = this.getNumInputValue(this.formInputs.maxVal);
+                const maxVal = this.getNumInputValue(this.formInputs.maxVal);
                 if(maxVal !== this.options.maxVal){
                     this.optionsChanged({maxVal: maxVal});
                 }
@@ -71,15 +71,15 @@ export class SliderCard{
         }); 
         this.formInputs.currentVal.focusout(() => {
             this.inputValidation("The current value must be one or two digits separated by a space", this.formInputs.currentVal, this.options.currentVal.toString(), () => {
-                let curVal = this.formInputs.currentVal.val().toString();
-                let isRange = this.formInputs.isRange.checked;
-                let currentVal = this.parseCurrentValue(curVal, isRange);               
+                const curVal = this.formInputs.currentVal.val().toString();
+                const isRange = this.formInputs.isRange.checked;
+                const currentVal = this.parseCurrentValue(curVal, isRange);               
                 this.optionsChanged({currentVal: currentVal});
             });
         }); 
         this.formInputs.step.focusout(() => {
             this.inputValidation("Invalid input values. The step must be a number and less than maxVal - minVal", this.formInputs.step, this.options.step.toString(), () => {
-                let step = this.getNumInputValue(this.formInputs.step);
+                const step = this.getNumInputValue(this.formInputs.step);
                 if(step !== this.options.step){
                     this.optionsChanged({step: step});
                 }
@@ -88,7 +88,7 @@ export class SliderCard{
         this.formInputs.numberOfScaleMarks.focusout(() => {
             this.inputValidation("Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer", 
             this.formInputs.numberOfScaleMarks, this.options.numberOfScaleMarks.toString(), () => {
-                let numberOfScaleMarks = this.getNumInputValue(this.formInputs.numberOfScaleMarks);
+                const numberOfScaleMarks = this.getNumInputValue(this.formInputs.numberOfScaleMarks);
                 if(numberOfScaleMarks !== this.options.numberOfScaleMarks){
                     this.optionsChanged({numberOfScaleMarks: numberOfScaleMarks});
                 }
@@ -97,11 +97,10 @@ export class SliderCard{
     }
 
     protected getSliderSettings(): ISliderSettings{
-        let options: ISliderSettings;
-        let curVal = this.formInputs.currentVal.val() as String;
-        let isRange = this.formInputs.isRange.checked;            
-        let currentValue = this.parseCurrentValue(curVal, isRange); 
-        options = {
+        const curVal = this.formInputs.currentVal.val() as String;
+        const isRange = this.formInputs.isRange.checked;            
+        const currentValue = this.parseCurrentValue(curVal, isRange); 
+        return {
             isHorizontal: this.formInputs.isHorizontal.checked,
             minVal: this.getNumInputValue(this.formInputs.minVal),
             maxVal: this.getNumInputValue(this.formInputs.maxVal),
@@ -112,17 +111,16 @@ export class SliderCard{
             isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked,
             isScaleEnabled: this.formInputs.isScaleEnabled.checked,
             numberOfScaleMarks: this.getNumInputValue(this.formInputs.numberOfScaleMarks)
-        }           
-        return options;
+        }         
     }
 
     protected parseCurrentValue(curVal: String, isRange: boolean): number[]{
         curVal.trim();
-        let indexSpace = curVal.indexOf(" ");
-        let valFrom = curVal.slice(0, indexSpace);
-        let currentValue = new Array<number>();
+        const indexSpace = curVal.indexOf(" ");
+        const valFrom = curVal.slice(0, indexSpace);
+        const currentValue = new Array<number>();
         if(isRange){
-            let valTo = curVal.slice(indexSpace + 1, curVal.length);
+            const valTo = curVal.slice(indexSpace + 1, curVal.length);
             currentValue.push(Number(valFrom));
             currentValue.push(Number(valTo));
         } else {
@@ -133,9 +131,9 @@ export class SliderCard{
     }
 
     protected getNumInputValue(elem: JQuery<HTMLElement>): number{
-        let val = elem.val() as string;
+        const val = elem.val() as string;
         val.trim();
-        let value = Number(val);
+        const value = Number(val);
         if(value || value === 0){                 
             return value;
         } else {     
@@ -182,7 +180,7 @@ export class SliderCard{
 
 
 $(document).ready(() => {
-    let sliderCards = $(document).find(".slider-card");
+    const sliderCards = $(document).find(".slider-card");
     sliderCards.each((index, element) => {
         new SliderCard(element);
     });

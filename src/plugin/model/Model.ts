@@ -27,8 +27,8 @@ export class Model implements IModel{
     } 
     
     public getCorrectValWithStep(currentVal: number): number {
-        let options = this.getOptions();
-        let step = options.step;
+        const options = this.getOptions();
+        const step = options.step;
         if(currentVal < options.minVal){
             return options.minVal;
         }
@@ -37,14 +37,14 @@ export class Model implements IModel{
         }
 
         let correctVal: number;
-        let shift = step - currentVal % step;
-        let middle = step / 2;
+        const shift = step - currentVal % step;
+        const middle = step / 2;
         if(shift > middle){            
             correctVal = currentVal - currentVal % step;
         } else {
             correctVal = currentVal + shift;
         }
-        let precision = Math.pow(10, options.precision);
+        const precision = Math.pow(10, options.precision);
         correctVal = Math.round(correctVal * precision) / precision;
         return correctVal;
     }

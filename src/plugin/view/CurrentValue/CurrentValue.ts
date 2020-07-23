@@ -49,16 +49,16 @@ export class CurrentValue implements ICurrentValue{
     }
 
     public setPosition(position: number, handlePercent?: number, lineWidth?: number, isCorrect?: boolean): void{
-        let correctPosition = this.isHorizontal && !isCorrect ? this.getCorrectPosition(position, handlePercent, lineWidth) : position;
+        const correctPosition = this.isHorizontal && !isCorrect ? this.getCorrectPosition(position, handlePercent, lineWidth) : position;
         this.position = correctPosition;
-        let direction = SliderDirection.getDiraction(this.isFrom, this.isHorizontal);
+        const direction = SliderDirection.getDiraction(this.isFrom, this.isHorizontal);
         this.$elem.attr("style", `${direction}: ${correctPosition}%;`);
     }
 
     protected getCorrectPosition(position: number, handlePercent: number, lineWidth: number): number {        
-        let currentPercent = this.$elem.get(0).offsetWidth * 100 / lineWidth;
-        let shiftPosition = (currentPercent - handlePercent) / 2;
-        let currentPosition = position - shiftPosition;
+        const currentPercent = this.$elem.get(0).offsetWidth * 100 / lineWidth;
+        const shiftPosition = (currentPercent - handlePercent) / 2;
+        const currentPosition = position - shiftPosition;
         return currentPosition;
     }
 
@@ -85,7 +85,7 @@ export class CurrentValue implements ICurrentValue{
         verticalClass: StyleClasses
     }): void{        
         const {isHorizontal, $elem, horizontalClass, verticalClass} = options;
-        let elem = $elem.get(0);
+        const elem = $elem.get(0);
         elem.classList.remove(horizontalClass, verticalClass);
         if(isHorizontal){
             elem.classList.add(horizontalClass)

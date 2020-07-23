@@ -45,7 +45,7 @@ export class View implements IView{
             this.options.isRangeLineEnabled,
             this.options.isRange 
         );        
-        let $mainDiv = this.options.isHorizontal ? $('<div>').addClass(StyleClasses.SLIDER) :  $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERV]);
+        const $mainDiv = this.options.isHorizontal ? $('<div>').addClass(StyleClasses.SLIDER) :  $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERV]);
         if(this.scaleValues === null || this.scaleValues === undefined){
             $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
         } else {
@@ -58,16 +58,16 @@ export class View implements IView{
     protected buildMainWrapper(isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper{
         let line: ISliderLine;
         if(isRangeLineEnabled){
-            let range = this.elementsFactory.buildRange();
+            const range = this.elementsFactory.buildRange();
             line = this.elementsFactory.buildLine(range);
         } else {
             line = this.elementsFactory.buildLine();
         }
         
         let handleWrapper: ISliderHandleWrapper;
-        let handleFrom = this.elementsFactory.buildHandle(line, true);
+        const handleFrom = this.elementsFactory.buildHandle(line, true);
         if(isRange){
-            let handleTo = this.elementsFactory.buildHandle(line, false);
+            const handleTo = this.elementsFactory.buildHandle(line, false);
             handleWrapper = this.elementsFactory.buildHandleWrapper(handleFrom, handleTo);
         } else {
             handleWrapper = this.elementsFactory.buildHandleWrapper(handleFrom);
@@ -76,10 +76,10 @@ export class View implements IView{
     }    
 
     protected buildCurrentValueWrapper(isRange: boolean): ICurrentValueWrapper{
-        let currentValueFrom = this.elementsFactory.buildCurrentValue(true);
+        const currentValueFrom = this.elementsFactory.buildCurrentValue(true);
         let currentValueWrapper: ICurrentValueWrapper;
         if(isRange){
-            let currentValueTo = this.elementsFactory.buildCurrentValue(false);
+            const currentValueTo = this.elementsFactory.buildCurrentValue(false);
             currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(currentValueFrom, currentValueTo);
         } else {
             currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(currentValueFrom);
@@ -91,7 +91,7 @@ export class View implements IView{
     }
 
     protected buildScaleWrapper(): IScaleWrapper{        
-        let scaleItems = new Array<IScaleItem>();
+        const scaleItems = new Array<IScaleItem>();
         if(!this.options.isHorizontal){
             this.scaleValues.reverse();
         }
@@ -114,7 +114,7 @@ export class View implements IView{
     }
 
     protected setCurrentValuePosition(direction: SliderDirection): void{
-        let position = SliderDirection.isFrom(direction) ? 
+        const position = SliderDirection.isFrom(direction) ? 
             this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
         this.currentValueWrapper.setCurrentValuePosition({
             position: position,

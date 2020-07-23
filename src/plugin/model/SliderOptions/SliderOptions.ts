@@ -50,7 +50,7 @@ export class SliderOptions implements ISliderOptions{
         maxVal: number
     }): number[]{
         const {isRange, currentVal, minVal, maxVal} = options;
-        let curVal: number[] = new Array(0,0);
+        const curVal: number[] = new Array(0,0);
         if(isRange){
             curVal[0] = currentVal[0] < minVal ? 
                 minVal : currentVal[0] > maxVal ? 
@@ -81,14 +81,14 @@ export class SliderOptions implements ISliderOptions{
     }
 
     protected checkNumberOfScaleMarks(numberOfScaleMarks: number): void{
-        let mod = numberOfScaleMarks % 1;
+        const mod = numberOfScaleMarks % 1;
         if(numberOfScaleMarks < 2 || mod != 0){
             throw new TypeError("Invalid input values. numberOfScaleMarks must be greater than or equal to two and be an integer");
         }
     }
 
     protected getPrecision(step: number): number{
-        let dotIndex = step.toString().indexOf(".");
+        const dotIndex = step.toString().indexOf(".");
         if(dotIndex === -1){
             return 0;
         } else {

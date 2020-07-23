@@ -60,7 +60,7 @@ export class SliderHandleWrapper extends AbstractElement implements ISliderHandl
     }
 
     protected checkHandleIntersection(positionFrom: number, positionTo: number, direction: SliderDirection): boolean{
-        let maxPos = this.getMaxHandlePosition();
+        const maxPos = this.getMaxHandlePosition();
         if(positionFrom > maxPos - positionTo){
             if(SliderDirection.isFrom(direction)){
                 this.setHandlePosition(maxPos - positionTo, direction);
@@ -76,7 +76,7 @@ export class SliderHandleWrapper extends AbstractElement implements ISliderHandl
         let maxHandlePosition: number;
         maxHandlePosition = this.handleFrom.getSliderHandleMaxPosition();
         if(this.isRange){
-            let maxHandlePositionTo = this.handleTo.getSliderHandleMaxPosition();
+            const maxHandlePositionTo = this.handleTo.getSliderHandleMaxPosition();
             maxHandlePosition = Math.min(maxHandlePosition, maxHandlePositionTo);
         }
         return maxHandlePosition;

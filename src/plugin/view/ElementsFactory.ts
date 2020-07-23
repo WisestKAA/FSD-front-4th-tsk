@@ -1,4 +1,3 @@
-import { IViewOptions } from "./IViewOptions";
 import { ISliderRange } from "./SliderRange/ISliderRange";
 import { SliderRange } from "./SliderRange/SliderRange";
 import { SliderLine } from "./SliderLine/SliderLine";

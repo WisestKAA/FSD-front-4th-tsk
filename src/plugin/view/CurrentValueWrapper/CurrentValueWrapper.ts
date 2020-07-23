@@ -37,8 +37,8 @@ export class CurrentValueWrapper extends AbstractElement{
     public setCurrentValuePosition(setCurrentValuePositionOptions: ISetCurrentValuePositionOptions): void {
         switch(setCurrentValuePositionOptions.direction){
             case SliderDirection.LEFT:{
-                let maxPosition = setCurrentValuePositionOptions.maxHandlePosition;
-                let handlePercent = 100 - maxPosition;
+                const maxPosition = setCurrentValuePositionOptions.maxHandlePosition;
+                const handlePercent = 100 - maxPosition;
                 this.currentValueFrom.setPosition(setCurrentValuePositionOptions.position, handlePercent, setCurrentValuePositionOptions.lineSize);
                 break;
             }
@@ -47,8 +47,8 @@ export class CurrentValueWrapper extends AbstractElement{
                 break;
             }
             case SliderDirection.RIGHT:{
-                let maxPosition = setCurrentValuePositionOptions.maxHandlePosition;
-                let handlePercent = 100 - maxPosition;
+                const maxPosition = setCurrentValuePositionOptions.maxHandlePosition;
+                const handlePercent = 100 - maxPosition;
                 this.currentValueTo.setPosition(setCurrentValuePositionOptions.position, handlePercent, setCurrentValuePositionOptions.lineSize);
                 break;
             }
@@ -69,20 +69,20 @@ export class CurrentValueWrapper extends AbstractElement{
     
     //зачем туту handleFromPosition и handleToPosition?
     protected checkCurrentValueIntersection(lineSize: number, handleFromPosition: number, handleToPosition: number): void{ 
-        let currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
-        let currentValueToSize = this.currentValueTo.getCurrentValueSize();
-        let maxSize = lineSize - currentValueFromSize - currentValueToSize;
+        const currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
+        const currentValueToSize = this.currentValueTo.getCurrentValueSize();
+        const maxSize = lineSize - currentValueFromSize - currentValueToSize;
         let maxSizePercent = maxSize * 100 / lineSize;
         let sumPosition = this.currentValueFrom.getCurrentValuePosition() + this.currentValueTo.getCurrentValuePosition();
-        let precision = Math.pow(10, 10);
+        const precision = Math.pow(10, 10);
         maxSizePercent = Math.round(maxSizePercent * precision) / precision;
         sumPosition = Math.round(sumPosition * precision) / precision;
         if(sumPosition >= maxSizePercent){
-            let shiftMiddlePosition = (100 - handleFromPosition - handleToPosition) / 2;
-            let currentValueFromPercent = currentValueFromSize * 100 / lineSize;
-            let currentValueToPercent = currentValueToSize * 100 / lineSize;
-            let currentPositionValueFrom = handleFromPosition + shiftMiddlePosition - currentValueFromPercent;
-            let currentPositionValueTo = handleToPosition + shiftMiddlePosition - currentValueToPercent;
+            const shiftMiddlePosition = (100 - handleFromPosition - handleToPosition) / 2;
+            const currentValueFromPercent = currentValueFromSize * 100 / lineSize;
+            const currentValueToPercent = currentValueToSize * 100 / lineSize;
+            const currentPositionValueFrom = handleFromPosition + shiftMiddlePosition - currentValueFromPercent;
+            const currentPositionValueTo = handleToPosition + shiftMiddlePosition - currentValueToPercent;
             this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
             this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
         }
@@ -96,7 +96,7 @@ export class CurrentValueWrapper extends AbstractElement{
     }
 
     public getCurrentValue(): number[]{
-        let val = new Array();
+        const val = new Array();
         val.push(this.currentValueFrom.getCurrentValue());
         if(this.isRange){
             val.push(this.currentValueTo.getCurrentValue());

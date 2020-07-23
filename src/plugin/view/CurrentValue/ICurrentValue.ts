@@ -1,5 +1,3 @@
-import { IElement } from "../AbstractElement/IElement";
-
 export interface ICurrentValue{    
     $elem: JQuery<HTMLElement>;
     setCurrentValue(currentValue: number): void;

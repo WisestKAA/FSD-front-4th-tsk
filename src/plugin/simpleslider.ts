@@ -17,13 +17,13 @@ declare global {
     }
 }
 
-;(function ($: JQueryStatic){
+(function ($: JQueryStatic){
     $.fn.SimpleSlider = function start(options?, additionalOptions?: ISliderSettings){ 
         return this.map((i: number, elem: HTMLElement) => {
             if(typeof options === 'object' || !options){               
-                let sliderOptionsFactory = new SliderOptionsFactory(options as ISliderSettings);
-                let modelFactory = new ModelFactory(sliderOptionsFactory); 
-                let viewFactory = new ViewFactory(elem);
+                const sliderOptionsFactory = new SliderOptionsFactory(options as ISliderSettings);
+                const modelFactory = new ModelFactory(sliderOptionsFactory); 
+                const viewFactory = new ViewFactory(elem);
                 const presenter = new Presenter(viewFactory, modelFactory);
                 this.data('presenter', presenter);
                 return this;

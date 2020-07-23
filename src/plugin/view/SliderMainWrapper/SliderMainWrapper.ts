@@ -40,7 +40,7 @@ export class SliderMainWrapper extends AbstractElement implements ISliderMainWra
 
     protected setRange(): void{
         let options: ISetRangeOptions;
-        let isRange = this.sliderHandleWrapper.getIsRange();
+        const isRange = this.sliderHandleWrapper.getIsRange();
         if(isRange){
             options = {
                 isRange: isRange, 

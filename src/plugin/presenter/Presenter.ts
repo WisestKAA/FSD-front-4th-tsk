@@ -20,14 +20,14 @@ export class Presenter implements IPresenter{
 
     protected init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{        
         this.model = modelFactory.build();
-        let currentOptions = this.model.getOptions();
-        let viewOptions: IViewOptions ={
+        const currentOptions = this.model.getOptions();
+        const viewOptions: IViewOptions ={
             isHorizontal: currentOptions.isHorizontal,
             isRange: currentOptions.isRange,
             isRangeLineEnabled: currentOptions.isRangeLineEnabled,
             isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
         };
-        let valuesForeScale = currentOptions.isScaleEnabled ? this.getValuesForScale({
+        const valuesForeScale = currentOptions.isScaleEnabled ? this.getValuesForScale({
                 maxVal: currentOptions.maxVal,
                 minVal: currentOptions.minVal,
                 numberOfScaleMarks: currentOptions.numberOfScaleMarks
@@ -37,14 +37,14 @@ export class Presenter implements IPresenter{
     }
 
     protected initViewComponents(): void{
-        let options = this.model.getOptions();
+        const options = this.model.getOptions();
         let direction = SliderDirection.getDiraction(true, options.isHorizontal);
-        let correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
+        const correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
         this.setCurrentValueView([correctValFrom, 0]);
         this.setCurrentHandlePosition(correctValFrom,  direction);
         if(options.isRange){
             direction = SliderDirection.getDiraction(false, options.isHorizontal);
-            let correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
+            const correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
             this.setCurrentValueView([correctValFrom, correctValTo]);
             this.setCurrentHandlePosition(correctValTo,  direction);
         }
@@ -90,10 +90,10 @@ export class Presenter implements IPresenter{
     }
 
     protected getCurrentValFromPosition(direction: SliderDirection): number{
-        let options = this.model.getOptions();
-        let maxVal = options.maxVal;
-        let minVal = options.minVal;
-        let correctPosition = this.getCorrectPosition({
+        const options = this.model.getOptions();
+        const maxVal = options.maxVal;
+        const minVal = options.minVal;
+        const correctPosition = this.getCorrectPosition({
             position: this.view.getSliderHandlePosition(direction), 
             maxHandlePosition: this.view.getMaxHandlePosition(), 
             isForView: false, 
@@ -101,13 +101,13 @@ export class Presenter implements IPresenter{
         });
         
         let newCurrentVal = ((maxVal - minVal)  * correctPosition / 100) + minVal;
-        let precision = Math.pow(10, options.precision);
+        const precision = Math.pow(10, options.precision);
         newCurrentVal = Math.round(newCurrentVal * precision) / precision;
         return newCurrentVal;
     }
 
     protected setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
-        let options = this.model.getOptions();
+        const options = this.model.getOptions();
         let position = (100*(correctValue - options.minVal))/(options.maxVal-options.minVal);
         position = this.getCorrectPosition({
             position: position,
@@ -119,9 +119,9 @@ export class Presenter implements IPresenter{
     }
 
     protected optionsChanged(): void{
-        let options = this.model.getOptions();
+        const options = this.model.getOptions();
         if(options.isScaleEnabled){
-            let scaleValues = this.getValuesForScale({
+            const scaleValues = this.getValuesForScale({
                 minVal: options.minVal,
                 maxVal: options.maxVal,
                 numberOfScaleMarks: options.numberOfScaleMarks
@@ -145,8 +145,8 @@ export class Presenter implements IPresenter{
     }
 
     protected getCorrectCurrentVal(correctValue: number, direction: SliderDirection): number[]{
-        let options = this.model.getOptions();
-        let current = options.currentVal;
+        const options = this.model.getOptions();
+        const current = options.currentVal;
         if(options.isRange){
             if(SliderDirection.isFrom(direction)){
                 current[0] = correctValue;
@@ -165,12 +165,12 @@ export class Presenter implements IPresenter{
         numberOfScaleMarks: number
     }): number[]{
         const {minVal, maxVal, numberOfScaleMarks} = options;
-        let scaleValues = new Array<number>();
+        const scaleValues = new Array<number>();
         scaleValues.push(minVal);
         if(numberOfScaleMarks === 2){
             scaleValues.push(maxVal);
         } else {
-            let step = (maxVal - minVal) / (numberOfScaleMarks - 1);
+            const step = (maxVal - minVal) / (numberOfScaleMarks - 1);
             for(let i = 0; i < numberOfScaleMarks - 2; i++){
                 scaleValues.push(scaleValues[i] + step);
             }
@@ -180,18 +180,18 @@ export class Presenter implements IPresenter{
     }
 
     public sliderHandleChangedPosition(direction: SliderDirection): void {
-        let currentVal = this.getCurrentValFromPosition(direction);
-        let correctVal = this.model.getCorrectValWithStep(currentVal);
-        let current = this.getCorrectCurrentVal(correctVal, direction);
+        const currentVal = this.getCurrentValFromPosition(direction);
+        const correctVal = this.model.getCorrectValWithStep(currentVal);
+        const current = this.getCorrectCurrentVal(correctVal, direction);
         this.setCurrentValueModel(current);
-        let currentValFromPosition = this.getCurrentValFromPosition(direction);
+        const currentValFromPosition = this.getCurrentValFromPosition(direction);
         if(correctVal != currentValFromPosition){
             this.setCurrentHandlePosition(correctVal, direction);
         }        
     }
 
     public scaleClicked(value: number): void{
-        let options = this.model.getOptions();
+        const options = this.model.getOptions();
         value = this.model.getCorrectValWithStep(value);
 
         if(!options.isRange){
