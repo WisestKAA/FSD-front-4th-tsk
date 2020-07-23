@@ -54,7 +54,7 @@ export class SliderCard{
         });
 
         this.formInputs.minVal.focusout(() => {            
-            this.inputValidation("Invalid input! The minimum value must be a number", this.formInputs.minVal, () => {
+            this.inputValidation("Invalid input! The minimum value must be a number", this.formInputs.minVal, this.options.minVal.toString(), () => {
                 let minVal = this.getNumInputValue(this.formInputs.minVal);
                 if(minVal !== this.options.minVal){
                     this.optionsChanged({minVal: minVal});
@@ -62,7 +62,7 @@ export class SliderCard{
             });            
         });   
         this.formInputs.maxVal.focusout(() => {
-            this.inputValidation("Invalid input! The maximum value must be a number", this.formInputs.maxVal, () => {
+            this.inputValidation("Invalid input! The maximum value must be a number", this.formInputs.maxVal, this.options.maxVal.toString(), () => {
                 let maxVal = this.getNumInputValue(this.formInputs.maxVal);
                 if(maxVal !== this.options.maxVal){
                     this.optionsChanged({maxVal: maxVal});
@@ -70,7 +70,7 @@ export class SliderCard{
             });
         }); 
         this.formInputs.currentVal.focusout(() => {
-            this.inputValidation("The current value must be one or two digits separated by a space", this.formInputs.currentVal, () => {
+            this.inputValidation("The current value must be one or two digits separated by a space", this.formInputs.currentVal, this.options.currentVal.toString(), () => {
                 let curVal = this.formInputs.currentVal.val().toString();
                 let isRange = this.formInputs.isRange.checked;
                 let currentVal = this.parseCurrentValue(curVal, isRange);               
@@ -78,7 +78,7 @@ export class SliderCard{
             });
         }); 
         this.formInputs.step.focusout(() => {
-            this.inputValidation("Invalid input values. The step must be a number and less than maxVal - minVal", this.formInputs.step, () => {
+            this.inputValidation("Invalid input values. The step must be a number and less than maxVal - minVal", this.formInputs.step, this.options.step.toString(), () => {
                 let step = this.getNumInputValue(this.formInputs.step);
                 if(step !== this.options.step){
                     this.optionsChanged({step: step});
@@ -86,7 +86,8 @@ export class SliderCard{
             });
         }); 
         this.formInputs.numberOfScaleMarks.focusout(() => {
-            this.inputValidation("Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer", this.formInputs.numberOfScaleMarks, () => {
+            this.inputValidation("Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer", 
+            this.formInputs.numberOfScaleMarks, this.options.numberOfScaleMarks.toString(), () => {
                 let numberOfScaleMarks = this.getNumInputValue(this.formInputs.numberOfScaleMarks);
                 if(numberOfScaleMarks !== this.options.numberOfScaleMarks){
                     this.optionsChanged({numberOfScaleMarks: numberOfScaleMarks});
@@ -97,25 +98,21 @@ export class SliderCard{
 
     protected getSliderSettings(): ISliderSettings{
         let options: ISliderSettings;
-        try{
-            let curVal = this.formInputs.currentVal.val() as String;
-            let isRange = this.formInputs.isRange.checked;            
-            let currentValue = this.parseCurrentValue(curVal, isRange); 
-            options = {
-                isHorizontal: this.formInputs.isHorizontal.checked,
-                minVal: this.getNumInputValue(this.formInputs.minVal),
-                maxVal: this.getNumInputValue(this.formInputs.maxVal),
-                currentVal: currentValue,
-                step: this.getNumInputValue(this.formInputs.step),
-                isRange: isRange,
-                isRangeLineEnabled: this.formInputs.isRangeLineEnabled.checked,
-                isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked,
-                isScaleEnabled: this.formInputs.isScaleEnabled.checked,
-                numberOfScaleMarks: this.getNumInputValue(this.formInputs.numberOfScaleMarks)
-            }
-        }catch(error) {
-            alert(error);
-        }     
+        let curVal = this.formInputs.currentVal.val() as String;
+        let isRange = this.formInputs.isRange.checked;            
+        let currentValue = this.parseCurrentValue(curVal, isRange); 
+        options = {
+            isHorizontal: this.formInputs.isHorizontal.checked,
+            minVal: this.getNumInputValue(this.formInputs.minVal),
+            maxVal: this.getNumInputValue(this.formInputs.maxVal),
+            currentVal: currentValue,
+            step: this.getNumInputValue(this.formInputs.step),
+            isRange: isRange,
+            isRangeLineEnabled: this.formInputs.isRangeLineEnabled.checked,
+            isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked,
+            isScaleEnabled: this.formInputs.isScaleEnabled.checked,
+            numberOfScaleMarks: this.getNumInputValue(this.formInputs.numberOfScaleMarks)
+        }           
         return options;
     }
 
@@ -124,17 +121,13 @@ export class SliderCard{
         let indexSpace = curVal.indexOf(" ");
         let valFrom = curVal.slice(0, indexSpace);
         let currentValue = new Array<number>();
-        try{    
-            if(isRange){
-                let valTo = curVal.slice(indexSpace + 1, curVal.length);
-                currentValue.push(Number(valFrom));
-                currentValue.push(Number(valTo));
-            } else {
-                currentValue.push(Number(valFrom));
-                currentValue.push(Number(0));
-            }
-        } catch{
-            alert("The current value must be one or two digits separated by a space");
+        if(isRange){
+            let valTo = curVal.slice(indexSpace + 1, curVal.length);
+            currentValue.push(Number(valFrom));
+            currentValue.push(Number(valTo));
+        } else {
+            currentValue.push(Number(valFrom));
+            currentValue.push(Number(0));
         }
         return currentValue;
     }
@@ -142,7 +135,12 @@ export class SliderCard{
     protected getNumInputValue(elem: JQuery<HTMLElement>): number{
         let val = elem.val() as string;
         val.trim();
-        return Number(val);
+        let value = Number(val);
+        if(value || value === 0){                 
+            return value;
+        } else {     
+            throw new Error();  
+        }
     }
 
     protected initSlider(slider: HTMLElement, sliderSettings: ISliderSettings): void{
@@ -171,11 +169,12 @@ export class SliderCard{
         this.slider.data("presenter").setNewOptions(this.options);
     }
 
-    protected inputValidation(errorMessage: string, element: JQuery<HTMLElement>, func: Function): void{
+    protected inputValidation(errorMessage: string, element: JQuery<HTMLElement>, oldValue: string, func: Function): void{
         try{
             func();
-        } catch {
+        } catch (e){
             element.before(`<div class="slider-card__error">${errorMessage}</div>`);
+            element.attr("value", oldValue);
         }
     }    
 }
