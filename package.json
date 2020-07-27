@@ -8,7 +8,9 @@
     "webpack": "webpack -w --mode development",
     "start": "webpack-dev-server --mode development",
     "buildplugin": "webpack -w --config webpack.buildplugin.config.js",
-    "eslint": "eslint ./src/**/*.ts --fix"
+    "eslint": "eslint ./src/**/*.ts --fix",
+    "builddemo": "webpack --mode production",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -41,6 +43,7 @@
     "css-loader": "^3.5.3",
     "eslint": "^7.1.0",
     "file-loader": "^6.0.0",
+    "gh-pages": "^3.1.0",
     "html-webpack-plugin": "^4.3.0",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.5.0",
