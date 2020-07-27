@@ -1,5 +1,5 @@
 export class SliderDirection{
-    static  get TOP(): string {return "top"}
+    static get TOP(): string {return "top"}
     static get RIGHT(): string {return "right"}
     static get BOTTOM(): string {return "bottom"}
     static get LEFT(): string {return "left"}

@@ -50,7 +50,7 @@ export class Presenter implements IPresenter{
         }
     }
 
-    protected addEvents(){
+    protected addEvents(): void{
         this.model.changeCurrentValueEvent.on((data) => {
             this.setCurrentValueView(data);
         });

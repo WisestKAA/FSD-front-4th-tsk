@@ -3,7 +3,7 @@ import { SliderDirection } from "../SliderDirection";
 import { ICurrentValue } from "./ICurrentValue";
 
 export class CurrentValue implements ICurrentValue{
-    $elem: JQuery<HTMLElement>;
+    public $elem: JQuery<HTMLElement>;
     protected $text: JQuery<HTMLElement>;
     protected $arrow: JQuery<HTMLElement>;
     protected val: number;

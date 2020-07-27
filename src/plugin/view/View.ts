@@ -39,7 +39,7 @@ export class View implements IView{
         this.addEvents();
     }
 
-    protected init(){
+    protected init(): void{
         this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isRange);
         this.mainWrapper = this.buildMainWrapper(
             this.options.isRangeLineEnabled,

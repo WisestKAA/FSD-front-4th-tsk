@@ -7,7 +7,8 @@
     "test": "karma start karma.conf.js",
     "webpack": "webpack -w --mode development",
     "start": "webpack-dev-server --mode development",
-    "buildplugin": "webpack -w --config webpack.buildplugin.config.js"
+    "buildplugin": "webpack -w --config webpack.buildplugin.config.js",
+    "eslint": "eslint ./src/**/*.ts --fix"
   },
   "repository": {
     "type": "git",

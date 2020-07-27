@@ -22,7 +22,7 @@ export class SliderLine extends AbstractElement implements ISliderLine{
         this.init();
     }
 
-    protected init() {
+    protected init(): void{
         this.$elem = this.isHorizontal ? $('<div>').addClass(StyleClasses.LINE) : $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINEV]);
         if(this.isRangeLineEnabled){            
             this.$elem.append(this.range.$elem);

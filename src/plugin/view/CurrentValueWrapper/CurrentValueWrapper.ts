@@ -5,7 +5,7 @@ import { SliderDirection } from "../SliderDirection";
 import { ISetCurrentValuePositionOptions } from "./ISetCurrentValuePositionOptions";
 
 export class CurrentValueWrapper extends AbstractElement{
-    $elem: JQuery<HTMLElement>;
+    public $elem: JQuery<HTMLElement>;
     protected currentValueFrom: ICurrentValue;
     protected currentValueTo: ICurrentValue;
     protected isHorizontal: boolean;
