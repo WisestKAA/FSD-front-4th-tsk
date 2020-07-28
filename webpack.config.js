@@ -5,7 +5,7 @@ const webpack = require ('webpack');
 
 module.exports = (env, options) => {
     const production = options.mode === 'production';
-    const publicDir = production ? 'https://wisestkaa.github.io/FSD-front-4nd-tsk/' : '/';
+    const publicDir = production ? 'https://wisestkaa.github.io/FSD-front-4th-tsk' : '/';
 
     return{  
         watch: true,
