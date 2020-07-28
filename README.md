@@ -109,8 +109,8 @@ ILiteEvent                          | Интерфейс создание и н�
 ...
 <head>
     <script src="./plugindist/lib/jquery.js"></script>
-    <script src="./simpleslider.jquery.js"></script>
-    <link rel="stylesheet" href="./style.css">
+    <script src="./plugindist/simpleslider.jquery.js"></script>
+    <link rel="stylesheet" href="./plugindist/style.css">
 </head>
 ...
 ```
