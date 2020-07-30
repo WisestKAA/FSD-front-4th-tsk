@@ -16,16 +16,16 @@ mixin slider-card({ currentValue=0,  minVal=0, maxVal=100, step=1, precision=0, 
                 +text-field({placeholder: "Current value", text: currentValue, name: "currentValue"})           
             .slider-card__form-item-wrapper
                 +label({text: "Minimum value", marginBottom: 3})
-                +text-field({placeholder: "Minimum value", text: minVal, name: "minVal"}) 
+                +text-field({placeholder: "Minimum value", text: minVal, name: "minVal", type: "number"}) 
             .slider-card__form-item-wrapper
                 +label({text: "Maximum value", marginBottom: 3})
-                +text-field({placeholder: "Maximum value", text: maxVal, name: "maxVal"})
+                +text-field({placeholder: "Maximum value", text: maxVal, name: "maxVal", type: "number"})
             .slider-card__form-item-wrapper
                 +label({text: "Step", marginBottom: 3})
-                +text-field({placeholder: "Step", text: step, name: "step"})           
+                +text-field({placeholder: "Step", text: step, name: "step", type: "number"})           
             .slider-card__form-item-wrapper
                 +label({text: "Number of scale marks", marginBottom: 3})
-                +text-field({placeholder: "Number of scale marks", text: numOfScaleMark, name: "numOfScaleMark"})
+                +text-field({placeholder: "Number of scale marks", text: numOfScaleMark, name: "numOfScaleMark", type: "number"})
             .slider-card__form-item-wrapper
                 +checkbox-button({text: "Horizontal", name: "horizontal", isChecked: isHorizontal})
             .slider-card__form-item-wrapper

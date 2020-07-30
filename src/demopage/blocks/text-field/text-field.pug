@@ -1,6 +1,6 @@
-mixin text-field({placeholder, text, name}={})
+mixin text-field({placeholder, text, name, type=text}={})
     input(
-        type="text"
+        type=type
         placeholder=placeholder
         class="text-field"
         value=text
