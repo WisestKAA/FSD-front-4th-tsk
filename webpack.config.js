@@ -49,6 +49,17 @@ module.exports = (env, options) => {
                         }
                     }
                 },
+                {
+                    test: /\.(svg|png|ico|xml|json|webmanifest)$/,
+                    exclude: [/node_modules/, /demopage/],
+                    use: [{
+                      loader: 'file-loader',
+                      options: {
+                        name: './favicons/[name].[ext]',
+                        publicPath: '../',
+                      },
+                    }],
+                  },
             ],
         },
         resolve: {
