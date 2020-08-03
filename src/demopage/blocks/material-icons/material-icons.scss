@@ -1,26 +1,23 @@
-.material-icons{
-    display: inline-block;
-    font-family: "Material Icons";
-    font-style: normal;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-    user-select: none;
-    
-    &_font-size-18{
-        font-size: 18px;
-        line-height: 18px;        
-    }
-
-    &_font-size-10{
-        font-size: 10px;
-        line-height: 9px;
-    }
-
-    &_font-size-48{
-        font-size: 48px;
-        line-height: 41px;        
-    }
+.material-icons {
+  display: inline-block;
+  font-family: 'Material Icons';
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  user-select: none;
+  &_font-size-18 {
+    font-size: 18px;
+    line-height: 18px;
+  }
+  &_font-size-10 {
+    font-size: 10px;
+    line-height: 9px;
+  }
+  &_font-size-48 {
+    font-size: 48px;
+    line-height: 41px;
+  }
 }

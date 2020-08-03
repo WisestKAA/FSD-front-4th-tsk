@@ -1,98 +1,96 @@
-.checkbox-button{
-    display: inline-block;    
-    white-space: nowrap;
-    width: 100%;
-    max-width: 260px;  
+.checkbox-button {
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  max-width: 260px;
+  box-sizing: border-box;
+  user-select: none;
+
+  &_rich {
+    margin-bottom: 9px;
+  }
+
+  &__input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  &__text {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+  }
+
+  &__header {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 20px;
+    color: $dark75;
+  }
+
+  &__content {
+    white-space: normal;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: $dark50;
+    max-width: 192px;
+    &_rich {
+      font-size: 12px;
+      line-height: 14px;
+      max-width: 230px;
+      margin-top: 5px;
+    }
+  }
+
+  &__text::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid $dark25;
     box-sizing: border-box;
-    user-select: none;
-
-    &_rich{
-        margin-bottom: 9px;  
-    }
-
-    &__input{
-        position: absolute;
-        z-index: -1;
-        opacity: 0;
-    }
-
-    &__text{
-        position: relative;
-        padding-left: 30px;
-        cursor: pointer;
-    }
-
-    &__header{
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 20px;
-        color: $dark75;
-    }
-
-    &__content{
-        white-space: normal;
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 18px;
-        color: $dark50;
-        max-width: 192px;
-
-        &_rich{
-            font-size: 12px;
-            line-height: 14px;
-            max-width: 230px;
-            margin-top: 5px;
-        }
-    }
-
-    &__text::before{
-        content: '';
-        position: absolute;
-        left: 0;
-        width: 20px;
-        height: 20px;
-        border: 1px solid $dark25;
-        box-sizing: border-box;
-        border-radius: 4px;
-    }
-
-    &__text::after{
-        content: 'done';
-        display: none;
-        font-family: 'Material Icons';
-        font-size: 18px;
-        line-height: 18px;
-        text-transform: none;
-        letter-spacing: normal;
-        word-wrap: normal;
-        white-space: nowrap;
-        direction: ltr;
-        user-select: none;
-        font-weight: bold;
-        background: linear-gradient(180deg, $purple 0%, #8BA4F9 100%);            
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text; 
-
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 20px;
-        height: 20px;
-        border: 1px solid $purple;
-        box-sizing: border-box;
-        border-radius: 4px;
-    }
-}
-
-.checkbox-button .checkbox-button__input:checked + .checkbox-button__text::before{
+    border-radius: 4px;
+  }
+  
+  &__text::after {
+    content: 'done';
     display: none;
+    font-family: 'Material Icons';
+    font-size: 18px;
+    line-height: 18px;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    user-select: none;
+    font-weight: bold;
+    background: linear-gradient(180deg, $purple 0%, #8BA4F9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid $purple;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
 }
 
-.checkbox-button .checkbox-button__input:checked + .checkbox-button__text::after{
-    display: inline-block;
+.checkbox-button .checkbox-button__input:checked+.checkbox-button__text::before {
+  display: none;
+}
+
+.checkbox-button .checkbox-button__input:checked+.checkbox-button__text::after {
+  display: inline-block;
 }
