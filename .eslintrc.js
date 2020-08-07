@@ -25,7 +25,8 @@ module.exports = {
         
     },
     'rules': {            
-        '@typescript-eslint/no-unused-vars': 'warn', 
+        'no-unused-vars': ["error", { "argsIgnorePattern": "^[A-Za-z]{1,20}Mock$" }],
+        '@typescript-eslint/no-unused-vars': ["error", { "argsIgnorePattern": "^[A-Za-z]{1,20}Mock$" }], 
         'prefer-const': 'error',
         'no-const-assign': 'error',
         'no-var': 'error',
@@ -93,7 +94,7 @@ module.exports = {
         'space-in-parens': ['error', 'never'],
         'array-bracket-spacing': ['error', 'never'],
         'object-curly-spacing': ['error', 'always'],
-        'max-len': ['error', { 'code': 100 }],
+        'max-len': ['error', { 'code': 100, "ignoreStrings": true, "ignoreTemplateLiterals": true }],
         'block-spacing': 'error',
         'comma-spacing': ['error', { 'before': false, 'after': true }],
         'computed-property-spacing': ['error', 'never'],
