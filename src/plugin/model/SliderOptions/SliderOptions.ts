@@ -79,6 +79,7 @@ class SliderOptions implements ISliderOptions {
         } else {
           curVal[0] = currentVal[0];
         }
+        curVal[1] = 0;
       }
       return curVal;
     }
