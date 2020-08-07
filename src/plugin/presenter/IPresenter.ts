@@ -1,4 +1,4 @@
-import { SliderDirection } from '../view/SliderDirection';
+import SliderDirection from '../view/SliderDirection';
 
 interface IPresenter{
     sliderHandleChangedPosition(direction: SliderDirection): void;

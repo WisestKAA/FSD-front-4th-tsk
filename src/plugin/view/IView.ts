@@ -1,5 +1,5 @@
-import { SliderDirection } from './SliderDirection';
-import { IViewOptions } from './IViewOptions';
+import SliderDirection from './SliderDirection';
+import IViewOptions from './IViewOptions';
 
 interface IView {
     getSliderHandlePosition(direction: SliderDirection): number;
