@@ -1,6 +1,6 @@
-import { ScaleItem } from "../../../src/plugin/view/ScaleItem/ScaleItem";
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { IScaleItem } from "../../../src/plugin/view/ScaleItem/IScaleItem";
+import ScaleItem from "../../../src/plugin/view/ScaleItem/ScaleItem";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
+import IScaleItem from "../../../src/plugin/view/ScaleItem/IScaleItem";
 
 class MockEvent{
     scaleItem: IScaleItem;

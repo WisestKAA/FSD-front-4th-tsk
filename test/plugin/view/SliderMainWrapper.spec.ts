@@ -1,12 +1,12 @@
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { SliderMainWrapper } from "../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper";
-import { ISliderLine } from "../../../src/plugin/view/SliderLine/ISliderLine";
-import { ISetRangeOptions } from "../../../src/plugin/view/SliderLine/ISetRangeOptions";
-import { ISliderHandleWrapper } from "../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper";
-import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
-import { ILiteEvent } from "../../../src/plugin/LiteEvent/ILiteEvent";
-import { ISliderMainWrapper } from "../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper";
-import { LiteEvent } from "../../../src/plugin/LiteEvent/LiteEvent";
+import ISliderLine from "../../../src/plugin/view/SliderLine/ISliderLine";
+import ISetRangeOptions from "../../../src/plugin/view/SliderLine/ISetRangeOptions";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
+import ISliderHandleWrapper from "../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper";
+import LiteEvent from "../../../src/plugin/LiteEvent/LiteEvent";
+import SliderDirection from "../../../src/plugin/view/SliderDirection";
+import ILiteEvent from "../../../src/plugin/LiteEvent/ILiteEvent";
+import ISliderMainWrapper from "../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper";
+import SliderMainWrapper from "../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper";
 
 class MockLine implements ISliderLine{
     $elem: JQuery<HTMLElement>;

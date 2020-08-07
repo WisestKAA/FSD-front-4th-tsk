@@ -1,6 +1,6 @@
-import { ISliderSettings } from "../../src/demopage/blocks/slider-card/ISliderSettings";
-import { SliderCard } from "../../src/demopage/blocks/slider-card/slider-card";
-import { IFormIntputs } from "../../src/demopage/blocks/slider-card/IFormIntputs";
+import ISliderSettings from "../../src/demopage/blocks/slider-card/ISliderSettings";
+import SliderCard from "../../src/demopage/blocks/slider-card/slider-card";
+import IFormIntputs from "../../src/demopage/blocks/slider-card/IFormIntputs";
 
 class MockElement{
     $elem: JQuery<HTMLElement>;

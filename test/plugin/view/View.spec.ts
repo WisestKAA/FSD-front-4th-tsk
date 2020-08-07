@@ -1,23 +1,24 @@
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { View } from "../../../src/plugin/view/View";
-import { IPresenter } from "../../../src/plugin/presenter/IPresenter";
-import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
-import { IViewOptions } from "../../../src/plugin/view/IViewOptions";
-import { ICurrentValueWrapper } from "../../../src/plugin/view/CurrentValueWrapper/ICurrentValueWrapper";
-import { ISliderMainWrapper } from "../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper";
-import { IElementsFactory } from "../../../src/plugin/view/IElementsFactory";
-import { ISliderRange } from "../../../src/plugin/view/SliderRange/ISliderRange";
-import { ISliderLine } from "../../../src/plugin/view/SliderLine/ISliderLine";
-import { ISliderHandle } from "../../../src/plugin/view/SliderHandle/ISliderHandle";
-import { ISliderHandleWrapper } from "../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper";
-import { ICurrentValue } from "../../../src/plugin/view/CurrentValue/ICurrentValue";
-import { ISetRangeOptions } from "../../../src/plugin/view/SliderLine/ISetRangeOptions";
-import { ILiteEvent } from "../../../src/plugin/LiteEvent/ILiteEvent";
-import { ISetCurrentValuePositionOptions } from "../../../src/plugin/view/CurrentValueWrapper/ISetCurrentValuePositionOptions";
-import { AbstractElement } from "../../../src/plugin/view/AbstractElement/AbstractElement";
-import { LiteEvent } from "../../../src/plugin/LiteEvent/LiteEvent";
-import { IScaleItem } from "../../../src/plugin/view/ScaleItem/IScaleItem";
-import { IScaleWrapper } from "../../../src/plugin/view/ScaleWrapper/IScaleWrapper";
+import IPresenter from "../../../src/plugin/presenter/IPresenter";
+import SliderDirection from "../../../src/plugin/view/SliderDirection";
+import View from "../../../src/plugin/view/View";
+import IViewOptions from "../../../src/plugin/view/IViewOptions";
+import ICurrentValueWrapper from "../../../src/plugin/view/CurrentValueWrapper/ICurrentValueWrapper";
+import ISliderMainWrapper from "../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper";
+import IScaleWrapper from "../../../src/plugin/view/ScaleWrapper/IScaleWrapper";
+import IElementsFactory from "../../../src/plugin/view/IElementsFactory";
+import IScaleItem from "../../../src/plugin/view/ScaleItem/IScaleItem";
+import ISliderRange from "../../../src/plugin/view/SliderRange/ISliderRange";
+import ISliderLine from "../../../src/plugin/view/SliderLine/ISliderLine";
+import ISliderHandle from "../../../src/plugin/view/SliderHandle/ISliderHandle";
+import ISliderHandleWrapper from "../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper";
+import ICurrentValue from "../../../src/plugin/view/CurrentValue/ICurrentValue";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
+import ISetRangeOptions from "../../../src/plugin/view/SliderLine/ISetRangeOptions";
+import ILiteEvent from "../../../src/plugin/LiteEvent/ILiteEvent";
+import LiteEvent from "../../../src/plugin/LiteEvent/LiteEvent";
+import AbstractElement from "../../../src/plugin/view/AbstractElement/AbstractElement";
+import ISetCurrentValuePositionOptions from "../../../src/plugin/view/CurrentValueWrapper/ISetCurrentValuePositionOptions";
+
 
 class MockPresenter implements IPresenter{
     constructor(){}

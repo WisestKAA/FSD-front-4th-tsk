@@ -1,6 +1,6 @@
-import { SliderRange } from "../../../src/plugin/view/SliderRange/SliderRange";
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { SliderLine } from "../../../src/plugin/view/SliderLine/SliderLine";
+import SliderRange from "../../../src/plugin/view/SliderRange/SliderRange";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
+
 
 describe("Test SliderRange", () => {
     let range: SliderRange;

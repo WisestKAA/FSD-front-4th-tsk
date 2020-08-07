@@ -1,9 +1,9 @@
-import { SliderHandle } from "../../../src/plugin/view/SliderHandle/SliderHandle";
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { ISliderLine } from "../../../src/plugin/view/SliderLine/ISliderLine";
-import { ISetRangeOptions } from "../../../src/plugin/view/SliderLine/ISetRangeOptions";
-import { ISliderHandle } from "../../../src/plugin/view/SliderHandle/ISliderHandle";
-import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
+import SliderHandle from "../../../src/plugin/view/SliderHandle/SliderHandle";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
+import ISliderLine from "../../../src/plugin/view/SliderLine/ISliderLine";
+import ISetRangeOptions from "../../../src/plugin/view/SliderLine/ISetRangeOptions";
+import ISliderHandle from "../../../src/plugin/view/SliderHandle/ISliderHandle";
+import SliderDirection from "../../../src/plugin/view/SliderDirection";
 
 class MockSliderLine implements ISliderLine {
     $elem: JQuery<HTMLElement>;

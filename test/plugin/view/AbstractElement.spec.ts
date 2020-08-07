@@ -1,5 +1,5 @@
-import { AbstractElement } from "../../../src/plugin/view/AbstractElement/AbstractElement";
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
+import AbstractElement from "../../../src/plugin/view/AbstractElement/AbstractElement";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
 
 class MockAbstractElement extends AbstractElement{
     public $elem: JQuery<HTMLElement>;

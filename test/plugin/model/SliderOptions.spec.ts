@@ -1,7 +1,7 @@
-import { SliderOptions } from "../../../src/plugin/model/SliderOptions/SliderOptions";
-import { ISliderSettings } from "../../../src/plugin/model/ISliderSettings";
+import SliderOptions from "../../../src/plugin/model/SliderOptions/SliderOptions";
+import ISliderSettings from "../../../src/plugin/model/ISliderSettings";
 
-describe("Test SliderOptions", () => {
+describe("Test SliderOptions", () => { 
     let options: SliderOptions;
     let defaultOption: ISliderSettings = {
         isHorizontal: true,

@@ -1,9 +1,9 @@
-import { ScaleWrapper } from "../../../src/plugin/view/ScaleWrapper/ScaleWrapper";
-import { IScaleItem } from "../../../src/plugin/view/ScaleItem/IScaleItem";
-import { ILiteEvent } from "../../../src/plugin/LiteEvent/ILiteEvent";
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { LiteEvent } from "../../../src/plugin/LiteEvent/LiteEvent";
-import { IScaleWrapper } from "../../../src/plugin/view/ScaleWrapper/IScaleWrapper";
+import ScaleWrapper from "../../../src/plugin/view/ScaleWrapper/ScaleWrapper";
+import IScaleItem from "../../../src/plugin/view/ScaleItem/IScaleItem";
+import ILiteEvent from "../../../src/plugin/LiteEvent/ILiteEvent";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
+import LiteEvent from "../../../src/plugin/LiteEvent/LiteEvent";
+import IScaleWrapper from "../../../src/plugin/view/ScaleWrapper/IScaleWrapper";
 
 class MockScaleItem implements IScaleItem{
     $elem: JQuery<HTMLElement>;

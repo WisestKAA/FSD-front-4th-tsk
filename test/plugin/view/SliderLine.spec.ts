@@ -1,6 +1,7 @@
-import { SliderLine } from "../../../src/plugin/view/SliderLine/SliderLine";
-import { ISliderRange } from "../../../src/plugin/view/SliderRange/ISliderRange";
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
+import ISliderRange from "../../../src/plugin/view/SliderRange/ISliderRange";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
+import SliderLine from "../../../src/plugin/view/SliderLine/SliderLine";
+
 
 class MockRange implements ISliderRange{
     $elem: JQuery<HTMLElement>;

@@ -1,7 +1,7 @@
-import { CurrentValueWrapper } from "../../../src/plugin/view/CurrentValueWrapper/CurrentValueWrapper";
-import { ICurrentValue } from "../../../src/plugin/view/CurrentValue/ICurrentValue";
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
+import CurrentValueWrapper from "../../../src/plugin/view/CurrentValueWrapper/CurrentValueWrapper";
+import ICurrentValue from "../../../src/plugin/view/CurrentValue/ICurrentValue";
+import StyleClasses  from "../../../src/plugin/view/StyleClasses";
+import SliderDirection from "../../../src/plugin/view/SliderDirection";
 
 class MockCurrentValue implements ICurrentValue{
     $elem: JQuery<HTMLElement>;

@@ -1,10 +1,10 @@
-import { SliderHandleWrapper } from "../../../src/plugin/view/SliderHandleWrapper/SliderHandleWrapper";
-import { ISliderHandle } from "../../../src/plugin/view/SliderHandle/ISliderHandle";
-import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
-import { ILiteEvent } from "../../../src/plugin/LiteEvent/ILiteEvent";
-import { StyleClasses } from "../../../src/plugin/view/StyleClasses";
-import { LiteEvent } from "../../../src/plugin/LiteEvent/LiteEvent";
-import { ISliderHandleWrapper } from "../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper";
+import ISliderHandle from "../../../src/plugin/view/SliderHandle/ISliderHandle";
+import LiteEvent from "../../../src/plugin/LiteEvent/LiteEvent";
+import SliderDirection from "../../../src/plugin/view/SliderDirection";
+import ILiteEvent from "../../../src/plugin/LiteEvent/ILiteEvent";
+import StyleClasses from "../../../src/plugin/view/StyleClasses";
+import ISliderHandleWrapper from "../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper";
+import SliderHandleWrapper from "../../../src/plugin/view/SliderHandleWrapper/SliderHandleWrapper";
 
 class MockHandle implements ISliderHandle{ 
     $elem: JQuery<HTMLElement>;
