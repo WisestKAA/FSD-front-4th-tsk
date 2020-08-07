@@ -1,6 +1,6 @@
-import { SliderDirection } from "../SliderDirection";
+import SliderDirection from '../SliderDirection';
 
-export interface ISetCurrentValuePositionOptions{
+interface ISetCurrentValuePositionOptions{
     position: number;
     direction: SliderDirection;
     maxHandlePosition?: number;
@@ -8,3 +8,5 @@ export interface ISetCurrentValuePositionOptions{
     handleFromPosition?: number; 
     handleToPosition?: number;
 }
+
+export default ISetCurrentValuePositionOptions;

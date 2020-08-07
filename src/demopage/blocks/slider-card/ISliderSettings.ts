@@ -1,4 +1,4 @@
-export interface ISliderSettings {
+interface ISliderSettings {
     isHorizontal: boolean;
     minVal: number;
     maxVal: number;
@@ -10,3 +10,5 @@ export interface ISliderSettings {
     isScaleEnabled: boolean;
     numberOfScaleMarks: number;
 }
+
+export default ISliderSettings;

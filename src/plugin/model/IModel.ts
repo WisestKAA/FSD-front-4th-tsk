@@ -1,7 +1,7 @@
-import { ISliderSettings } from "./ISliderSettings";
-import { ILiteEvent } from "../LiteEvent/ILiteEvent";
+import ISliderSettings from './ISliderSettings';
+import ILiteEvent from '../LiteEvent/ILiteEvent';
 
-export interface IModel{
+interface IModel{
     setCurrentValue(newVal: number[]): void;
     setNewOptions(options: ISliderSettings): void;
     getCorrectValWithStep(currentVal: number): number;
@@ -9,3 +9,5 @@ export interface IModel{
     changeCurrentValueEvent: ILiteEvent<number[]>;
     changeOptionsEvent: ILiteEvent<void>;
 }
+
+export default IModel;

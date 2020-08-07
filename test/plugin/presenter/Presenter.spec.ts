@@ -1,11 +1,12 @@
 import { Presenter } from "../../../src/plugin/presenter/Presenter";
-import { IViewFactory } from "../../../src/plugin/view/ViewFactory";
+import { IViewFactory } from "../../../src/plugin/view/IViewFactory";
 import { IPresenter } from "../../../src/plugin/presenter/IPresenter";
 import { IViewOptions } from "../../../src/plugin/view/IViewOptions";
-import { IElementsFactory } from "../../../src/plugin/view/ElementsFactory";
+import { IElementsFactory } from "../../../src/plugin/view/IElementsFactory";
 import { IView } from "../../../src/plugin/view/IView";
 import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
-import { IModelFactory, ModelFactory } from "../../../src/plugin/model/ModelFactory";
+import { ModelFactory } from "../../../src/plugin/model/ModelFactory";
+import { IModelFactory } from "../../../src/plugin/model/IModelFactory";
 import { IModel } from "../../../src/plugin/model/IModel";
 import { ISliderSettings } from "../../../src/plugin/model/ISliderSettings";
 import { ILiteEvent } from "../../../src/plugin/LiteEvent/ILiteEvent";

@@ -5,7 +5,7 @@ import { SliderDirection } from "../../../src/plugin/view/SliderDirection";
 import { IViewOptions } from "../../../src/plugin/view/IViewOptions";
 import { ICurrentValueWrapper } from "../../../src/plugin/view/CurrentValueWrapper/ICurrentValueWrapper";
 import { ISliderMainWrapper } from "../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper";
-import { IElementsFactory } from "../../../src/plugin/view/ElementsFactory";
+import { IElementsFactory } from "../../../src/plugin/view/IElementsFactory";
 import { ISliderRange } from "../../../src/plugin/view/SliderRange/ISliderRange";
 import { ISliderLine } from "../../../src/plugin/view/SliderLine/ISliderLine";
 import { ISliderHandle } from "../../../src/plugin/view/SliderHandle/ISliderHandle";

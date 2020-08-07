@@ -1,8 +1,10 @@
-import { ISliderLine } from "../SliderLine/ISliderLine";
+import ISliderLine from '../SliderLine/ISliderLine';
 
-export interface ISliderHandleOptions{
+interface ISliderHandleOptions{
     isFrom?: boolean;
     sliderLine: ISliderLine;
     isHorizontal: boolean;
     isRange: boolean;
 }
+
+export default ISliderHandleOptions;

@@ -1,8 +1,8 @@
-import { IElement } from "../AbstractElement/IElement";
-import { ILiteEvent } from "../../LiteEvent/ILiteEvent";
-import { SliderDirection } from "../SliderDirection";
+import IElement from '../AbstractElement/IElement';
+import ILiteEvent from '../../LiteEvent/ILiteEvent';
+import SliderDirection from '../SliderDirection';
 
-export interface ISliderMainWrapper extends IElement{
+interface ISliderMainWrapper extends IElement{
     getSliderHandlePosition(direction: SliderDirection): number;
     getMaxHandlePosition(): number;
     setHandlePosition(position: number, direction: SliderDirection): void;
@@ -11,3 +11,5 @@ export interface ISliderMainWrapper extends IElement{
     getLineSize(): number;
     handlePositionChangedEvent: ILiteEvent<SliderDirection>;
 }
+
+export default ISliderMainWrapper;

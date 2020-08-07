@@ -1,6 +1,8 @@
-import { SliderDirection } from "../view/SliderDirection";
+import { SliderDirection } from '../view/SliderDirection';
 
-export interface IPresenter{
+interface IPresenter{
     sliderHandleChangedPosition(direction: SliderDirection): void;
     scaleClicked(value: number): void;
 }
+
+export default IPresenter;

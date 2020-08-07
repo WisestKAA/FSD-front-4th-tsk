@@ -1,7 +1,9 @@
-import { ISliderSettings } from "../ISliderSettings";
+import ISliderSettings from '../ISliderSettings';
 
-export interface ISliderOptions {
+interface ISliderOptions {
     getOptions(): ISliderSettings;
     setCurrentValue(currentVal: number[]): void;
     setNewOptions(options: ISliderSettings): void;
 }
+
+export default ISliderOptions;
