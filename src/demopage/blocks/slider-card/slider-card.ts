@@ -50,29 +50,29 @@ class SliderCard {
         this.optionsChanged({ 'isScaleEnabled': this.formInputs.isScaleEnabled.checked });
       });
       $(this.formInputs.isVisibleCurrentValue).change(() => {
-        this.optionsChanged({ 'isVisibleCurrentValue': 
+        this.optionsChanged({ 'isVisibleCurrentValue':
           this.formInputs.isVisibleCurrentValue.checked });
       });
 
-      this.formInputs.minVal.focusout(() => {            
+      this.formInputs.minVal.focusout(() => {
         this.inputValidation(
-          'Invalid input! The minimum value must be a number', 
-          this.formInputs.minVal, 
-          this.options.minVal.toString(), 
+          'Invalid input! The minimum value must be a number',
+          this.formInputs.minVal,
+          this.options.minVal.toString(),
           () => {
             const minVal = this.getNumInputValue(this.formInputs.minVal);
             if (minVal !== this.options.minVal) {
               this.optionsChanged({ minVal });
             }
           }
-        );            
-      });  
+        );
+      });
 
       this.formInputs.maxVal.focusout(() => {
         this.inputValidation(
-          'Invalid input! The maximum value must be a number', 
-          this.formInputs.maxVal, 
-          this.options.maxVal.toString(), 
+          'Invalid input! The maximum value must be a number',
+          this.formInputs.maxVal,
+          this.options.maxVal.toString(),
           () => {
             const maxVal = this.getNumInputValue(this.formInputs.maxVal);
             if (maxVal !== this.options.maxVal) {
@@ -84,23 +84,23 @@ class SliderCard {
 
       this.formInputs.currentVal.focusout(() => {
         this.inputValidation(
-          'The current value must be one or two digits separated by a space', 
-          this.formInputs.currentVal, 
-          this.options.currentVal.toString(), 
+          'The current value must be one or two digits separated by a space',
+          this.formInputs.currentVal,
+          this.options.currentVal.toString(),
           () => {
             const curVal = this.formInputs.currentVal.val().toString();
             const isRange = this.formInputs.isRange.checked;
-            const currentVal = this.parseCurrentValue(curVal, isRange);               
+            const currentVal = this.parseCurrentValue(curVal, isRange);
             this.optionsChanged({ currentVal });
           }
         );
-      }); 
+      });
 
       this.formInputs.step.focusout(() => {
         this.inputValidation(
-          'Invalid input values. The step must be a number and less than maxVal - minVal', 
-          this.formInputs.step, 
-          this.options.step.toString(), 
+          'Invalid input values. The step must be a number and less than maxVal - minVal',
+          this.formInputs.step,
+          this.options.step.toString(),
           () => {
             const step = this.getNumInputValue(this.formInputs.step);
             if (step !== this.options.step) {
@@ -112,11 +112,11 @@ class SliderCard {
 
       this.formInputs.numberOfScaleMarks.focusout(() => {
         this.inputValidation(
-          'Invalid input values.' + 
-            ' numberOfScaleMarks must be a number and greater than or equal' + 
-            ' to two and be an integer', 
-          this.formInputs.numberOfScaleMarks, 
-          this.options.numberOfScaleMarks.toString(), 
+          'Invalid input values.' +
+            ' numberOfScaleMarks must be a number and greater than or equal' +
+            ' to two and be an integer',
+          this.formInputs.numberOfScaleMarks,
+          this.options.numberOfScaleMarks.toString(),
           () => {
             const numberOfScaleMarks = this.getNumInputValue(this.formInputs.numberOfScaleMarks);
             if (numberOfScaleMarks !== this.options.numberOfScaleMarks) {
@@ -129,8 +129,8 @@ class SliderCard {
 
     protected getSliderSettings (): ISliderSettings {
       const curVal = this.formInputs.currentVal.val() as String;
-      const isRange = this.formInputs.isRange.checked;            
-      const currentValue = this.parseCurrentValue(curVal, isRange); 
+      const isRange = this.formInputs.isRange.checked;
+      const currentValue = this.parseCurrentValue(curVal, isRange);
       return {
         'isHorizontal': this.formInputs.isHorizontal.checked,
         'minVal': this.getNumInputValue(this.formInputs.minVal),
@@ -141,8 +141,8 @@ class SliderCard {
         'isRangeLineEnabled': this.formInputs.isRangeLineEnabled.checked,
         'isVisibleCurrentValue': this.formInputs.isVisibleCurrentValue.checked,
         'isScaleEnabled': this.formInputs.isScaleEnabled.checked,
-        'numberOfScaleMarks': this.getNumInputValue(this.formInputs.numberOfScaleMarks)
-      }         
+        'numberOfScaleMarks': this.getNumInputValue(this.formInputs.numberOfScaleMarks),
+      };
     }
 
     protected parseCurrentValue (curVal: String, isRange: boolean): number[] {
@@ -165,10 +165,10 @@ class SliderCard {
       const val = elem.val() as string;
       val.trim();
       const value = Number(val);
-      if (value || value === 0) {                 
+      if (value || value === 0) {
         return value;
-      } else {     
-        throw new Error();  
+      } else {
+        throw new Error();
       }
     }
 
@@ -189,8 +189,8 @@ class SliderCard {
         'isVisibleCurrentValue': <HTMLInputElement>form.
           find('input[name=visibleCurrentValue]').get(0),
         'isScaleEnabled': <HTMLInputElement>form.find('input[name=scale]').get(0),
-        'numberOfScaleMarks': form.find('input[name=numOfScaleMark]')
-      }
+        'numberOfScaleMarks': form.find('input[name=numOfScaleMark]'),
+      };
     }
 
     protected optionsChanged (option: Object): void{
@@ -200,17 +200,17 @@ class SliderCard {
     }
 
     protected inputValidation (
-      errorMessage: string, 
-      element: JQuery<HTMLElement>, 
+      errorMessage: string,
+      element: JQuery<HTMLElement>,
       oldValue: string, func: Function
     ): void{
       try {
         func();
-      } catch (e) {
+      } catch (error) {
         element.before(`<div class="slider-card__error">${errorMessage}</div>`);
         element.attr('value', oldValue);
       }
-    }    
+    }
 }
 
 

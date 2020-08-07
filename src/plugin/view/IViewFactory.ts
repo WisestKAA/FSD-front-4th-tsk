@@ -5,11 +5,11 @@ import IElementsFactory from './IElementsFactory';
 
  interface IViewFactory {
   build(
-    presenter: IPresenter, 
-    option: IViewOptions, 
-    elementsFactory: IElementsFactory, 
+    presenter: IPresenter,
+    option: IViewOptions,
+    elementsFactory: IElementsFactory,
     scaleValues?: number[]
   ): IView;
 }
 
-export default IViewFactory
+export default IViewFactory;

@@ -5,7 +5,7 @@ interface ISetCurrentValuePositionOptions{
     direction: SliderDirection;
     maxHandlePosition?: number;
     lineSize?: number;
-    handleFromPosition?: number; 
+    handleFromPosition?: number;
     handleToPosition?: number;
 }
 

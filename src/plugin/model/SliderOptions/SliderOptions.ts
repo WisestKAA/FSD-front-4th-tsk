@@ -28,10 +28,10 @@ class SliderOptions implements ISliderOptions {
         'currentVal': options.currentVal,
         'isRange': options.isRange,
         'maxVal': options.maxVal,
-        'minVal': options.minVal
+        'minVal': options.minVal,
       });
       this.checkStep({ 'maxVal': options.maxVal, 'minVal': options.minVal, 'step': options.step });
-      this.checkNumberOfScaleMarks(options.numberOfScaleMarks)
+      this.checkNumberOfScaleMarks(options.numberOfScaleMarks);
       options.precision = this.getPrecision(options.step);
 
       return options;
@@ -44,8 +44,8 @@ class SliderOptions implements ISliderOptions {
     }
 
     protected getCorrectCurrentValue (options: {
-        isRange: boolean, 
-        currentVal: number[], 
+        isRange: boolean,
+        currentVal: number[],
         minVal: number,
         maxVal: number
     }): number[] {
@@ -84,8 +84,8 @@ class SliderOptions implements ISliderOptions {
     }
 
     protected checkStep (options: {
-        minVal: number, 
-        maxVal: number, 
+        minVal: number,
+        maxVal: number,
         step: number
     }): void{
       const { minVal, maxVal, step } = options;
@@ -97,7 +97,7 @@ class SliderOptions implements ISliderOptions {
     protected checkNumberOfScaleMarks (numberOfScaleMarks: number): void{
       const mod = numberOfScaleMarks % 1;
       if (numberOfScaleMarks < 2 || mod !== 0) {
-        throw new TypeError('Invalid input values.' + 
+        throw new TypeError('Invalid input values.' +
           ' numberOfScaleMarks must be greater than or equal to two and be an integer');
       }
     }

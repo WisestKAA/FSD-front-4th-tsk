@@ -5,26 +5,26 @@ import IModel from './IModel';
 import ISliderSettings from './ISliderSettings';
 import ISliderOptionsFactory from './SliderOptions/ISliderOptionsFactory';
 
-class Model implements IModel {  
+class Model implements IModel {
     private sliderOptions: ISliderOptions;
     private onCurrentValueChanged: LiteEvent<number[]>;
     private onOptionsChanged: LiteEvent<void>;
 
     constructor (optionsFactory: ISliderOptionsFactory) {
-      this.sliderOptions = optionsFactory.build(); 
+      this.sliderOptions = optionsFactory.build();
       this.onCurrentValueChanged = new LiteEvent<number[]>();
       this.onOptionsChanged = new LiteEvent<void>();
     }
     
     public setCurrentValue (newVal: number[]): void{
       this.sliderOptions.setCurrentValue(newVal);
-      this.onCurrentValueChanged.trigger(newVal);        
+      this.onCurrentValueChanged.trigger(newVal);
     }
 
     public setNewOptions (options: ISliderSettings): void{
       this.sliderOptions.setNewOptions(options);
       this.onOptionsChanged.trigger();
-    } 
+    }
     
     public getCorrectValWithStep (currentVal: number): number {
       const options = this.getOptions();
@@ -39,7 +39,7 @@ class Model implements IModel {
       let correctVal: number;
       const shift = step - (currentVal % step);
       const middle = step / 2;
-      if (shift > middle) {            
+      if (shift > middle) {
         correctVal = currentVal - (currentVal % step);
       } else {
         correctVal = currentVal + shift;

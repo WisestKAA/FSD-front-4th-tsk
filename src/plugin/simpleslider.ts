@@ -18,11 +18,11 @@ declare global {
 }
 
 (function ($: JQueryStatic) {
-  $.fn.SimpleSlider = function start (options?, additionalOptions?: ISliderSettings) { 
-    return this.map((i: number, elem: HTMLElement) => {
-      if (typeof options === 'object' || !options) {               
+  $.fn.SimpleSlider = function start (options?, additionalOptions?: ISliderSettings) {
+    return this.map((iter: number, elem: HTMLElement) => {
+      if (typeof options === 'object' || !options) {
         const sliderOptionsFactory = new SliderOptionsFactory(options as ISliderSettings);
-        const modelFactory = new ModelFactory(sliderOptionsFactory); 
+        const modelFactory = new ModelFactory(sliderOptionsFactory);
         const viewFactory = new ViewFactory(elem);
         const presenter = new Presenter(viewFactory, modelFactory);
         this.data('presenter', presenter);
@@ -37,5 +37,5 @@ declare global {
       }
       return null;
     });
-  }
+  };
 }(jQuery));

@@ -13,8 +13,8 @@ class SliderRange extends AbstractElement implements ISliderRange {
     }
     
     protected init (): void {
-      this.$elem = this.isHorizontal ? 
-        $('<div>').addClass(StyleClasses.RANGE) : 
+      this.$elem = this.isHorizontal ?
+        $('<div>').addClass(StyleClasses.RANGE) :
         $('<div>').addClass([StyleClasses.RANGE, StyleClasses.RANGEV]);
     }
 
@@ -27,11 +27,11 @@ class SliderRange extends AbstractElement implements ISliderRange {
     }
 
     public changeRangeLineOne (positionFrom: number, maxHandlePosition: number): void{
-      const size = ((100 - maxHandlePosition) / 2) + positionFrom
+      const size = ((100 - maxHandlePosition) / 2) + positionFrom;
       const direction = this.isHorizontal ? 'left' : 'bottom';
       const wh = this.isHorizontal ? 'width' : 'height';
       this.$elem.attr('style', `${direction}: 0%; ${wh}: ${size}%`);
     }
 }
 
-export default SliderRange
+export default SliderRange;

@@ -12,8 +12,8 @@ class LiteEvent<T> implements ILiteEvent<T> {
     // }
 
     public trigger (data?: T) {
-      this.handlers.slice(0).forEach((h) => {
-        return h(data)
+      this.handlers.slice(0).forEach((handler) => {
+        return handler(data);
       });
     }
 

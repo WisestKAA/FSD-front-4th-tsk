@@ -1,15 +1,15 @@
 class SliderDirection {
   static get TOP (): string {
-    return 'top'
+    return 'top';
   }
   static get RIGHT (): string {
-    return 'right'
+    return 'right';
   }
   static get BOTTOM (): string {
-    return 'bottom'
+    return 'bottom';
   }
   static get LEFT (): string {
-    return 'left'
+    return 'left';
   }
     
   static getDiraction (isFrom: boolean, isHorizontal: boolean): string {

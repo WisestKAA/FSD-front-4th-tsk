@@ -16,8 +16,8 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     protected onHandlePositionChanged: LiteEvent<SliderDirection>;
 
     constructor (
-      isHorizontal: boolean, 
-      sliderLine: ISliderLine, 
+      isHorizontal: boolean,
+      sliderLine: ISliderLine,
       sliderHandleWrapper: ISliderHandleWrapper
     ) {
       super();
@@ -28,14 +28,14 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
       this.addEvents();
     }
 
-    protected init (): void {        
+    protected init (): void {
       this.$elem = $('<div>');
       this.changeOrientation(
-        this.isHorizontal, 
-        StyleClasses.MAINWRAPPER, 
+        this.isHorizontal,
+        StyleClasses.MAINWRAPPER,
         StyleClasses.MAINWRAPPERV
       );
-      this.$elem.append([this.sliderLine.$elem, this.sliderHandleWrapper.$elem])
+      this.$elem.append([this.sliderLine.$elem, this.sliderHandleWrapper.$elem]);
       this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
     }
 
@@ -51,15 +51,15 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
       const isRange = this.sliderHandleWrapper.getIsRange();
       if (isRange) {
         options = {
-          isRange, 
+          isRange,
           'handleFromPosition': this.getHandleFromPosition(),
-          'handleToPosition': this.getHandleToPosition() 
-        }
+          'handleToPosition': this.getHandleToPosition(),
+        };
       } else {
         options = {
-          isRange, 
-          'handleFromPosition': this.getHandleFromPosition(), 
-          'maxHandlePosition': this.getMaxHandlePosition()
+          isRange,
+          'handleFromPosition': this.getHandleFromPosition(),
+          'maxHandlePosition': this.getMaxHandlePosition(),
         };
       }
       this.sliderLine.setRange(options);

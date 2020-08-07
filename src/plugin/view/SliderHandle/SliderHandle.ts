@@ -32,8 +32,8 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
 
     protected init (): void {
-      this.$elem =  this.isHorizontal ? 
-        $('<div>').addClass(StyleClasses.HANDLE) : 
+      this.$elem =  this.isHorizontal ?
+        $('<div>').addClass(StyleClasses.HANDLE) :
         $('<div>').addClass([StyleClasses.HANDLE, StyleClasses.HANDLEV]);
       this.position = 0;
       this.shiftX = 0;
@@ -80,12 +80,12 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       const lineWidth = lineHTMLElement.outerWidth();
       const handleWidth = this.$elem.outerWidth();
       if (this.isFrom) {
-        const newLeft = this.getNewLeft(event.pageX, offset, lineWidth, handleWidth); 
+        const newLeft = this.getNewLeft(event.pageX, offset, lineWidth, handleWidth);
         this.setNewPosition(newLeft, SliderDirection.LEFT);
       } else {
-        const newRight = this.getNewRight(event.pageX, offset, lineWidth, handleWidth); 
+        const newRight = this.getNewRight(event.pageX, offset, lineWidth, handleWidth);
         this.setNewPosition(newRight, SliderDirection.RIGHT);
-      }        
+      }
     }
 
     protected onMouseMoveY (event: JQuery.MouseMoveEvent): void {
@@ -94,10 +94,10 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       const lineHieght = lineHTMLElement.outerHeight();
       const handleHeight = this.$elem.outerHeight();
       if (this.isFrom) {
-        const newBot = this.getNewBot(event.pageY, offset, lineHieght, handleHeight); 
+        const newBot = this.getNewBot(event.pageY, offset, lineHieght, handleHeight);
         this.setNewPosition(newBot, SliderDirection.BOTTOM);
       } else {
-        const newTop = this.getNewTop(event.pageY, offset, lineHieght, handleHeight); 
+        const newTop = this.getNewTop(event.pageY, offset, lineHieght, handleHeight);
         this.setNewPosition(newTop, SliderDirection.TOP);
       }
     }
@@ -108,9 +108,9 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
 
     protected getNewLeft (
-      pageX: number, 
-      offsetLeft: number, 
-      lineWidth: number, 
+      pageX: number,
+      offsetLeft: number,
+      lineWidth: number,
       handleWidth: number
     ): number {
       const newLeft = pageX - this.shiftX - offsetLeft;
@@ -119,31 +119,31 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
 
     protected getNewRight (
-      pageX: number, 
-      offsetLeft: number, 
-      lineWidth: number, 
+      pageX: number,
+      offsetLeft: number,
+      lineWidth: number,
       handleWidth: number
     ): number {
       const newRight = pageX - this.shiftXR - offsetLeft;
-      const newRightPosition = this.getCorrectPositionTo(newRight, lineWidth, handleWidth);        
+      const newRightPosition = this.getCorrectPositionTo(newRight, lineWidth, handleWidth);
       return 100 - newRightPosition;
     }
 
     protected getNewBot (
-      pageY: number, 
-      offsetTop: number, 
-      lineHieght: number, 
+      pageY: number,
+      offsetTop: number,
+      lineHieght: number,
       handleHeight: number
     ): number {
-      const newBot = lineHieght - (pageY - offsetTop - this.shiftYT); 
+      const newBot = lineHieght - (pageY - offsetTop - this.shiftYT);
       const newBotPosition = this.getCorrectPositionFrom(newBot, lineHieght, handleHeight);
       return newBotPosition;
     }
 
     protected getNewTop (
-      pageY: number, 
-      offsetTop: number, 
-      lineHieght: number, 
+      pageY: number,
+      offsetTop: number,
+      lineHieght: number,
       handleHeight: number
     ): number {
       const newTop = lineHieght - (pageY - offsetTop - this.shiftY);
@@ -152,11 +152,11 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
 
     protected getCorrectPositionFrom (
-      newCoordinate: number, 
-      linesize: number, 
+      newCoordinate: number,
+      linesize: number,
       handleSize: number
     ): number {
-      let coordinate = newCoordinate
+      let coordinate = newCoordinate;
       if (coordinate < 0) {
         return 0;
       }
@@ -169,12 +169,12 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
 
     protected getCorrectPositionTo (
-      newCoordinate: number, 
+      newCoordinate: number,
       linesize: number, handleSize: number
     ): number {
-      let coordinate = newCoordinate  
+      let coordinate = newCoordinate;
       if (coordinate < handleSize) {
-        coordinate = handleSize; 
+        coordinate = handleSize;
       }
       if (coordinate > linesize) {
         coordinate = linesize;
@@ -188,20 +188,20 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       this.onPositionChanged.trigger(direction);
     }
 
-    public getSliderHandleMaxPosition (): number {        
-      const lineSize = this.isHorizontal ? 
-        this.line.$elem.outerWidth() : 
+    public getSliderHandleMaxPosition (): number {
+      const lineSize = this.isHorizontal ?
+        this.line.$elem.outerWidth() :
         this.line.$elem.outerHeight();
       const handleSize = this.getHandleSize();
       const maxWidth = lineSize - handleSize;
       this.maxPosition = (100 * maxWidth) / lineSize;
-      return this.maxPosition;        
+      return this.maxPosition;
     }
 
     public setCurrentPosition (position: number, direction: SliderDirection): void{
       this.position = position;
       if (position >= this.getSliderHandleMaxPosition()) {
-        this.$elem.attr('style', `${direction}: ${position}%; z-index: 100;`)
+        this.$elem.attr('style', `${direction}: ${position}%; z-index: 100;`);
       } else {
         this.$elem.attr('style', `${direction}: ${position}%`);
       }

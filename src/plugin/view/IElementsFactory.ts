@@ -14,7 +14,7 @@ interface IElementsFactory {
   buildHandle(line: ISliderLine, isFrom: boolean): ISliderHandle;
   buildHandleWrapper(handleFrom: ISliderHandle, handleTo?: ISliderHandle): ISliderHandleWrapper;
   buildMainWrapper(
-    sliderLine: ISliderLine, 
+    sliderLine: ISliderLine,
     sliderHandleWrapper: ISliderHandleWrapper
   ): ISliderMainWrapper;
   buildCurrentValue(isFrom: boolean): ICurrentValue;

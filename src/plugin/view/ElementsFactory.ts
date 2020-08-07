@@ -44,19 +44,19 @@ class ElementsFactory implements IElementsFactory {
         'isHorizontal': this.isHorizontal,
         'isRange': this.isRange,
         'sliderLine': line,
-        isFrom
+        isFrom,
       });
     }
 
     public buildHandleWrapper (
-      handleFrom: ISliderHandle, 
+      handleFrom: ISliderHandle,
       handleTo?: ISliderHandle
     ): ISliderHandleWrapper {
       return new SliderHandleWrapper(this.isHorizontal, handleFrom, handleTo);
     }
 
     public buildMainWrapper (
-      sliderLine: ISliderLine, 
+      sliderLine: ISliderLine,
       sliderHandleWrapper: ISliderHandleWrapper
     ): ISliderMainWrapper {
       return new SliderMainWrapper(this.isHorizontal, sliderLine, sliderHandleWrapper);
@@ -67,7 +67,7 @@ class ElementsFactory implements IElementsFactory {
     }
 
     public buildCurrentValueWrapper (
-      valueFrom: ICurrentValue, 
+      valueFrom: ICurrentValue,
       valueTo?: ICurrentValue
     ): ICurrentValueWrapper {
       return new CurrentValueWrapper(this.isHorizontal, valueFrom, valueTo);

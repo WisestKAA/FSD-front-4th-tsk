@@ -21,8 +21,8 @@ class ScaleItem extends AbstractElement implements IScaleItem {
     }
 
     protected init (): void {
-      const mark = this.isHorizontal ? 
-        $('<div>').addClass(StyleClasses.SCALEMARK) : 
+      const mark = this.isHorizontal ?
+        $('<div>').addClass(StyleClasses.SCALEMARK) :
         $('<div>').addClass([StyleClasses.SCALEMARK, StyleClasses.SCALEMARKV]);
       const text = $('<div>').addClass(StyleClasses.SCALETEXT);
       text.html(this.value.toString());

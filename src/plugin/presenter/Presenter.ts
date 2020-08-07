@@ -14,11 +14,11 @@ class Presenter implements IPresenter {
     protected view: IView;
 
     constructor (viewFactory: IViewFactory, modelFactory: IModelFactory) {
-      this.init(viewFactory, modelFactory)
-      this.addEvents(); 
+      this.init(viewFactory, modelFactory);
+      this.addEvents();
     }
 
-    protected init (viewFactory: IViewFactory, modelFactory: IModelFactory): void{        
+    protected init (viewFactory: IViewFactory, modelFactory: IModelFactory): void{
       this.model = modelFactory.build();
       const currentOptions = this.model.getOptions();
       const viewOptions: IViewOptions = {
@@ -27,17 +27,17 @@ class Presenter implements IPresenter {
         'isRangeLineEnabled': currentOptions.isRangeLineEnabled,
         'isVisibleCurrentValue': currentOptions.isVisibleCurrentValue,
       };
-      const valuesForeScale = currentOptions.isScaleEnabled ? 
+      const valuesForeScale = currentOptions.isScaleEnabled ?
         this.getValuesForScale({
           'maxVal': currentOptions.maxVal,
           'minVal': currentOptions.minVal,
-          'numberOfScaleMarks': currentOptions.numberOfScaleMarks
-        }) : 
+          'numberOfScaleMarks': currentOptions.numberOfScaleMarks,
+        }) :
         null;
       this.view = viewFactory.build(
-        this, 
-        viewOptions, 
-        new ElementsFactory(viewOptions.isHorizontal, viewOptions.isRange), 
+        this,
+        viewOptions,
+        new ElementsFactory(viewOptions.isHorizontal, viewOptions.isRange),
         valuesForeScale
       );
       this.initViewComponents();
@@ -70,14 +70,14 @@ class Presenter implements IPresenter {
       this.view.setCurrentValue(currentValue);
     }
 
-    protected setCurrentValueModel (currentVal?: number[]): void{       
-      this.model.setCurrentValue(currentVal);            
+    protected setCurrentValueModel (currentVal?: number[]): void{
+      this.model.setCurrentValue(currentVal);
     }
 
     protected getCorrectPosition (option: {
-        position: number, 
-        maxHandlePosition: number, 
-        isForView: boolean, 
+        position: number,
+        maxHandlePosition: number,
+        isForView: boolean,
         direction: SliderDirection
     }): number {
       const { position, maxHandlePosition, isForView, direction } = option;
@@ -85,14 +85,14 @@ class Presenter implements IPresenter {
       if (isForView) {
         correctPosition = position * maxHandlePosition / 100;
         if (!SliderDirection.isFrom(direction)) {
-          correctPosition = maxHandlePosition - correctPosition
+          correctPosition = maxHandlePosition - correctPosition;
         }
       } else {
         correctPosition = 100 * position / maxHandlePosition;
         if (!SliderDirection.isFrom(direction)) {
-          correctPosition = 100 - correctPosition
+          correctPosition = 100 - correctPosition;
         }
-      }        
+      }
       return correctPosition;
     }
 
@@ -101,10 +101,10 @@ class Presenter implements IPresenter {
       const { maxVal } = options;
       const { minVal } = options;
       const correctPosition = this.getCorrectPosition({
-        'position': this.view.getSliderHandlePosition(direction), 
-        'maxHandlePosition': this.view.getMaxHandlePosition(), 
-        'isForView': false, 
-        direction
+        'position': this.view.getSliderHandlePosition(direction),
+        'maxHandlePosition': this.view.getMaxHandlePosition(),
+        'isForView': false,
+        direction,
       });
         
       let newCurrentVal = ((maxVal - minVal)  * correctPosition / 100) + minVal;
@@ -120,7 +120,7 @@ class Presenter implements IPresenter {
         position,
         'maxHandlePosition': this.view.getMaxHandlePosition(),
         'isForView': true,
-        direction
+        direction,
       });
       this.view.setHandlePosition(position, direction);
     }
@@ -131,7 +131,7 @@ class Presenter implements IPresenter {
         const scaleValues = this.getValuesForScale({
           'minVal': options.minVal,
           'maxVal': options.maxVal,
-          'numberOfScaleMarks': options.numberOfScaleMarks
+          'numberOfScaleMarks': options.numberOfScaleMarks,
         });
         this.view.reinitialization({
           'isHorizontal': options.isHorizontal,
@@ -164,7 +164,7 @@ class Presenter implements IPresenter {
         current[0] = correctValue;
       }
       return current;
-    }    
+    }
 
     protected getValuesForScale (options: {
         minVal: number,
@@ -194,7 +194,7 @@ class Presenter implements IPresenter {
       const currentValFromPosition = this.getCurrentValFromPosition(direction);
       if (correctVal !== currentValFromPosition) {
         this.setCurrentHandlePosition(correctVal, direction);
-      }        
+      }
     }
 
     public scaleClicked (value: number): void{
@@ -204,30 +204,30 @@ class Presenter implements IPresenter {
       if (!options.isRange) {
         this.setCurrentValueModel([val, 0]);
         this.setCurrentHandlePosition(
-          val, 
+          val,
           SliderDirection.getDiraction(true, options.isHorizontal)
         );
         return;
       }
 
-      if (val < options.currentVal[0] || 
+      if (val < options.currentVal[0] ||
         val - options.currentVal[0] < options.currentVal[1] - val
       ) {
         this.setCurrentValueModel([val, options.currentVal[1]]);
         this.setCurrentHandlePosition(
-          val, 
+          val,
           SliderDirection.getDiraction(true, options.isHorizontal)
         );
       } else {
         this.setCurrentValueModel([options.currentVal[0], val]);
         this.setCurrentHandlePosition(
-          val, 
+          val,
           SliderDirection.getDiraction(false, options.isHorizontal)
         );
       }
     }
 
-    @bind 
+    @bind
     public setNewOptions (options: ISliderSettings): void{
       this.model.setNewOptions(options);
     }
@@ -241,7 +241,7 @@ class Presenter implements IPresenter {
     public onCurrentValueChanged (callBack: Function): void{
       this.model.changeCurrentValueEvent.on((data) => {
         callBack(data);
-      })
+      });
     }
 }
 

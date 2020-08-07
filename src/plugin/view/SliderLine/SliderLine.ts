@@ -4,7 +4,7 @@ import ISliderLine from './ISliderLine';
 import ISliderRange from '../SliderRange/ISliderRange';
 import ISetRangeOptions from './ISetRangeOptions';
 
-class SliderLine extends AbstractElement implements ISliderLine {    
+class SliderLine extends AbstractElement implements ISliderLine {
     public $elem: JQuery<HTMLElement>;
     protected isHorizontal: boolean;
     protected isRangeLineEnabled: boolean;
@@ -12,7 +12,7 @@ class SliderLine extends AbstractElement implements ISliderLine {
 
     constructor (isHorizontal: boolean, range?: ISliderRange) {
       super();
-      this.isHorizontal = isHorizontal
+      this.isHorizontal = isHorizontal;
       if (range) {
         this.range = range;
         this.isRangeLineEnabled = true;
@@ -23,32 +23,32 @@ class SliderLine extends AbstractElement implements ISliderLine {
     }
 
     protected init (): void{
-      this.$elem = this.isHorizontal ? 
-        $('<div>').addClass(StyleClasses.LINE) : 
+      this.$elem = this.isHorizontal ?
+        $('<div>').addClass(StyleClasses.LINE) :
         $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINEV]);
-      if (this.isRangeLineEnabled) {            
+      if (this.isRangeLineEnabled) {
         this.$elem.append(this.range.$elem);
       }
     }
 
     public getLineSize (): number {
       return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
-    }    
+    }
 
     public setRange (setRangeOptions: ISetRangeOptions): void{
       if (this.isRangeLineEnabled) {
         if (setRangeOptions.isRange) {
           this.range.changeRangeLineTwo(
-            setRangeOptions.handleFromPosition, 
+            setRangeOptions.handleFromPosition,
             setRangeOptions.handleToPosition
           );
         } else {
           this.range.changeRangeLineOne(
-            setRangeOptions.handleFromPosition, 
+            setRangeOptions.handleFromPosition,
             setRangeOptions.maxHandlePosition
           );
-        }            
-      } 
+        }
+      }
     }
 }
 

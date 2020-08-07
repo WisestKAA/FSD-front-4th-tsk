@@ -5,4 +5,4 @@ interface ISliderRange extends IElement{
     changeRangeLineOne(positionFrom: number, maxHandlePosition: number): void;
 }
 
-export default ISliderRange
+export default ISliderRange;

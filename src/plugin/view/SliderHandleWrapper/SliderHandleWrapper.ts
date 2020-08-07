@@ -31,8 +31,8 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     protected init (): void {
       this.$elem = $('<div>');
       this.changeOrientation(
-        this.isHorizontal, 
-        StyleClasses.HANDLEWRAPPER, 
+        this.isHorizontal,
+        StyleClasses.HANDLEWRAPPER,
         StyleClasses.HANDLEWRAPPERV
       );
       if (this.isRange) {
@@ -46,7 +46,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
 
     protected addEvents (): void{
       this.handleFrom.positionChangedEvent.on((direction) => {
-        this.sliderHandlePositionChanged(direction); 
+        this.sliderHandlePositionChanged(direction);
         this.onHandlePositionChanged.trigger(direction);
       });
       if (this.isRange) {
@@ -60,16 +60,16 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     protected sliderHandlePositionChanged (direction: SliderDirection): void{
       if (this.isRange) {
         this.checkHandleIntersection(
-          this.handleFrom.getPosition(), 
-          this.handleTo.getPosition(), 
+          this.handleFrom.getPosition(),
+          this.handleTo.getPosition(),
           direction
         );
       }
     }
 
     protected checkHandleIntersection (
-      positionFrom: number, 
-      positionTo: number, 
+      positionFrom: number,
+      positionTo: number,
       direction: SliderDirection
     ): boolean {
       const maxPos = this.getMaxHandlePosition();
@@ -81,7 +81,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
         }
       } else {
         return false;
-      }        
+      }
     }
 
     public getMaxHandlePosition (): number {
@@ -99,7 +99,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
         this.handleFrom.setCurrentPosition(position, direction);
       } else {
         this.handleTo.setCurrentPosition(position, direction);
-      } 
+      }
       this.onHandlePositionChanged.trigger(direction);
     }
 
@@ -124,7 +124,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     }
 
     public get handlePositionChangedEvent (): ILiteEvent<SliderDirection> {
-      return this.onHandlePositionChanged.expose()
+      return this.onHandlePositionChanged.expose();
     }
 }
 

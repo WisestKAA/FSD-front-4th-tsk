@@ -13,17 +13,17 @@ class ViewFactory implements IViewFactory {
   }
 
   public build (
-    presenter: IPresenter, 
-    option: IViewOptions, 
-    elementsFactory: IElementsFactory, 
+    presenter: IPresenter,
+    option: IViewOptions,
+    elementsFactory: IElementsFactory,
     scaleValues?: number[]
   ): IView {
     return new View({
-      'elem': this.elem, 
+      'elem': this.elem,
       presenter,
       'options': option,
       elementsFactory,
-      scaleValues
+      scaleValues,
     });
   }
 }

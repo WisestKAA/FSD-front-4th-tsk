@@ -23,8 +23,8 @@ class View implements IView {
     protected scaleValues?: number[] = null;
 
     constructor (viewOptions: {
-        elem: HTMLElement, 
-        presenter: IPresenter, 
+        elem: HTMLElement,
+        presenter: IPresenter,
         options: IViewOptions,
         elementsFactory: IElementsFactory,
         scaleValues?: number[]
@@ -43,18 +43,18 @@ class View implements IView {
       this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isRange);
       this.mainWrapper = this.buildMainWrapper(
         this.options.isRangeLineEnabled,
-        this.options.isRange 
-      );        
-      const $mainDiv = this.options.isHorizontal ? 
-        $('<div>').addClass(StyleClasses.SLIDER) :  
+        this.options.isRange
+      );
+      const $mainDiv = this.options.isHorizontal ?
+        $('<div>').addClass(StyleClasses.SLIDER) :
         $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERV]);
       if (this.scaleValues === null || this.scaleValues === undefined) {
         $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
       } else {
         this.scaleWrapper = this.buildScaleWrapper();
         $mainDiv.append([
-          this.currentValueWrapper.$elem, 
-          this.mainWrapper.$elem, this.scaleWrapper.$elem
+          this.currentValueWrapper.$elem,
+          this.mainWrapper.$elem, this.scaleWrapper.$elem,
         ]);
       }
       this.slider = $(this.elem).append($mainDiv);
@@ -76,12 +76,12 @@ class View implements IView {
         handleWrapper = this.elementsFactory.buildHandleWrapper(handleFrom, handleTo);
       } else {
         handleWrapper = this.elementsFactory.buildHandleWrapper(handleFrom);
-      } 
+      }
       return this.elementsFactory.buildMainWrapper(
-        line, 
+        line,
         handleWrapper
       );
-    }    
+    }
 
     protected buildCurrentValueWrapper (isRange: boolean): ICurrentValueWrapper {
       const currentValueFrom = this.elementsFactory.buildCurrentValue(true);
@@ -89,7 +89,7 @@ class View implements IView {
       if (isRange) {
         const currentValueTo = this.elementsFactory.buildCurrentValue(false);
         currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(
-          currentValueFrom, 
+          currentValueFrom,
           currentValueTo
         );
       } else {
@@ -101,14 +101,14 @@ class View implements IView {
       return currentValueWrapper;
     }
 
-    protected buildScaleWrapper (): IScaleWrapper {        
+    protected buildScaleWrapper (): IScaleWrapper {
       const scaleItems: IScaleItem[] = [];
       if (!this.options.isHorizontal) {
         this.scaleValues.reverse();
       }
       this.scaleValues.forEach((value) => {
         scaleItems.push(this.elementsFactory.buildScaleItem(value));
-      });        
+      });
       return this.elementsFactory.buildScaleWrapper(scaleItems);
     }
 
@@ -125,7 +125,7 @@ class View implements IView {
     }
 
     protected setCurrentValuePosition (direction: SliderDirection): void{
-      const position = SliderDirection.isFrom(direction) ? 
+      const position = SliderDirection.isFrom(direction) ?
         this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
       this.currentValueWrapper.setCurrentValuePosition({
         position,
@@ -133,12 +133,12 @@ class View implements IView {
         'handleFromPosition': this.mainWrapper.getHandleFromPosition(),
         'handleToPosition': this.mainWrapper.getHandleToPosition(),
         'lineSize': this.mainWrapper.getLineSize(),
-        'maxHandlePosition': this.getMaxHandlePosition()
+        'maxHandlePosition': this.getMaxHandlePosition(),
       });
     }
 
     public getSliderHandlePosition (direction: SliderDirection): number {
-      return this.mainWrapper.getSliderHandlePosition(direction);    
+      return this.mainWrapper.getSliderHandlePosition(direction);
     }
 
     public setCurrentValue (currentValue: number[]): void {
@@ -154,7 +154,7 @@ class View implements IView {
     }
 
     public setHandlePosition (position: number, direction: SliderDirection): void {
-      this.mainWrapper.setHandlePosition(position, direction);    
+      this.mainWrapper.setHandlePosition(position, direction);
     }
 
     public reinitialization (option: IViewOptions, scaleValues?: number[]): void{

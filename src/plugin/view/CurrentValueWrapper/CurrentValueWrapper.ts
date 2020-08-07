@@ -24,11 +24,11 @@ class CurrentValueWrapper extends AbstractElement {
       this.init();
     }
 
-    protected init (): void {        
+    protected init (): void {
       this.$elem = $('<div>');
       this.changeOrientation(
-        this.isHorizontal, 
-        StyleClasses.CURRENTVALWRAPPER, 
+        this.isHorizontal,
+        StyleClasses.CURRENTVALWRAPPER,
         StyleClasses.CURRENTVALWRAPPERV
       );
         
@@ -44,8 +44,8 @@ class CurrentValueWrapper extends AbstractElement {
         const maxPosition = options.maxHandlePosition;
         const handlePercent = 100 - maxPosition;
         this.currentValueFrom.setPosition(
-          options.position, 
-          handlePercent, 
+          options.position,
+          handlePercent,
           options.lineSize
         );
         break;
@@ -58,8 +58,8 @@ class CurrentValueWrapper extends AbstractElement {
         const maxPosition = options.maxHandlePosition;
         const handlePercent = 100 - maxPosition;
         this.currentValueTo.setPosition(
-          options.position, 
-          handlePercent, 
+          options.position,
+          handlePercent,
           options.lineSize
         );
         break;
@@ -80,15 +80,15 @@ class CurrentValueWrapper extends AbstractElement {
     }
     
     protected checkCurrentValueIntersection (
-      lineSize: number, 
-      handleFromPosition: number, 
+      lineSize: number,
+      handleFromPosition: number,
       handleToPosition: number
-    ): void{ 
+    ): void{
       const currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
       const currentValueToSize = this.currentValueTo.getCurrentValueSize();
       const maxSize = lineSize - currentValueFromSize - currentValueToSize;
       let maxSizePercent = maxSize * 100 / lineSize;
-      let sumPosition = this.currentValueFrom.getCurrentValuePosition() + 
+      let sumPosition = this.currentValueFrom.getCurrentValuePosition() +
         this.currentValueTo.getCurrentValuePosition();
       const precision = Math.pow(10, 10);
       maxSizePercent = Math.round(maxSizePercent * precision) / precision;
@@ -97,9 +97,9 @@ class CurrentValueWrapper extends AbstractElement {
         const shiftMiddlePosition = (100 - handleFromPosition - handleToPosition) / 2;
         const currentValueFromPercent = currentValueFromSize * 100 / lineSize;
         const currentValueToPercent = currentValueToSize * 100 / lineSize;
-        const currentPositionValueFrom = handleFromPosition + 
+        const currentPositionValueFrom = handleFromPosition +
           shiftMiddlePosition - currentValueFromPercent;
-        const currentPositionValueTo = handleToPosition + 
+        const currentPositionValueTo = handleToPosition +
           shiftMiddlePosition - currentValueToPercent;
         this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
         this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
