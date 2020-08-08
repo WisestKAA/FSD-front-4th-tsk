@@ -21,14 +21,14 @@ class ScaleItem extends AbstractElement implements IScaleItem {
     }
 
     protected init (): void {
-      const mark = this.isHorizontal ?
+      const $mark = this.isHorizontal ?
         $('<div>').addClass(StyleClasses.SCALEMARK) :
         $('<div>').addClass([StyleClasses.SCALEMARK, StyleClasses.SCALEMARKV]);
-      const text = $('<div>').addClass(StyleClasses.SCALETEXT);
-      text.html(this.value.toString());
+      const $text = $('<div>').addClass(StyleClasses.SCALETEXT);
+      $text.html(this.value.toString());
       this.$elem = $('<div>');
       this.changeOrientation(this.isHorizontal, StyleClasses.SCALEITEM, StyleClasses.SCALEITEMV);
-      this.$elem.append(mark, text);
+      this.$elem.append($mark, $text);
     }
 
     protected addEvents (): void{

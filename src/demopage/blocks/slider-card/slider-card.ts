@@ -3,7 +3,7 @@ import IFormIntputs from './IFormIntputs';
 
 class SliderCard {
     protected $elem: JQuery<HTMLElement>;
-    protected slider: JQuery<Object>;
+    protected $slider: JQuery<Object>;
     protected formInputs: IFormIntputs;
     protected options: ISliderSettings;
 
@@ -14,16 +14,16 @@ class SliderCard {
     }
 
     protected init (): void{
-      const form = this.$elem.find('form');
-      this.initFormInputs(form);
+      const $form = this.$elem.find('form');
+      this.initFormInputs($form);
       this.options = this.getSliderSettings();
-      const sliderDiv = this.$elem.find('.slider-card__slider');
-      this.initSlider(sliderDiv.get(0), this.options);
+      const $sliderDiv = this.$elem.find('.slider-card__slider');
+      this.initSlider($sliderDiv.get(0), this.options);
     }
 
     protected addEvents (): void{
       const that = this;
-      this.slider.data('presenter').onCurrentValueChanged((val: number[]) => {
+      this.$slider.data('presenter').onCurrentValueChanged((val: number[]) => {
         if (this.formInputs.isRange.checked) {
           (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]} ${val[1]}`;
         } else {
@@ -34,9 +34,9 @@ class SliderCard {
 
       $(this.formInputs.isHorizontal).change(() => {
         if (this.formInputs.isHorizontal.checked) {
-          this.slider.removeClass('slider-card__slider_vertical');
+          this.$slider.removeClass('slider-card__slider_vertical');
         } else {
-          this.slider.addClass('slider-card__slider_vertical');
+          this.$slider.addClass('slider-card__slider_vertical');
         }
         this.optionsChanged({ 'isHorizontal': this.formInputs.isHorizontal.checked });
       });
@@ -173,7 +173,7 @@ class SliderCard {
     }
 
     protected initSlider (slider: HTMLElement, sliderSettings: ISliderSettings): void{
-      this.slider = $(slider);
+      this.$slider = $(slider);
       $(slider).SimpleSlider(sliderSettings);
     }
 
@@ -196,27 +196,27 @@ class SliderCard {
     protected optionsChanged (option: Object): void{
       this.$elem.find('.slider-card__error').remove();
       this.options = $.extend(this.options, option);
-      this.slider.data('presenter').setNewOptions(this.options);
+      this.$slider.data('presenter').setNewOptions(this.options);
     }
 
     protected inputValidation (
       errorMessage: string,
-      element: JQuery<HTMLElement>,
+      $element: JQuery<HTMLElement>,
       oldValue: string, func: Function
     ): void{
       try {
         func();
       } catch (error) {
-        element.before(`<div class="slider-card__error">${errorMessage}</div>`);
-        element.attr('value', oldValue);
+        $element.before(`<div class="slider-card__error">${errorMessage}</div>`);
+        $element.attr('value', oldValue);
       }
     }
 }
 
 
 $(document).ready(() => {
-  const sliderCards = $(document).find('.slider-card');
-  sliderCards.each((index, element) => {
+  const $sliderCards = $(document).find('.slider-card');
+  $sliderCards.each((index, element) => {
     new SliderCard(element);
   });
 });

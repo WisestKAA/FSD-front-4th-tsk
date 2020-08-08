@@ -75,9 +75,9 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
 
     protected onMouseMoveX (event: JQuery.MouseMoveEvent): void {
-      const lineHTMLElement = this.line.$elem;
-      const offset = lineHTMLElement.offset().left;
-      const lineWidth = lineHTMLElement.outerWidth();
+      const $lineHTMLElement = this.line.$elem;
+      const offset = $lineHTMLElement.offset().left;
+      const lineWidth = $lineHTMLElement.outerWidth();
       const handleWidth = this.$elem.outerWidth();
       if (this.isFrom) {
         const newLeft = this.getNewLeft(event.pageX, offset, lineWidth, handleWidth);
@@ -89,9 +89,9 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
 
     protected onMouseMoveY (event: JQuery.MouseMoveEvent): void {
-      const lineHTMLElement = this.line.$elem;
-      const offset = lineHTMLElement.offset().top;
-      const lineHieght = lineHTMLElement.outerHeight();
+      const $lineHTMLElement = this.line.$elem;
+      const offset = $lineHTMLElement.offset().top;
+      const lineHieght = $lineHTMLElement.outerHeight();
       const handleHeight = this.$elem.outerHeight();
       if (this.isFrom) {
         const newBot = this.getNewBot(event.pageY, offset, lineHieght, handleHeight);

@@ -382,7 +382,7 @@ describe('Test View', () => {
             'presenter': new MockPresenter(),
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
           });
-          expect(view.slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
+          expect(view.$slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
             .toBe(StyleClasses.SLIDER);
         }
       );
@@ -403,7 +403,7 @@ describe('Test View', () => {
             'presenter': new MockPresenter(),
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
           });
-          expect(view.slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
+          expect(view.$slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
             .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDERV}`);
         }
       );
@@ -424,7 +424,7 @@ describe('Test View', () => {
             'presenter': new MockPresenter(),
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
           });
-          expect(view.slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr('class'))
+          expect(view.$slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr('class'))
             .toBe(StyleClasses.CURRENTVALWRAPPER);
         }
       );
@@ -445,7 +445,7 @@ describe('Test View', () => {
             'presenter': new MockPresenter(),
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
           });
-          expect(view.slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr('class'))
+          expect(view.$slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr('class'))
             .toBe(`${StyleClasses.CURRENTVALWRAPPER} ${StyleClasses.CURRENTVALWRAPPERV}`);
         }
       );
@@ -466,7 +466,7 @@ describe('Test View', () => {
             'presenter': new MockPresenter(),
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
           });
-          expect(view.slider.find(`.${StyleClasses.MAINWRAPPER}`).attr('class'))
+          expect(view.$slider.find(`.${StyleClasses.MAINWRAPPER}`).attr('class'))
             .toBe(StyleClasses.MAINWRAPPER);
         }
       );
@@ -487,7 +487,7 @@ describe('Test View', () => {
             'presenter': new MockPresenter(),
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
           });
-          expect(view.slider.find(`.${StyleClasses.MAINWRAPPER}`).attr('class'))
+          expect(view.$slider.find(`.${StyleClasses.MAINWRAPPER}`).attr('class'))
             .toBe(`${StyleClasses.MAINWRAPPER} ${StyleClasses.MAINWRAPPERV}`);
         }
       );
@@ -509,7 +509,7 @@ describe('Test View', () => {
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
             'scaleValues': [0, 100],
           });
-          expect(view.slider.find(`.${StyleClasses.SCALEWRAPPER}`).attr('class'))
+          expect(view.$slider.find(`.${StyleClasses.SCALEWRAPPER}`).attr('class'))
             .toBe(StyleClasses.SCALEWRAPPER);
         }
       );
@@ -531,7 +531,7 @@ describe('Test View', () => {
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
             'scaleValues': [0, 100],
           });
-          expect(view.slider.find(`.${StyleClasses.SCALEWRAPPER}`).attr('class'))
+          expect(view.$slider.find(`.${StyleClasses.SCALEWRAPPER}`).attr('class'))
             .toBe(`${StyleClasses.SCALEWRAPPER} ${StyleClasses.SCALEWRAPPERV}`);
         }
       );
@@ -705,7 +705,7 @@ describe('Test View', () => {
             'isVisibleCurrentValue': true,
           };
           const view = new MockView(elem, new MockPresenter(), oldOptions);
-          const spySlider = spyOn(view.slider, 'html');
+          const spySlider = spyOn(view.$slider, 'html');
           const spyInit = spyOn(view, 'init');
           const spyAddEvents = spyOn(view, 'addEvents');
           view.reinitialization(newOptions);

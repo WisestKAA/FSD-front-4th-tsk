@@ -156,7 +156,7 @@ class MockSliderCard extends SliderCard {
     presenter: Presenter;
 
     initSlider (slider: HTMLElement, sliderSettings: ISliderSettings): void{
-      this.slider = $(slider);
+      this.$slider = $(slider);
       this.presenter = new Presenter(sliderSettings);
       $(slider).data('presenter', this.presenter);
     }

@@ -13,7 +13,7 @@ import IView from './IView';
 
 class View implements IView {
     protected presenter: IPresenter;
-    public slider: JQuery<HTMLElement>;
+    public $slider: JQuery<HTMLElement>;
     protected currentValueWrapper: ICurrentValueWrapper;
     protected mainWrapper: ISliderMainWrapper;
     protected options: IViewOptions;
@@ -57,7 +57,7 @@ class View implements IView {
           this.mainWrapper.$elem, this.scaleWrapper.$elem,
         ]);
       }
-      this.slider = $(this.elem).append($mainDiv);
+      this.$slider = $(this.elem).append($mainDiv);
     }
 
     protected buildMainWrapper (isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper {
@@ -158,7 +158,7 @@ class View implements IView {
     }
 
     public reinitialization (option: IViewOptions, scaleValues?: number[]): void{
-      this.slider.html('');
+      this.$slider.html('');
       this.options = option;
       this.scaleValues = scaleValues;
       this.elementsFactory.setNewOptions(option.isHorizontal, option.isRange);
