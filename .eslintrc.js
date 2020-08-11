@@ -7,6 +7,7 @@ module.exports = {
         'eslint:recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:import/errors',
+        'plugin:fsd/all'
     ],
     'globals': {
         'Atomics': 'readonly',
@@ -19,6 +20,7 @@ module.exports = {
     },
     'plugins': [
         '@typescript-eslint',
+        'fsd'
     ],
     'settings': {
         
@@ -108,6 +110,7 @@ module.exports = {
         'camelcase': 'error',
         'new-cap': ['error', { 'capIsNewExceptionPattern': `.SimpleSlider` }],
         'no-underscore-dangle': 'error',
-        'no-restricted-globals': ['error', 'event', 'fdescribe'],        
+        'no-restricted-globals': ['error', 'event', 'fdescribe'],   
+        'fsd/no-function-declaration-in-event-listener': "off"     
     }
 };

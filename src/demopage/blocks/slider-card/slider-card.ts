@@ -68,7 +68,7 @@ class SliderCard {
       });
     }
 
-    protected handleSliderCurrentValueChanged(val: number[]): void{
+    protected handleSliderCurrentValueChanged (val: number[]): void{
       if (this.formInputs.isRange.checked) {
         (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]} ${val[1]}`;
       } else {
@@ -77,7 +77,7 @@ class SliderCard {
       this.options.currentVal = val;
     }
 
-    protected handleHorizontalChanged(): void{
+    protected handleHorizontalChanged (): void{
       if (this.formInputs.isHorizontal.checked) {
         this.$slider.removeClass('slider-card__slider_vertical');
       } else {
@@ -86,7 +86,7 @@ class SliderCard {
       this.optionsChanged({ 'isHorizontal': this.formInputs.isHorizontal.checked });
     }
 
-    protected handleMinValFocusOut(): void{
+    protected handleMinValFocusOut (): void{
       this.inputValidation(
         'Invalid input! The minimum value must be a number',
         this.formInputs.minVal,
@@ -100,7 +100,7 @@ class SliderCard {
       );
     }
 
-    protected handleMaxValFocusOut(): void{
+    protected handleMaxValFocusOut (): void{
       this.inputValidation(
         'Invalid input! The maximum value must be a number',
         this.formInputs.maxVal,
@@ -114,7 +114,7 @@ class SliderCard {
       );
     }
 
-    protected handleCurrentValFocusOut(): void{
+    protected handleCurrentValFocusOut (): void{
       this.inputValidation(
         'The current value must be one or two digits separated by a space',
         this.formInputs.currentVal,
@@ -128,7 +128,7 @@ class SliderCard {
       );
     }
 
-    protected handleStepFocusOut(): void{
+    protected handleStepFocusOut (): void{
       this.inputValidation(
         'Invalid input values. The step must be a number and less than maxVal - minVal',
         this.formInputs.step,
@@ -142,7 +142,7 @@ class SliderCard {
       );
     }
 
-    protected handleNumOfScaleMarksFocusOut(): void{
+    protected handleNumOfScaleMarksFocusOut (): void{
       this.inputValidation(
         'Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer',
         this.formInputs.numberOfScaleMarks,
