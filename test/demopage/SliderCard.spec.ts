@@ -29,7 +29,7 @@ class MockElement {
     };
 
     constructor () {
-      this.$slider = $('<div>').addClass('slider-card__slider');
+      this.$slider = $('<div>').addClass('slider-card__slider js-slider-card__slider');
     }
     
     public getElement (options: {
@@ -113,7 +113,7 @@ class MockElement {
         .append(
           $('<div>').addClass('slider-card__slider-wrapper')
             .append(this.$slider),
-          $('<form>').addClass('slider-card__form')
+          $('<form>').addClass('slider-card__form js-slider-card__form')
             .append(
               this.$currentValue,
               this.$minVal,

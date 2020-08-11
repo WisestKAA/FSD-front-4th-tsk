@@ -1,6 +1,7 @@
 enum StyleClasses {
      SLIDER = 'simpleslider',
      SLIDERV = 'simpleslider_vertical',
+     SLIDERJS = 'js-simpleslider',
      WRAPPER = 'simpleslider__wrapper',
      WRAPPERV = 'simpleslider__wrapper_vertical',
      LINE = 'simpleslider__line',

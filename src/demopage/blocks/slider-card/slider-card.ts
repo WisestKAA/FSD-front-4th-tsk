@@ -14,117 +14,146 @@ class SliderCard {
     }
 
     protected init (): void{
-      const $form = this.$elem.find('form');
+      const $form = this.$elem.find('.js-slider-card__form');
       this.initFormInputs($form);
       this.options = this.getSliderSettings();
-      const $sliderDiv = this.$elem.find('.slider-card__slider');
+      const $sliderDiv = this.$elem.find('.js-slider-card__slider');
       this.initSlider($sliderDiv.get(0), this.options);
     }
 
     protected addEvents (): void{
-      const that = this;
       this.$slider.data('presenter').onCurrentValueChanged((val: number[]) => {
-        if (this.formInputs.isRange.checked) {
-          (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]} ${val[1]}`;
-        } else {
-          (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]}`;
-        }
-        that.options.currentVal = val;
+        this.handleSliderCurrentValueChanged(val);
       });
 
-      $(this.formInputs.isHorizontal).change(() => {
-        if (this.formInputs.isHorizontal.checked) {
-          this.$slider.removeClass('slider-card__slider_vertical');
-        } else {
-          this.$slider.addClass('slider-card__slider_vertical');
-        }
-        this.optionsChanged({ 'isHorizontal': this.formInputs.isHorizontal.checked });
+      $(this.formInputs.isHorizontal).on('change', () => {
+        this.handleHorizontalChanged();
       });
-      $(this.formInputs.isRange).change(() => {
+
+      $(this.formInputs.isRange).on('change', () => {
         this.optionsChanged({ 'isRange': this.formInputs.isRange.checked });
       });
-      $(this.formInputs.isRangeLineEnabled).change(() => {
+
+      $(this.formInputs.isRangeLineEnabled).on('change', () => {
         this.optionsChanged({ 'isRangeLineEnabled': this.formInputs.isRangeLineEnabled.checked });
       });
-      $(this.formInputs.isScaleEnabled).change(() => {
+
+      $(this.formInputs.isScaleEnabled).on('change', () => {
         this.optionsChanged({ 'isScaleEnabled': this.formInputs.isScaleEnabled.checked });
       });
-      $(this.formInputs.isVisibleCurrentValue).change(() => {
+
+      $(this.formInputs.isVisibleCurrentValue).on('change', () => {
         this.optionsChanged({ 'isVisibleCurrentValue':
           this.formInputs.isVisibleCurrentValue.checked });
       });
 
-      this.formInputs.minVal.focusout(() => {
-        this.inputValidation(
-          'Invalid input! The minimum value must be a number',
-          this.formInputs.minVal,
-          this.options.minVal.toString(),
-          () => {
-            const minVal = this.getNumInputValue(this.formInputs.minVal);
-            if (minVal !== this.options.minVal) {
-              this.optionsChanged({ minVal });
-            }
-          }
-        );
+      this.formInputs.minVal.on('focusout', () => {
+        this.handleMinValFocusOut();
       });
 
-      this.formInputs.maxVal.focusout(() => {
-        this.inputValidation(
-          'Invalid input! The maximum value must be a number',
-          this.formInputs.maxVal,
-          this.options.maxVal.toString(),
-          () => {
-            const maxVal = this.getNumInputValue(this.formInputs.maxVal);
-            if (maxVal !== this.options.maxVal) {
-              this.optionsChanged({ maxVal });
-            }
-          }
-        );
+      this.formInputs.maxVal.on('focusout', () => {
+        this.handleMaxValFocusOut();
       });
 
-      this.formInputs.currentVal.focusout(() => {
-        this.inputValidation(
-          'The current value must be one or two digits separated by a space',
-          this.formInputs.currentVal,
-          this.options.currentVal.toString(),
-          () => {
-            const curVal = this.formInputs.currentVal.val().toString();
-            const isRange = this.formInputs.isRange.checked;
-            const currentVal = this.parseCurrentValue(curVal, isRange);
-            this.optionsChanged({ currentVal });
-          }
-        );
+      this.formInputs.currentVal.on('focusout', () => {
+        this.handleCurrentValFocusOut();
       });
 
-      this.formInputs.step.focusout(() => {
-        this.inputValidation(
-          'Invalid input values. The step must be a number and less than maxVal - minVal',
-          this.formInputs.step,
-          this.options.step.toString(),
-          () => {
-            const step = this.getNumInputValue(this.formInputs.step);
-            if (step !== this.options.step) {
-              this.optionsChanged({ step });
-            }
-          }
-        );
+      this.formInputs.step.on('focusout', () => {
+        this.handleStepFocusOut();
       });
 
-      this.formInputs.numberOfScaleMarks.focusout(() => {
-        this.inputValidation(
-          'Invalid input values.' +
-            ' numberOfScaleMarks must be a number and greater than or equal' +
-            ' to two and be an integer',
-          this.formInputs.numberOfScaleMarks,
-          this.options.numberOfScaleMarks.toString(),
-          () => {
-            const numberOfScaleMarks = this.getNumInputValue(this.formInputs.numberOfScaleMarks);
-            if (numberOfScaleMarks !== this.options.numberOfScaleMarks) {
-              this.optionsChanged({ numberOfScaleMarks });
-            }
-          }
-        );
+      this.formInputs.numberOfScaleMarks.on('focusout', () => {
+        this.handleNumOfScaleMarksFocusOut();
       });
+    }
+
+    protected handleSliderCurrentValueChanged(val: number[]): void{
+      if (this.formInputs.isRange.checked) {
+        (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]} ${val[1]}`;
+      } else {
+        (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]}`;
+      }
+      this.options.currentVal = val;
+    }
+
+    protected handleHorizontalChanged(): void{
+      if (this.formInputs.isHorizontal.checked) {
+        this.$slider.removeClass('slider-card__slider_vertical');
+      } else {
+        this.$slider.addClass('slider-card__slider_vertical');
+      }
+      this.optionsChanged({ 'isHorizontal': this.formInputs.isHorizontal.checked });
+    }
+
+    protected handleMinValFocusOut(): void{
+      this.inputValidation(
+        'Invalid input! The minimum value must be a number',
+        this.formInputs.minVal,
+        this.options.minVal.toString(),
+        () => {
+          const minVal = this.getNumInputValue(this.formInputs.minVal);
+          if (minVal !== this.options.minVal) {
+            this.optionsChanged({ minVal });
+          }
+        }
+      );
+    }
+
+    protected handleMaxValFocusOut(): void{
+      this.inputValidation(
+        'Invalid input! The maximum value must be a number',
+        this.formInputs.maxVal,
+        this.options.maxVal.toString(),
+        () => {
+          const maxVal = this.getNumInputValue(this.formInputs.maxVal);
+          if (maxVal !== this.options.maxVal) {
+            this.optionsChanged({ maxVal });
+          }
+        }
+      );
+    }
+
+    protected handleCurrentValFocusOut(): void{
+      this.inputValidation(
+        'The current value must be one or two digits separated by a space',
+        this.formInputs.currentVal,
+        this.options.currentVal.toString(),
+        () => {
+          const curVal = this.formInputs.currentVal.val().toString();
+          const isRange = this.formInputs.isRange.checked;
+          const currentVal = this.parseCurrentValue(curVal, isRange);
+          this.optionsChanged({ currentVal });
+        }
+      );
+    }
+
+    protected handleStepFocusOut(): void{
+      this.inputValidation(
+        'Invalid input values. The step must be a number and less than maxVal - minVal',
+        this.formInputs.step,
+        this.options.step.toString(),
+        () => {
+          const step = this.getNumInputValue(this.formInputs.step);
+          if (step !== this.options.step) {
+            this.optionsChanged({ step });
+          }
+        }
+      );
+    }
+
+    protected handleNumOfScaleMarksFocusOut(): void{
+      this.inputValidation(
+        'Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer',
+        this.formInputs.numberOfScaleMarks,
+        this.options.numberOfScaleMarks.toString(),
+        () => {
+          const numberOfScaleMarks = this.getNumInputValue(this.formInputs.numberOfScaleMarks);
+          if (numberOfScaleMarks !== this.options.numberOfScaleMarks) {
+            this.optionsChanged({ numberOfScaleMarks });
+          }
+        }
+      );
     }
 
     protected getSliderSettings (): ISliderSettings {
@@ -194,7 +223,7 @@ class SliderCard {
     }
 
     protected optionsChanged (option: Object): void{
-      this.$elem.find('.slider-card__error').remove();
+      this.$elem.find('.js-slider-card__error').remove();
       this.options = $.extend(this.options, option);
       this.$slider.data('presenter').setNewOptions(this.options);
     }
@@ -207,7 +236,7 @@ class SliderCard {
       try {
         func();
       } catch (error) {
-        $element.before(`<div class="slider-card__error">${errorMessage}</div>`);
+        $element.before(`<div class="slider-card__error js-slider-card__error">${errorMessage}</div>`);
         $element.attr('value', oldValue);
       }
     }
@@ -215,7 +244,7 @@ class SliderCard {
 
 
 $(document).ready(() => {
-  const $sliderCards = $(document).find('.slider-card');
+  const $sliderCards = $(document).find('.js-slider-card');
   $sliderCards.each((index, element) => {
     new SliderCard(element);
   });

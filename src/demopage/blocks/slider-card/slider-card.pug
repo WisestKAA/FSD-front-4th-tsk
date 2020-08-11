@@ -7,10 +7,10 @@ mixin slider-card({ currentValue=0,  minVal=0, maxVal=100, step=1, precision=0, 
     if(!isHorizontal)
         - vertical = "slider-card__slider_vertical"
     
-    article.slider-card
+    article.slider-card.js-slider-card
         .slider-card__slider-wrapper
-            .slider-card__slider(class = vertical)
-        form.slider-card__form               
+            .slider-card__slider.js-slider-card__slider(class = vertical)
+        form.slider-card__form.js-slider-card__form
             .slider-card__form-item-wrapper
                 +label({text: "Current value", marginBottom: 3})
                 +text-field({placeholder: "Current value", text: currentValue, name: "currentValue"})           

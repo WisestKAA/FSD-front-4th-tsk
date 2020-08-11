@@ -383,7 +383,7 @@ describe('Test View', () => {
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
           });
           expect(view.$slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
-            .toBe(StyleClasses.SLIDER);
+            .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDERJS}`);
         }
       );
 
@@ -404,7 +404,7 @@ describe('Test View', () => {
             'elementsFactory': new MockElementsFactory(options.isHorizontal, options.isRange),
           });
           expect(view.$slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
-            .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDERV}`);
+            .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDERJS} ${StyleClasses.SLIDERV}`);
         }
       );
 
