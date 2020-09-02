@@ -106,7 +106,7 @@ class Presenter implements IPresenter {
         'isForView': false,
         direction,
       });
-        
+
       let newCurrentVal = ((maxVal - minVal)  * correctPosition / 100) + minVal;
       const precision = Math.pow(10, options.precision);
       newCurrentVal = Math.round(newCurrentVal * precision) / precision;

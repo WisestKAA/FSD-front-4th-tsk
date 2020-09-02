@@ -1,12 +1,12 @@
 mixin label({text, marginBottom, caption, marginCaption, isShort=false}={})
-    - var margtop = ''
-    if(_marginCaption==3) 
-        - margtop = 'label__caption_margin-top-3'
-    
-    - var short = ''
-    if(_isShort)
-        - short = ' label_short'
+  - var margtop = ''
+  if(_marginCaption==3)
+    - margtop = 'label__caption_margin-top-3'
 
-    .label(class=`label_margin-bottom-${marginBottom}${short}`)
-        .label__text.h3=text
-        .label__caption(class=`${margtop}`)=caption
+  - var short = ''
+  if(_isShort)
+    - short = ' label_short'
+
+  .label(class=`label_margin-bottom-${marginBottom}${short}`)
+    .label__text.h3=text
+    .label__caption(class=`${margtop}`)=caption

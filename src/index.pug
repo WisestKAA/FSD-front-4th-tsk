@@ -3,22 +3,47 @@ include ./demopage/blocks/slider-card/slider-card.pug
 doctype html
 
 html(lang='en')
-    head
-        meta(charset="utf-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1")
-        title="FSD-front-4th-tsk"
-        link(rel="apple-touch-icon" sizes="180x180" href="/FSD-front-4th-tsk/favicons/apple-touch-icon.png")
-        link(rel="icon" type="image/png" sizes="32x32" href="/FSD-front-4th-tsk/favicons/favicon-32x32.png")
-        link(rel="icon" type="image/png" sizes="16x16" href="/FSD-front-4th-tsk/favicons/favicon-16x16.png")
-        link(rel="manifest" href="/FSD-front-4th-tsk/favicons/site.webmanifest")
-        link(rel="mask-icon" href="/FSD-front-4th-tsk/favicons/safari-pinned-tab.svg" color="#5bbad5")
-        meta(name="msapplication-TileColor" content="#da532c")
-        meta(name="theme-color" content="#ffffff")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title FSD-front-4th-tsk
+    link(rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png")
+    link(rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png")
+    link(rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png")
+    link(rel="manifest" href="./favicons/site.webmanifest")
+    link(rel="mask-icon" href="./favicons/safari-pinned-tab.svg" color="#5bbad5")
+    meta(name="msapplication-TileColor" content="#da532c")
+    meta(name="theme-color" content="#ffffff")
 
-    body(bgcolor="#F4F4F6", style="margin: 0; box-sizing: border-box;")
-        main.demo
-            .demo-wrapper
-                +slider-card({isRange: true, currentValue: "10 30", isScaleEnabled: true, numOfScaleMark: 5})
-                +slider-card({minVal: -10, maxVal: 10, step: 0.5, isRangeLineEnabled: true})
-                +slider-card({isHorizontal: false, isRange: true, currentValue: "-5 5", isScaleEnabled: true, numOfScaleMark: 5,minVal: -10, maxVal: 10, isRangeLineEnabled: true})
-                +slider-card({isHorizontal: false, minVal: -10, maxVal: 10, step: 0.5, isCurrentValueVisible: false})
+  body(bgcolor="#F4F4F6", style="margin: 0; box-sizing: border-box;")
+    main.demo
+      .demo-wrapper
+        +slider-card({
+          isRange: true,
+          currentValue: "10 30",
+          isScaleEnabled: true,
+          numOfScaleMark: 5
+        })
+        +slider-card({
+          minVal: -10,
+          maxVal: 10,
+          step: 0.5,
+          isRangeLineEnabled: true
+        })
+        +slider-card({
+          isHorizontal: false,
+          isRange: true,
+          currentValue: "-5 5",
+          isScaleEnabled: true,
+          numOfScaleMark: 5,
+          minVal: -10,
+          maxVal: 10,
+          isRangeLineEnabled: true
+        })
+        +slider-card({
+          isHorizontal: false,
+          minVal: -10,
+          maxVal: 10,
+          step: 0.5,
+          isCurrentValueVisible: false
+        })

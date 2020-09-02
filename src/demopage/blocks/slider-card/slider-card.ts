@@ -1,19 +1,23 @@
+import bind from 'bind-decorator';
 import ISliderSettings from './ISliderSettings';
 import IFormIntputs from './IFormIntputs';
 
 class SliderCard {
     protected $elem: JQuery<HTMLElement>;
+
     protected $slider: JQuery<Object>;
+
     protected formInputs: IFormIntputs;
+
     protected options: ISliderSettings;
 
-    constructor (elem: HTMLElement) {
+    constructor(elem: HTMLElement) {
       this.$elem = $(elem);
       this.init();
       this.addEvents();
     }
 
-    protected init (): void{
+    protected init(): void{
       const $form = this.$elem.find('.js-slider-card__form');
       this.initFormInputs($form);
       this.options = this.getSliderSettings();
@@ -21,54 +25,25 @@ class SliderCard {
       this.initSlider($sliderDiv.get(0), this.options);
     }
 
-    protected addEvents (): void{
+    protected addEvents(): void{
       this.$slider.data('presenter').onCurrentValueChanged((val: number[]) => {
         this.handleSliderCurrentValueChanged(val);
       });
 
-      $(this.formInputs.isHorizontal).on('change', () => {
-        this.handleHorizontalChanged();
-      });
+      $(this.formInputs.isHorizontal).on('change', this.handleHorizontalChanged);
+      $(this.formInputs.isRange).on('change', this.handleRangeChanged);
+      $(this.formInputs.isRangeLineEnabled).on('change', this.handleRangeLineEnabledChanged);
+      $(this.formInputs.isScaleEnabled).on('change', this.handleScaleEnabledChanged);
+      $(this.formInputs.isVisibleCurrentValue).on('change', this.handleVisibleCurrentValueChanged);
 
-      $(this.formInputs.isRange).on('change', () => {
-        this.optionsChanged({ 'isRange': this.formInputs.isRange.checked });
-      });
-
-      $(this.formInputs.isRangeLineEnabled).on('change', () => {
-        this.optionsChanged({ 'isRangeLineEnabled': this.formInputs.isRangeLineEnabled.checked });
-      });
-
-      $(this.formInputs.isScaleEnabled).on('change', () => {
-        this.optionsChanged({ 'isScaleEnabled': this.formInputs.isScaleEnabled.checked });
-      });
-
-      $(this.formInputs.isVisibleCurrentValue).on('change', () => {
-        this.optionsChanged({ 'isVisibleCurrentValue':
-          this.formInputs.isVisibleCurrentValue.checked });
-      });
-
-      this.formInputs.minVal.on('focusout', () => {
-        this.handleMinValFocusOut();
-      });
-
-      this.formInputs.maxVal.on('focusout', () => {
-        this.handleMaxValFocusOut();
-      });
-
-      this.formInputs.currentVal.on('focusout', () => {
-        this.handleCurrentValFocusOut();
-      });
-
-      this.formInputs.step.on('focusout', () => {
-        this.handleStepFocusOut();
-      });
-
-      this.formInputs.numberOfScaleMarks.on('focusout', () => {
-        this.handleNumOfScaleMarksFocusOut();
-      });
+      this.formInputs.minVal.on('focusout', this.handleMinValFocusOut);
+      this.formInputs.maxVal.on('focusout', this.handleMaxValFocusOut);
+      this.formInputs.currentVal.on('focusout', this.handleCurrentValFocusOut);
+      this.formInputs.step.on('focusout', this.handleStepFocusOut);
+      this.formInputs.numberOfScaleMarks.on('focusout', this.handleNumOfScaleMarksFocusOut);
     }
 
-    protected handleSliderCurrentValueChanged (val: number[]): void{
+    protected handleSliderCurrentValueChanged(val: number[]): void{
       if (this.formInputs.isRange.checked) {
         (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]} ${val[1]}`;
       } else {
@@ -77,16 +52,17 @@ class SliderCard {
       this.options.currentVal = val;
     }
 
-    protected handleHorizontalChanged (): void{
+    protected handleHorizontalChanged(): void{
       if (this.formInputs.isHorizontal.checked) {
         this.$slider.removeClass('slider-card__slider_vertical');
       } else {
         this.$slider.addClass('slider-card__slider_vertical');
       }
-      this.optionsChanged({ 'isHorizontal': this.formInputs.isHorizontal.checked });
+      this.optionsChanged({ isHorizontal: this.formInputs.isHorizontal.checked });
     }
 
-    protected handleMinValFocusOut (): void{
+    @bind
+    protected handleMinValFocusOut(): void{
       this.inputValidation(
         'Invalid input! The minimum value must be a number',
         this.formInputs.minVal,
@@ -100,7 +76,8 @@ class SliderCard {
       );
     }
 
-    protected handleMaxValFocusOut (): void{
+    @bind
+    protected handleMaxValFocusOut(): void{
       this.inputValidation(
         'Invalid input! The maximum value must be a number',
         this.formInputs.maxVal,
@@ -114,7 +91,8 @@ class SliderCard {
       );
     }
 
-    protected handleCurrentValFocusOut (): void{
+    @bind
+    protected handleCurrentValFocusOut(): void{
       this.inputValidation(
         'The current value must be one or two digits separated by a space',
         this.formInputs.currentVal,
@@ -128,7 +106,8 @@ class SliderCard {
       );
     }
 
-    protected handleStepFocusOut (): void{
+    @bind
+    protected handleStepFocusOut(): void{
       this.inputValidation(
         'Invalid input values. The step must be a number and less than maxVal - minVal',
         this.formInputs.step,
@@ -142,7 +121,8 @@ class SliderCard {
       );
     }
 
-    protected handleNumOfScaleMarksFocusOut (): void{
+    @bind
+    protected handleNumOfScaleMarksFocusOut(): void{
       this.inputValidation(
         'Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer',
         this.formInputs.numberOfScaleMarks,
@@ -156,25 +136,45 @@ class SliderCard {
       );
     }
 
-    protected getSliderSettings (): ISliderSettings {
+    @bind
+    protected handleRangeChanged(): void{
+      this.optionsChanged({ isRange: this.formInputs.isRange.checked });
+    }
+
+    @bind
+    protected handleRangeLineEnabledChanged(): void{
+      this.optionsChanged({ isRangeLineEnabled: this.formInputs.isRangeLineEnabled.checked });
+    }
+
+    @bind
+    protected handleVisibleCurrentValueChanged(): void{
+      this.optionsChanged({ isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked });
+    }
+
+    @bind
+    protected handleScaleEnabledChanged(): void{
+      this.optionsChanged({ isScaleEnabled: this.formInputs.isScaleEnabled.checked });
+    }
+
+    protected getSliderSettings(): ISliderSettings {
       const curVal = this.formInputs.currentVal.val() as String;
       const isRange = this.formInputs.isRange.checked;
       const currentValue = this.parseCurrentValue(curVal, isRange);
       return {
-        'isHorizontal': this.formInputs.isHorizontal.checked,
-        'minVal': this.getNumInputValue(this.formInputs.minVal),
-        'maxVal': this.getNumInputValue(this.formInputs.maxVal),
-        'currentVal': currentValue,
-        'step': this.getNumInputValue(this.formInputs.step),
+        isHorizontal: this.formInputs.isHorizontal.checked,
+        minVal: this.getNumInputValue(this.formInputs.minVal),
+        maxVal: this.getNumInputValue(this.formInputs.maxVal),
+        currentVal: currentValue,
+        step: this.getNumInputValue(this.formInputs.step),
         isRange,
-        'isRangeLineEnabled': this.formInputs.isRangeLineEnabled.checked,
-        'isVisibleCurrentValue': this.formInputs.isVisibleCurrentValue.checked,
-        'isScaleEnabled': this.formInputs.isScaleEnabled.checked,
-        'numberOfScaleMarks': this.getNumInputValue(this.formInputs.numberOfScaleMarks),
+        isRangeLineEnabled: this.formInputs.isRangeLineEnabled.checked,
+        isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked,
+        isScaleEnabled: this.formInputs.isScaleEnabled.checked,
+        numberOfScaleMarks: this.getNumInputValue(this.formInputs.numberOfScaleMarks)
       };
     }
 
-    protected parseCurrentValue (curVal: String, isRange: boolean): number[] {
+    protected parseCurrentValue(curVal: String, isRange: boolean): number[] {
       curVal.trim();
       const indexSpace = curVal.indexOf(' ');
       const valFrom = curVal.slice(0, indexSpace);
@@ -190,45 +190,44 @@ class SliderCard {
       return currentValue;
     }
 
-    protected getNumInputValue (elem: JQuery<HTMLElement>): number {
+    protected getNumInputValue(elem: JQuery<HTMLElement>): number {
       const val = elem.val() as string;
       val.trim();
       const value = Number(val);
       if (value || value === 0) {
         return value;
-      } else {
-        throw new Error();
       }
+      throw new Error();
     }
 
-    protected initSlider (slider: HTMLElement, sliderSettings: ISliderSettings): void{
+    protected initSlider(slider: HTMLElement, sliderSettings: ISliderSettings): void{
       this.$slider = $(slider);
       $(slider).SimpleSlider(sliderSettings);
     }
 
-    protected initFormInputs (form: JQuery<HTMLElement>): void {
+    protected initFormInputs(form: JQuery<HTMLElement>): void {
       this.formInputs = {
-        'isHorizontal': <HTMLInputElement>form.find('input[name=horizontal]').get(0),
-        'minVal': form.find('input[name=minVal]'),
-        'maxVal': form.find('input[name=maxVal]'),
-        'currentVal': form.find('input[name=currentValue]'),
-        'step': form.find('input[name=step]'),
-        'isRange': <HTMLInputElement>form.find('input[name=range]').get(0),
-        'isRangeLineEnabled': <HTMLInputElement>form.find('input[name=rangeLine]').get(0),
-        'isVisibleCurrentValue': <HTMLInputElement>form.
-          find('input[name=visibleCurrentValue]').get(0),
-        'isScaleEnabled': <HTMLInputElement>form.find('input[name=scale]').get(0),
-        'numberOfScaleMarks': form.find('input[name=numOfScaleMark]'),
+        isHorizontal: <HTMLInputElement>form.find('input[name=horizontal]').get(0),
+        minVal: form.find('input[name=minVal]'),
+        maxVal: form.find('input[name=maxVal]'),
+        currentVal: form.find('input[name=currentValue]'),
+        step: form.find('input[name=step]'),
+        isRange: <HTMLInputElement>form.find('input[name=range]').get(0),
+        isRangeLineEnabled: <HTMLInputElement>form.find('input[name=rangeLine]').get(0),
+        isVisibleCurrentValue: <HTMLInputElement>form
+          .find('input[name=visibleCurrentValue]').get(0),
+        isScaleEnabled: <HTMLInputElement>form.find('input[name=scale]').get(0),
+        numberOfScaleMarks: form.find('input[name=numOfScaleMark]')
       };
     }
 
-    protected optionsChanged (option: Object): void{
+    protected optionsChanged(option: Object): void{
       this.$elem.find('.js-slider-card__error').remove();
       this.options = $.extend(this.options, option);
       this.$slider.data('presenter').setNewOptions(this.options);
     }
 
-    protected inputValidation (
+    protected inputValidation(
       errorMessage: string,
       $element: JQuery<HTMLElement>,
       oldValue: string, func: Function
@@ -241,7 +240,6 @@ class SliderCard {
       }
     }
 }
-
 
 $(document).ready(() => {
   const $sliderCards = $(document).find('.js-slider-card');
