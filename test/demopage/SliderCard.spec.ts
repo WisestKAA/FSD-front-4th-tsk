@@ -31,7 +31,7 @@ class MockElement {
     constructor () {
       this.$slider = $('<div>').addClass('slider-card__slider js-slider-card__slider');
     }
-    
+
     public getElement (options: {
         currentVal?: number[],
         minVal?: number,
@@ -108,7 +108,7 @@ class MockElement {
       if (isScaleEnabled) {
         this.$scale.attr('checked', 'checked');
       }
-                
+
       this.$elem = $('<div>').addClass('slider-card')
         .append(
           $('<div>').addClass('slider-card__slider-wrapper')
@@ -207,7 +207,7 @@ describe(
       () => {
         const mockElem = new MockElement();
         sliderCard = new MockSliderCard(mockElem.getElement({}).get(0));
-        
+
         it(
           'If the current value field changed then after focusout the SliderCard must call the setNewOptions function from presenter with new options',
           () => {

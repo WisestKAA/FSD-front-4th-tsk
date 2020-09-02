@@ -7,26 +7,28 @@ import ISliderOptionsFactory from './SliderOptions/ISliderOptionsFactory';
 
 class Model implements IModel {
     private sliderOptions: ISliderOptions;
+
     private onCurrentValueChanged: LiteEvent<number[]>;
+
     private onOptionsChanged: LiteEvent<void>;
 
-    constructor (optionsFactory: ISliderOptionsFactory) {
+    constructor(optionsFactory: ISliderOptionsFactory) {
       this.sliderOptions = optionsFactory.build();
       this.onCurrentValueChanged = new LiteEvent<number[]>();
       this.onOptionsChanged = new LiteEvent<void>();
     }
-    
-    public setCurrentValue (newVal: number[]): void{
+
+    public setCurrentValue(newVal: number[]): void{
       this.sliderOptions.setCurrentValue(newVal);
       this.onCurrentValueChanged.trigger(newVal);
     }
 
-    public setNewOptions (options: ISliderSettings): void{
+    public setNewOptions(options: ISliderSettings): void{
       this.sliderOptions.setNewOptions(options);
       this.onOptionsChanged.trigger();
     }
-    
-    public getCorrectValWithStep (currentVal: number): number {
+
+    public getCorrectValWithStep(currentVal: number): number {
       const options = this.getOptions();
       const { step } = options;
       if (currentVal < options.minVal) {
@@ -49,15 +51,15 @@ class Model implements IModel {
       return correctVal;
     }
 
-    public getOptions (): ISliderSettings {
+    public getOptions(): ISliderSettings {
       return this.sliderOptions.getOptions();
     }
 
-    public get changeCurrentValueEvent (): ILiteEvent<number[]> {
+    public get changeCurrentValueEvent(): ILiteEvent<number[]> {
       return this.onCurrentValueChanged.expose();
     }
 
-    public get changeOptionsEvent (): ILiteEvent<void> {
+    public get changeOptionsEvent(): ILiteEvent<void> {
       return this.onOptionsChanged.expose();
     }
 }

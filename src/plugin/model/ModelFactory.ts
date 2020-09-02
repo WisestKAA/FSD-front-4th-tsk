@@ -6,11 +6,11 @@ import IModelFactory from './IModelFactory';
 class ModelFactory implements IModelFactory {
     protected sliderOptionsFactory: ISliderOptionsFactory;
 
-    constructor (sliderOptionsFactory: ISliderOptionsFactory) {
+    constructor(sliderOptionsFactory: ISliderOptionsFactory) {
       this.sliderOptionsFactory = sliderOptionsFactory;
     }
 
-    public build (): IModel {
+    public build(): IModel {
       return new Model(this.sliderOptionsFactory);
     }
 }
