@@ -5,10 +5,24 @@
 ## [Demo](https://wisestkaa.github.io/FSD-front-4th-tsk)
 ---
 
+## Установка
+
+Для установки и развертывания проекта необходимо установить [Node.js](https://nodejs.org/).
+
+1. Загрузите исходные файлы удобнгым способом:
+
+  * [Скачайте архив](https://github.com/WisestKAA/FSD-front-4th-tsk/archive/master.zip) и распакуйте его в удобном месте
+  * Колинруйте репазиторий с помощью git:
+  > $ git clone https://github.com/WisestKAA/FSD-front-4th-tsk.git
+ 
+ 2. Установите необходимые node_module's:
+  > npm i
+
+
 ## Развертывание
 
-Установка
->npm i
+Запустить webpack
+>npm run webpack
 
 Запуск сервера webpack
 >npm start
@@ -21,6 +35,12 @@
 
 Запустить Eslint по файлам проекта
 >npm run eslint
+
+Собрать демонстрационную страницу для production
+>npm run builddemo
+
+Загрузить сборку на GitHub Pages
+>npm run deploy
 
 ---
 
