@@ -52,6 +52,7 @@ class SliderCard {
       this.options.currentVal = val;
     }
 
+    @bind
     protected handleHorizontalChanged(): void{
       if (this.formInputs.isHorizontal.checked) {
         this.$slider.removeClass('slider-card__slider_vertical');
