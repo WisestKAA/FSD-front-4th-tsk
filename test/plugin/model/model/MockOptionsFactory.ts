@@ -1,6 +1,6 @@
-import ISliderOptionsFactory from '../../../src/plugin/model/SliderOptions/ISliderOptionsFactory';
-import ISliderOptions from '../../../src/plugin/model/SliderOptions/ISliderOptions';
 import MockSliderOptions from './MockSliderOptions';
+import ISliderOptionsFactory from '../../../../src/plugin/model/SliderOptions/ISliderOptionsFactory';
+import ISliderOptions from '../../../../src/plugin/model/SliderOptions/ISliderOptions';
 
 class MockOptionsFactory implements ISliderOptionsFactory {
   options: ISliderOptions;

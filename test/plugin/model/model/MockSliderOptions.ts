@@ -1,5 +1,5 @@
-import ISliderSettings from '../../../src/plugin/model/ISliderSettings';
-import ISliderOptions from '../../../src/plugin/model/SliderOptions/ISliderOptions';
+import ISliderOptions from '../../../../src/plugin/model/SliderOptions/ISliderOptions';
+import ISliderSettings from '../../../../src/plugin/model/ISliderSettings';
 
 class MockSliderOptions implements ISliderOptions {
   defaultOption: ISliderSettings = {
