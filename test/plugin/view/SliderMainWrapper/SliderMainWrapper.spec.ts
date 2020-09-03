@@ -1,88 +1,9 @@
-import ISliderLine from '../../../src/plugin/view/SliderLine/ISliderLine';
-import ISetRangeOptions from '../../../src/plugin/view/SliderLine/ISetRangeOptions';
-import StyleClasses from '../../../src/plugin/view/StyleClasses';
-import ISliderHandleWrapper from '../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper';
-import LiteEvent from '../../../src/plugin/LiteEvent/LiteEvent';
-import SliderDirection from '../../../src/plugin/view/SliderDirection';
-import ILiteEvent from '../../../src/plugin/LiteEvent/ILiteEvent';
-import ISliderMainWrapper from '../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper';
-import SliderMainWrapper from '../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper';
-
-class MockLine implements ISliderLine {
-    $elem: JQuery<HTMLElement>;
-
-    getLineSize (): number {
-      return 100;
-    }
-    
-    setRange (setRangeOptionsMock: ISetRangeOptions): void {}
-
-    changeOrientation (
-      isHorizontalMock: boolean,
-      horizontalClassMock: StyleClasses,
-      verticalClassMock: StyleClasses
-    ): void { }
-}
-
-class MockHandleWrapper implements ISliderHandleWrapper {
-    $elem: JQuery<HTMLElement>;
-    isRange: boolean = true;
-    foromPosition: number = 10;
-    toPosition: number = 10;
-    protected onHandlePositionChanged: LiteEvent<SliderDirection>;
-
-    public get handlePositionChangedEvent (): ILiteEvent<SliderDirection> {
-      return this.onHandlePositionChanged.expose();
-    }
-
-    constructor (isHorizontal?: boolean) {
-      this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
-      this.$elem = isHorizontal ? $('<div>').attr('class', `${StyleClasses.HANDLEWRAPPER}`) :
-        $('<div>').attr('class', `${StyleClasses.HANDLEWRAPPER} ${StyleClasses.HANDLEWRAPPERV}`);
-    }
-
-    getMaxHandlePosition (): number {
-      return 90;
-    }
-
-    setHandlePosition (positionMock: number, direction: SliderDirection): void {
-      this.onHandlePositionChanged.trigger(direction);
-    }
-    getSliderHandlePosition (directionMock: SliderDirection): number {
-      return 10;
-    }
-
-    getHandleFromPosition (): number {
-      return this.foromPosition;
-    }
-
-    getHandleToPosition (): number {
-      return this.toPosition;
-    }
-
-    getIsRange (): boolean {
-      return this.isRange;
-    }
-
-    changeOrientation (
-      isHorizontalMock: boolean,
-      horizontalClassMock: StyleClasses,
-      verticalClassMock: StyleClasses
-    ): void {}
-}
-
-class MockWrapperEvent {
-    wrapper: ISliderMainWrapper;
-
-    constructor (wrapper: ISliderMainWrapper) {
-      this.wrapper = wrapper;
-      this.wrapper.handlePositionChangedEvent.on((direction) => {
-        this.eventHandler(direction);
-      });
-    }
-
-    eventHandler (directionMock: SliderDirection) {}
-}
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import SliderDirection from '../../../../src/plugin/view/SliderDirection';
+import SliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper';
+import MockLine from './MockLine';
+import MockHandleWrapper from './MockHandleWrapper';
+import MockWrapperEvent from './MockWrapperEvent';
 
 describe('Tests SliderMainWrapper', () => {
   let wrapper: SliderMainWrapper;
@@ -93,7 +14,7 @@ describe('Tests SliderMainWrapper', () => {
       it(
         `The element must have class ${StyleClasses.MAINWRAPPER} if the isHorizontal property is true`,
         () => {
-          wrapper = new SliderMainWrapper(true, new MockLine, new MockHandleWrapper());
+          wrapper = new SliderMainWrapper(true, new MockLine(), new MockHandleWrapper());
           expect(wrapper.$elem.attr('class')).toBe(StyleClasses.MAINWRAPPER);
         }
       );
@@ -101,7 +22,7 @@ describe('Tests SliderMainWrapper', () => {
       it(
         `The element must have classes ${StyleClasses.MAINWRAPPER} and ${StyleClasses.MAINWRAPPERV} if the isHorizontal property is false`,
         () => {
-          wrapper = new SliderMainWrapper(false, new MockLine, new MockHandleWrapper());
+          wrapper = new SliderMainWrapper(false, new MockLine(), new MockHandleWrapper());
           expect(wrapper.$elem.attr('class'))
             .toBe(`${StyleClasses.MAINWRAPPER} ${StyleClasses.MAINWRAPPERV}`);
         }
@@ -110,7 +31,7 @@ describe('Tests SliderMainWrapper', () => {
       it(
         `The element must have subelement with class ${StyleClasses.HANDLEWRAPPER} if the isHorizontal property is true`,
         () => {
-          wrapper = new SliderMainWrapper(true, new MockLine, new MockHandleWrapper(true));
+          wrapper = new SliderMainWrapper(true, new MockLine(), new MockHandleWrapper(true));
           expect(wrapper.$elem.find(`.${StyleClasses.HANDLEWRAPPER}`).attr('class'))
             .toBe(StyleClasses.HANDLEWRAPPER);
         }
@@ -119,7 +40,7 @@ describe('Tests SliderMainWrapper', () => {
       it(
         `The element must have subelement with classes ${StyleClasses.HANDLEWRAPPER} and ${StyleClasses.HANDLEWRAPPERV} if the isHorizontal property is false`,
         () => {
-          wrapper = new SliderMainWrapper(false, new MockLine, new MockHandleWrapper(false));
+          wrapper = new SliderMainWrapper(false, new MockLine(), new MockHandleWrapper(false));
           expect(wrapper.$elem.find(`.${StyleClasses.HANDLEWRAPPER}`).attr('class'))
             .toBe(`${StyleClasses.HANDLEWRAPPER} ${StyleClasses.HANDLEWRAPPERV}`);
         }

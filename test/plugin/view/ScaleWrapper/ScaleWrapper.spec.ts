@@ -1,44 +1,8 @@
-import ScaleWrapper from '../../../src/plugin/view/ScaleWrapper/ScaleWrapper';
-import IScaleItem from '../../../src/plugin/view/ScaleItem/IScaleItem';
-import ILiteEvent from '../../../src/plugin/LiteEvent/ILiteEvent';
-import StyleClasses from '../../../src/plugin/view/StyleClasses';
-import LiteEvent from '../../../src/plugin/LiteEvent/LiteEvent';
-import IScaleWrapper from '../../../src/plugin/view/ScaleWrapper/IScaleWrapper';
-
-class MockScaleItem implements IScaleItem {
-    $elem: JQuery<HTMLElement>;
-    onScaleItemClicked: LiteEvent<number>;
-    value: number;
-    constructor (value: number) {
-      this.$elem = $('<div>').addClass(StyleClasses.SCALEITEM);
-      this.onScaleItemClicked = new LiteEvent<number>();
-      this.value = value;
-      this.$elem.click(() => {
-        this.onScaleItemClicked.trigger(this.value);
-      });
-    }
-    changeOrientation (
-      isHorizontalMock: boolean,
-      horizontalClassMock: StyleClasses,
-      verticalClassMock: StyleClasses
-    ): void {}
-    public get scaleItemClickedEvent (): ILiteEvent<number> {
-      return this.onScaleItemClicked.expose();
-    }
-}
-
-class MockEvent {
-    wrapper: IScaleWrapper;
-
-    constructor (wrapper: IScaleWrapper) {
-      this.wrapper = wrapper;
-      this.wrapper.scaleItemClickedEvent.on((val) => {
-        this.eventHandler(val);
-      });
-    }
-
-    eventHandler (valMock: number):void{}
-}
+import ScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/ScaleWrapper';
+import IScaleItem from '../../../../src/plugin/view/ScaleItem/IScaleItem';
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import MockScaleItem from './MockScaleItem';
+import MockEvent from './MockEvent';
 
 describe(
   'Test ScaleWrapper',
@@ -51,7 +15,7 @@ describe(
         const items: IScaleItem[] = [];
         items.push(new MockScaleItem(0));
         items.push(new MockScaleItem(100));
-        
+
         it(
           `The element must have class ${StyleClasses.SCALEWRAPPER} if the isHorizontal property is true`,
           () => {

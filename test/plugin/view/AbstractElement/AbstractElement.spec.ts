@@ -1,17 +1,5 @@
-import AbstractElement from '../../../src/plugin/view/AbstractElement/AbstractElement';
-import StyleClasses from '../../../src/plugin/view/StyleClasses';
-
-class MockAbstractElement extends AbstractElement {
-    public $elem: JQuery<HTMLElement>;
-    protected isHorizontal: boolean;
-    constructor () {
-      super();
-      this.init();
-    }
-    protected init (): void {
-      this.$elem = $('<div>');
-    }
-}
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import MockAbstractElement from './MockAbstractElement';
 
 describe('Test AbstractElement', () =>{
   const abstractElement = new MockAbstractElement();

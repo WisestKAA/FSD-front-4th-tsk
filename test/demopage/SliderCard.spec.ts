@@ -1,178 +1,5 @@
-import ISliderSettings from '../../src/demopage/blocks/slider-card/ISliderSettings';
-import SliderCard from '../../src/demopage/blocks/slider-card/slider-card';
-import IFormIntputs from '../../src/demopage/blocks/slider-card/IFormIntputs';
-
-class MockElement {
-    $elem: JQuery<HTMLElement>;
-    $slider: JQuery<HTMLElement>;
-    $currentValue: JQuery<HTMLElement>;
-    $minVal: JQuery<HTMLElement>;
-    $maxVal: JQuery<HTMLElement>;
-    $step: JQuery<HTMLElement>;
-    $numOfScaleMark: JQuery<HTMLElement>;
-    $horizontal: JQuery<HTMLElement>;
-    $range: JQuery<HTMLElement>;
-    $visibleCurrentValue: JQuery<HTMLElement>;
-    $rangeLine: JQuery<HTMLElement>;
-    $scale: JQuery<HTMLElement>;
-    defOpt = {
-      'currentVal': [0, 0],
-      'minVal': 0,
-      'maxVal': 100,
-      'step': 1,
-      'numberOfScaleMarks': 2,
-      'isHorizontal': true,
-      'isRange': false,
-      'isVisibleCurrentValue': true,
-      'isRangeLineEnabled': false,
-      'isScaleEnabled': false,
-    };
-
-    constructor () {
-      this.$slider = $('<div>').addClass('slider-card__slider js-slider-card__slider');
-    }
-
-    public getElement (options: {
-        currentVal?: number[],
-        minVal?: number,
-        maxVal?: number,
-        step?: number,
-        numberOfScaleMarks?: number,
-        isHorizontal?: boolean,
-        isRange?: boolean,
-        isVisibleCurrentValue?: boolean,
-        isRangeLineEnabled?: boolean,
-        isScaleEnabled?: boolean,
-    }): JQuery<HTMLSpanElement> {
-      const option = $.extend(this.defOpt, options);
-      const {
-        currentVal,
-        minVal,
-        maxVal,
-        step,
-        numberOfScaleMarks,
-        isHorizontal,
-        isRange,
-        isVisibleCurrentValue,
-        isRangeLineEnabled,
-        isScaleEnabled,
-      } = option;
-      this.$currentValue = $('<input>').addClass('text-field')
-        .attr('type', 'text')
-        .attr('name', 'currentValue')
-        .attr('value', `${currentVal[0]} ${currentVal[1]}`);
-      this.$minVal = $('<input>').addClass('text-field')
-        .attr('type', 'text')
-        .attr('name', 'minVal')
-        .attr('value', minVal.toString());
-      this.$maxVal = $('<input>').addClass('text-field')
-        .attr('type', 'text')
-        .attr('name', 'maxVal')
-        .attr('value', maxVal.toString());
-      this.$step = $('<input>').addClass('text-field')
-        .attr('type', 'text')
-        .attr('name', 'step')
-        .attr('value', step.toString());
-      this.$numOfScaleMark = $('<input>').addClass('text-field')
-        .attr('type', 'text')
-        .attr('name', 'numOfScaleMark')
-        .attr('value', numberOfScaleMarks.toString());
-
-      this.$horizontal = $('<input>').addClass('checkbox-button__input')
-        .attr('type', 'checkbox')
-        .attr('name', 'horizontal');
-      if (isHorizontal) {
-        this.$horizontal.attr('checked', 'checked');
-      }
-      this.$range = $('<input>').addClass('checkbox-button__input')
-        .attr('type', 'checkbox')
-        .attr('name', 'range');
-      if (isRange) {
-        this.$range.attr('checked', 'checked');
-      }
-      this.$visibleCurrentValue = $('<input>').addClass('checkbox-button__input')
-        .attr('type', 'checkbox')
-        .attr('name', 'visibleCurrentValue');
-      if (isVisibleCurrentValue) {
-        this.$visibleCurrentValue.attr('checked', 'checked');
-      }
-      this.$rangeLine = $('<input>').addClass('checkbox-button__input')
-        .attr('type', 'checkbox')
-        .attr('name', 'rangeLine');
-      if (isRangeLineEnabled) {
-        this.$rangeLine.attr('checked', 'checked');
-      }
-      this.$scale = $('<input>').addClass('checkbox-button__input')
-        .attr('type', 'checkbox')
-        .attr('name', 'scale');
-      if (isScaleEnabled) {
-        this.$scale.attr('checked', 'checked');
-      }
-
-      this.$elem = $('<div>').addClass('slider-card')
-        .append(
-          $('<div>').addClass('slider-card__slider-wrapper')
-            .append(this.$slider),
-          $('<form>').addClass('slider-card__form js-slider-card__form')
-            .append(
-              this.$currentValue,
-              this.$minVal,
-              this.$maxVal,
-              this.$step,
-              this.$numOfScaleMark,
-              this.$horizontal,
-              this.$range,
-              this.$visibleCurrentValue,
-              this.$rangeLine,
-              this.$scale
-            )
-        );
-      return this.$elem;
-    }
-}
-
-class Presenter {
-    callBack: Function;
-    sliderSettings: ISliderSettings;
-
-    constructor (sliderSettings: ISliderSettings) {
-      this.sliderSettings = sliderSettings;
-    }
-
-    setNewOptions (options: ISliderSettings): void{
-      this.sliderSettings = options;
-    }
-
-    onCurrentValueChanged (func: Function) {
-      this.callBack = func;
-    }
-
-    mockTriggerEvent (val: number[]) {
-      this.callBack(val);
-    }
-}
-
-class MockSliderCard extends SliderCard {
-    presenter: Presenter;
-
-    initSlider (slider: HTMLElement, sliderSettings: ISliderSettings): void{
-      this.$slider = $(slider);
-      this.presenter = new Presenter(sliderSettings);
-      $(slider).data('presenter', this.presenter);
-    }
-
-    getOpt (): ISliderSettings {
-      return this.options;
-    }
-
-    getFormInputs (): IFormIntputs {
-      return this.formInputs;
-    }
-
-    getElem (): JQuery<HTMLElement> {
-      return this.$elem;
-    }
-}
+import MockElement from './MockElement';
+import MockSliderCard from './MockSliderCard';
 
 describe(
   'Test SliderCard',
@@ -187,7 +14,7 @@ describe(
           () => {
             const mockElem = new MockElement();
             sliderCard = new MockSliderCard(mockElem.getElement({}).get(0));
-            expect(mockElem.defOpt as ISliderSettings).toEqual(sliderCard.presenter.sliderSettings);
+            expect(mockElem.defOpt).toEqual(sliderCard.presenter.sliderSettings);
           }
         );
 
@@ -195,8 +22,8 @@ describe(
           'After initialization the SliderCard must init slider with options from form elements (isRange=true)',
           () => {
             const mockElem = new MockElement();
-            sliderCard = new MockSliderCard(mockElem.getElement({ 'isRange': true }).get(0));
-            expect(mockElem.defOpt as ISliderSettings).toEqual(sliderCard.presenter.sliderSettings);
+            sliderCard = new MockSliderCard(mockElem.getElement({ isRange: true }).get(0));
+            expect(mockElem.defOpt).toEqual(sliderCard.presenter.sliderSettings);
           }
         );
       }
@@ -211,8 +38,8 @@ describe(
         it(
           'If the current value field changed then after focusout the SliderCard must call the setNewOptions function from presenter with new options',
           () => {
-            const mockElem = new MockElement();
-            sliderCard = new MockSliderCard(mockElem.getElement({}).get(0));
+            const elem = new MockElement();
+            sliderCard = new MockSliderCard(elem.getElement({}).get(0));
             sliderCard.getFormInputs().currentVal.attr('value', '5 0');
             const setNewOptionsSpy = spyOn(sliderCard.presenter, 'setNewOptions');
             sliderCard.getFormInputs().currentVal.focusout();
@@ -334,8 +161,8 @@ describe(
         it(
           'If the slider change current value, the current value fieald must change to',
           () => {
-            const mockElem = new MockElement();
-            sliderCard = new MockSliderCard(mockElem.getElement({ 'isRange': false }).get(0));
+            const elem = new MockElement();
+            sliderCard = new MockSliderCard(elem.getElement({ isRange: false }).get(0));
             sliderCard.presenter.mockTriggerEvent([10, 15]);
             expect(sliderCard.getOpt().currentVal).toEqual([10, 15]);
           }
@@ -344,8 +171,8 @@ describe(
         it(
           'If the slider change current value, the current value fieald must change to (isRage=true)',
           () => {
-            const mockElem = new MockElement();
-            sliderCard = new MockSliderCard(mockElem.getElement({ 'isRange': true }).get(0));
+            const elem = new MockElement();
+            sliderCard = new MockSliderCard(elem.getElement({ isRange: true }).get(0));
             sliderCard.presenter.mockTriggerEvent([10, 15]);
             expect(sliderCard.getOpt().currentVal).toEqual([10, 15]);
           }

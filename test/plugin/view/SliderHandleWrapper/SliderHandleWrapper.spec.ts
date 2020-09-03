@@ -1,69 +1,8 @@
-import ISliderHandle from '../../../src/plugin/view/SliderHandle/ISliderHandle';
-import LiteEvent from '../../../src/plugin/LiteEvent/LiteEvent';
-import SliderDirection from '../../../src/plugin/view/SliderDirection';
-import ILiteEvent from '../../../src/plugin/LiteEvent/ILiteEvent';
-import StyleClasses from '../../../src/plugin/view/StyleClasses';
-import ISliderHandleWrapper from '../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper';
-import SliderHandleWrapper from '../../../src/plugin/view/SliderHandleWrapper/SliderHandleWrapper';
-
-class MockHandle implements ISliderHandle {
-    $elem: JQuery<HTMLElement>;
-    position?: number;
-    size: number = 10;
-    protected onPositionChanged: LiteEvent<SliderDirection>;
-    public get positionChangedEvent (): ILiteEvent<SliderDirection> {
-      return this.onPositionChanged.expose();
-    }
-    
-    constructor (isHorizontal?: boolean) {
-      this.$elem = isHorizontal ? $('<div>').attr('class', StyleClasses.HANDLE) :
-        $('<div>').attr('class', `${StyleClasses.HANDLE} ${StyleClasses.HANDLEV}`);
-      this.onPositionChanged = new LiteEvent<SliderDirection>();
-    }
-
-    setNewPosition (position: number, direction: SliderDirection): void {
-      this.position = position;
-      this.onPositionChanged.trigger(direction);
-    }
-
-    getSliderHandleMaxPosition (): number {
-      return 100 - this.size;
-    }
-
-    setCurrentPosition (position: number, directionMock: SliderDirection): void {
-      this.position = position;
-    }
-
-    getHandleSize (): number {
-      return this.size;
-    }
-
-    getPosition (): number {
-      return this.position;
-    }
-
-    changeOrientation (
-      isHorizontalMock: boolean,
-      horizontalClassMock: StyleClasses,
-      verticalClassMock: StyleClasses
-    ): void {}
-}
-
-class MockHandleWrapperEvent {
-    public wrapper: ISliderHandleWrapper;
-    direction: SliderDirection;
-
-    constructor (wrapper: ISliderHandleWrapper) {
-      this.wrapper = wrapper;
-      this.wrapper.handlePositionChangedEvent.on((direction) => {
-        this.eventHandler(direction);
-      });
-    }
-
-    eventHandler (direction: SliderDirection): void{
-      this.direction = direction;
-    }
-}
+import SliderDirection from '../../../../src/plugin/view/SliderDirection';
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import SliderHandleWrapper from '../../../../src/plugin/view/SliderHandleWrapper/SliderHandleWrapper';
+import MockHandle from './MockHandle';
+import MockHandleWrapperEvent from './MockHandleWrapperEvent';
 
 describe('Test SliderHandleWrapper', () => {
   let wrapper: SliderHandleWrapper;

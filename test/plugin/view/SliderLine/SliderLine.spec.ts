@@ -1,28 +1,6 @@
-import ISliderRange from '../../../src/plugin/view/SliderRange/ISliderRange';
-import StyleClasses from '../../../src/plugin/view/StyleClasses';
-import SliderLine from '../../../src/plugin/view/SliderLine/SliderLine';
-
-
-class MockRange implements ISliderRange {
-    $elem: JQuery<HTMLElement>;
-    
-    changeRangeLineTwo (
-      positionFromMock: number,
-      positionToMock: number
-    ): void {}
-
-    changeRangeLineOne (
-      positionFromMock: number,
-      maxHandlePositionMock: number
-    ): void {}
-
-    changeOrientation (
-      isHorizontalMock: boolean,
-      horizontalClassMock: StyleClasses,
-      verticalClassMock: StyleClasses
-    ): void {}
-}
-
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import SliderLine from '../../../../src/plugin/view/SliderLine/SliderLine';
+import MockRange from './MockRange';
 
 describe('Test SliderLine', () => {
   let line: SliderLine;
@@ -72,7 +50,7 @@ describe('Test SliderLine', () => {
           const range = new MockRange();
           line = new SliderLine(true, range);
           const spy = spyOn(range, 'changeRangeLineTwo');
-          line.setRange({ 'handleFromPosition': 10, 'isRange': true });
+          line.setRange({ handleFromPosition: 10, isRange: true });
           expect(spy).toHaveBeenCalled();
         }
       );
@@ -83,7 +61,7 @@ describe('Test SliderLine', () => {
           const range = new MockRange();
           line = new SliderLine(true, range);
           const spy = spyOn(range, 'changeRangeLineOne');
-          line.setRange({ 'handleFromPosition': 10, 'isRange': false });
+          line.setRange({ handleFromPosition: 10, isRange: false });
           expect(spy).toHaveBeenCalled();
         }
       );

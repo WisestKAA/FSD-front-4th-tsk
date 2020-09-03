@@ -1,5 +1,5 @@
-import CurrentValue from '../../../src/plugin/view/CurrentValue/CurrentValue';
-import StyleClasses from '../../../src/plugin/view/StyleClasses';
+import CurrentValue from '../../../../src/plugin/view/CurrentValue/CurrentValue';
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 
 describe('Test CurrentValue', () => {
   let currentValue: CurrentValue;

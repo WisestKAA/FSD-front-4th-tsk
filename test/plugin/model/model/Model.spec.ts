@@ -1,60 +1,6 @@
-import Model from '../../../src/plugin/model/Model';
-import ISliderOptions from '../../../src/plugin/model/SliderOptions/ISliderOptions';
-import ISliderSettings from '../../../src/plugin/model/ISliderSettings';
-import ISliderOptionsFactory from '../../../src/plugin/model/SliderOptions/ISliderOptionsFactory';
-import IModel from '../../../src/plugin/model/IModel';
-
-class MockSliderOptions implements ISliderOptions {
-    defaultOption: ISliderSettings = {
-      'isHorizontal': true,
-      'maxVal': 100,
-      'minVal': 0,
-      'currentVal': [0, 0],
-      'step': 1,
-      'precision': 0,
-      'isRange': false,
-      'isRangeLineEnabled': false,
-      'isVisibleCurrentValue': true,
-    }
-    
-    getOptions (): ISliderSettings {
-      return this.defaultOption;
-    }
-
-    setCurrentValue (currentValMock: number[]): void {}
-
-    setNewOptions (optionsMock: ISliderSettings): void {}
-}
-
-class MockOptionsFactory implements ISliderOptionsFactory {
-    options: ISliderOptions;
-
-    constructor () {
-      this.options = new MockSliderOptions();
-    }
-
-    build (): ISliderOptions {
-      return this.options;
-    }
-}
-
-class MockEvent {
-    model: IModel;
-
-    constructor (model: IModel) {
-      this.model = model;
-      this.model.changeCurrentValueEvent.on((currentVal) => {
-        this.changeCurrentValue(currentVal);
-      });
-      this.model.changeOptionsEvent.on(() => {
-        this.changeOptions();
-      });
-    }
-
-    changeCurrentValue (currentValMock: number[]): void{}
-
-    changeOptions (): void{}
-}
+import Model from '../../../../src/plugin/model/Model';
+import MockOptionsFactory from './MockOptionsFactory';
+import MockEvent from './MockEvent';
 
 describe('Test Model', () => {
   let model: Model;
@@ -101,8 +47,8 @@ describe('Test Model', () => {
           const spyNewOptions = spyOn(options, 'setNewOptions');
           const event = new MockEvent(model);
           const spyEvent = spyOn(event, 'changeOptions');
-          model.setNewOptions({ 'currentVal': [0, 0] });
-          expect(spyNewOptions).toHaveBeenCalledWith({ 'currentVal': [0, 0] });
+          model.setNewOptions({ currentVal: [0, 0] });
+          expect(spyNewOptions).toHaveBeenCalledWith({ currentVal: [0, 0] });
           expect(spyEvent).toHaveBeenCalled();
         }
       );
@@ -114,7 +60,7 @@ describe('Test Model', () => {
           expect(model.getCorrectValWithStep(2.5)).toBe(3);
         }
       );
-        
+
       it(
         'The getCorrectValWithStep function must return the correct current value taking into account the step (2.4)',
         () => {
@@ -122,7 +68,7 @@ describe('Test Model', () => {
           expect(model.getCorrectValWithStep(2.4)).toBe(2);
         }
       );
-        
+
       it(
         'The getCorrectValWithStep function must return minVal if newCurrentVal is less than minVal',
         () => {

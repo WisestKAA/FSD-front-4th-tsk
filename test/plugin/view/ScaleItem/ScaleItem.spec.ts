@@ -1,17 +1,6 @@
-import ScaleItem from '../../../src/plugin/view/ScaleItem/ScaleItem';
-import StyleClasses from '../../../src/plugin/view/StyleClasses';
-import IScaleItem from '../../../src/plugin/view/ScaleItem/IScaleItem';
-
-class MockEvent {
-    scaleItem: IScaleItem;
-    constructor (scaleItem: IScaleItem) {
-      this.scaleItem = scaleItem;
-      this.scaleItem.scaleItemClickedEvent.on((value) => {
-        this.eventHandler(value);
-      });
-    }
-    eventHandler (valMock: number): void{}
-}
+import ScaleItem from '../../../../src/plugin/view/ScaleItem/ScaleItem';
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import MockEvent from './MockEvent';
 
 describe(
   'Test ScaleItem',
@@ -36,7 +25,7 @@ describe(
             expect(scaleItem.$elem.attr('class')).toBe(`${StyleClasses.SCALEITEM} ${StyleClasses.SCALEITEMV}`);
           }
         );
-        
+
         it(
           `The element must have subelement with class ${StyleClasses.SCALEMARK} if the isHorizontal property is true`,
           () => {
