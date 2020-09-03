@@ -13,23 +13,33 @@ import IView from './IView';
 
 class View implements IView {
     protected presenter: IPresenter;
+
     public $slider: JQuery<HTMLElement>;
+
     protected currentValueWrapper: ICurrentValueWrapper;
+
     protected mainWrapper: ISliderMainWrapper;
+
     protected options: IViewOptions;
+
     protected elem: HTMLElement;
+
     protected elementsFactory: IElementsFactory;
+
     protected scaleWrapper: IScaleWrapper;
+
     protected scaleValues?: number[] = null;
 
-    constructor (viewOptions: {
+    constructor(viewOptions: {
         elem: HTMLElement,
         presenter: IPresenter,
         options: IViewOptions,
         elementsFactory: IElementsFactory,
         scaleValues?: number[]
     }) {
-      const { elem, presenter, options, elementsFactory, scaleValues } = viewOptions;
+      const {
+        elem, presenter, options, elementsFactory, scaleValues
+      } = viewOptions;
       this.presenter = presenter;
       this.options = options;
       this.elem = elem;
@@ -39,28 +49,28 @@ class View implements IView {
       this.addEvents();
     }
 
-    protected init (): void{
+    protected init(): void{
       this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isRange);
       this.mainWrapper = this.buildMainWrapper(
         this.options.isRangeLineEnabled,
         this.options.isRange
       );
-      const $mainDiv = this.options.isHorizontal ?
-        $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERJS]) :
-        $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERJS, StyleClasses.SLIDERV]);
+      const $mainDiv = this.options.isHorizontal
+        ? $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERJS])
+        : $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDERJS, StyleClasses.SLIDERV]);
       if (this.scaleValues === null || this.scaleValues === undefined) {
         $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
       } else {
         this.scaleWrapper = this.buildScaleWrapper();
         $mainDiv.append([
           this.currentValueWrapper.$elem,
-          this.mainWrapper.$elem, this.scaleWrapper.$elem,
+          this.mainWrapper.$elem, this.scaleWrapper.$elem
         ]);
       }
       this.$slider = $(this.elem).append($mainDiv);
     }
 
-    protected buildMainWrapper (isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper {
+    protected buildMainWrapper(isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper {
       let line: ISliderLine;
       if (isRangeLineEnabled) {
         const range = this.elementsFactory.buildRange();
@@ -68,7 +78,7 @@ class View implements IView {
       } else {
         line = this.elementsFactory.buildLine();
       }
-        
+
       let handleWrapper: ISliderHandleWrapper;
       const handleFrom = this.elementsFactory.buildHandle(line, true);
       if (isRange) {
@@ -83,7 +93,7 @@ class View implements IView {
       );
     }
 
-    protected buildCurrentValueWrapper (isRange: boolean): ICurrentValueWrapper {
+    protected buildCurrentValueWrapper(isRange: boolean): ICurrentValueWrapper {
       const currentValueFrom = this.elementsFactory.buildCurrentValue(true);
       let currentValueWrapper: ICurrentValueWrapper;
       if (isRange) {
@@ -101,7 +111,7 @@ class View implements IView {
       return currentValueWrapper;
     }
 
-    protected buildScaleWrapper (): IScaleWrapper {
+    protected buildScaleWrapper(): IScaleWrapper {
       const scaleItems: IScaleItem[] = [];
       if (!this.options.isHorizontal) {
         this.scaleValues.reverse();
@@ -112,7 +122,7 @@ class View implements IView {
       return this.elementsFactory.buildScaleWrapper(scaleItems);
     }
 
-    protected addEvents (): void {
+    protected addEvents(): void {
       this.mainWrapper.handlePositionChangedEvent.on((direction) => {
         this.setCurrentValuePosition(direction);
         this.presenter.sliderHandleChangedPosition(direction);
@@ -124,40 +134,40 @@ class View implements IView {
       }
     }
 
-    protected setCurrentValuePosition (direction: SliderDirection): void{
-      const position = SliderDirection.isFrom(direction) ?
-        this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
+    protected setCurrentValuePosition(direction: SliderDirection): void{
+      const position = SliderDirection.isFrom(direction)
+        ? this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
       this.currentValueWrapper.setCurrentValuePosition({
         position,
         direction,
-        'handleFromPosition': this.mainWrapper.getHandleFromPosition(),
-        'handleToPosition': this.mainWrapper.getHandleToPosition(),
-        'lineSize': this.mainWrapper.getLineSize(),
-        'maxHandlePosition': this.getMaxHandlePosition(),
+        handleFromPosition: this.mainWrapper.getHandleFromPosition(),
+        handleToPosition: this.mainWrapper.getHandleToPosition(),
+        lineSize: this.mainWrapper.getLineSize(),
+        maxHandlePosition: this.getMaxHandlePosition()
       });
     }
 
-    public getSliderHandlePosition (direction: SliderDirection): number {
+    public getSliderHandlePosition(direction: SliderDirection): number {
       return this.mainWrapper.getSliderHandlePosition(direction);
     }
 
-    public setCurrentValue (currentValue: number[]): void {
+    public setCurrentValue(currentValue: number[]): void {
       this.currentValueWrapper.setCurrentValue(currentValue);
     }
 
-    public getCurrentValue (): number[] {
+    public getCurrentValue(): number[] {
       return this.currentValueWrapper.getCurrentValue();
     }
 
-    public getMaxHandlePosition (): number {
+    public getMaxHandlePosition(): number {
       return this.mainWrapper.getMaxHandlePosition();
     }
 
-    public setHandlePosition (position: number, direction: SliderDirection): void {
+    public setHandlePosition(position: number, direction: SliderDirection): void {
       this.mainWrapper.setHandlePosition(position, direction);
     }
 
-    public reinitialization (option: IViewOptions, scaleValues?: number[]): void{
+    public reinitialization(option: IViewOptions, scaleValues?: number[]): void{
       this.$slider.html('');
       this.options = option;
       this.scaleValues = scaleValues;

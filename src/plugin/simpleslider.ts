@@ -18,7 +18,8 @@ declare global {
 }
 
 (function ($: JQueryStatic) {
-  $.fn.SimpleSlider = function start (options?, additionalOptions?: ISliderSettings) {
+  // eslint-disable-next-line no-param-reassign
+  $.fn.SimpleSlider = function start(options?, additionalOptions?: ISliderSettings) {
     return this.map((iter: number, elem: HTMLElement) => {
       if (typeof options === 'object' || !options) {
         const sliderOptionsFactory = new SliderOptionsFactory(options as ISliderSettings);

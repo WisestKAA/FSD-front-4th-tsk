@@ -9,19 +9,30 @@ import ISliderLine from '../SliderLine/ISliderLine';
 
 class SliderHandle extends AbstractElement implements ISliderHandle {
     public $elem: JQuery<HTMLElement>;
+
     protected shiftX: number;
+
     protected shiftXR: number;
+
     protected shiftY: number;
+
     protected shiftYT: number;
+
     protected position: number;
+
     protected line: ISliderLine;
+
     protected onPositionChanged: LiteEvent<SliderDirection>;
+
     protected isHorizontal: boolean;
+
     protected maxPosition: number;
+
     protected isRange: boolean;
+
     protected isFrom: boolean;
 
-    constructor (sliderHandleOptions: ISliderHandleOptions) {
+    constructor(sliderHandleOptions: ISliderHandleOptions) {
       super();
       this.line = sliderHandleOptions.sliderLine;
       this.isHorizontal = sliderHandleOptions.isHorizontal;
@@ -31,10 +42,10 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       this.addEvents();
     }
 
-    protected init (): void {
-      this.$elem =  this.isHorizontal ?
-        $('<div>').addClass(StyleClasses.HANDLE) :
-        $('<div>').addClass([StyleClasses.HANDLE, StyleClasses.HANDLEV]);
+    protected init(): void {
+      this.$elem = this.isHorizontal
+        ? $('<div>').addClass(StyleClasses.HANDLE)
+        : $('<div>').addClass([StyleClasses.HANDLE, StyleClasses.HANDLEV]);
       this.position = 0;
       this.shiftX = 0;
       this.shiftXR = 0;
@@ -43,7 +54,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       this.onPositionChanged = new LiteEvent<SliderDirection>();
     }
 
-    protected addEvents (): void {
+    protected addEvents(): void {
       const that = this;
 
       this.$elem.on('mousedown', function (event) {
@@ -53,7 +64,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       this.$elem.on('dragstart', false);
     }
 
-    protected onMouseDown (elem: HTMLElement, event: JQuery.MouseDownEvent): void {
+    protected onMouseDown(elem: HTMLElement, event: JQuery.MouseDownEvent): void {
       const that = this;
       event.preventDefault();
       this.shiftX = event.clientX - elem.getBoundingClientRect().left;
@@ -74,7 +85,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       });
     }
 
-    protected onMouseMoveX (event: JQuery.MouseMoveEvent): void {
+    protected onMouseMoveX(event: JQuery.MouseMoveEvent): void {
       const $lineHTMLElement = this.line.$elem;
       const offset = $lineHTMLElement.offset().left;
       const lineWidth = $lineHTMLElement.outerWidth();
@@ -88,7 +99,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       }
     }
 
-    protected onMouseMoveY (event: JQuery.MouseMoveEvent): void {
+    protected onMouseMoveY(event: JQuery.MouseMoveEvent): void {
       const $lineHTMLElement = this.line.$elem;
       const offset = $lineHTMLElement.offset().top;
       const lineHieght = $lineHTMLElement.outerHeight();
@@ -102,12 +113,12 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       }
     }
 
-    protected onMouseUp (): void{
+    protected onMouseUp(): void{
       $(document).off('mousemove');
       $(document).off('mouseup');
     }
 
-    protected getNewLeft (
+    protected getNewLeft(
       pageX: number,
       offsetLeft: number,
       lineWidth: number,
@@ -118,7 +129,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       return newLeftPosition;
     }
 
-    protected getNewRight (
+    protected getNewRight(
       pageX: number,
       offsetLeft: number,
       lineWidth: number,
@@ -129,7 +140,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       return 100 - newRightPosition;
     }
 
-    protected getNewBot (
+    protected getNewBot(
       pageY: number,
       offsetTop: number,
       lineHieght: number,
@@ -140,7 +151,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       return newBotPosition;
     }
 
-    protected getNewTop (
+    protected getNewTop(
       pageY: number,
       offsetTop: number,
       lineHieght: number,
@@ -151,7 +162,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       return 100 - newBTopPosition;
     }
 
-    protected getCorrectPositionFrom (
+    protected getCorrectPositionFrom(
       newCoordinate: number,
       linesize: number,
       handleSize: number
@@ -168,7 +179,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       return correctPosition;
     }
 
-    protected getCorrectPositionTo (
+    protected getCorrectPositionTo(
       newCoordinate: number,
       linesize: number, handleSize: number
     ): number {
@@ -182,23 +193,23 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       const correctPosition = (100 * coordinate) / linesize;
       return correctPosition;
     }
-    
-    public setNewPosition (position: number, direction: SliderDirection): void {
+
+    public setNewPosition(position: number, direction: SliderDirection): void {
       this.setCurrentPosition(position, direction);
       this.onPositionChanged.trigger(direction);
     }
 
-    public getSliderHandleMaxPosition (): number {
-      const lineSize = this.isHorizontal ?
-        this.line.$elem.outerWidth() :
-        this.line.$elem.outerHeight();
+    public getSliderHandleMaxPosition(): number {
+      const lineSize = this.isHorizontal
+        ? this.line.$elem.outerWidth()
+        : this.line.$elem.outerHeight();
       const handleSize = this.getHandleSize();
       const maxWidth = lineSize - handleSize;
       this.maxPosition = (100 * maxWidth) / lineSize;
       return this.maxPosition;
     }
 
-    public setCurrentPosition (position: number, direction: SliderDirection): void{
+    public setCurrentPosition(position: number, direction: SliderDirection): void{
       this.position = position;
       if (position >= this.getSliderHandleMaxPosition()) {
         this.$elem.attr('style', `${direction}: ${position}%; z-index: 100;`);
@@ -207,15 +218,15 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       }
     }
 
-    public getHandleSize (): number {
+    public getHandleSize(): number {
       return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
     }
 
-    public getPosition (): number {
+    public getPosition(): number {
       return this.position;
     }
 
-    public get positionChangedEvent (): ILiteEvent<SliderDirection> {
+    public get positionChangedEvent(): ILiteEvent<SliderDirection> {
       return this.onPositionChanged.expose();
     }
 }

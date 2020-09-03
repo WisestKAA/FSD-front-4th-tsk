@@ -2,6 +2,7 @@ import StyleClasses from '../StyleClasses';
 
 abstract class AbstractElement {
     public abstract $elem: JQuery<HTMLElement>;
+
     protected abstract isHorizontal: boolean;
 
     protected abstract init(): void ;

@@ -7,11 +7,14 @@ import ILiteEvent from '../../LiteEvent/ILiteEvent';
 
 class ScaleWrapper extends AbstractElement implements IScaleWrapper {
     public $elem: JQuery<HTMLElement>;
+
     protected isHorizontal: boolean;
+
     protected scaleItems: IScaleItem[];
+
     protected onScaleItemClicked: LiteEvent<number>;
 
-    constructor (isHorizontal: boolean, scaleItems: IScaleItem[]) {
+    constructor(isHorizontal: boolean, scaleItems: IScaleItem[]) {
       super();
       this.isHorizontal = isHorizontal;
       this.scaleItems = scaleItems;
@@ -20,7 +23,7 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
       this.addEvents();
     }
 
-    protected init (): void {
+    protected init(): void {
       this.$elem = $('<div>');
       this.changeOrientation(
         this.isHorizontal,
@@ -32,15 +35,15 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
       });
     }
 
-    protected addEvents (): void{
+    protected addEvents(): void{
       this.scaleItems.forEach((value) => {
-        value.scaleItemClickedEvent.on((value) => {
-          this.onScaleItemClicked.trigger(value);
+        value.scaleItemClickedEvent.on((val) => {
+          this.onScaleItemClicked.trigger(val);
         });
       });
     }
 
-    public get scaleItemClickedEvent (): ILiteEvent<number> {
+    public get scaleItemClickedEvent(): ILiteEvent<number> {
       return this.onScaleItemClicked.expose();
     }
 }

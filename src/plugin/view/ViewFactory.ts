@@ -8,22 +8,22 @@ import IViewFactory from './IViewFactory';
 class ViewFactory implements IViewFactory {
   protected elem: HTMLElement;
 
-  constructor (elem: HTMLElement) {
+  constructor(elem: HTMLElement) {
     this.elem = elem;
   }
 
-  public build (
+  public build(
     presenter: IPresenter,
     option: IViewOptions,
     elementsFactory: IElementsFactory,
     scaleValues?: number[]
   ): IView {
     return new View({
-      'elem': this.elem,
+      elem: this.elem,
       presenter,
-      'options': option,
+      options: option,
       elementsFactory,
-      scaleValues,
+      scaleValues
     });
   }
 }

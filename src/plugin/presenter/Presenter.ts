@@ -11,29 +11,30 @@ import ElementsFactory from '../view/ElementsFactory';
 
 class Presenter implements IPresenter {
     protected model: IModel;
+
     protected view: IView;
 
-    constructor (viewFactory: IViewFactory, modelFactory: IModelFactory) {
+    constructor(viewFactory: IViewFactory, modelFactory: IModelFactory) {
       this.init(viewFactory, modelFactory);
       this.addEvents();
     }
 
-    protected init (viewFactory: IViewFactory, modelFactory: IModelFactory): void{
+    protected init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{
       this.model = modelFactory.build();
       const currentOptions = this.model.getOptions();
       const viewOptions: IViewOptions = {
-        'isHorizontal': currentOptions.isHorizontal,
-        'isRange': currentOptions.isRange,
-        'isRangeLineEnabled': currentOptions.isRangeLineEnabled,
-        'isVisibleCurrentValue': currentOptions.isVisibleCurrentValue,
+        isHorizontal: currentOptions.isHorizontal,
+        isRange: currentOptions.isRange,
+        isRangeLineEnabled: currentOptions.isRangeLineEnabled,
+        isVisibleCurrentValue: currentOptions.isVisibleCurrentValue
       };
-      const valuesForeScale = currentOptions.isScaleEnabled ?
-        this.getValuesForScale({
-          'maxVal': currentOptions.maxVal,
-          'minVal': currentOptions.minVal,
-          'numberOfScaleMarks': currentOptions.numberOfScaleMarks,
-        }) :
-        null;
+      const valuesForeScale = currentOptions.isScaleEnabled
+        ? this.getValuesForScale({
+          maxVal: currentOptions.maxVal,
+          minVal: currentOptions.minVal,
+          numberOfScaleMarks: currentOptions.numberOfScaleMarks
+        })
+        : null;
       this.view = viewFactory.build(
         this,
         viewOptions,
@@ -43,21 +44,21 @@ class Presenter implements IPresenter {
       this.initViewComponents();
     }
 
-    protected initViewComponents (): void{
+    protected initViewComponents(): void{
       const options = this.model.getOptions();
       let direction = SliderDirection.getDiraction(true, options.isHorizontal);
       const correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
       this.setCurrentValueView([correctValFrom, 0]);
-      this.setCurrentHandlePosition(correctValFrom,  direction);
+      this.setCurrentHandlePosition(correctValFrom, direction);
       if (options.isRange) {
         direction = SliderDirection.getDiraction(false, options.isHorizontal);
         const correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
         this.setCurrentValueView([correctValFrom, correctValTo]);
-        this.setCurrentHandlePosition(correctValTo,  direction);
+        this.setCurrentHandlePosition(correctValTo, direction);
       }
     }
 
-    protected addEvents (): void{
+    protected addEvents(): void{
       this.model.changeCurrentValueEvent.on((data) => {
         this.setCurrentValueView(data);
       });
@@ -66,29 +67,34 @@ class Presenter implements IPresenter {
       });
     }
 
-    protected setCurrentValueView (currentValue: number[]): void{
+    protected setCurrentValueView(currentValue: number[]): void{
       this.view.setCurrentValue(currentValue);
     }
 
-    protected setCurrentValueModel (currentVal?: number[]): void{
+    protected setCurrentValueModel(currentVal?: number[]): void{
       this.model.setCurrentValue(currentVal);
     }
 
-    protected getCorrectPosition (option: {
+    protected getCorrectPosition(option: {
         position: number,
         maxHandlePosition: number,
         isForView: boolean,
         direction: SliderDirection
     }): number {
-      const { position, maxHandlePosition, isForView, direction } = option;
+      const {
+        position,
+        maxHandlePosition,
+        isForView,
+        direction
+      } = option;
       let correctPosition: number;
       if (isForView) {
-        correctPosition = position * maxHandlePosition / 100;
+        correctPosition = (position * maxHandlePosition) / 100;
         if (!SliderDirection.isFrom(direction)) {
           correctPosition = maxHandlePosition - correctPosition;
         }
       } else {
-        correctPosition = 100 * position / maxHandlePosition;
+        correctPosition = 100 * (position / maxHandlePosition);
         if (!SliderDirection.isFrom(direction)) {
           correctPosition = 100 - correctPosition;
         }
@@ -96,62 +102,62 @@ class Presenter implements IPresenter {
       return correctPosition;
     }
 
-    protected getCurrentValFromPosition (direction: SliderDirection): number {
+    protected getCurrentValFromPosition(direction: SliderDirection): number {
       const options = this.model.getOptions();
       const { maxVal } = options;
       const { minVal } = options;
       const correctPosition = this.getCorrectPosition({
-        'position': this.view.getSliderHandlePosition(direction),
-        'maxHandlePosition': this.view.getMaxHandlePosition(),
-        'isForView': false,
-        direction,
+        position: this.view.getSliderHandlePosition(direction),
+        maxHandlePosition: this.view.getMaxHandlePosition(),
+        isForView: false,
+        direction
       });
 
-      let newCurrentVal = ((maxVal - minVal)  * correctPosition / 100) + minVal;
+      let newCurrentVal = (((maxVal - minVal) * correctPosition) / 100) + minVal;
       const precision = Math.pow(10, options.precision);
       newCurrentVal = Math.round(newCurrentVal * precision) / precision;
       return newCurrentVal;
     }
 
-    protected setCurrentHandlePosition (correctValue: number, direction: SliderDirection): void {
+    protected setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
       const options = this.model.getOptions();
       let position = (100 * (correctValue - options.minVal)) / (options.maxVal - options.minVal);
       position = this.getCorrectPosition({
         position,
-        'maxHandlePosition': this.view.getMaxHandlePosition(),
-        'isForView': true,
-        direction,
+        maxHandlePosition: this.view.getMaxHandlePosition(),
+        isForView: true,
+        direction
       });
       this.view.setHandlePosition(position, direction);
     }
 
-    protected optionsChanged (): void{
+    protected optionsChanged(): void{
       const options = this.model.getOptions();
       if (options.isScaleEnabled) {
         const scaleValues = this.getValuesForScale({
-          'minVal': options.minVal,
-          'maxVal': options.maxVal,
-          'numberOfScaleMarks': options.numberOfScaleMarks,
+          minVal: options.minVal,
+          maxVal: options.maxVal,
+          numberOfScaleMarks: options.numberOfScaleMarks
         });
         this.view.reinitialization({
-          'isHorizontal': options.isHorizontal,
-          'isRange': options.isRange,
-          'isRangeLineEnabled': options.isRangeLineEnabled,
-          'isVisibleCurrentValue': options.isVisibleCurrentValue,
+          isHorizontal: options.isHorizontal,
+          isRange: options.isRange,
+          isRangeLineEnabled: options.isRangeLineEnabled,
+          isVisibleCurrentValue: options.isVisibleCurrentValue
 
         }, scaleValues);
       } else {
         this.view.reinitialization({
-          'isHorizontal': options.isHorizontal,
-          'isRange': options.isRange,
-          'isRangeLineEnabled': options.isRangeLineEnabled,
-          'isVisibleCurrentValue': options.isVisibleCurrentValue,
+          isHorizontal: options.isHorizontal,
+          isRange: options.isRange,
+          isRangeLineEnabled: options.isRangeLineEnabled,
+          isVisibleCurrentValue: options.isVisibleCurrentValue
         });
       }
       this.initViewComponents();
     }
 
-    protected getCorrectCurrentVal (correctValue: number, direction: SliderDirection): number[] {
+    protected getCorrectCurrentVal(correctValue: number, direction: SliderDirection): number[] {
       const options = this.model.getOptions();
       const current = options.currentVal;
       if (options.isRange) {
@@ -166,7 +172,7 @@ class Presenter implements IPresenter {
       return current;
     }
 
-    protected getValuesForScale (options: {
+    protected getValuesForScale(options: {
         minVal: number,
         maxVal: number,
         numberOfScaleMarks: number
@@ -186,7 +192,7 @@ class Presenter implements IPresenter {
       return scaleValues;
     }
 
-    public sliderHandleChangedPosition (direction: SliderDirection): void {
+    public sliderHandleChangedPosition(direction: SliderDirection): void {
       const currentVal = this.getCurrentValFromPosition(direction);
       const correctVal = this.model.getCorrectValWithStep(currentVal);
       const current = this.getCorrectCurrentVal(correctVal, direction);
@@ -197,7 +203,7 @@ class Presenter implements IPresenter {
       }
     }
 
-    public scaleClicked (value: number): void{
+    public scaleClicked(value: number): void{
       const options = this.model.getOptions();
       const val = this.model.getCorrectValWithStep(value);
 
@@ -210,8 +216,8 @@ class Presenter implements IPresenter {
         return;
       }
 
-      if (val < options.currentVal[0] ||
-        val - options.currentVal[0] < options.currentVal[1] - val
+      if (val < options.currentVal[0]
+        || val - options.currentVal[0] < options.currentVal[1] - val
       ) {
         this.setCurrentValueModel([val, options.currentVal[1]]);
         this.setCurrentHandlePosition(
@@ -228,17 +234,17 @@ class Presenter implements IPresenter {
     }
 
     @bind
-    public setNewOptions (options: ISliderSettings): void{
+    public setNewOptions(options: ISliderSettings): void{
       this.model.setNewOptions(options);
     }
 
     @bind
-    public getOptions (): ISliderSettings {
+    public getOptions(): ISliderSettings {
       return this.model.getOptions();
     }
 
     @bind
-    public onCurrentValueChanged (callBack: Function): void{
+    public onCurrentValueChanged(callBack: Function): void{
       this.model.changeCurrentValueEvent.on((data) => {
         callBack(data);
       });

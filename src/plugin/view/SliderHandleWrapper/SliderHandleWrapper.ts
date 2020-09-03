@@ -8,13 +8,18 @@ import ILiteEvent from '../../LiteEvent/ILiteEvent';
 
 class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrapper {
     public $elem: JQuery<HTMLElement>;
+
     protected isHorizontal: boolean;
+
     protected handleFrom: ISliderHandle;
+
     protected handleTo: ISliderHandle;
+
     protected isRange: boolean;
+
     protected onHandlePositionChanged: LiteEvent<SliderDirection>;
-    
-    constructor (isHorizontal: boolean, handleFrom: ISliderHandle, handleTo?: ISliderHandle) {
+
+    constructor(isHorizontal: boolean, handleFrom: ISliderHandle, handleTo?: ISliderHandle) {
       super();
       this.isHorizontal = isHorizontal;
       this.handleFrom = handleFrom;
@@ -27,8 +32,8 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       this.init();
       this.addEvents();
     }
-    
-    protected init (): void {
+
+    protected init(): void {
       this.$elem = $('<div>');
       this.changeOrientation(
         this.isHorizontal,
@@ -40,11 +45,11 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       } else {
         this.$elem.append(this.handleFrom.$elem);
       }
-        
+
       this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
     }
 
-    protected addEvents (): void{
+    protected addEvents(): void{
       this.handleFrom.positionChangedEvent.on((direction) => {
         this.sliderHandlePositionChanged(direction);
         this.onHandlePositionChanged.trigger(direction);
@@ -57,7 +62,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       }
     }
 
-    protected sliderHandlePositionChanged (direction: SliderDirection): void{
+    protected sliderHandlePositionChanged(direction: SliderDirection): void{
       if (this.isRange) {
         this.checkHandleIntersection(
           this.handleFrom.getPosition(),
@@ -67,11 +72,11 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       }
     }
 
-    protected checkHandleIntersection (
+    protected checkHandleIntersection(
       positionFrom: number,
       positionTo: number,
       direction: SliderDirection
-    ): boolean {
+    ): void {
       const maxPos = this.getMaxHandlePosition();
       if (positionFrom > maxPos - positionTo) {
         if (SliderDirection.isFrom(direction)) {
@@ -79,12 +84,10 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
         } else {
           this.setHandlePosition(maxPos - positionFrom, direction);
         }
-      } else {
-        return false;
       }
     }
 
-    public getMaxHandlePosition (): number {
+    public getMaxHandlePosition(): number {
       let maxHandlePosition: number;
       maxHandlePosition = this.handleFrom.getSliderHandleMaxPosition();
       if (this.isRange) {
@@ -94,7 +97,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       return maxHandlePosition;
     }
 
-    public setHandlePosition (position: number, direction: SliderDirection): void {
+    public setHandlePosition(position: number, direction: SliderDirection): void {
       if (SliderDirection.isFrom(direction)) {
         this.handleFrom.setCurrentPosition(position, direction);
       } else {
@@ -103,27 +106,26 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       this.onHandlePositionChanged.trigger(direction);
     }
 
-    public getSliderHandlePosition (direction: SliderDirection): number {
+    public getSliderHandlePosition(direction: SliderDirection): number {
       if (SliderDirection.isFrom(direction)) {
         return this.handleFrom.getPosition();
-      } else {
-        return this.handleTo.getPosition();
       }
+      return this.handleTo.getPosition();
     }
 
-    public getHandleFromPosition (): number {
+    public getHandleFromPosition(): number {
       return this.handleFrom.getPosition();
     }
 
-    public getHandleToPosition (): number | null{
+    public getHandleToPosition(): number | null{
       return !this.isRange ? null : this.handleTo.getPosition();
     }
 
-    public getIsRange (): boolean {
+    public getIsRange(): boolean {
       return this.isRange;
     }
 
-    public get handlePositionChangedEvent (): ILiteEvent<SliderDirection> {
+    public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
       return this.onHandlePositionChanged.expose();
     }
 }

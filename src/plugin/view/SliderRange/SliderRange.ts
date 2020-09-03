@@ -4,21 +4,22 @@ import ISliderRange from './ISliderRange';
 
 class SliderRange extends AbstractElement implements ISliderRange {
     public $elem: JQuery<HTMLElement>;
+
     protected isHorizontal: boolean;
 
-    constructor (isHorizontal: boolean) {
+    constructor(isHorizontal: boolean) {
       super();
       this.isHorizontal = isHorizontal;
       this.init();
     }
-    
-    protected init (): void {
-      this.$elem = this.isHorizontal ?
-        $('<div>').addClass(StyleClasses.RANGE) :
-        $('<div>').addClass([StyleClasses.RANGE, StyleClasses.RANGEV]);
+
+    protected init(): void {
+      this.$elem = this.isHorizontal
+        ? $('<div>').addClass(StyleClasses.RANGE)
+        : $('<div>').addClass([StyleClasses.RANGE, StyleClasses.RANGEV]);
     }
 
-    public changeRangeLineTwo (positionFrom: number, positionTo: number): void{
+    public changeRangeLineTwo(positionFrom: number, positionTo: number): void{
       const rangePosition = positionFrom;
       const rangeSize = 100 - positionTo - positionFrom;
       const direction = this.isHorizontal ? 'left' : 'bottom';
@@ -26,7 +27,7 @@ class SliderRange extends AbstractElement implements ISliderRange {
       this.$elem.attr('style', `${direction}: ${rangePosition}%; ${wh}: ${rangeSize}%`);
     }
 
-    public changeRangeLineOne (positionFrom: number, maxHandlePosition: number): void{
+    public changeRangeLineOne(positionFrom: number, maxHandlePosition: number): void{
       const size = ((100 - maxHandlePosition) / 2) + positionFrom;
       const direction = this.isHorizontal ? 'left' : 'bottom';
       const wh = this.isHorizontal ? 'width' : 'height';

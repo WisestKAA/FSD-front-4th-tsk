@@ -25,7 +25,7 @@ module.exports = {
     'fsd'
   ],
   rules: {
-    'no-unused-vars': ['error', { argsIgnorePattern: '^[A-Za-z]{1,20}Mock$', varsIgnorePattern: '^I[A-Za-z]{1,20}$' }],
+    'no-unused-vars': ['error', { argsIgnorePattern: '^[A-Za-z]{1,20}Mock$', varsIgnorePattern: '^I[A-Za-z]{1,40}$' }],
     'class-methods-use-this': 'off',
     'no-underscore-dangle': 'off',
     'import/no-unresolved': 'off',

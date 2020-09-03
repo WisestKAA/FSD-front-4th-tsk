@@ -6,11 +6,14 @@ import ILiteEvent from '../../LiteEvent/ILiteEvent';
 
 class ScaleItem extends AbstractElement implements IScaleItem {
     public $elem: JQuery<HTMLElement>;
+
     protected isHorizontal: boolean;
+
     protected value: number;
+
     protected onScaleItemClicked: LiteEvent<number>;
 
-    constructor (isHorizontal: boolean, value: number) {
+    constructor(isHorizontal: boolean, value: number) {
       super();
       this.isHorizontal = isHorizontal;
       this.value = value;
@@ -20,10 +23,10 @@ class ScaleItem extends AbstractElement implements IScaleItem {
       this.addEvents();
     }
 
-    protected init (): void {
-      const $mark = this.isHorizontal ?
-        $('<div>').addClass(StyleClasses.SCALEMARK) :
-        $('<div>').addClass([StyleClasses.SCALEMARK, StyleClasses.SCALEMARKV]);
+    protected init(): void {
+      const $mark = this.isHorizontal
+        ? $('<div>').addClass(StyleClasses.SCALEMARK)
+        : $('<div>').addClass([StyleClasses.SCALEMARK, StyleClasses.SCALEMARKV]);
       const $text = $('<div>').addClass(StyleClasses.SCALETEXT);
       $text.html(this.value.toString());
       this.$elem = $('<div>');
@@ -31,13 +34,13 @@ class ScaleItem extends AbstractElement implements IScaleItem {
       this.$elem.append($mark, $text);
     }
 
-    protected addEvents (): void{
+    protected addEvents(): void{
       this.$elem.click(() => {
         this.onScaleItemClicked.trigger(this.value);
       });
     }
 
-    public get scaleItemClickedEvent (): ILiteEvent<number> {
+    public get scaleItemClickedEvent(): ILiteEvent<number> {
       return this.onScaleItemClicked.expose();
     }
 }

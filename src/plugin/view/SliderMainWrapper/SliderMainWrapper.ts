@@ -10,12 +10,16 @@ import SliderDirection from '../SliderDirection';
 
 class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     public $elem: JQuery<HTMLElement>;
+
     protected isHorizontal: boolean;
+
     protected sliderLine: ISliderLine;
+
     protected sliderHandleWrapper: ISliderHandleWrapper;
+
     protected onHandlePositionChanged: LiteEvent<SliderDirection>;
 
-    constructor (
+    constructor(
       isHorizontal: boolean,
       sliderLine: ISliderLine,
       sliderHandleWrapper: ISliderHandleWrapper
@@ -28,7 +32,7 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
       this.addEvents();
     }
 
-    protected init (): void {
+    protected init(): void {
       this.$elem = $('<div>');
       this.changeOrientation(
         this.isHorizontal,
@@ -39,57 +43,57 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
       this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
     }
 
-    protected addEvents (): void{
+    protected addEvents(): void{
       this.sliderHandleWrapper.handlePositionChangedEvent.on((direction) => {
         this.setRange();
         this.onHandlePositionChanged.trigger(direction);
       });
     }
 
-    protected setRange (): void{
+    protected setRange(): void{
       let options: ISetRangeOptions;
       const isRange = this.sliderHandleWrapper.getIsRange();
       if (isRange) {
         options = {
           isRange,
-          'handleFromPosition': this.getHandleFromPosition(),
-          'handleToPosition': this.getHandleToPosition(),
+          handleFromPosition: this.getHandleFromPosition(),
+          handleToPosition: this.getHandleToPosition()
         };
       } else {
         options = {
           isRange,
-          'handleFromPosition': this.getHandleFromPosition(),
-          'maxHandlePosition': this.getMaxHandlePosition(),
+          handleFromPosition: this.getHandleFromPosition(),
+          maxHandlePosition: this.getMaxHandlePosition()
         };
       }
       this.sliderLine.setRange(options);
     }
 
-    public getSliderHandlePosition (direction: SliderDirection): number {
+    public getSliderHandlePosition(direction: SliderDirection): number {
       return this.sliderHandleWrapper.getSliderHandlePosition(direction);
     }
 
-    public getMaxHandlePosition (): number {
+    public getMaxHandlePosition(): number {
       return this.sliderHandleWrapper.getMaxHandlePosition();
     }
 
-    public setHandlePosition (position: number, direction: SliderDirection): void{
+    public setHandlePosition(position: number, direction: SliderDirection): void{
       this.sliderHandleWrapper.setHandlePosition(position, direction);
     }
 
-    public getHandleFromPosition (): number {
+    public getHandleFromPosition(): number {
       return this.sliderHandleWrapper.getHandleFromPosition();
     }
-    
-    public getHandleToPosition (): number | null{
+
+    public getHandleToPosition(): number | null{
       return this.sliderHandleWrapper.getHandleToPosition();
     }
 
-    public getLineSize (): number {
+    public getLineSize(): number {
       return this.sliderLine.getLineSize();
     }
 
-    public get handlePositionChangedEvent (): ILiteEvent<SliderDirection> {
+    public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
       return this.onHandlePositionChanged.expose();
     }
 }
