@@ -1,7 +1,5 @@
-const webpackConfig = require('./webpack.testconfig');
+const webpackConfig = require('./configs/webpack.tests');
 const path = require('path');
-
-delete webpackConfig.entry;
 
 module.exports = (config) => {
   config.set({

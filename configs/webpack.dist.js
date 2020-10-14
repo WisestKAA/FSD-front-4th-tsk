@@ -15,16 +15,24 @@ module.exports = {
         exclude: /(node_modules)/
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.(sa|sc|c)ss$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: './out/'
+              publicPath: '../'
             }
           },
-          'css-loader',
-          'sass-loader'
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: false,
+              importLoaders: 1
+            }
+          },
+          { loader: 'postcss-loader', options: { sourceMap: false } },
+          { loader: 'resolve-url-loader' },
+          { loader: 'sass-loader', options: { sourceMap: true } }
         ]
       }
     ]
@@ -34,7 +42,7 @@ module.exports = {
   },
   output: {
     filename: './simpleslider.jquery.js',
-    path: path.resolve(__dirname, './plugindist')
+    path: path.resolve(__dirname, '../plugindist')
   },
   plugins: [
     new MiniCssExtractPlugin({
