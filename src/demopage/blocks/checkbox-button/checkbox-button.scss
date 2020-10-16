@@ -1,3 +1,5 @@
+@import '../material-icons/material-icons.scss';
+
 .checkbox-button {
   display: inline-block;
   white-space: nowrap;
@@ -85,12 +87,12 @@
     box-sizing: border-box;
     border-radius: 4px;
   }
-}
 
-.checkbox-button .checkbox-button__input:checked+.checkbox-button__text::before {
-  display: none;
-}
+  &__input:checked + &__text::before {
+    display: none;
+  }
 
-.checkbox-button .checkbox-button__input:checked+.checkbox-button__text::after {
-  display: inline-block;
+  &__input:checked + &__text::after {
+    display: inline-block;
+  }
 }
