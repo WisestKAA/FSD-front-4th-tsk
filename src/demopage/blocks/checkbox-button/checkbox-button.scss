@@ -1,5 +1,7 @@
-@import '../material-icons/material-icons.scss';
 @import '../../scss/colors.scss';
+
+@import '../../scss/fonts/material-icons/material-icons.scss';
+@import '../../scss/fonts/montserrat/montserrat.scss';
 
 .checkbox-button {
   display: inline-block;
