@@ -1,15 +1,16 @@
 @import '../material-icons/material-icons.scss';
+@import '../../scss/colors.scss';
 
 .checkbox-button {
   display: inline-block;
   white-space: nowrap;
   width: 100%;
-  max-width: 260px;
+  max-width: 18.5714rem;
   box-sizing: border-box;
   user-select: none;
 
   &_rich {
-    margin-bottom: 9px;
+    margin-bottom: 0.6429rem;
   }
 
   &__input {
@@ -20,7 +21,7 @@
 
   &__text {
     position: relative;
-    padding-left: 30px;
+    padding-left: 2.1429rem;
     cursor: pointer;
   }
 
@@ -28,8 +29,8 @@
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: bold;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 1rem;
+    line-height: 1.4286rem;
     color: $dark75;
   }
 
@@ -38,15 +39,16 @@
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 1rem;
+    line-height: 1.2857rem;
     color: $dark50;
-    max-width: 192px;
+    max-width: 13.7143rem;
+
     &_rich {
-      font-size: 12px;
-      line-height: 14px;
-      max-width: 230px;
-      margin-top: 5px;
+      font-size: 0.8571rem;
+      line-height: 1rem;
+      max-width: 16.4286rem;
+      margin-top: 0.3571rem;
     }
   }
 
@@ -54,19 +56,19 @@
     content: '';
     position: absolute;
     left: 0;
-    width: 20px;
-    height: 20px;
-    border: 1px solid $dark25;
+    width: 1.4286rem;
+    height: 1.4286rem;
+    border: 0.0714rem solid $dark25;
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: 0.2857rem;
   }
 
   &__text::after {
     content: 'done';
     display: none;
     font-family: 'Material Icons';
-    font-size: 18px;
-    line-height: 18px;
+    font-size: 1.2857rem;
+    line-height: 1.2857rem;
     text-transform: none;
     letter-spacing: normal;
     word-wrap: normal;
@@ -81,11 +83,11 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 20px;
-    height: 20px;
-    border: 1px solid $purple;
+    width: 1.4286rem;
+    height: 1.4286rem;
+    border: 0.0714rem solid $purple;
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: 0.2857rem;
   }
 
   &__input:checked + &__text::before {

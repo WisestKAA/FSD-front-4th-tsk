@@ -1,0 +1,18 @@
+@import './demopage/fonts/materialicons/material-icons.css';
+@import './demopage/fonts/montserrat/Montserrat.css';
+
+@import './demopage/blocks/slider-card/slider-card.scss';
+
+html {
+  font-size: 14px;
+}
+
+.h3 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  text-transform: uppercase;
+  color: $dark100;
+}
