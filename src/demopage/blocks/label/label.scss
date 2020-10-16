@@ -3,38 +3,4 @@
 .label {
   display: flex;
   justify-content: space-between;
-
-  &_margin-bottom-5 {
-    margin-bottom: 0.3571rem;
-  }
-
-  &_margin-bottom-13 {
-    margin-bottom: 0.9286rem;
-  }
-
-  &_margin-bottom-16 {
-    margin-bottom: 1.1429rem;
-  }
-
-  &_margin-bottom-17 {
-    margin-bottom: 1.2143rem;
-  }
-
-  &_short {
-    max-width: 19rem;
-  }
-
-  &__caption {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 0.8571rem;
-    line-height: 1.0714rem;
-    text-transform: uppercase;
-    color: $dark50;
-
-    &_margin-top-3 {
-      margin-top: -0.2143rem;
-    }
-  }
 }

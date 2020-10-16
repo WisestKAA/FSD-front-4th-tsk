@@ -1,8 +1,2 @@
-mixin text-field({ placeholder, text, name, type=text }={})
-  input(
-    type=type
-    placeholder=placeholder
-    class="text-field"
-    value=text
-    name=name
-  )
+mixin text-field({ placeholder, text, name, type='text' }={})
+  input.text-field&attributes({type: 'text', placeholder, value: text, name, type})
