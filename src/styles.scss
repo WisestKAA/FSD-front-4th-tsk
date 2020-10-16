@@ -1,2 +1,8 @@
 @import './plugin/styles.scss';
 @import './demopage/demopage.scss';
+
+.body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #F4F4F6;
+}
