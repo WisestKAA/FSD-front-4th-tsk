@@ -1,6 +1,6 @@
 mixin checkbox-button({ text, name, isChecked=false } = {})
   section.checkbox-button
     label.checkbox-button__label
-      input(type="checkbox", name=name, checked=isChecked).checkbox-button__input
+      input.checkbox-button__input&attributes({ type: 'checkbox', name, checked: isChecked })
       .checkbox-button__text
         .checkbox-button__content=text
