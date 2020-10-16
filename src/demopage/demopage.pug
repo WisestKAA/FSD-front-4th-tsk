@@ -1,0 +1,10 @@
+extends ../index
+
+block demo
+  include ./blocks/slider-card/slider-card.pug
+
+  - const { cards } = require('@src/demopage/demopage-data.json');
+  main.demopage
+    .demopage-wrapper
+      each card in cards
+        +slider-card({ data: card })

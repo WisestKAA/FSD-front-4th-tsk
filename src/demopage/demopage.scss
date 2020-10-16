@@ -1,0 +1,16 @@
+@import './scss/main.scss';
+
+.demopage{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2.8571rem;
+
+  &-wrapper{
+      max-width: 102.8571rem;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+  }
+}

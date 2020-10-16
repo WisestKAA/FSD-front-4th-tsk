@@ -39,7 +39,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.pug',
+      template: './src/demopage/demopage.pug',
       filename: './index.html'
     }),
     new webpack.ProvidePlugin({

@@ -48,7 +48,7 @@ const config = {
       filename: '[name].min.css'
     }),
     new HtmlWebpackPlugin({
-      template: './src/index.pug',
+      template: './src/demopage/demopage.pug',
       filename: './index.html'
     }),
     new webpack.ProvidePlugin({
