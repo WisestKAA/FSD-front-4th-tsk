@@ -41,8 +41,7 @@ const config = {
   },
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, '../dist'),
-    publicPath: './'
+    path: path.join(__dirname, '../dist')
   },
   plugins: [
     new MiniCssExtractPlugin({
