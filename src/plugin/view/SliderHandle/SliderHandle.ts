@@ -60,6 +60,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     this.$elem.on('dragstart', false);
   }
 
+  @bind
   protected handleMouseDown(event: JQuery.MouseDownEvent): void {
     const elem = this.$elem.get(0);
     event.preventDefault();
