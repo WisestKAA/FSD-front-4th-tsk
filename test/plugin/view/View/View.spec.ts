@@ -56,7 +56,7 @@ describe('Test View', () => {
       );
 
       it(
-        `The element must have have subelement with class ${StyleClasses.CURRENTVALWRAPPER} if the isHorizontal property is true`,
+        `The element must have have sub-element with class ${StyleClasses.CURRENTVALWRAPPER} if the isHorizontal property is true`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -77,7 +77,7 @@ describe('Test View', () => {
       );
 
       it(
-        `The element must have have subelement with classes ${StyleClasses.CURRENTVALWRAPPER} and ${StyleClasses.CURRENTVALWRAPPERV} if the isHorizontal property is false`,
+        `The element must have have sub-element with classes ${StyleClasses.CURRENTVALWRAPPER} and ${StyleClasses.CURRENTVALWRAPPERV} if the isHorizontal property is false`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -98,7 +98,7 @@ describe('Test View', () => {
       );
 
       it(
-        `The element must have have subelement with class ${StyleClasses.MAINWRAPPER} if the isHorizontal property is true`,
+        `The element must have have sub-element with class ${StyleClasses.MAINWRAPPER} if the isHorizontal property is true`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -119,7 +119,7 @@ describe('Test View', () => {
       );
 
       it(
-        `The element must have have subelement with classes ${StyleClasses.MAINWRAPPER} and ${StyleClasses.MAINWRAPPERV} if the isHorizontal property is false`,
+        `The element must have have sub-element with classes ${StyleClasses.MAINWRAPPER} and ${StyleClasses.MAINWRAPPERV} if the isHorizontal property is false`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -140,7 +140,7 @@ describe('Test View', () => {
       );
 
       it(
-        `The element must have have subelement with class ${StyleClasses.SCALEWRAPPER} if the isHorizontal property is true and the scaleValues is not null/undefined`,
+        `The element must have have sub-element with class ${StyleClasses.SCALEWRAPPER} if the isHorizontal property is true and the scaleValues is not null/undefined`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -162,7 +162,7 @@ describe('Test View', () => {
       );
 
       it(
-        `The element must have have subelement with classes ${StyleClasses.SCALEWRAPPER} and ${StyleClasses.SCALEWRAPPERV} if the isHorizontal property is false`,
+        `The element must have have sub-element with classes ${StyleClasses.SCALEWRAPPER} and ${StyleClasses.SCALEWRAPPERV} if the isHorizontal property is false`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -364,7 +364,7 @@ describe('Test View', () => {
       );
 
       it(
-        'When user clicked on element from ScaleWrapper, the View must call scaleClicked whith a value from presenter',
+        'When user clicked on element from ScaleWrapper, the View must call scaleClicked with a value from presenter',
         () => {
           const options: IViewOptions = {
             isHorizontal: false,

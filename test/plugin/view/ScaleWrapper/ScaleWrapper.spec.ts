@@ -34,12 +34,12 @@ describe(
         );
 
         it(
-          `The element must have subelements with class ${StyleClasses.SCALEITEM}`,
+          `The element must have sub-elements with class ${StyleClasses.SCALEITEM}`,
           () => {
             scaleWrapper = new ScaleWrapper(false, items);
             let numItems = 0;
-            const childrens = scaleWrapper.$elem.find(`.${StyleClasses.SCALEITEM}`);
-            childrens.each(() => {
+            const children = scaleWrapper.$elem.find(`.${StyleClasses.SCALEITEM}`);
+            children.each(() => {
               numItems += 1;
             });
             expect(numItems).toBe(2);
@@ -52,7 +52,7 @@ describe(
       'Test ScaleWrapper / functions',
       () => {
         it(
-          'When user cliced on element from ISliderItem, the ScaleWrapper must call scaleItemClickedEvent whith a value from ISliderItem',
+          'When user clicked on element from ISliderItem, the ScaleWrapper must call scaleItemClickedEvent with a value from ISliderItem',
           () => {
             const items: IScaleItem[] = [];
             const itemFrom = new MockScaleItem(0);

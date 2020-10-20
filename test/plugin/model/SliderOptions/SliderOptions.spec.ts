@@ -115,7 +115,7 @@ describe(
         );
 
         it(
-          'If the numberOfScaleMarks is not intager or less than two, then initialization must throw error',
+          'If the numberOfScaleMarks is not integer or less than two, then initialization must throw error',
           () => {
             const opt: ISliderSettings = { numberOfScaleMarks: 0.5 };
             expect(() => {

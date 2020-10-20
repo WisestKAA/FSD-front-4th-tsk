@@ -9,7 +9,7 @@ class MockHandleWrapper implements ISliderHandleWrapper {
 
   isRange: boolean = true;
 
-  foromPosition: number = 10;
+  formPosition: number = 10;
 
   toPosition: number = 10;
 
@@ -38,7 +38,7 @@ class MockHandleWrapper implements ISliderHandleWrapper {
   }
 
   getHandleFromPosition(): number {
-    return this.foromPosition;
+    return this.formPosition;
   }
 
   getHandleToPosition(): number {

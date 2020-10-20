@@ -67,7 +67,7 @@ class CurrentValue implements ICurrentValue {
       ? this.getCorrectPosition(position, handlePercent, lineWidth)
       : position;
     this.position = correctPosition;
-    const direction = SliderDirection.getDiraction(this.isFrom, this.isHorizontal);
+    const direction = SliderDirection.getDirection(this.isFrom, this.isHorizontal);
     this.$elem.attr('style', `${direction}: ${correctPosition}%;`);
   }
 

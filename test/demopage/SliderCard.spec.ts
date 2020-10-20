@@ -159,7 +159,7 @@ describe(
         );
 
         it(
-          'If the slider change current value, the current value fieald must change to',
+          'If the slider change current value, the current value field must change to',
           () => {
             const elem = new MockElement();
             sliderCard = new MockSliderCard(elem.getElement({ isRange: false }).get(0));
@@ -169,7 +169,7 @@ describe(
         );
 
         it(
-          'If the slider change current value, the current value fieald must change to (isRage=true)',
+          'If the slider change current value, the current value field must change to (isRage=true)',
           () => {
             const elem = new MockElement();
             sliderCard = new MockSliderCard(elem.getElement({ isRange: true }).get(0));

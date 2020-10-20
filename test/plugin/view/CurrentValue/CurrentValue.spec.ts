@@ -15,24 +15,24 @@ describe('Test CurrentValue', () => {
       expect(currentValue.$elem.attr('class')).toBe(`${StyleClasses.CURRENTVAL} ${StyleClasses.CURRENTVALV}`);
     });
 
-    it(`The element must have subelement with class ${StyleClasses.CURRENTVALARROW} if the isHorizontal property is true`, () => {
+    it(`The element must have sub-element with class ${StyleClasses.CURRENTVALARROW} if the isHorizontal property is true`, () => {
       currentValue = new CurrentValue(true, true);
       expect(currentValue.$elem.find(`.${StyleClasses.CURRENTVALARROW}`).attr('class')).toBe(StyleClasses.CURRENTVALARROW);
     });
 
-    it(`The element must have subelement with classes ${StyleClasses.CURRENTVALARROW} and ${StyleClasses.CURRENTVALARROWV} if the isHorizontal property  is true`, () => {
+    it(`The element must have sub-element with classes ${StyleClasses.CURRENTVALARROW} and ${StyleClasses.CURRENTVALARROWV} if the isHorizontal property  is true`, () => {
       currentValue = new CurrentValue(true, false);
       expect(currentValue.$elem.find(`.${StyleClasses.CURRENTVALARROW}`).attr('class')).toBe(`${StyleClasses.CURRENTVALARROW} ${StyleClasses.CURRENTVALARROWV}`);
     });
 
-    it(`The element must have subelement with class ${StyleClasses.CURRENTVALTEXT}`, () => {
+    it(`The element must have sub-element with class ${StyleClasses.CURRENTVALTEXT}`, () => {
       currentValue = new CurrentValue(true, true);
       expect(currentValue.$elem.find(`.${StyleClasses.CURRENTVALTEXT}`).attr('class')).toBe(StyleClasses.CURRENTVALTEXT);
     });
   });
 
   describe('Test CurrentValue / functions', () => {
-    it('The setCurrentValue function should set the current value for the currentValue property and change the text subelement of the $element', () => {
+    it('The setCurrentValue function should set the current value for the currentValue property and change the text sub-element of the $element', () => {
       currentValue = new CurrentValue(true, true);
       currentValue.setCurrentValue(10);
       expect(currentValue.getCurrentValue()).toBe(10);

@@ -46,7 +46,7 @@ describe(
             isFrom: boolean,
             isRange: boolean,
             startPosition: number,
-            endPositon: number,
+            endPosition: number,
             expectVal: number
         }): void{
           const {
@@ -54,7 +54,7 @@ describe(
             isFrom,
             isRange,
             startPosition,
-            endPositon,
+            endPosition: endPosition,
             expectVal
           } = options;
           line = new MockSliderLine(isHorizontal);
@@ -101,10 +101,10 @@ describe(
             true,
             window,
             1,
-            endPositon,
-            endPositon,
-            endPositon,
-            endPositon,
+            endPosition,
+            endPosition,
+            endPosition,
+            endPosition,
             false,
             false,
             true,
@@ -126,7 +126,7 @@ describe(
               isFrom: true,
               isRange: false,
               startPosition: 25,
-              endPositon: 40,
+              endPosition: 40,
               expectVal: 15
             });
           }
@@ -140,7 +140,7 @@ describe(
               isFrom: false,
               isRange: true,
               startPosition: 25,
-              endPositon: 40,
+              endPosition: 40,
               expectVal: 85
             });
           }
@@ -154,7 +154,7 @@ describe(
               isFrom: true,
               isRange: false,
               startPosition: 80,
-              endPositon: 40,
+              endPosition: 40,
               expectVal: 90
             });
           }
@@ -168,7 +168,7 @@ describe(
               isFrom: false,
               isRange: true,
               startPosition: 10,
-              endPositon: 60,
+              endPosition: 60,
               expectVal: 50
             });
           }
@@ -182,7 +182,7 @@ describe(
               isFrom: true,
               isRange: true,
               startPosition: 0,
-              endPositon: -100,
+              endPosition: -100,
               expectVal: 0
             });
           }
@@ -196,7 +196,7 @@ describe(
               isFrom: false,
               isRange: true,
               startPosition: 100,
-              endPositon: 2000,
+              endPosition: 2000,
               expectVal: 0
             });
           }
@@ -210,7 +210,7 @@ describe(
               isFrom: false,
               isRange: true,
               startPosition: 0,
-              endPositon: -10,
+              endPosition: -10,
               expectVal: 90
             });
           }
@@ -265,7 +265,7 @@ describe(
         );
 
         it(
-          'If the position more then the sliderHandleMaxPosition - the setCurrentPosition function must set the style for the handle element whith z-index = 100',
+          'If the position more then the sliderHandleMaxPosition - the setCurrentPosition function must set the style for the handle element with z-index = 100',
           () => {
             line = new MockSliderLine(true);
             handle = new SliderHandle({

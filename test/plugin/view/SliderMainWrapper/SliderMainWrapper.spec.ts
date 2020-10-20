@@ -29,7 +29,7 @@ describe('Tests SliderMainWrapper', () => {
       );
 
       it(
-        `The element must have subelement with class ${StyleClasses.HANDLEWRAPPER} if the isHorizontal property is true`,
+        `The element must have sub-element with class ${StyleClasses.HANDLEWRAPPER} if the isHorizontal property is true`,
         () => {
           wrapper = new SliderMainWrapper(true, new MockLine(), new MockHandleWrapper(true));
           expect(wrapper.$elem.find(`.${StyleClasses.HANDLEWRAPPER}`).attr('class'))
@@ -38,7 +38,7 @@ describe('Tests SliderMainWrapper', () => {
       );
 
       it(
-        `The element must have subelement with classes ${StyleClasses.HANDLEWRAPPER} and ${StyleClasses.HANDLEWRAPPERV} if the isHorizontal property is false`,
+        `The element must have sub-element with classes ${StyleClasses.HANDLEWRAPPER} and ${StyleClasses.HANDLEWRAPPERV} if the isHorizontal property is false`,
         () => {
           wrapper = new SliderMainWrapper(false, new MockLine(), new MockHandleWrapper(false));
           expect(wrapper.$elem.find(`.${StyleClasses.HANDLEWRAPPER}`).attr('class'))
@@ -52,7 +52,7 @@ describe('Tests SliderMainWrapper', () => {
     'Tests SliderMainWrapper / functions',
     () => {
       it(
-        'The getSliderHandlePosition function must call the getSliderHandlePosition funtion from the sliderHandleWrapper',
+        'The getSliderHandlePosition function must call the getSliderHandlePosition function from the sliderHandleWrapper',
         () => {
           const handleWrapper = new MockHandleWrapper();
           wrapper = new SliderMainWrapper(true, new MockLine(), handleWrapper);
@@ -63,7 +63,7 @@ describe('Tests SliderMainWrapper', () => {
       );
 
       it(
-        'The getMaxHandlePosition function must call the getMaxHandlePosition funtion from the sliderHandleWrapper',
+        'The getMaxHandlePosition function must call the getMaxHandlePosition function from the sliderHandleWrapper',
         () => {
           const handleWrapper = new MockHandleWrapper();
           wrapper = new SliderMainWrapper(true, new MockLine(), handleWrapper);
@@ -74,7 +74,7 @@ describe('Tests SliderMainWrapper', () => {
       );
 
       it(
-        'The setHandlePosition function must call the setHandlePosition funtion from the sliderHandleWrapper',
+        'The setHandlePosition function must call the setHandlePosition function from the sliderHandleWrapper',
         () => {
           const handleWrapper = new MockHandleWrapper();
           wrapper = new SliderMainWrapper(true, new MockLine(), handleWrapper);
@@ -85,7 +85,7 @@ describe('Tests SliderMainWrapper', () => {
       );
 
       it(
-        'The getHandleFromPosition function must call the getHandleFromPosition funtion from the sliderHandleWrapper',
+        'The getHandleFromPosition function must call the getHandleFromPosition function from the sliderHandleWrapper',
         () => {
           const handleWrapper = new MockHandleWrapper();
           wrapper = new SliderMainWrapper(true, new MockLine(), handleWrapper);
@@ -96,7 +96,7 @@ describe('Tests SliderMainWrapper', () => {
       );
 
       it(
-        'The getHandleToPosition function must call the getHandleToPosition funtion from the sliderHandleWrapper',
+        'The getHandleToPosition function must call the getHandleToPosition function from the sliderHandleWrapper',
         () => {
           const handleWrapper = new MockHandleWrapper();
           wrapper = new SliderMainWrapper(true, new MockLine(), handleWrapper);
@@ -107,7 +107,7 @@ describe('Tests SliderMainWrapper', () => {
       );
 
       it(
-        'The getLineSize function must call the getLineSize funtion from the sliderLine',
+        'The getLineSize function must call the getLineSize function from the sliderLine',
         () => {
           const line = new MockLine();
           wrapper = new SliderMainWrapper(true, line, new MockHandleWrapper());

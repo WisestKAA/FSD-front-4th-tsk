@@ -29,7 +29,7 @@ describe('Test SliderHandleWrapper', () => {
       );
 
       it(
-        `The element must have subelement with class ${StyleClasses.HANDLE} if the isHorizontal property is true`,
+        `The element must have sub-element with class ${StyleClasses.HANDLE} if the isHorizontal property is true`,
         () => {
           wrapper = new SliderHandleWrapper(true, new MockHandle(true), new MockHandle(true));
           expect(wrapper.$elem.find(`.${StyleClasses.HANDLE}`).attr('class')).toBe(StyleClasses.HANDLE);
@@ -37,7 +37,7 @@ describe('Test SliderHandleWrapper', () => {
       );
 
       it(
-        `The element must have subelement with classes ${StyleClasses.HANDLE} and ${StyleClasses.HANDLEV} if the isHorizontal property is false`,
+        `The element must have sub-element with classes ${StyleClasses.HANDLE} and ${StyleClasses.HANDLEV} if the isHorizontal property is false`,
         () => {
           wrapper = new SliderHandleWrapper(false, new MockHandle(), new MockHandle(false));
           expect(wrapper.$elem.find(`.${StyleClasses.HANDLE}`).attr('class')).toBe(`${StyleClasses.HANDLE} ${StyleClasses.HANDLEV}`);

@@ -48,12 +48,12 @@ class Presenter implements IPresenter {
 
   protected initViewComponents(): void{
     const options = this.model.getOptions();
-    let direction = SliderDirection.getDiraction(true, options.isHorizontal);
+    let direction = SliderDirection.getDirection(true, options.isHorizontal);
     const correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
     this.setCurrentValueView([correctValFrom, 0]);
     this.setCurrentHandlePosition(correctValFrom, direction);
     if (options.isRange) {
-      direction = SliderDirection.getDiraction(false, options.isHorizontal);
+      direction = SliderDirection.getDirection(false, options.isHorizontal);
       const correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
       this.setCurrentValueView([correctValFrom, correctValTo]);
       this.setCurrentHandlePosition(correctValTo, direction);
@@ -212,7 +212,7 @@ class Presenter implements IPresenter {
       this.setCurrentValueModel([val, 0]);
       this.setCurrentHandlePosition(
         val,
-        SliderDirection.getDiraction(true, options.isHorizontal)
+        SliderDirection.getDirection(true, options.isHorizontal)
       );
       return;
     }
@@ -223,13 +223,13 @@ class Presenter implements IPresenter {
       this.setCurrentValueModel([val, options.currentVal[1]]);
       this.setCurrentHandlePosition(
         val,
-        SliderDirection.getDiraction(true, options.isHorizontal)
+        SliderDirection.getDirection(true, options.isHorizontal)
       );
     } else {
       this.setCurrentValueModel([options.currentVal[0], val]);
       this.setCurrentHandlePosition(
         val,
-        SliderDirection.getDiraction(false, options.isHorizontal)
+        SliderDirection.getDirection(false, options.isHorizontal)
       );
     }
   }

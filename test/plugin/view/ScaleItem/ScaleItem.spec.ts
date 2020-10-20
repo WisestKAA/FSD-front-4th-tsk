@@ -27,7 +27,7 @@ describe(
         );
 
         it(
-          `The element must have subelement with class ${StyleClasses.SCALEMARK} if the isHorizontal property is true`,
+          `The element must have sub-element with class ${StyleClasses.SCALEMARK} if the isHorizontal property is true`,
           () => {
             scaleItem = new ScaleItem(true, 0);
             expect(scaleItem.$elem.find(`.${StyleClasses.SCALEMARK}`).attr('class')).toBe(StyleClasses.SCALEMARK);
@@ -35,7 +35,7 @@ describe(
         );
 
         it(
-          `The element must have subelement with classes ${StyleClasses.SCALEMARK} and ${StyleClasses.SCALEMARKV} if the isHorizontal property  is true`,
+          `The element must have sub-element with classes ${StyleClasses.SCALEMARK} and ${StyleClasses.SCALEMARKV} if the isHorizontal property  is true`,
           () => {
             scaleItem = new ScaleItem(false, 0);
             expect(scaleItem.$elem.find(`.${StyleClasses.SCALEMARK}`).attr('class')).toBe(`${StyleClasses.SCALEMARK} ${StyleClasses.SCALEMARKV}`);
@@ -43,7 +43,7 @@ describe(
         );
 
         it(
-          `The element must have subelement with class ${StyleClasses.SCALETEXT}`,
+          `The element must have sub-element with class ${StyleClasses.SCALETEXT}`,
           () => {
             scaleItem = new ScaleItem(true, 0);
             expect(scaleItem.$elem.find(`.${StyleClasses.SCALETEXT}`).attr('class')).toBe(StyleClasses.SCALETEXT);
@@ -64,7 +64,7 @@ describe(
       'Test ScaleItem / functions',
       () => {
         it(
-          'When user cliced on element, he must call scaleItemClickedEvent',
+          'When user clicked on element, he must call scaleItemClickedEvent',
           () => {
             scaleItem = new ScaleItem(true, 0);
             const mockEvent = new MockEvent(scaleItem);

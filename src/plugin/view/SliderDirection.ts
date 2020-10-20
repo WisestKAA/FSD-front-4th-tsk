@@ -15,7 +15,7 @@ class SliderDirection {
     return 'left';
   }
 
-  static getDiraction(isFrom: boolean, isHorizontal: boolean): string {
+  static getDirection(isFrom: boolean, isHorizontal: boolean): string {
     if (isFrom) {
       return isHorizontal ? this.LEFT : this.BOTTOM;
     }

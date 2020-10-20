@@ -94,7 +94,7 @@ describe(
         );
 
         it(
-          'If the isScaleEnabled propertys is true after initialization the scaleValues property in the view must be defined',
+          'If the isScaleEnabled properties is true after initialization the scaleValues property in the view must be defined',
           () => {
             const viewFactory = new MockViewFactory();
             const modelFactory = new MockModelFactory({ isRange: false, isScaleEnabled: true });
@@ -104,7 +104,7 @@ describe(
         );
 
         it(
-          'If the isScaleEnabled propertys is true and the numberOfScaleMarks property more than 2 after initialization the scaleValues property must have more than 2 values',
+          'If the isScaleEnabled properties is true and the numberOfScaleMarks property more than 2 after initialization the scaleValues property must have more than 2 values',
           () => {
             const viewFactory = new MockViewFactory();
             const modelFactory = new MockModelFactory({

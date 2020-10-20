@@ -22,7 +22,7 @@ describe(
         );
 
         it(
-          `The element must have classs ${StyleClasses.CURRENTVALWRAPPER} and ${StyleClasses.CURRENTVALWRAPPERV} if the isHorizontal property is false`,
+          `The element must have class ${StyleClasses.CURRENTVALWRAPPER} and ${StyleClasses.CURRENTVALWRAPPERV} if the isHorizontal property is false`,
           () =>{
             currentValueWrapper = new CurrentValueWrapper(
               false, new MockCurrentValue(),
@@ -39,7 +39,7 @@ describe(
       'CurrentValueWrapper / functions',
       () => {
         it(
-          'The setCurrentValuePosition function must set the position for valFrom if the dictionory property is LEFT',
+          'The setCurrentValuePosition function must set the position for valFrom if the dictionary property is LEFT',
           () => {
             valFrom = new MockCurrentValue();
             currentValueWrapper = new CurrentValueWrapper(true, valFrom);
@@ -52,7 +52,7 @@ describe(
         );
 
         it(
-          'The setCurrentValuePosition function must set the position for valFrom if the dictionory property is BOTTOM',
+          'The setCurrentValuePosition function must set the position for valFrom if the dictionary property is BOTTOM',
           () => {
             valFrom = new MockCurrentValue();
             currentValueWrapper = new CurrentValueWrapper(true, valFrom);
@@ -65,7 +65,7 @@ describe(
         );
 
         it(
-          'The setCurrentValuePosition function must set the position for valFrom if the dictionory property is RIGHT',
+          'The setCurrentValuePosition function must set the position for valFrom if the dictionary property is RIGHT',
           () => {
             valTo = new MockCurrentValue();
             currentValueWrapper = new CurrentValueWrapper(true, new MockCurrentValue(), valTo);
@@ -78,7 +78,7 @@ describe(
         );
 
         it(
-          'The setCurrentValuePosition function must set the position for valFrom if the dictionory property is TOP',
+          'The setCurrentValuePosition function must set the position for valFrom if the dictionary property is TOP',
           () => {
             valTo = new MockCurrentValue();
             currentValueWrapper = new CurrentValueWrapper(true, new MockCurrentValue(), valTo);
@@ -133,7 +133,7 @@ describe(
         );
 
         it(
-          'The getCurrentValue function must freturn [valFrom, 0] if the isRange property is false',
+          'The getCurrentValue function must return [valFrom, 0] if the isRange property is false',
           () => {
             valFrom = new MockCurrentValue();
             valFrom.currentValue = 1;
@@ -143,7 +143,7 @@ describe(
         );
 
         it(
-          'The getCurrentValue function must freturn [valFrom, 0] if the isRange property is true',
+          'The getCurrentValue function must return [valFrom, 0] if the isRange property is true',
           () => {
             valFrom = new MockCurrentValue();
             valTo = new MockCurrentValue();

@@ -102,13 +102,13 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
   protected onMouseMoveY(event: JQuery.MouseMoveEvent): void {
     const $lineHTMLElement = this.line.$elem;
     const offset = $lineHTMLElement.offset().top;
-    const lineHieght = $lineHTMLElement.outerHeight();
+    const lineHeight = $lineHTMLElement.outerHeight();
     const handleHeight = this.$elem.outerHeight();
     if (this.isFrom) {
-      const newBot = this.getNewBot(event.pageY, offset, lineHieght, handleHeight);
+      const newBot = this.getNewBot(event.pageY, offset, lineHeight, handleHeight);
       this.setNewPosition(newBot, SliderDirection.BOTTOM);
     } else {
-      const newTop = this.getNewTop(event.pageY, offset, lineHieght, handleHeight);
+      const newTop = this.getNewTop(event.pageY, offset, lineHeight, handleHeight);
       this.setNewPosition(newTop, SliderDirection.TOP);
     }
   }
@@ -143,54 +143,54 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
   protected getNewBot(
     pageY: number,
     offsetTop: number,
-    lineHieght: number,
+    lineHeight: number,
     handleHeight: number
   ): number {
-    const newBot = lineHieght - (pageY - offsetTop - this.shiftYT);
-    const newBotPosition = this.getCorrectPositionFrom(newBot, lineHieght, handleHeight);
+    const newBot = lineHeight - (pageY - offsetTop - this.shiftYT);
+    const newBotPosition = this.getCorrectPositionFrom(newBot, lineHeight, handleHeight);
     return newBotPosition;
   }
 
   protected getNewTop(
     pageY: number,
     offsetTop: number,
-    lineHieght: number,
+    lineHeight: number,
     handleHeight: number
   ): number {
-    const newTop = lineHieght - (pageY - offsetTop - this.shiftY);
-    const newBTopPosition = this.getCorrectPositionTo(newTop, lineHieght, handleHeight);
+    const newTop = lineHeight - (pageY - offsetTop - this.shiftY);
+    const newBTopPosition = this.getCorrectPositionTo(newTop, lineHeight, handleHeight);
     return 100 - newBTopPosition;
   }
 
   protected getCorrectPositionFrom(
     newCoordinate: number,
-    linesize: number,
+    lineSize: number,
     handleSize: number
   ): number {
     let coordinate = newCoordinate;
     if (coordinate < 0) {
       return 0;
     }
-    const edge = linesize - handleSize;
+    const edge = lineSize - handleSize;
     if (coordinate > edge) {
       coordinate = edge;
     }
-    const correctPosition = (100 * coordinate) / linesize;
+    const correctPosition = (100 * coordinate) / lineSize;
     return correctPosition;
   }
 
   protected getCorrectPositionTo(
     newCoordinate: number,
-    linesize: number, handleSize: number
+    lineSize: number, handleSize: number
   ): number {
     let coordinate = newCoordinate;
     if (coordinate < handleSize) {
       coordinate = handleSize;
     }
-    if (coordinate > linesize) {
-      coordinate = linesize;
+    if (coordinate > lineSize) {
+      coordinate = lineSize;
     }
-    const correctPosition = (100 * coordinate) / linesize;
+    const correctPosition = (100 * coordinate) / lineSize;
     return correctPosition;
   }
 
