@@ -4,15 +4,15 @@ import ISliderOptionsFactory from './SliderOptions/ISliderOptionsFactory';
 import IModelFactory from './IModelFactory';
 
 class ModelFactory implements IModelFactory {
-    protected sliderOptionsFactory: ISliderOptionsFactory;
+  protected sliderOptionsFactory: ISliderOptionsFactory;
 
-    constructor(sliderOptionsFactory: ISliderOptionsFactory) {
-      this.sliderOptionsFactory = sliderOptionsFactory;
-    }
+  constructor(sliderOptionsFactory: ISliderOptionsFactory) {
+    this.sliderOptionsFactory = sliderOptionsFactory;
+  }
 
-    public build(): IModel {
-      return new Model(this.sliderOptionsFactory);
-    }
+  public build(): IModel {
+    return new Model(this.sliderOptionsFactory);
+  }
 }
 
 export default ModelFactory;

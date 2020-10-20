@@ -3,13 +3,13 @@ import SliderDirection from '../SliderDirection';
 import ILiteEvent from '../../LiteEvent/ILiteEvent';
 
 interface ISliderHandleWrapper extends IElement{
-    getMaxHandlePosition(): number;
-    setHandlePosition(position: number, direction: SliderDirection): void;
-    getSliderHandlePosition(direction: SliderDirection): number;
-    getHandleFromPosition(): number;
-    getHandleToPosition(): number | null;
-    getIsRange(): boolean;
-    handlePositionChangedEvent: ILiteEvent<SliderDirection>;
+  getMaxHandlePosition(): number;
+  setHandlePosition(position: number, direction: SliderDirection): void;
+  getSliderHandlePosition(direction: SliderDirection): number;
+  getHandleFromPosition(): number;
+  getHandleToPosition(): number | null;
+  getIsRange(): boolean;
+  handlePositionChangedEvent: ILiteEvent<SliderDirection>;
 }
 
 export default ISliderHandleWrapper;

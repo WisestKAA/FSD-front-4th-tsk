@@ -31,6 +31,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'no-unused-expressions': 'off',
     'no-new': 'off',
-    'no-undef': 'off'
+    'no-undef': 'off',
+    indent: ['error', 2]
   }
 };

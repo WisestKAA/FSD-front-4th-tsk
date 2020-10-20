@@ -4,15 +4,15 @@ import ISliderOptions from './ISliderOptions';
 import ISliderOptionsFactory from './ISliderOptionsFactory';
 
 class SliderOptionsFactory implements ISliderOptionsFactory {
-    options?: ISliderSettings;
+  options?: ISliderSettings;
 
-    constructor(options?: ISliderSettings) {
-      this.options = options;
-    }
+  constructor(options?: ISliderSettings) {
+    this.options = options;
+  }
 
-    public build(): ISliderOptions {
-      return new SliderOptions(this.options);
-    }
+  public build(): ISliderOptions {
+    return new SliderOptions(this.options);
+  }
 }
 
 export default SliderOptionsFactory;

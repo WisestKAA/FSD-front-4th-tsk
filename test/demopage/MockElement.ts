@@ -43,16 +43,16 @@ class MockElement {
   }
 
   public getElement(options: {
-      currentVal?: number[],
-      minVal?: number,
-      maxVal?: number,
-      step?: number,
-      numberOfScaleMarks?: number,
-      isHorizontal?: boolean,
-      isRange?: boolean,
-      isVisibleCurrentValue?: boolean,
-      isRangeLineEnabled?: boolean,
-      isScaleEnabled?: boolean,
+    currentVal?: number[],
+    minVal?: number,
+    maxVal?: number,
+    step?: number,
+    numberOfScaleMarks?: number,
+    isHorizontal?: boolean,
+    isRange?: boolean,
+    isVisibleCurrentValue?: boolean,
+    isRangeLineEnabled?: boolean,
+    isScaleEnabled?: boolean,
   }): JQuery<HTMLSpanElement> {
     const option = $.extend(this.defOpt, options);
     const {
