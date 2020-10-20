@@ -1,7 +1,7 @@
-import StyleClasses from '../StyleClasses';
 import AbstractElement from '../AbstractElement/AbstractElement';
-import ISliderLine from './ISliderLine';
 import ISliderRange from '../SliderRange/ISliderRange';
+import StyleClasses from '../StyleClasses';
+import ISliderLine from './ISliderLine';
 import ISetRangeOptions from './ISetRangeOptions';
 
 class SliderLine extends AbstractElement implements ISliderLine {

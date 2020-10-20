@@ -1,9 +1,9 @@
-import View from '../../../../src/plugin/view/View';
-import IPresenter from '../../../../src/plugin/presenter/IPresenter';
-import IViewOptions from '../../../../src/plugin/view/IViewOptions';
 import ICurrentValueWrapper from '../../../../src/plugin/view/CurrentValueWrapper/ICurrentValueWrapper';
 import ISliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper';
 import IScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/IScaleWrapper';
+import View from '../../../../src/plugin/view/View';
+import IViewOptions from '../../../../src/plugin/view/IViewOptions';
+import IPresenter from '../../../../src/plugin/presenter/IPresenter';
 import MockElementsFactory from './MockElementsFactory';
 
 class MockView extends View {

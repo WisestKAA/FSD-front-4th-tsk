@@ -1,22 +1,22 @@
 import IElementsFactory from '../../../../src/plugin/view/IElementsFactory';
-import IScaleItem from '../../../../src/plugin/view/ScaleItem/IScaleItem';
-import MockScaleItem from './MockScaleItem';
 import IScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/IScaleWrapper';
-import MockScaleWrapper from './MockScaleWrapper';
+import IScaleItem from '../../../../src/plugin/view/ScaleItem/IScaleItem';
 import ISliderRange from '../../../../src/plugin/view/SliderRange/ISliderRange';
-import MockRange from './MockRange';
 import ISliderLine from '../../../../src/plugin/view/SliderLine/ISliderLine';
-import MockLine from './MockLine';
 import ISliderHandle from '../../../../src/plugin/view/SliderHandle/ISliderHandle';
-import MockHandle from './MockHandle';
 import ISliderHandleWrapper from '../../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper';
-import MockHandleWrapper from './MockHandleWrapper';
 import ISliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper';
-import MockMainWrapper from './MockMainWrapper';
 import ICurrentValue from '../../../../src/plugin/view/CurrentValue/ICurrentValue';
-import MockCurrentValue from './MockCurrentValue';
 import ICurrentValueWrapper from '../../../../src/plugin/view/CurrentValueWrapper/ICurrentValueWrapper';
 import MockCurrentValueWrapper from './MockCurrentValueWrapper';
+import MockScaleItem from './MockScaleItem';
+import MockCurrentValue from './MockCurrentValue';
+import MockMainWrapper from './MockMainWrapper';
+import MockHandle from './MockHandle';
+import MockLine from './MockLine';
+import MockRange from './MockRange';
+import MockHandleWrapper from './MockHandleWrapper';
+import MockScaleWrapper from './MockScaleWrapper';
 
 class MockElementsFactory implements IElementsFactory {
   isHorizontal: boolean;

@@ -1,7 +1,7 @@
 import ISliderHandle from '../../../../src/plugin/view/SliderHandle/ISliderHandle';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
-import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
 
 class MockHandle implements ISliderHandle {
   setNewPosition(positionMock: number, directionMock: SliderDirection): void {}

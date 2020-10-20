@@ -1,6 +1,6 @@
+import SliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
-import SliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper';
 import MockLine from './MockLine';
 import MockHandleWrapper from './MockHandleWrapper';
 import MockWrapperEvent from './MockWrapperEvent';

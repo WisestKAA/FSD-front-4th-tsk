@@ -1,6 +1,6 @@
 import IScaleItem from '../../../../src/plugin/view/ScaleItem/IScaleItem';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
 
 class MockScaleItem implements IScaleItem {

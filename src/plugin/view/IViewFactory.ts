@@ -1,5 +1,5 @@
-import IView from './IView';
 import IPresenter from '../presenter/IPresenter';
+import IView from './IView';
 import IViewOptions from './IViewOptions';
 import IElementsFactory from './IElementsFactory';
 

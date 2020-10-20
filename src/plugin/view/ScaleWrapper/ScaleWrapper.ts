@@ -1,9 +1,9 @@
-import AbstractElement from '../AbstractElement/AbstractElement';
-import IScaleWrapper from './IScaleWrapper';
-import IScaleItem from '../ScaleItem/IScaleItem';
-import StyleClasses from '../StyleClasses';
 import LiteEvent from '../../LiteEvent/LiteEvent';
 import ILiteEvent from '../../LiteEvent/ILiteEvent';
+import IScaleItem from '../ScaleItem/IScaleItem';
+import AbstractElement from '../AbstractElement/AbstractElement';
+import StyleClasses from '../StyleClasses';
+import IScaleWrapper from './IScaleWrapper';
 
 class ScaleWrapper extends AbstractElement implements IScaleWrapper {
   public $elem: JQuery<HTMLElement>;

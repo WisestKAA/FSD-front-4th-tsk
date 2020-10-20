@@ -1,14 +1,14 @@
-import StyleClasses from './StyleClasses';
-import IViewOptions from './IViewOptions';
-import SliderDirection from './SliderDirection';
+import IPresenter from '../presenter/IPresenter';
 import ICurrentValueWrapper from './CurrentValueWrapper/ICurrentValueWrapper';
 import ISliderMainWrapper from './SliderMainWrapper/ISliderMainWrapper';
 import ISliderLine from './SliderLine/ISliderLine';
 import ISliderHandleWrapper from './SliderHandleWrapper/ISliderHandleWrapper';
-import IPresenter from '../presenter/IPresenter';
-import IElementsFactory from './IElementsFactory';
 import IScaleWrapper from './ScaleWrapper/IScaleWrapper';
 import IScaleItem from './ScaleItem/IScaleItem';
+import StyleClasses from './StyleClasses';
+import IViewOptions from './IViewOptions';
+import SliderDirection from './SliderDirection';
+import IElementsFactory from './IElementsFactory';
 import IView from './IView';
 
 class View implements IView {

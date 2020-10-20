@@ -1,5 +1,5 @@
-import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import SliderLine from '../../../../src/plugin/view/SliderLine/SliderLine';
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import MockRange from './MockRange';
 
 describe('Test SliderLine', () => {

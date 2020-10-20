@@ -1,5 +1,5 @@
-import ISliderSettings from './ISliderSettings';
 import ILiteEvent from '../LiteEvent/ILiteEvent';
+import ISliderSettings from './ISliderSettings';
 
 interface IModel{
   setCurrentValue(newVal: number[]): void;

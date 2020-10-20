@@ -1,5 +1,5 @@
-import SliderOptions from './SliderOptions';
 import ISliderSettings from '../ISliderSettings';
+import SliderOptions from './SliderOptions';
 import ISliderOptions from './ISliderOptions';
 import ISliderOptionsFactory from './ISliderOptionsFactory';
 

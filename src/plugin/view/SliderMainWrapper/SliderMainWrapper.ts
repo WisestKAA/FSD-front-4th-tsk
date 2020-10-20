@@ -1,12 +1,12 @@
 import AbstractElement from '../AbstractElement/AbstractElement';
-import ISliderMainWrapper from './ISliderMainWrapper';
-import StyleClasses from '../StyleClasses';
-import ISliderLine from '../SliderLine/ISliderLine';
 import ISliderHandleWrapper from '../SliderHandleWrapper/ISliderHandleWrapper';
 import LiteEvent from '../../LiteEvent/LiteEvent';
 import ILiteEvent from '../../LiteEvent/ILiteEvent';
 import ISetRangeOptions from '../SliderLine/ISetRangeOptions';
+import ISliderLine from '../SliderLine/ISliderLine';
 import SliderDirection from '../SliderDirection';
+import StyleClasses from '../StyleClasses';
+import ISliderMainWrapper from './ISliderMainWrapper';
 
 class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
   public $elem: JQuery<HTMLElement>;

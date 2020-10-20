@@ -1,8 +1,8 @@
 import IView from '../../../src/plugin/view/IView';
 import SliderDirection from '../../../src/plugin/view/SliderDirection';
+import IElementsFactory from '../../../src/plugin/view/IElementsFactory';
 import IViewOptions from '../../../src/plugin/view/IViewOptions';
 import IPresenter from '../../../src/plugin/presenter/IPresenter';
-import IElementsFactory from '../../../src/plugin/view/IElementsFactory';
 
 class MockView implements IView {
   currentValue: number[];

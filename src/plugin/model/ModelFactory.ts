@@ -1,7 +1,8 @@
-import IModel from './IModel';
-import Model from './Model';
 import ISliderOptionsFactory from './SliderOptions/ISliderOptionsFactory';
 import IModelFactory from './IModelFactory';
+import IModel from './IModel';
+import Model from './Model';
+
 
 class ModelFactory implements IModelFactory {
   protected sliderOptionsFactory: ISliderOptionsFactory;

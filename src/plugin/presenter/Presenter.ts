@@ -1,13 +1,14 @@
 import bind from 'bind-decorator';
+
 import SliderDirection from '../view/SliderDirection';
 import IView from '../view/IView';
-import IPresenter from './IPresenter';
-import ISliderSettings from '../model/ISliderSettings';
-import IModel from '../model/IModel';
-import IModelFactory from '../model/IModelFactory';
 import IViewFactory from '../view/IViewFactory';
 import IViewOptions from '../view/IViewOptions';
 import ElementsFactory from '../view/ElementsFactory';
+import ISliderSettings from '../model/ISliderSettings';
+import IModel from '../model/IModel';
+import IModelFactory from '../model/IModelFactory';
+import IPresenter from './IPresenter';
 
 class Presenter implements IPresenter {
   protected model: IModel;

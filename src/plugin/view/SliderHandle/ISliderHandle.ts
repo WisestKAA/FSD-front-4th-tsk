@@ -1,6 +1,7 @@
+import ILiteEvent from '../../LiteEvent/ILiteEvent';
 import IElement from '../AbstractElement/IElement';
 import SliderDirection from '../SliderDirection';
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
+
 
 interface ISliderHandle extends IElement{
   setNewPosition(position: number, direction: SliderDirection): void;

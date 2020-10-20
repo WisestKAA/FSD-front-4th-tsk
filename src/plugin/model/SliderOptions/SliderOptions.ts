@@ -1,5 +1,5 @@
-import ISliderOptions from './ISliderOptions';
 import ISliderSettings from '../ISliderSettings';
+import ISliderOptions from './ISliderOptions';
 
 class SliderOptions implements ISliderOptions {
   protected defaultOption: ISliderSettings = {

@@ -1,7 +1,7 @@
 import IScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/IScaleWrapper';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
+import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 
 class MockScaleWrapper implements IScaleWrapper {
   protected onScaleItemClicked: LiteEvent<number>;

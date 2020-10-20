@@ -1,8 +1,8 @@
-import AbstractElement from '../AbstractElement/AbstractElement';
-import IScaleItem from './IScaleItem';
-import StyleClasses from '../StyleClasses';
 import LiteEvent from '../../LiteEvent/LiteEvent';
 import ILiteEvent from '../../LiteEvent/ILiteEvent';
+import AbstractElement from '../AbstractElement/AbstractElement';
+import StyleClasses from '../StyleClasses';
+import IScaleItem from './IScaleItem';
 
 class ScaleItem extends AbstractElement implements IScaleItem {
   public $elem: JQuery<HTMLElement>;

@@ -1,9 +1,9 @@
-import ISliderOptions from './SliderOptions/ISliderOptions';
 import LiteEvent from '../LiteEvent/LiteEvent';
 import ILiteEvent from '../LiteEvent/ILiteEvent';
-import IModel from './IModel';
-import ISliderSettings from './ISliderSettings';
+import ISliderOptions from './SliderOptions/ISliderOptions';
 import ISliderOptionsFactory from './SliderOptions/ISliderOptionsFactory';
+import ISliderSettings from './ISliderSettings';
+import IModel from './IModel';
 
 class Model implements IModel {
   private sliderOptions: ISliderOptions;

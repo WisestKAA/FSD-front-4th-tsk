@@ -1,8 +1,8 @@
+import SliderOptionsFactory from './model/SliderOptions/SliderOptionsFactory';
+import ViewFactory from './view/ViewFactory';
 import Presenter from './presenter/Presenter';
 import ISliderSettings from './model/ISliderSettings';
 import ModelFactory from './model/ModelFactory';
-import SliderOptionsFactory from './model/SliderOptions/SliderOptionsFactory';
-import ViewFactory from './view/ViewFactory';
 import './styles.scss';
 
 declare global {

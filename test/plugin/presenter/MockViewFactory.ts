@@ -1,8 +1,8 @@
 import IViewFactory from '../../../src/plugin/view/IViewFactory';
-import IPresenter from '../../../src/plugin/presenter/IPresenter';
 import IViewOptions from '../../../src/plugin/view/IViewOptions';
 import IElementsFactory from '../../../src/plugin/view/IElementsFactory';
 import IView from '../../../src/plugin/view/IView';
+import IPresenter from '../../../src/plugin/presenter/IPresenter';
 import MockView from './MockView';
 
 class MockViewFactory implements IViewFactory {

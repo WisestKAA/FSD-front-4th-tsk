@@ -1,7 +1,7 @@
 import AbstractElement from '../../../../src/plugin/view/AbstractElement/AbstractElement';
 import ICurrentValueWrapper from '../../../../src/plugin/view/CurrentValueWrapper/ICurrentValueWrapper';
-import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import ISetCurrentValuePositionOptions from '../../../../src/plugin/view/CurrentValueWrapper/ISetCurrentValuePositionOptions';
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 
 class MockCurrentValueWrapper extends AbstractElement implements ICurrentValueWrapper {
   protected isHorizontal: boolean;

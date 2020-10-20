@@ -1,6 +1,6 @@
+import ILiteEvent from '../../LiteEvent/ILiteEvent';
 import IElement from '../AbstractElement/IElement';
 import SliderDirection from '../SliderDirection';
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
 
 interface ISliderHandleWrapper extends IElement{
   getMaxHandlePosition(): number;

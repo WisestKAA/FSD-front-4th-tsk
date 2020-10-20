@@ -1,9 +1,9 @@
 import AbstractElement from '../../../../src/plugin/view/AbstractElement/AbstractElement';
 import ISliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
+import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 
 class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {
   protected isHorizontal: boolean;

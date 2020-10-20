@@ -1,6 +1,6 @@
 import ISliderLine from '../../../../src/plugin/view/SliderLine/ISliderLine';
-import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import ISetRangeOptions from '../../../../src/plugin/view/SliderLine/ISetRangeOptions';
+import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 
 class MockLine implements ISliderLine {
   changeOrientation(

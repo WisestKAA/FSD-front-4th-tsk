@@ -1,6 +1,6 @@
 import AbstractElement from '../AbstractElement/AbstractElement';
-import StyleClasses from '../StyleClasses';
 import ICurrentValue from '../CurrentValue/ICurrentValue';
+import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
 import ISetCurrentValuePositionOptions from './ISetCurrentValuePositionOptions';
 
