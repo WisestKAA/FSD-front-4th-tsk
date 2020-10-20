@@ -7,7 +7,7 @@ abstract class AbstractElement {
 
   protected abstract init(): void ;
 
-  public changeOrientation (
+  public changeOrientation(
     isHorizontal: boolean,
     horizontalClass: StyleClasses,
     verticalClass: StyleClasses

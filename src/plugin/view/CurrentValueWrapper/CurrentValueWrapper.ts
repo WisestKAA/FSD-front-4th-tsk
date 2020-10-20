@@ -44,37 +44,37 @@ class CurrentValueWrapper extends AbstractElement {
 
   public setCurrentValuePosition(options: ISetCurrentValuePositionOptions): void {
     switch (options.direction) {
-      case SliderDirection.LEFT: {
-        const maxPosition = options.maxHandlePosition;
-        const handlePercent = 100 - maxPosition;
-        this.currentValueFrom.setPosition(
-          options.position,
-          handlePercent,
-          options.lineSize
-        );
-        break;
-      }
-      case SliderDirection.BOTTOM: {
-        this.currentValueFrom.setPosition(options.position);
-        break;
-      }
-      case SliderDirection.RIGHT: {
-        const maxPosition = options.maxHandlePosition;
-        const handlePercent = 100 - maxPosition;
-        this.currentValueTo.setPosition(
-          options.position,
-          handlePercent,
-          options.lineSize
-        );
-        break;
-      }
-      case SliderDirection.TOP: {
-        this.currentValueTo.setPosition(options.position);
-        break;
-      }
-      default: {
-        return;
-      }
+    case SliderDirection.LEFT: {
+      const maxPosition = options.maxHandlePosition;
+      const handlePercent = 100 - maxPosition;
+      this.currentValueFrom.setPosition(
+        options.position,
+        handlePercent,
+        options.lineSize
+      );
+      break;
+    }
+    case SliderDirection.BOTTOM: {
+      this.currentValueFrom.setPosition(options.position);
+      break;
+    }
+    case SliderDirection.RIGHT: {
+      const maxPosition = options.maxHandlePosition;
+      const handlePercent = 100 - maxPosition;
+      this.currentValueTo.setPosition(
+        options.position,
+        handlePercent,
+        options.lineSize
+      );
+      break;
+    }
+    case SliderDirection.TOP: {
+      this.currentValueTo.setPosition(options.position);
+      break;
+    }
+    default: {
+      return;
+    }
     }
 
     if (this.isRange) {
