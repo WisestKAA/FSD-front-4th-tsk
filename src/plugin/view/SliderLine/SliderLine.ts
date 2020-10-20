@@ -29,9 +29,7 @@ class SliderLine extends AbstractElement implements ISliderLine {
     this.$elem = this.isHorizontal
       ? $('<div>').addClass(StyleClasses.LINE)
       : $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINEV]);
-    if (this.isRangeLineEnabled) {
-      this.$elem.append(this.range.$elem);
-    }
+    this.isRangeLineEnabled && this.$elem.append(this.range.$elem);
   }
 
   public getLineSize(): number {
@@ -40,17 +38,15 @@ class SliderLine extends AbstractElement implements ISliderLine {
 
   public setRange(setRangeOptions: ISetRangeOptions): void{
     if (this.isRangeLineEnabled) {
-      if (setRangeOptions.isRange) {
-        this.range.changeRangeLineTwo(
+      setRangeOptions.isRange
+        ? this.range.changeRangeLineTwo(
           setRangeOptions.handleFromPosition,
           setRangeOptions.handleToPosition
-        );
-      } else {
-        this.range.changeRangeLineOne(
+        )
+        : this.range.changeRangeLineOne(
           setRangeOptions.handleFromPosition,
           setRangeOptions.maxHandlePosition
         );
-      }
     }
   }
 }

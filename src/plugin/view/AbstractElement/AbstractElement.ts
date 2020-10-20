@@ -14,11 +14,9 @@ abstract class AbstractElement {
   ): void{
     const elem = this.$elem.get(0);
     elem.classList.remove(horizontalClass, verticalClass);
-    if (isHorizontal) {
-      elem.classList.add(horizontalClass);
-    } else {
-      elem.classList.add(horizontalClass, verticalClass);
-    }
+    isHorizontal
+      ? elem.classList.add(horizontalClass)
+      : elem.classList.add(horizontalClass, verticalClass);
     this.isHorizontal = isHorizontal;
   }
 }

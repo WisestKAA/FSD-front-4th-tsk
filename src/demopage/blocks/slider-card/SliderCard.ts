@@ -44,21 +44,17 @@ class SliderCard {
     }
 
     protected handleSliderCurrentValueChanged(val: number[]): void{
-      if (this.formInputs.isRange.checked) {
-        (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]} ${val[1]}`;
-      } else {
-        (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = `${val[0]}`;
-      }
+      (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = this.formInputs.isRange.checked
+        ? `${val[0]} ${val[1]}`
+        : `${val[0]}`;
       this.options.currentVal = val;
     }
 
     @bind
     protected handleHorizontalChanged(): void{
-      if (this.formInputs.isHorizontal.checked) {
-        this.$slider.removeClass('slider-card__slider_vertical');
-      } else {
-        this.$slider.addClass('slider-card__slider_vertical');
-      }
+      this.formInputs.isHorizontal.checked
+        ? this.$slider.removeClass('slider-card__slider_vertical')
+        : this.$slider.addClass('slider-card__slider_vertical');
       this.optionsChanged({ isHorizontal: this.formInputs.isHorizontal.checked });
     }
 
@@ -70,9 +66,7 @@ class SliderCard {
         this.options.minVal.toString(),
         () => {
           const minVal = this.getNumInputValue(this.formInputs.minVal);
-          if (minVal !== this.options.minVal) {
-            this.optionsChanged({ minVal });
-          }
+          minVal !== this.options.minVal && this.optionsChanged({ minVal });
         }
       );
     }
@@ -85,9 +79,7 @@ class SliderCard {
         this.options.maxVal.toString(),
         () => {
           const maxVal = this.getNumInputValue(this.formInputs.maxVal);
-          if (maxVal !== this.options.maxVal) {
-            this.optionsChanged({ maxVal });
-          }
+          maxVal !== this.options.maxVal && this.optionsChanged({ maxVal });
         }
       );
     }
@@ -115,9 +107,7 @@ class SliderCard {
         this.options.step.toString(),
         () => {
           const step = this.getNumInputValue(this.formInputs.step);
-          if (step !== this.options.step) {
-            this.optionsChanged({ step });
-          }
+          step !== this.options.step && this.optionsChanged({ step });
         }
       );
     }
@@ -130,9 +120,8 @@ class SliderCard {
         this.options.numberOfScaleMarks.toString(),
         () => {
           const numberOfScaleMarks = this.getNumInputValue(this.formInputs.numberOfScaleMarks);
-          if (numberOfScaleMarks !== this.options.numberOfScaleMarks) {
-            this.optionsChanged({ numberOfScaleMarks });
-          }
+          numberOfScaleMarks !== this.options.numberOfScaleMarks
+            && this.optionsChanged({ numberOfScaleMarks });
         }
       );
     }

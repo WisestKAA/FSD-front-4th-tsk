@@ -40,11 +40,9 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       StyleClasses.HANDLEWRAPPER,
       StyleClasses.HANDLEWRAPPERV
     );
-    if (this.isRange) {
-      this.$elem.append([this.handleFrom.$elem, this.handleTo.$elem]);
-    } else {
-      this.$elem.append(this.handleFrom.$elem);
-    }
+    this.isRange
+      ? this.$elem.append([this.handleFrom.$elem, this.handleTo.$elem])
+      : this.$elem.append(this.handleFrom.$elem);
 
     this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
   }
@@ -54,22 +52,20 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       this.sliderHandlePositionChanged(direction);
       this.onHandlePositionChanged.trigger(direction);
     });
-    if (this.isRange) {
-      this.handleTo.positionChangedEvent.on((direction) => {
+    this.isRange
+      && this.handleTo.positionChangedEvent.on((direction) => {
         this.sliderHandlePositionChanged(direction);
         this.onHandlePositionChanged.trigger(direction);
       });
-    }
   }
 
   protected sliderHandlePositionChanged(direction: SliderDirection): void{
-    if (this.isRange) {
-      this.checkHandleIntersection(
+    this.isRange
+      && this.checkHandleIntersection(
         this.handleFrom.getPosition(),
         this.handleTo.getPosition(),
         direction
       );
-    }
   }
 
   protected checkHandleIntersection(
@@ -79,11 +75,9 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
   ): void {
     const maxPos = this.getMaxHandlePosition();
     if (positionFrom > maxPos - positionTo) {
-      if (SliderDirection.isFrom(direction)) {
-        this.setHandlePosition(maxPos - positionTo, direction);
-      } else {
-        this.setHandlePosition(maxPos - positionFrom, direction);
-      }
+      SliderDirection.isFrom(direction)
+        ? this.setHandlePosition(maxPos - positionTo, direction)
+        : this.setHandlePosition(maxPos - positionFrom, direction);
     }
   }
 
@@ -98,11 +92,9 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
   }
 
   public setHandlePosition(position: number, direction: SliderDirection): void {
-    if (SliderDirection.isFrom(direction)) {
-      this.handleFrom.setCurrentPosition(position, direction);
-    } else {
-      this.handleTo.setCurrentPosition(position, direction);
-    }
+    SliderDirection.isFrom(direction)
+      ? this.handleFrom.setCurrentPosition(position, direction)
+      : this.handleTo.setCurrentPosition(position, direction);
     this.onHandlePositionChanged.trigger(direction);
   }
 

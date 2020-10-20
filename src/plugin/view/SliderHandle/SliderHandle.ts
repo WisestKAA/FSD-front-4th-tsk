@@ -211,11 +211,9 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
 
   public setCurrentPosition(position: number, direction: SliderDirection): void{
     this.position = position;
-    if (position >= this.getSliderHandleMaxPosition()) {
-      this.$elem.attr('style', `${direction}: ${position}%; z-index: 100;`);
-    } else {
-      this.$elem.attr('style', `${direction}: ${position}%`);
-    }
+    position >= this.getSliderHandleMaxPosition()
+      ? this.$elem.attr('style', `${direction}: ${position}%; z-index: 100;`)
+      : this.$elem.attr('style', `${direction}: ${position}%`);
   }
 
   public getHandleSize(): number {

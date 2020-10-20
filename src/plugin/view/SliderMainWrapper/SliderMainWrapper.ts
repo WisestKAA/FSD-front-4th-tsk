@@ -53,19 +53,17 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
   protected setRange(): void{
     let options: ISetRangeOptions;
     const isRange = this.sliderHandleWrapper.getIsRange();
-    if (isRange) {
-      options = {
+    isRange
+      ? options = {
         isRange,
         handleFromPosition: this.getHandleFromPosition(),
         handleToPosition: this.getHandleToPosition()
-      };
-    } else {
-      options = {
+      }
+      : options = {
         isRange,
         handleFromPosition: this.getHandleFromPosition(),
         maxHandlePosition: this.getMaxHandlePosition()
       };
-    }
     this.sliderLine.setRange(options);
   }
 

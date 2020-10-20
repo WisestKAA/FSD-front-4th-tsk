@@ -87,10 +87,7 @@ class View implements IView {
     } else {
       handleWrapper = this.elementsFactory.buildHandleWrapper(handleFrom);
     }
-    return this.elementsFactory.buildMainWrapper(
-      line,
-      handleWrapper
-    );
+    return this.elementsFactory.buildMainWrapper(line, handleWrapper);
   }
 
   protected buildCurrentValueWrapper(isRange: boolean): ICurrentValueWrapper {
@@ -105,17 +102,14 @@ class View implements IView {
     } else {
       currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(currentValueFrom);
     }
-    if (!this.options.isVisibleCurrentValue) {
-      currentValueWrapper.$elem.attr('style', 'display: none');
-    }
+    !this.options.isVisibleCurrentValue && currentValueWrapper.$elem.attr('style', 'display: none');
+
     return currentValueWrapper;
   }
 
   protected buildScaleWrapper(): IScaleWrapper {
     const scaleItems: IScaleItem[] = [];
-    if (!this.options.isHorizontal) {
-      this.scaleValues.reverse();
-    }
+    !this.options.isHorizontal && this.scaleValues.reverse();
     this.scaleValues.forEach((value) => {
       scaleItems.push(this.elementsFactory.buildScaleItem(value));
     });

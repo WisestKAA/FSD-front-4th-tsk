@@ -37,9 +37,7 @@ class CurrentValueWrapper extends AbstractElement {
     );
 
     this.$elem.append(this.currentValueFrom.$elem);
-    if (this.isRange) {
-      this.$elem.append(this.currentValueTo.$elem);
-    }
+    this.isRange && this.$elem.append(this.currentValueTo.$elem);
   }
 
   public setCurrentValuePosition(options: ISetCurrentValuePositionOptions): void {
@@ -115,17 +113,13 @@ class CurrentValueWrapper extends AbstractElement {
 
   public setCurrentValue(currentValue: number[]): void{
     this.currentValueFrom.setCurrentValue(currentValue[0]);
-    if (this.isRange) {
-      this.currentValueTo.setCurrentValue(currentValue[1]);
-    }
+    this.isRange && this.currentValueTo.setCurrentValue(currentValue[1]);
   }
 
   public getCurrentValue(): number[] {
     const val: number[] = [];
     val.push(this.currentValueFrom.getCurrentValue());
-    if (this.isRange) {
-      val.push(this.currentValueTo.getCurrentValue());
-    }
+    this.isRange && val.push(this.currentValueTo.getCurrentValue());
     return val;
   }
 }

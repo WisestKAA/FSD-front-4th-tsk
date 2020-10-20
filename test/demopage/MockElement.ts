@@ -91,33 +91,23 @@ class MockElement {
     this.$horizontal = $('<input>').addClass('checkbox-button__input')
       .attr('type', 'checkbox')
       .attr('name', 'horizontal');
-    if (isHorizontal) {
-      this.$horizontal.attr('checked', 'checked');
-    }
+    isHorizontal && this.$horizontal.attr('checked', 'checked');
     this.$range = $('<input>').addClass('checkbox-button__input')
       .attr('type', 'checkbox')
       .attr('name', 'range');
-    if (isRange) {
-      this.$range.attr('checked', 'checked');
-    }
+    isRange && this.$range.attr('checked', 'checked');
     this.$visibleCurrentValue = $('<input>').addClass('checkbox-button__input')
       .attr('type', 'checkbox')
       .attr('name', 'visibleCurrentValue');
-    if (isVisibleCurrentValue) {
-      this.$visibleCurrentValue.attr('checked', 'checked');
-    }
+    isVisibleCurrentValue && this.$visibleCurrentValue.attr('checked', 'checked');
     this.$rangeLine = $('<input>').addClass('checkbox-button__input')
       .attr('type', 'checkbox')
       .attr('name', 'rangeLine');
-    if (isRangeLineEnabled) {
-      this.$rangeLine.attr('checked', 'checked');
-    }
+    isRangeLineEnabled && this.$rangeLine.attr('checked', 'checked');
     this.$scale = $('<input>').addClass('checkbox-button__input')
       .attr('type', 'checkbox')
       .attr('name', 'scale');
-    if (isScaleEnabled) {
-      this.$scale.attr('checked', 'checked');
-    }
+    isScaleEnabled && this.$scale.attr('checked', 'checked');
 
     this.$elem = $('<div>').addClass('slider-card')
       .append(
