@@ -1,4 +1,4 @@
-interface IFormIntputs{
+interface IFormInputs{
   isHorizontal: HTMLInputElement,
   minVal: JQuery<HTMLElement>,
   maxVal: JQuery<HTMLElement>,
@@ -11,4 +11,4 @@ interface IFormIntputs{
   numberOfScaleMarks: JQuery<HTMLElement>
 }
 
-export default IFormIntputs;
+export default IFormInputs;

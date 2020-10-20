@@ -1,13 +1,13 @@
 import bind from 'bind-decorator';
 import ISliderSettings from './ISliderSettings';
-import IFormIntputs from './IFormIntputs';
+import IFormInputs from './IFormInputs';
 
 class SliderCard {
     protected $elem: JQuery<HTMLElement>;
 
     protected $slider: JQuery<Object>;
 
-    protected formInputs: IFormIntputs;
+    protected formInputs: IFormInputs;
 
     protected options: ISliderSettings;
 
@@ -241,12 +241,5 @@ class SliderCard {
       }
     }
 }
-
-$(document).ready(() => {
-  const $sliderCards = $(document).find('.js-slider-card');
-  $sliderCards.each((index, element) => {
-    new SliderCard(element);
-  });
-});
 
 export default SliderCard;

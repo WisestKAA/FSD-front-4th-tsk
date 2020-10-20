@@ -1,7 +1,7 @@
-import SliderCard from '../../src/demopage/blocks/slider-card/slider-card';
+import SliderCard from '../../src/demopage/blocks/slider-card/SliderCard';
 import MockPresenter from './MockPresenter';
 import ISliderSettings from '../../src/plugin/model/ISliderSettings';
-import IFormIntputs from '../../src/demopage/blocks/slider-card/IFormIntputs';
+import IFormInputs from '../../src/demopage/blocks/slider-card/IFormInputs';
 
 class MockSliderCard extends SliderCard {
   presenter: MockPresenter;
@@ -16,7 +16,7 @@ class MockSliderCard extends SliderCard {
     return this.options;
   }
 
-  getFormInputs(): IFormIntputs {
+  getFormInputs(): IFormInputs {
     return this.formInputs;
   }
 
