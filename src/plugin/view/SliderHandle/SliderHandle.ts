@@ -1,3 +1,4 @@
+import bind from 'bind-decorator';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
 import LiteEvent from '../../LiteEvent/LiteEvent';
@@ -55,37 +56,26 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
   }
 
   protected addEvents(): void {
-    const that = this;
-
-    this.$elem.on('mousedown', function (event) {
-      that.onMouseDown(this, event);
-    });
-
+    this.$elem.on('mousedown', this.handleMouseDown);
     this.$elem.on('dragstart', false);
   }
 
-  protected onMouseDown(elem: HTMLElement, event: JQuery.MouseDownEvent): void {
-    const that = this;
+  protected handleMouseDown(event: JQuery.MouseDownEvent): void {
+    const elem = this.$elem.get(0);
     event.preventDefault();
     this.shiftX = event.clientX - elem.getBoundingClientRect().left;
     this.shiftXR = event.clientX - elem.getBoundingClientRect().right;
     this.shiftY = event.clientY - elem.getBoundingClientRect().top;
     this.shiftYT = event.clientY - elem.getBoundingClientRect().bottom;
 
-    $(document).on('mousemove', (event) => {
-      if (that.isHorizontal) {
-        that.onMouseMoveX(event);
-      } else {
-        that.onMouseMoveY(event);
-      }
-    });
+    const handleMouseMove = this.isHorizontal ? this.handleMouseMoveX : this.handleMouseMoveY;
+    $(document).on('mousemove', handleMouseMove);
 
-    $(document).on('mouseup', () => {
-      that.onMouseUp();
-    });
+    $(document).on('mouseup', this.handleMouseUp);
   }
 
-  protected onMouseMoveX(event: JQuery.MouseMoveEvent): void {
+  @bind
+  protected handleMouseMoveX(event: JQuery.MouseMoveEvent): void {
     const $lineHTMLElement = this.line.$elem;
     const offset = $lineHTMLElement.offset().left;
     const lineWidth = $lineHTMLElement.outerWidth();
@@ -99,7 +89,8 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
   }
 
-  protected onMouseMoveY(event: JQuery.MouseMoveEvent): void {
+  @bind
+  protected handleMouseMoveY(event: JQuery.MouseMoveEvent): void {
     const $lineHTMLElement = this.line.$elem;
     const offset = $lineHTMLElement.offset().top;
     const lineHeight = $lineHTMLElement.outerHeight();
@@ -113,7 +104,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
   }
 
-  protected onMouseUp(): void{
+  protected handleMouseUp(): void{
     $(document).off('mousemove');
     $(document).off('mouseup');
   }

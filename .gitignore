@@ -3,3 +3,4 @@ dist
 coverage
 plugindist
 .vscode
+debug.log
