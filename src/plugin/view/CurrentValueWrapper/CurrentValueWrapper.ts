@@ -84,31 +84,80 @@ class CurrentValueWrapper extends AbstractElement {
     }
   }
 
-  protected checkCurrentValueIntersection(
+  private checkCurrentValueIntersection(
     lineSize: number,
     handleFromPosition: number,
     handleToPosition: number
   ): void{
+    const precision = Math.pow(10, 10);
     const currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
     const currentValueToSize = this.currentValueTo.getCurrentValueSize();
-    const maxSize = lineSize - currentValueFromSize - currentValueToSize;
-    let maxSizePercent = (maxSize * 100) / lineSize;
+
+    const sumPosition = this.getSumPosition(precision);
+    const maxSizePercent = this.getMaxSizePercent({
+      currentValueFromSize,
+      currentValueToSize,
+      lineSize,
+      precision
+    });
+
+    sumPosition >= maxSizePercent && this.fixIntersection({
+      handleFromPosition,
+      handleToPosition,
+      currentValueFromSize,
+      currentValueToSize,
+      lineSize
+    });
+  }
+
+  private getSumPosition(precision: number): number {
     let sumPosition = this.currentValueFrom.getCurrentValuePosition()
       + this.currentValueTo.getCurrentValuePosition();
-    const precision = Math.pow(10, 10);
-    maxSizePercent = Math.round(maxSizePercent * precision) / precision;
     sumPosition = Math.round(sumPosition * precision) / precision;
-    if (sumPosition >= maxSizePercent) {
-      const shiftMiddlePosition = (100 - handleFromPosition - handleToPosition) / 2;
-      const currentValueFromPercent = (currentValueFromSize * 100) / lineSize;
-      const currentValueToPercent = (currentValueToSize * 100) / lineSize;
-      const currentPositionValueFrom = handleFromPosition
-        + shiftMiddlePosition - currentValueFromPercent;
-      const currentPositionValueTo = handleToPosition
-        + shiftMiddlePosition - currentValueToPercent;
-      this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
-      this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
-    }
+    return sumPosition;
+  }
+
+  private getMaxSizePercent(data : {
+    currentValueFromSize: number,
+    currentValueToSize: number,
+    lineSize: number,
+    precision: number
+  }): number {
+    const {
+      currentValueFromSize,
+      currentValueToSize,
+      lineSize,
+      precision
+    } = data;
+    const maxSize = lineSize - currentValueFromSize - currentValueToSize;
+    let maxSizePercent = (maxSize * 100) / lineSize;
+    maxSizePercent = Math.round(maxSizePercent * precision) / precision;
+    return maxSizePercent;
+  }
+
+  private fixIntersection(data: {
+    handleFromPosition: number,
+    handleToPosition: number,
+    currentValueFromSize: number,
+    currentValueToSize: number,
+    lineSize: number
+  }): void {
+    const {
+      handleFromPosition,
+      handleToPosition,
+      currentValueFromSize,
+      currentValueToSize,
+      lineSize
+    } = data;
+    const shiftMiddlePosition = (100 - handleFromPosition - handleToPosition) / 2;
+    const currentValueFromPercent = (currentValueFromSize * 100) / lineSize;
+    const currentValueToPercent = (currentValueToSize * 100) / lineSize;
+    const currentPositionValueFrom = handleFromPosition
+      + shiftMiddlePosition - currentValueFromPercent;
+    const currentPositionValueTo = handleToPosition
+      + shiftMiddlePosition - currentValueToPercent;
+    this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
+    this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
   }
 
   public setCurrentValue(currentValue: number[]): void{
