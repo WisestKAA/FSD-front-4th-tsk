@@ -5,23 +5,17 @@ import ICurrentValue from './ICurrentValue';
 class CurrentValue implements ICurrentValue {
   public $elem: JQuery<HTMLElement>;
 
-  protected $text: JQuery<HTMLElement>;
+  private $text: JQuery<HTMLElement>;
 
-  protected $arrow: JQuery<HTMLElement>;
+  private $arrow: JQuery<HTMLElement>;
 
-  protected val: number;
+  private val: number;
 
-  protected isFrom: boolean;
+  private isFrom: boolean;
 
-  protected isHorizontal: boolean;
+  private isHorizontal: boolean;
 
-  protected position: number;
-
-  protected outerWidth: number;
-
-  protected outerHeight: number;
-
-  protected resizeSensor: any;
+  private position: number;
 
   constructor(isFrom: boolean, isHorizontal: boolean) {
     this.val = 0;
@@ -30,7 +24,7 @@ class CurrentValue implements ICurrentValue {
     this.init(isHorizontal);
   }
 
-  protected init(isHorizontal: boolean): void {
+  private init(isHorizontal: boolean): void {
     this.$text = $('<div>').addClass(StyleClasses.CURRENTVALTEXT);
     this.$text.html(`${this.val}`);
 
@@ -71,7 +65,7 @@ class CurrentValue implements ICurrentValue {
     this.$elem.attr('style', `${direction}: ${correctPosition}%;`);
   }
 
-  protected getCorrectPosition(
+  private getCorrectPosition(
     position: number,
     handlePercent: number,
     lineWidth: number

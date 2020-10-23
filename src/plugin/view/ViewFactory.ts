@@ -6,7 +6,7 @@ import IElementsFactory from './IElementsFactory';
 import IViewFactory from './IViewFactory';
 
 class ViewFactory implements IViewFactory {
-  protected elem: HTMLElement;
+  private elem: HTMLElement;
 
   constructor(elem: HTMLElement) {
     this.elem = elem;

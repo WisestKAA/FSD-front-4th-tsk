@@ -12,7 +12,7 @@ import IElementsFactory from './IElementsFactory';
 import IView from './IView';
 
 class View implements IView {
-  protected presenter: IPresenter;
+  private presenter: IPresenter;
 
   public $slider: JQuery<HTMLElement>;
 
@@ -22,13 +22,13 @@ class View implements IView {
 
   protected options: IViewOptions;
 
-  protected elem: HTMLElement;
+  private elem: HTMLElement;
 
-  protected elementsFactory: IElementsFactory;
+  private elementsFactory: IElementsFactory;
 
   protected scaleWrapper: IScaleWrapper;
 
-  protected scaleValues?: number[] = null;
+  private scaleValues?: number[] = null;
 
   constructor(viewOptions: {
       elem: HTMLElement,
@@ -70,7 +70,7 @@ class View implements IView {
     this.$slider = $(this.elem).append($mainDiv);
   }
 
-  protected buildMainWrapper(isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper {
+  private buildMainWrapper(isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper {
     let line: ISliderLine;
     if (isRangeLineEnabled) {
       const range = this.elementsFactory.buildRange();
@@ -90,7 +90,7 @@ class View implements IView {
     return this.elementsFactory.buildMainWrapper(line, handleWrapper);
   }
 
-  protected buildCurrentValueWrapper(isRange: boolean): ICurrentValueWrapper {
+  private buildCurrentValueWrapper(isRange: boolean): ICurrentValueWrapper {
     const currentValueFrom = this.elementsFactory.buildCurrentValue(true);
     let currentValueWrapper: ICurrentValueWrapper;
     if (isRange) {
@@ -107,7 +107,7 @@ class View implements IView {
     return currentValueWrapper;
   }
 
-  protected buildScaleWrapper(): IScaleWrapper {
+  private buildScaleWrapper(): IScaleWrapper {
     const scaleItems: IScaleItem[] = [];
     !this.options.isHorizontal && this.scaleValues.reverse();
     this.scaleValues.forEach((value) => {
@@ -128,7 +128,7 @@ class View implements IView {
     }
   }
 
-  protected setCurrentValuePosition(direction: SliderDirection): void{
+  private setCurrentValuePosition(direction: SliderDirection): void{
     const position = SliderDirection.isFrom(direction)
       ? this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
     this.currentValueWrapper.setCurrentValuePosition({

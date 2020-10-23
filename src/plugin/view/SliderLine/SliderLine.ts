@@ -9,9 +9,9 @@ class SliderLine extends AbstractElement implements ISliderLine {
 
   protected isHorizontal: boolean;
 
-  protected isRangeLineEnabled: boolean;
+  private isRangeLineEnabled: boolean;
 
-  protected range: ISliderRange;
+  private range: ISliderRange;
 
   constructor(isHorizontal: boolean, range?: ISliderRange) {
     super();

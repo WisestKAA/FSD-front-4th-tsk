@@ -19,9 +19,9 @@ import ScaleWrapper from './ScaleWrapper/ScaleWrapper';
 import IElementsFactory from './IElementsFactory';
 
 class ElementsFactory implements IElementsFactory {
-  protected isHorizontal: boolean;
+  private isHorizontal: boolean;
 
-  protected isRange: boolean;
+  private isRange: boolean;
 
   constructor(isHorizontal: boolean, isRange: boolean) {
     this.setNewOptions(isHorizontal, isRange);

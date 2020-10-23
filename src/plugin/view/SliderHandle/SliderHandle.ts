@@ -12,33 +12,30 @@ import ISliderHandle from './ISliderHandle';
 class SliderHandle extends AbstractElement implements ISliderHandle {
   public $elem: JQuery<HTMLElement>;
 
-  protected shiftX: number;
+  private shiftX: number;
 
-  protected shiftXR: number;
+  private shiftXR: number;
 
-  protected shiftY: number;
+  private shiftY: number;
 
-  protected shiftYT: number;
+  private shiftYT: number;
 
-  protected position: number;
+  private position: number;
 
-  protected line: ISliderLine;
+  private line: ISliderLine;
 
-  protected onPositionChanged: LiteEvent<SliderDirection>;
+  private onPositionChanged: LiteEvent<SliderDirection>;
 
   protected isHorizontal: boolean;
 
-  protected maxPosition: number;
+  private maxPosition: number;
 
-  protected isRange: boolean;
-
-  protected isFrom: boolean;
+  private isFrom: boolean;
 
   constructor(sliderHandleOptions: ISliderHandleOptions) {
     super();
     this.line = sliderHandleOptions.sliderLine;
     this.isHorizontal = sliderHandleOptions.isHorizontal;
-    this.isRange = sliderHandleOptions.isRange;
     this.isFrom = sliderHandleOptions.isFrom;
     this.init();
     this.addEvents();
@@ -56,13 +53,13 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     this.onPositionChanged = new LiteEvent<SliderDirection>();
   }
 
-  protected addEvents(): void {
+  private addEvents(): void {
     this.$elem.on('mousedown', this.handleMouseDown);
     this.$elem.on('dragstart', false);
   }
 
   @bind
-  protected handleMouseDown(event: JQuery.MouseDownEvent): void {
+  private handleMouseDown(event: JQuery.MouseDownEvent): void {
     const elem = this.$elem.get(0);
     event.preventDefault();
     this.shiftX = event.clientX - elem.getBoundingClientRect().left;
@@ -77,7 +74,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
   }
 
   @bind
-  protected handleMouseMoveX(event: JQuery.MouseMoveEvent): void {
+  private handleMouseMoveX(event: JQuery.MouseMoveEvent): void {
     const $lineHTMLElement = this.line.$elem;
     const offset = $lineHTMLElement.offset().left;
     const lineWidth = $lineHTMLElement.outerWidth();
@@ -92,7 +89,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
   }
 
   @bind
-  protected handleMouseMoveY(event: JQuery.MouseMoveEvent): void {
+  private handleMouseMoveY(event: JQuery.MouseMoveEvent): void {
     const $lineHTMLElement = this.line.$elem;
     const offset = $lineHTMLElement.offset().top;
     const lineHeight = $lineHTMLElement.outerHeight();
@@ -106,12 +103,12 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
   }
 
-  protected handleMouseUp(): void{
+  private handleMouseUp(): void{
     $(document).off('mousemove');
     $(document).off('mouseup');
   }
 
-  protected getNewLeft(
+  private getNewLeft(
     pageX: number,
     offsetLeft: number,
     lineWidth: number,
@@ -122,7 +119,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     return newLeftPosition;
   }
 
-  protected getNewRight(
+  private getNewRight(
     pageX: number,
     offsetLeft: number,
     lineWidth: number,
@@ -133,7 +130,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     return 100 - newRightPosition;
   }
 
-  protected getNewBot(
+  private getNewBot(
     pageY: number,
     offsetTop: number,
     lineHeight: number,
@@ -144,7 +141,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     return newBotPosition;
   }
 
-  protected getNewTop(
+  private getNewTop(
     pageY: number,
     offsetTop: number,
     lineHeight: number,
@@ -155,7 +152,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     return 100 - newBTopPosition;
   }
 
-  protected getCorrectPositionFrom(
+  private getCorrectPositionFrom(
     newCoordinate: number,
     lineSize: number,
     handleSize: number
@@ -172,7 +169,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     return correctPosition;
   }
 
-  protected getCorrectPositionTo(
+  private getCorrectPositionTo(
     newCoordinate: number,
     lineSize: number, handleSize: number
   ): number {

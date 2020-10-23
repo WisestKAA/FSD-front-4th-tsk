@@ -11,13 +11,13 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
 
   protected isHorizontal: boolean;
 
-  protected handleFrom: ISliderHandle;
+  private handleFrom: ISliderHandle;
 
-  protected handleTo: ISliderHandle;
+  private handleTo: ISliderHandle;
 
-  protected isRange: boolean;
+  private isRange: boolean;
 
-  protected onHandlePositionChanged: LiteEvent<SliderDirection>;
+  private onHandlePositionChanged: LiteEvent<SliderDirection>;
 
   constructor(isHorizontal: boolean, handleFrom: ISliderHandle, handleTo?: ISliderHandle) {
     super();
@@ -47,7 +47,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
   }
 
-  protected addEvents(): void{
+  private addEvents(): void{
     this.handleFrom.positionChangedEvent.on((direction) => {
       this.sliderHandlePositionChanged(direction);
       this.onHandlePositionChanged.trigger(direction);
@@ -59,7 +59,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       });
   }
 
-  protected sliderHandlePositionChanged(direction: SliderDirection): void{
+  private sliderHandlePositionChanged(direction: SliderDirection): void{
     this.isRange
       && this.checkHandleIntersection(
         this.handleFrom.getPosition(),
@@ -68,7 +68,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       );
   }
 
-  protected checkHandleIntersection(
+  private checkHandleIntersection(
     positionFrom: number,
     positionTo: number,
     direction: SliderDirection

@@ -10,9 +10,9 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
 
   protected isHorizontal: boolean;
 
-  protected scaleItems: IScaleItem[];
+  private scaleItems: IScaleItem[];
 
-  protected onScaleItemClicked: LiteEvent<number>;
+  private onScaleItemClicked: LiteEvent<number>;
 
   constructor(isHorizontal: boolean, scaleItems: IScaleItem[]) {
     super();
@@ -35,7 +35,7 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
     });
   }
 
-  protected addEvents(): void{
+  private addEvents(): void{
     this.scaleItems.forEach((value) => {
       value.scaleItemClickedEvent.on((val) => {
         this.onScaleItemClicked.trigger(val);

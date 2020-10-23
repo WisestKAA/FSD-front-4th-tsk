@@ -13,11 +13,11 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
 
   protected isHorizontal: boolean;
 
-  protected sliderLine: ISliderLine;
+  private sliderLine: ISliderLine;
 
-  protected sliderHandleWrapper: ISliderHandleWrapper;
+  private sliderHandleWrapper: ISliderHandleWrapper;
 
-  protected onHandlePositionChanged: LiteEvent<SliderDirection>;
+  private onHandlePositionChanged: LiteEvent<SliderDirection>;
 
   constructor(
     isHorizontal: boolean,
@@ -43,14 +43,14 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
   }
 
-  protected addEvents(): void{
+  private addEvents(): void{
     this.sliderHandleWrapper.handlePositionChangedEvent.on((direction) => {
       this.setRange();
       this.onHandlePositionChanged.trigger(direction);
     });
   }
 
-  protected setRange(): void{
+  private setRange(): void{
     let options: ISetRangeOptions;
     const isRange = this.sliderHandleWrapper.getIsRange();
     isRange

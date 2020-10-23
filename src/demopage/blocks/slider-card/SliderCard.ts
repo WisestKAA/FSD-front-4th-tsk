@@ -17,7 +17,7 @@ class SliderCard {
       this.addEvents();
     }
 
-    protected init(): void{
+    private init(): void{
       const $form = this.$elem.find('.js-slider-card__form');
       this.initFormInputs($form);
       this.options = this.getSliderSettings();
@@ -25,7 +25,7 @@ class SliderCard {
       this.initSlider($sliderDiv.get(0), this.options);
     }
 
-    protected addEvents(): void{
+    private addEvents(): void{
       this.$slider.data('presenter').onCurrentValueChanged((val: number[]) => {
         this.handleSliderCurrentValueChanged(val);
       });
@@ -43,7 +43,7 @@ class SliderCard {
       this.formInputs.numberOfScaleMarks.on('focusout', this.handleNumOfScaleMarksFocusOut);
     }
 
-    protected handleSliderCurrentValueChanged(val: number[]): void{
+    private handleSliderCurrentValueChanged(val: number[]): void{
       (<HTMLInputElement> this.formInputs.currentVal.get(0)).value = this.formInputs.isRange.checked
         ? `${val[0]} ${val[1]}`
         : `${val[0]}`;
@@ -51,7 +51,7 @@ class SliderCard {
     }
 
     @bind
-    protected handleHorizontalChanged(): void{
+    private handleHorizontalChanged(): void{
       this.formInputs.isHorizontal.checked
         ? this.$slider.removeClass('slider-card__slider_vertical')
         : this.$slider.addClass('slider-card__slider_vertical');
@@ -59,7 +59,7 @@ class SliderCard {
     }
 
     @bind
-    protected handleMinValFocusOut(): void{
+    private handleMinValFocusOut(): void{
       this.inputValidation(
         'Invalid input! The minimum value must be a number',
         this.formInputs.minVal,
@@ -72,7 +72,7 @@ class SliderCard {
     }
 
     @bind
-    protected handleMaxValFocusOut(): void{
+    private handleMaxValFocusOut(): void{
       this.inputValidation(
         'Invalid input! The maximum value must be a number',
         this.formInputs.maxVal,
@@ -85,7 +85,7 @@ class SliderCard {
     }
 
     @bind
-    protected handleCurrentValFocusOut(): void{
+    private handleCurrentValFocusOut(): void{
       this.inputValidation(
         'The current value must be one or two digits separated by a space',
         this.formInputs.currentVal,
@@ -100,7 +100,7 @@ class SliderCard {
     }
 
     @bind
-    protected handleStepFocusOut(): void{
+    private handleStepFocusOut(): void{
       this.inputValidation(
         'Invalid input values. The step must be a number and less than maxVal - minVal',
         this.formInputs.step,
@@ -113,7 +113,7 @@ class SliderCard {
     }
 
     @bind
-    protected handleNumOfScaleMarksFocusOut(): void{
+    private handleNumOfScaleMarksFocusOut(): void{
       this.inputValidation(
         'Invalid input values. numberOfScaleMarks must be a number and greater than or equal to two and be an integer',
         this.formInputs.numberOfScaleMarks,
@@ -127,26 +127,26 @@ class SliderCard {
     }
 
     @bind
-    protected handleRangeChanged(): void{
+    private handleRangeChanged(): void{
       this.optionsChanged({ isRange: this.formInputs.isRange.checked });
     }
 
     @bind
-    protected handleRangeLineEnabledChanged(): void{
+    private handleRangeLineEnabledChanged(): void{
       this.optionsChanged({ isRangeLineEnabled: this.formInputs.isRangeLineEnabled.checked });
     }
 
     @bind
-    protected handleVisibleCurrentValueChanged(): void{
+    private handleVisibleCurrentValueChanged(): void{
       this.optionsChanged({ isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked });
     }
 
     @bind
-    protected handleScaleEnabledChanged(): void{
+    private handleScaleEnabledChanged(): void{
       this.optionsChanged({ isScaleEnabled: this.formInputs.isScaleEnabled.checked });
     }
 
-    protected getSliderSettings(): ISliderSettings {
+    private getSliderSettings(): ISliderSettings {
       const curVal = this.formInputs.currentVal.val() as String;
       const isRange = this.formInputs.isRange.checked;
       const currentValue = this.parseCurrentValue(curVal, isRange);
@@ -164,7 +164,7 @@ class SliderCard {
       };
     }
 
-    protected parseCurrentValue(curVal: String, isRange: boolean): number[] {
+    private parseCurrentValue(curVal: String, isRange: boolean): number[] {
       curVal.trim();
       const indexSpace = curVal.indexOf(' ');
       const valFrom = curVal.slice(0, indexSpace);
@@ -180,7 +180,7 @@ class SliderCard {
       return currentValue;
     }
 
-    protected getNumInputValue(elem: JQuery<HTMLElement>): number {
+    private getNumInputValue(elem: JQuery<HTMLElement>): number {
       const val = elem.val() as string;
       val.trim();
       const value = Number(val);
@@ -195,7 +195,7 @@ class SliderCard {
       $(slider).SimpleSlider(sliderSettings);
     }
 
-    protected initFormInputs(form: JQuery<HTMLElement>): void {
+    private initFormInputs(form: JQuery<HTMLElement>): void {
       this.formInputs = {
         isHorizontal: <HTMLInputElement>form.find('input[name=horizontal]').get(0),
         minVal: form.find('input[name=minVal]'),
@@ -211,13 +211,13 @@ class SliderCard {
       };
     }
 
-    protected optionsChanged(option: Object): void{
+    private optionsChanged(option: Object): void{
       this.$elem.find('.js-slider-card__error').remove();
       this.options = $.extend(this.options, option);
       this.$slider.data('presenter').setNewOptions(this.options);
     }
 
-    protected inputValidation(
+    private inputValidation(
       errorMessage: string,
       $element: JQuery<HTMLElement>,
       oldValue: string, func: Function

@@ -9,9 +9,9 @@ class ScaleItem extends AbstractElement implements IScaleItem {
 
   protected isHorizontal: boolean;
 
-  protected value: number;
+  private value: number;
 
-  protected onScaleItemClicked: LiteEvent<number>;
+  private onScaleItemClicked: LiteEvent<number>;
 
   constructor(isHorizontal: boolean, value: number) {
     super();
@@ -34,7 +34,7 @@ class ScaleItem extends AbstractElement implements IScaleItem {
     this.$elem.append($mark, $text);
   }
 
-  protected addEvents(): void{
+  private addEvents(): void{
     this.$elem.click(() => {
       this.onScaleItemClicked.trigger(this.value);
     });

@@ -2,7 +2,7 @@ import ISliderSettings from '../ISliderSettings';
 import ISliderOptions from './ISliderOptions';
 
 class SliderOptions implements ISliderOptions {
-  protected defaultOption: ISliderSettings = {
+  private defaultOption: ISliderSettings = {
     isHorizontal: true,
     maxVal: 100,
     minVal: 0,
@@ -16,14 +16,14 @@ class SliderOptions implements ISliderOptions {
     numberOfScaleMarks: 2
   }
 
-  protected options: ISliderSettings;
+  private options: ISliderSettings;
 
   constructor(options?: ISliderSettings) {
     this.options = $.extend(this.defaultOption, options);
     this.options = this.checkOptions(this.options);
   }
 
-  protected checkOptions(options: ISliderSettings): ISliderSettings {
+  private checkOptions(options: ISliderSettings): ISliderSettings {
     const opt = options;
     this.checkMinMaxValue(opt.minVal, opt.maxVal);
     opt.currentVal = this.getCorrectCurrentValue({
@@ -39,13 +39,13 @@ class SliderOptions implements ISliderOptions {
     return opt;
   }
 
-  protected checkMinMaxValue(minVal: number, maxVal: number): void{
+  private checkMinMaxValue(minVal: number, maxVal: number): void{
     if (minVal >= maxVal) {
       throw new TypeError('Invalid input values. minVal must be less than maxVal');
     }
   }
 
-  protected getCorrectCurrentValue(options: {
+  private getCorrectCurrentValue(options: {
     isRange: boolean,
     currentVal: number[],
     minVal: number,
@@ -88,7 +88,7 @@ class SliderOptions implements ISliderOptions {
     return curVal;
   }
 
-  protected checkStep(options: {
+  private checkStep(options: {
     minVal: number,
     maxVal: number,
     step: number
@@ -99,7 +99,7 @@ class SliderOptions implements ISliderOptions {
     }
   }
 
-  protected checkNumberOfScaleMarks(numberOfScaleMarks: number): void{
+  private checkNumberOfScaleMarks(numberOfScaleMarks: number): void{
     const mod = numberOfScaleMarks % 1;
     if (numberOfScaleMarks < 2 || mod !== 0) {
       throw new TypeError('Invalid input values.'
@@ -107,7 +107,7 @@ class SliderOptions implements ISliderOptions {
     }
   }
 
-  protected getPrecision(step: number): number {
+  private getPrecision(step: number): number {
     const dotIndex = step.toString().indexOf('.');
     if (dotIndex === -1) {
       return 0;

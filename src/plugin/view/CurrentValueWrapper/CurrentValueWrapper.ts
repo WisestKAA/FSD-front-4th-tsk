@@ -7,13 +7,13 @@ import ISetCurrentValuePositionOptions from './ISetCurrentValuePositionOptions';
 class CurrentValueWrapper extends AbstractElement {
   public $elem: JQuery<HTMLElement>;
 
-  protected currentValueFrom: ICurrentValue;
+  private currentValueFrom: ICurrentValue;
 
-  protected currentValueTo: ICurrentValue;
+  private currentValueTo: ICurrentValue;
 
   protected isHorizontal: boolean;
 
-  protected isRange: boolean;
+  private isRange: boolean;
 
   constructor(isHorizontal: boolean, valFrom: ICurrentValue, valTo?: ICurrentValue) {
     super();

@@ -4,7 +4,7 @@ import IModel from './IModel';
 import Model from './Model';
 
 class ModelFactory implements IModelFactory {
-  protected sliderOptionsFactory: ISliderOptionsFactory;
+  private sliderOptionsFactory: ISliderOptionsFactory;
 
   constructor(sliderOptionsFactory: ISliderOptionsFactory) {
     this.sliderOptionsFactory = sliderOptionsFactory;

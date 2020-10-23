@@ -11,16 +11,16 @@ import IModelFactory from '../model/IModelFactory';
 import IPresenter from './IPresenter';
 
 class Presenter implements IPresenter {
-  protected model: IModel;
+  private model: IModel;
 
-  protected view: IView;
+  private view: IView;
 
   constructor(viewFactory: IViewFactory, modelFactory: IModelFactory) {
     this.init(viewFactory, modelFactory);
     this.addEvents();
   }
 
-  protected init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{
+  private init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{
     this.model = modelFactory.build();
     const currentOptions = this.model.getOptions();
     const viewOptions: IViewOptions = {
@@ -47,7 +47,7 @@ class Presenter implements IPresenter {
     this.initViewComponents();
   }
 
-  protected initViewComponents(): void{
+  private initViewComponents(): void{
     const options = this.model.getOptions();
     let direction = SliderDirection.getDirection(true, options.isHorizontal);
     const correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
@@ -61,20 +61,20 @@ class Presenter implements IPresenter {
     }
   }
 
-  protected addEvents(): void{
+  private addEvents(): void{
     this.model.changeCurrentValueEvent.on((data) => { this.setCurrentValueView(data); });
     this.model.changeOptionsEvent.on(() => { this.optionsChanged(); });
   }
 
-  protected setCurrentValueView(currentValue: number[]): void{
+  private setCurrentValueView(currentValue: number[]): void{
     this.view.setCurrentValue(currentValue);
   }
 
-  protected setCurrentValueModel(currentVal?: number[]): void{
+  private setCurrentValueModel(currentVal?: number[]): void{
     this.model.setCurrentValue(currentVal);
   }
 
-  protected getCorrectPosition(option: {
+  private getCorrectPosition(option: {
     position: number,
     maxHandlePosition: number,
     isForView: boolean,
@@ -99,7 +99,7 @@ class Presenter implements IPresenter {
     return correctPosition;
   }
 
-  protected getCurrentValFromPosition(direction: SliderDirection): number {
+  private getCurrentValFromPosition(direction: SliderDirection): number {
     const { maxVal, minVal, precision } = this.model.getOptions();
     const correctPosition = this.getCorrectPosition({
       position: this.view.getSliderHandlePosition(direction),
@@ -113,7 +113,7 @@ class Presenter implements IPresenter {
     return Math.round(newCurrentVal * correctPrecision) / correctPrecision;
   }
 
-  protected setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
+  private setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
     const options = this.model.getOptions();
     let position = (100 * (correctValue - options.minVal)) / (options.maxVal - options.minVal);
     position = this.getCorrectPosition({
@@ -125,7 +125,7 @@ class Presenter implements IPresenter {
     this.view.setHandlePosition(position, direction);
   }
 
-  protected optionsChanged(): void{
+  private optionsChanged(): void{
     const options = this.model.getOptions();
     if (options.isScaleEnabled) {
       const scaleValues = this.getValuesForScale({
@@ -150,7 +150,7 @@ class Presenter implements IPresenter {
     this.initViewComponents();
   }
 
-  protected getCorrectCurrentVal(correctValue: number, direction: SliderDirection): number[] {
+  private getCorrectCurrentVal(correctValue: number, direction: SliderDirection): number[] {
     const options = this.model.getOptions();
     const current = options.currentVal;
     if (options.isRange) {
@@ -161,7 +161,7 @@ class Presenter implements IPresenter {
     return current;
   }
 
-  protected getValuesForScale(options: {
+  private getValuesForScale(options: {
       minVal: number,
       maxVal: number,
       numberOfScaleMarks: number
