@@ -38,14 +38,11 @@ class Model implements IModel {
       return options.maxVal;
     }
 
-    let correctVal: number;
     const shift = step - (currentVal % step);
     const middle = step / 2;
-    if (shift > middle) {
-      correctVal = currentVal - (currentVal % step);
-    } else {
-      correctVal = currentVal + shift;
-    }
+    let correctVal = shift > middle
+      ? currentVal - (currentVal % step)
+      : currentVal + shift;
     const precision = Math.pow(10, options.precision);
     correctVal = Math.round(correctVal * precision) / precision;
     return correctVal;
