@@ -62,12 +62,8 @@ class Presenter implements IPresenter {
   }
 
   protected addEvents(): void{
-    this.model.changeCurrentValueEvent.on((data) => {
-      this.setCurrentValueView(data);
-    });
-    this.model.changeOptionsEvent.on(() => {
-      this.optionsChanged();
-    });
+    this.model.changeCurrentValueEvent.on((data) => { this.setCurrentValueView(data); });
+    this.model.changeOptionsEvent.on(() => { this.optionsChanged(); });
   }
 
   protected setCurrentValueView(currentValue: number[]): void{
@@ -92,22 +88,19 @@ class Presenter implements IPresenter {
     } = option;
     let correctPosition: number;
     if (isForView) {
-      correctPosition = (position * maxHandlePosition) / 100;
-      if (!SliderDirection.isFrom(direction)) {
-        correctPosition = maxHandlePosition - correctPosition;
-      }
+      correctPosition = !SliderDirection.isFrom(direction)
+        ? maxHandlePosition - (position * maxHandlePosition) / 100
+        : (position * maxHandlePosition) / 100;
     } else {
-      correctPosition = 100 * (position / maxHandlePosition);
-      if (!SliderDirection.isFrom(direction)) {
-        correctPosition = 100 - correctPosition;
-      }
+      correctPosition = !SliderDirection.isFrom(direction)
+        ? 100 - 100 * (position / maxHandlePosition)
+        : 100 * (position / maxHandlePosition);
     }
     return correctPosition;
   }
 
   protected getCurrentValFromPosition(direction: SliderDirection): number {
-    const options = this.model.getOptions();
-    const { maxVal, minVal } = options;
+    const { maxVal, minVal, precision } = this.model.getOptions();
     const correctPosition = this.getCorrectPosition({
       position: this.view.getSliderHandlePosition(direction),
       maxHandlePosition: this.view.getMaxHandlePosition(),
@@ -115,10 +108,9 @@ class Presenter implements IPresenter {
       direction
     });
 
-    let newCurrentVal = (((maxVal - minVal) * correctPosition) / 100) + minVal;
-    const precision = Math.pow(10, options.precision);
-    newCurrentVal = Math.round(newCurrentVal * precision) / precision;
-    return newCurrentVal;
+    const newCurrentVal = (((maxVal - minVal) * correctPosition) / 100) + minVal;
+    const correctPrecision = Math.pow(10, precision);
+    return Math.round(newCurrentVal * correctPrecision) / correctPrecision;
   }
 
   protected setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
@@ -162,11 +154,7 @@ class Presenter implements IPresenter {
     const options = this.model.getOptions();
     const current = options.currentVal;
     if (options.isRange) {
-      if (SliderDirection.isFrom(direction)) {
-        current[0] = correctValue;
-      } else {
-        current[1] = correctValue;
-      }
+      current[SliderDirection.isFrom(direction) ? 0 : 1] = correctValue;
     } else {
       current[0] = correctValue;
     }
