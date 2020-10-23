@@ -52,40 +52,51 @@ class SliderOptions implements ISliderOptions {
     maxVal: number
   }): number[] {
     const {
-      isRange, currentVal, minVal, maxVal
+      isRange,
+      currentVal,
+      minVal,
+      maxVal
     } = options;
     const curVal: number[] = [];
     if (isRange) {
-      if (currentVal[0] < minVal) {
-        curVal.push(minVal);
-      } else if (currentVal[0] > maxVal) {
-        curVal.push(maxVal);
-      } else {
-        curVal.push(currentVal[0]);
-      }
-
-      if (currentVal[1] < minVal) {
-        curVal.push(minVal);
-      } else if (currentVal[1] > maxVal) {
-        curVal.push(maxVal);
-      } else {
-        curVal.push(currentVal[1]);
-      }
+      curVal[0] = this.getCorrectValue({
+        currentVal: currentVal[0],
+        minVal,
+        maxVal
+      });
+      curVal[1] = this.getCorrectValue({
+        currentVal: currentVal[1],
+        minVal,
+        maxVal
+      });
 
       if (curVal[0] > curVal[1]) {
         curVal[1] = curVal[0];
       }
     } else {
-      if (currentVal[0] < minVal) {
-        curVal[0] = minVal;
-      } else if (currentVal[0] > maxVal) {
-        curVal[0] = maxVal;
-      } else {
-        curVal[0] = currentVal[0];
-      }
+      curVal[0] = this.getCorrectValue({
+        currentVal: currentVal[0],
+        minVal,
+        maxVal
+      });
       curVal[1] = 0;
     }
     return curVal;
+  }
+
+  private getCorrectValue(data : {
+    currentVal: number,
+    minVal: number,
+    maxVal: number
+  }): number {
+    const { currentVal, minVal, maxVal } = data;
+    let val;
+    if (currentVal < minVal) {
+      val = minVal;
+    } else if (currentVal > maxVal) {
+      val = maxVal;
+    } else { val = currentVal; }
+    return val;
   }
 
   private checkStep(options: {
