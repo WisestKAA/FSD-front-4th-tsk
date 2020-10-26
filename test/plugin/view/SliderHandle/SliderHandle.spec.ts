@@ -24,7 +24,7 @@ describe(
         });
 
         it(
-          `The element must have classes ${StyleClasses.HANDLE} and ${StyleClasses.HANDLEV} if the isHorizontal property is false`,
+          `The element must have classes ${StyleClasses.HANDLE} and ${StyleClasses.HANDLE_V} if the isHorizontal property is false`,
           () =>{
             handle = new SliderHandle({
               isHorizontal: false,
@@ -32,7 +32,7 @@ describe(
               sliderLine: new MockSliderLine(false),
               isFrom: true
             });
-            expect(handle.$elem.attr('class')).toBe(`${StyleClasses.HANDLE} ${StyleClasses.HANDLEV}`);
+            expect(handle.$elem.attr('class')).toBe(`${StyleClasses.HANDLE} ${StyleClasses.HANDLE_V}`);
           }
         );
       }

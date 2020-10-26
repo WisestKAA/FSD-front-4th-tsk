@@ -19,7 +19,7 @@ class MockHandle implements ISliderHandle {
 
   constructor(isHorizontal?: boolean) {
     this.$elem = isHorizontal ? $('<div>').attr('class', StyleClasses.HANDLE)
-      : $('<div>').attr('class', `${StyleClasses.HANDLE} ${StyleClasses.HANDLEV}`);
+      : $('<div>').attr('class', `${StyleClasses.HANDLE} ${StyleClasses.HANDLE_V}`);
     this.onPositionChanged = new LiteEvent<SliderDirection>();
   }
 

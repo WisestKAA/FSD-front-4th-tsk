@@ -21,8 +21,8 @@ class MockHandleWrapper implements ISliderHandleWrapper {
 
   constructor(isHorizontal?: boolean) {
     this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
-    this.$elem = isHorizontal ? $('<div>').attr('class', `${StyleClasses.HANDLEWRAPPER}`)
-      : $('<div>').attr('class', `${StyleClasses.HANDLEWRAPPER} ${StyleClasses.HANDLEWRAPPERV}`);
+    this.$elem = isHorizontal ? $('<div>').attr('class', `${StyleClasses.HANDLE_WRAPPER}`)
+      : $('<div>').attr('class', `${StyleClasses.HANDLE_WRAPPER} ${StyleClasses.HANDLE_WRAPPER_V}`);
   }
 
   getMaxHandlePosition(): number {

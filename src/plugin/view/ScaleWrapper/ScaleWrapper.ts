@@ -31,8 +31,8 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
     this.$elem = $('<div>');
     this.changeOrientation(
       this.isHorizontal,
-      StyleClasses.SCALEWRAPPER,
-      StyleClasses.SCALEWRAPPERV
+      StyleClasses.SCALE_WRAPPER,
+      StyleClasses.SCALE_WRAPPER_V
     );
     this.scaleItems.forEach((value) => {
       this.$elem.append(value.$elem);

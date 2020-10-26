@@ -78,7 +78,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
   protected init(): void {
     this.$elem = this.isHorizontal
       ? $('<div>').addClass(StyleClasses.HANDLE)
-      : $('<div>').addClass([StyleClasses.HANDLE, StyleClasses.HANDLEV]);
+      : $('<div>').addClass([StyleClasses.HANDLE, StyleClasses.HANDLE_V]);
     this.position = 0;
     this.shiftX = 0;
     this.shiftXR = 0;

@@ -10,9 +10,9 @@ describe('Test SliderRange', () => {
       expect(range.$elem.attr('class')).toBe(StyleClasses.RANGE);
     });
 
-    it(`The element must have classes ${StyleClasses.RANGE} and ${StyleClasses.RANGEV} if the isHorizontal property is false`, () => {
+    it(`The element must have classes ${StyleClasses.RANGE} and ${StyleClasses.RANGE_V} if the isHorizontal property is false`, () => {
       range = new SliderRange(false);
-      expect(range.$elem.attr('class')).toBe(`${StyleClasses.RANGE} ${StyleClasses.RANGEV}`);
+      expect(range.$elem.attr('class')).toBe(`${StyleClasses.RANGE} ${StyleClasses.RANGE_V}`);
     });
   });
   describe('Test SliderRange / functions', () => {

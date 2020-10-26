@@ -16,8 +16,8 @@ class MockCurrentValueWrapper extends AbstractElement implements ICurrentValueWr
     this.$elem = $('<div>');
     this.changeOrientation(
       this.isHorizontal,
-      StyleClasses.CURRENTVALWRAPPER,
-      StyleClasses.CURRENTVALWRAPPERV
+      StyleClasses.CURRENT_VAL_WRAPPER,
+      StyleClasses.CURRENT_VAL_WRAPPER_V
     );
   }
 

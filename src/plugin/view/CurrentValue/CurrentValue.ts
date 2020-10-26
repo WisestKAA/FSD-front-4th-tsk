@@ -78,23 +78,23 @@ class CurrentValue implements ICurrentValue {
   }
 
   private init(isHorizontal: boolean): void {
-    this.$text = $('<div>').addClass(StyleClasses.CURRENTVALTEXT);
+    this.$text = $('<div>').addClass(StyleClasses.CURRENT_VAL_TEXT);
     this.$text.html(`${this.val}`);
 
     this.$arrow = $('<div>');
     this.changeOrientation({
       isHorizontal,
       $elem: this.$arrow,
-      horizontalClass: StyleClasses.CURRENTVALARROW,
-      verticalClass: StyleClasses.CURRENTVALARROWV
+      horizontalClass: StyleClasses.CURRENT_VAL_ARROW,
+      verticalClass: StyleClasses.CURRENT_VAL_ARROW_V
     });
 
     this.$elem = $('<div>');
     this.changeOrientation({
       isHorizontal,
       $elem: this.$elem,
-      horizontalClass: StyleClasses.CURRENTVAL,
-      verticalClass: StyleClasses.CURRENTVALV
+      horizontalClass: StyleClasses.CURRENT_VAL,
+      verticalClass: StyleClasses.CURRENT_VAL_V
     });
     this.$elem.append(this.$text, this.$arrow);
   }

@@ -20,8 +20,8 @@ class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {
     this.$elem = $('<div>');
     this.changeOrientation(
       this.isHorizontal,
-      StyleClasses.MAINWRAPPER,
-      StyleClasses.MAINWRAPPERV
+      StyleClasses.MAIN_WRAPPER,
+      StyleClasses.MAIN_WRAPPER_V
     );
     this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
   }

@@ -14,22 +14,22 @@ describe(
       'CurrentValueWrapper / init',
       () => {
         it(
-          `The element must have class ${StyleClasses.CURRENTVALWRAPPER} if the isHorizontal property is true`,
+          `The element must have class ${StyleClasses.CURRENT_VAL_WRAPPER} if the isHorizontal property is true`,
           () =>{
             currentValueWrapper = new CurrentValueWrapper(true, new MockCurrentValue());
-            expect(currentValueWrapper.$elem.attr('class')).toBe(StyleClasses.CURRENTVALWRAPPER);
+            expect(currentValueWrapper.$elem.attr('class')).toBe(StyleClasses.CURRENT_VAL_WRAPPER);
           }
         );
 
         it(
-          `The element must have class ${StyleClasses.CURRENTVALWRAPPER} and ${StyleClasses.CURRENTVALWRAPPERV} if the isHorizontal property is false`,
+          `The element must have class ${StyleClasses.CURRENT_VAL_WRAPPER} and ${StyleClasses.CURRENT_VAL_WRAPPER_V} if the isHorizontal property is false`,
           () =>{
             currentValueWrapper = new CurrentValueWrapper(
               false, new MockCurrentValue(),
               new MockCurrentValue()
             );
             expect(currentValueWrapper.$elem.attr('class'))
-              .toBe(`${StyleClasses.CURRENTVALWRAPPER} ${StyleClasses.CURRENTVALWRAPPERV}`);
+              .toBe(`${StyleClasses.CURRENT_VAL_WRAPPER} ${StyleClasses.CURRENT_VAL_WRAPPER_V}`);
           }
         );
       }

@@ -12,37 +12,37 @@ describe('Tests SliderMainWrapper', () => {
     'Tests SliderMainWrapper / init',
     () => {
       it(
-        `The element must have class ${StyleClasses.MAINWRAPPER} if the isHorizontal property is true`,
+        `The element must have class ${StyleClasses.MAIN_WRAPPER} if the isHorizontal property is true`,
         () => {
           wrapper = new SliderMainWrapper(true, new MockLine(), new MockHandleWrapper());
-          expect(wrapper.$elem.attr('class')).toBe(StyleClasses.MAINWRAPPER);
+          expect(wrapper.$elem.attr('class')).toBe(StyleClasses.MAIN_WRAPPER);
         }
       );
 
       it(
-        `The element must have classes ${StyleClasses.MAINWRAPPER} and ${StyleClasses.MAINWRAPPERV} if the isHorizontal property is false`,
+        `The element must have classes ${StyleClasses.MAIN_WRAPPER} and ${StyleClasses.MAIN_WRAPPER_V} if the isHorizontal property is false`,
         () => {
           wrapper = new SliderMainWrapper(false, new MockLine(), new MockHandleWrapper());
           expect(wrapper.$elem.attr('class'))
-            .toBe(`${StyleClasses.MAINWRAPPER} ${StyleClasses.MAINWRAPPERV}`);
+            .toBe(`${StyleClasses.MAIN_WRAPPER} ${StyleClasses.MAIN_WRAPPER_V}`);
         }
       );
 
       it(
-        `The element must have sub-element with class ${StyleClasses.HANDLEWRAPPER} if the isHorizontal property is true`,
+        `The element must have sub-element with class ${StyleClasses.HANDLE_WRAPPER} if the isHorizontal property is true`,
         () => {
           wrapper = new SliderMainWrapper(true, new MockLine(), new MockHandleWrapper(true));
-          expect(wrapper.$elem.find(`.${StyleClasses.HANDLEWRAPPER}`).attr('class'))
-            .toBe(StyleClasses.HANDLEWRAPPER);
+          expect(wrapper.$elem.find(`.${StyleClasses.HANDLE_WRAPPER}`).attr('class'))
+            .toBe(StyleClasses.HANDLE_WRAPPER);
         }
       );
 
       it(
-        `The element must have sub-element with classes ${StyleClasses.HANDLEWRAPPER} and ${StyleClasses.HANDLEWRAPPERV} if the isHorizontal property is false`,
+        `The element must have sub-element with classes ${StyleClasses.HANDLE_WRAPPER} and ${StyleClasses.HANDLE_WRAPPER_V} if the isHorizontal property is false`,
         () => {
           wrapper = new SliderMainWrapper(false, new MockLine(), new MockHandleWrapper(false));
-          expect(wrapper.$elem.find(`.${StyleClasses.HANDLEWRAPPER}`).attr('class'))
-            .toBe(`${StyleClasses.HANDLEWRAPPER} ${StyleClasses.HANDLEWRAPPERV}`);
+          expect(wrapper.$elem.find(`.${StyleClasses.HANDLE_WRAPPER}`).attr('class'))
+            .toBe(`${StyleClasses.HANDLE_WRAPPER} ${StyleClasses.HANDLE_WRAPPER_V}`);
         }
       );
     }

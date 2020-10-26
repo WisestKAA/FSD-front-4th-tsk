@@ -15,10 +15,10 @@ describe('Test SliderLine', () => {
     );
 
     it(
-      `The element must have classes ${StyleClasses.LINE} and ${StyleClasses.LINEV} if the isHorizontal property is false`,
+      `The element must have classes ${StyleClasses.LINE} and ${StyleClasses.LINE_V} if the isHorizontal property is false`,
       () => {
         line = new SliderLine(false);
-        expect(line.$elem.attr('class')).toBe(`${StyleClasses.LINE} ${StyleClasses.LINEV}`);
+        expect(line.$elem.attr('class')).toBe(`${StyleClasses.LINE} ${StyleClasses.LINE_V}`);
       }
     );
   });

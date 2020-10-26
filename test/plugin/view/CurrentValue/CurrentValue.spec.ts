@@ -5,29 +5,29 @@ describe('Test CurrentValue', () => {
   let currentValue: CurrentValue;
 
   describe('Test CurrentValue / init', () => {
-    it(`The element must have class ${StyleClasses.CURRENTVAL} if the isHorizontal property is true`, () => {
+    it(`The element must have class ${StyleClasses.CURRENT_VAL} if the isHorizontal property is true`, () => {
       currentValue = new CurrentValue(true, true);
-      expect(currentValue.$elem.attr('class')).toBe(StyleClasses.CURRENTVAL);
+      expect(currentValue.$elem.attr('class')).toBe(StyleClasses.CURRENT_VAL);
     });
 
-    it(`The element must have classes ${StyleClasses.CURRENTVAL} and ${StyleClasses.CURRENTVALV} if the isHorizontal property is false`, () => {
+    it(`The element must have classes ${StyleClasses.CURRENT_VAL} and ${StyleClasses.CURRENT_VAL_V} if the isHorizontal property is false`, () => {
       currentValue = new CurrentValue(true, false);
-      expect(currentValue.$elem.attr('class')).toBe(`${StyleClasses.CURRENTVAL} ${StyleClasses.CURRENTVALV}`);
+      expect(currentValue.$elem.attr('class')).toBe(`${StyleClasses.CURRENT_VAL} ${StyleClasses.CURRENT_VAL_V}`);
     });
 
-    it(`The element must have sub-element with class ${StyleClasses.CURRENTVALARROW} if the isHorizontal property is true`, () => {
+    it(`The element must have sub-element with class ${StyleClasses.CURRENT_VAL_ARROW} if the isHorizontal property is true`, () => {
       currentValue = new CurrentValue(true, true);
-      expect(currentValue.$elem.find(`.${StyleClasses.CURRENTVALARROW}`).attr('class')).toBe(StyleClasses.CURRENTVALARROW);
+      expect(currentValue.$elem.find(`.${StyleClasses.CURRENT_VAL_ARROW}`).attr('class')).toBe(StyleClasses.CURRENT_VAL_ARROW);
     });
 
-    it(`The element must have sub-element with classes ${StyleClasses.CURRENTVALARROW} and ${StyleClasses.CURRENTVALARROWV} if the isHorizontal property  is true`, () => {
+    it(`The element must have sub-element with classes ${StyleClasses.CURRENT_VAL_ARROW} and ${StyleClasses.CURRENT_VAL_ARROW_V} if the isHorizontal property  is true`, () => {
       currentValue = new CurrentValue(true, false);
-      expect(currentValue.$elem.find(`.${StyleClasses.CURRENTVALARROW}`).attr('class')).toBe(`${StyleClasses.CURRENTVALARROW} ${StyleClasses.CURRENTVALARROWV}`);
+      expect(currentValue.$elem.find(`.${StyleClasses.CURRENT_VAL_ARROW}`).attr('class')).toBe(`${StyleClasses.CURRENT_VAL_ARROW} ${StyleClasses.CURRENT_VAL_ARROW_V}`);
     });
 
-    it(`The element must have sub-element with class ${StyleClasses.CURRENTVALTEXT}`, () => {
+    it(`The element must have sub-element with class ${StyleClasses.CURRENT_VAL_TEXT}`, () => {
       currentValue = new CurrentValue(true, true);
-      expect(currentValue.$elem.find(`.${StyleClasses.CURRENTVALTEXT}`).attr('class')).toBe(StyleClasses.CURRENTVALTEXT);
+      expect(currentValue.$elem.find(`.${StyleClasses.CURRENT_VAL_TEXT}`).attr('class')).toBe(StyleClasses.CURRENT_VAL_TEXT);
     });
   });
 
@@ -36,7 +36,7 @@ describe('Test CurrentValue', () => {
       currentValue = new CurrentValue(true, true);
       currentValue.setCurrentValue(10);
       expect(currentValue.getCurrentValue()).toBe(10);
-      expect(currentValue.$elem.find(`.${StyleClasses.CURRENTVALTEXT}`).html()).toBe('10');
+      expect(currentValue.$elem.find(`.${StyleClasses.CURRENT_VAL_TEXT}`).html()).toBe('10');
     });
 
     it('The setPosition function must set the position for the $element and check the position if the isHorizontal property is true', () => {

@@ -30,12 +30,12 @@ describe('Test View', () => {
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
           });
           expect(view.$slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
-            .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDERJS}`);
+            .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDER_JS}`);
         }
       );
 
       it(
-        `The element must have classes ${StyleClasses.SLIDER} and ${StyleClasses.SLIDERV} if the isHorizontal property is false`,
+        `The element must have classes ${StyleClasses.SLIDER} and ${StyleClasses.SLIDER_V} if the isHorizontal property is false`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -51,12 +51,12 @@ describe('Test View', () => {
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
           });
           expect(view.$slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
-            .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDERJS} ${StyleClasses.SLIDERV}`);
+            .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDER_JS} ${StyleClasses.SLIDER_V}`);
         }
       );
 
       it(
-        `The element must have have sub-element with class ${StyleClasses.CURRENTVALWRAPPER} if the isHorizontal property is true`,
+        `The element must have have sub-element with class ${StyleClasses.CURRENT_VAL_WRAPPER} if the isHorizontal property is true`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -71,13 +71,13 @@ describe('Test View', () => {
             presenter: new MockPresenter(),
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
           });
-          expect(view.$slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr('class'))
-            .toBe(StyleClasses.CURRENTVALWRAPPER);
+          expect(view.$slider.find(`.${StyleClasses.CURRENT_VAL_WRAPPER}`).attr('class'))
+            .toBe(StyleClasses.CURRENT_VAL_WRAPPER);
         }
       );
 
       it(
-        `The element must have have sub-element with classes ${StyleClasses.CURRENTVALWRAPPER} and ${StyleClasses.CURRENTVALWRAPPERV} if the isHorizontal property is false`,
+        `The element must have have sub-element with classes ${StyleClasses.CURRENT_VAL_WRAPPER} and ${StyleClasses.CURRENT_VAL_WRAPPER_V} if the isHorizontal property is false`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -92,13 +92,13 @@ describe('Test View', () => {
             presenter: new MockPresenter(),
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
           });
-          expect(view.$slider.find(`.${StyleClasses.CURRENTVALWRAPPER}`).attr('class'))
-            .toBe(`${StyleClasses.CURRENTVALWRAPPER} ${StyleClasses.CURRENTVALWRAPPERV}`);
+          expect(view.$slider.find(`.${StyleClasses.CURRENT_VAL_WRAPPER}`).attr('class'))
+            .toBe(`${StyleClasses.CURRENT_VAL_WRAPPER} ${StyleClasses.CURRENT_VAL_WRAPPER_V}`);
         }
       );
 
       it(
-        `The element must have have sub-element with class ${StyleClasses.MAINWRAPPER} if the isHorizontal property is true`,
+        `The element must have have sub-element with class ${StyleClasses.MAIN_WRAPPER} if the isHorizontal property is true`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -113,13 +113,13 @@ describe('Test View', () => {
             presenter: new MockPresenter(),
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
           });
-          expect(view.$slider.find(`.${StyleClasses.MAINWRAPPER}`).attr('class'))
-            .toBe(StyleClasses.MAINWRAPPER);
+          expect(view.$slider.find(`.${StyleClasses.MAIN_WRAPPER}`).attr('class'))
+            .toBe(StyleClasses.MAIN_WRAPPER);
         }
       );
 
       it(
-        `The element must have have sub-element with classes ${StyleClasses.MAINWRAPPER} and ${StyleClasses.MAINWRAPPERV} if the isHorizontal property is false`,
+        `The element must have have sub-element with classes ${StyleClasses.MAIN_WRAPPER} and ${StyleClasses.MAIN_WRAPPER_V} if the isHorizontal property is false`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -134,13 +134,13 @@ describe('Test View', () => {
             presenter: new MockPresenter(),
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
           });
-          expect(view.$slider.find(`.${StyleClasses.MAINWRAPPER}`).attr('class'))
-            .toBe(`${StyleClasses.MAINWRAPPER} ${StyleClasses.MAINWRAPPERV}`);
+          expect(view.$slider.find(`.${StyleClasses.MAIN_WRAPPER}`).attr('class'))
+            .toBe(`${StyleClasses.MAIN_WRAPPER} ${StyleClasses.MAIN_WRAPPER_V}`);
         }
       );
 
       it(
-        `The element must have have sub-element with class ${StyleClasses.SCALEWRAPPER} if the isHorizontal property is true and the scaleValues is not null/undefined`,
+        `The element must have have sub-element with class ${StyleClasses.SCALE_WRAPPER} if the isHorizontal property is true and the scaleValues is not null/undefined`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -156,13 +156,13 @@ describe('Test View', () => {
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
             scaleValues: [0, 100]
           });
-          expect(view.$slider.find(`.${StyleClasses.SCALEWRAPPER}`).attr('class'))
-            .toBe(StyleClasses.SCALEWRAPPER);
+          expect(view.$slider.find(`.${StyleClasses.SCALE_WRAPPER}`).attr('class'))
+            .toBe(StyleClasses.SCALE_WRAPPER);
         }
       );
 
       it(
-        `The element must have have sub-element with classes ${StyleClasses.SCALEWRAPPER} and ${StyleClasses.SCALEWRAPPERV} if the isHorizontal property is false`,
+        `The element must have have sub-element with classes ${StyleClasses.SCALE_WRAPPER} and ${StyleClasses.SCALE_WRAPPER_V} if the isHorizontal property is false`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
@@ -178,8 +178,8 @@ describe('Test View', () => {
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
             scaleValues: [0, 100]
           });
-          expect(view.$slider.find(`.${StyleClasses.SCALEWRAPPER}`).attr('class'))
-            .toBe(`${StyleClasses.SCALEWRAPPER} ${StyleClasses.SCALEWRAPPERV}`);
+          expect(view.$slider.find(`.${StyleClasses.SCALE_WRAPPER}`).attr('class'))
+            .toBe(`${StyleClasses.SCALE_WRAPPER} ${StyleClasses.SCALE_WRAPPER_V}`);
         }
       );
     }

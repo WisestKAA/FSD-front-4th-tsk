@@ -31,7 +31,7 @@ class SliderRange extends AbstractElement implements ISliderRange {
   protected init(): void {
     this.$elem = this.isHorizontal
       ? $('<div>').addClass(StyleClasses.RANGE)
-      : $('<div>').addClass([StyleClasses.RANGE, StyleClasses.RANGEV]);
+      : $('<div>').addClass([StyleClasses.RANGE, StyleClasses.RANGE_V]);
   }
 }
 

@@ -11,7 +11,7 @@ class MockScaleItem implements IScaleItem {
   value: number;
 
   constructor(value: number) {
-    this.$elem = $('<div>').addClass(StyleClasses.SCALEITEM);
+    this.$elem = $('<div>').addClass(StyleClasses.SCALE_ITEM);
     this.onScaleItemClicked = new LiteEvent<number>();
     this.value = value;
     this.$elem.click(() => {

@@ -14,8 +14,8 @@ class MockScaleWrapper implements IScaleWrapper {
     this.isHorizontal = isHorizontal;
     this.onScaleItemClicked = new LiteEvent<number>();
     this.$elem = this.isHorizontal
-      ? $('<div>').addClass(StyleClasses.SCALEWRAPPER)
-      : $('<div>').addClass([StyleClasses.SCALEWRAPPER, StyleClasses.SCALEWRAPPERV]);
+      ? $('<div>').addClass(StyleClasses.SCALE_WRAPPER)
+      : $('<div>').addClass([StyleClasses.SCALE_WRAPPER, StyleClasses.SCALE_WRAPPER_V]);
     this.$elem.click(() => {
       this.onScaleItemClicked.trigger(0);
     });

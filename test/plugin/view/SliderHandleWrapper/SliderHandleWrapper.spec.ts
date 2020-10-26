@@ -13,18 +13,18 @@ describe('Test SliderHandleWrapper', () => {
     'Test SliderHandleWrapper / init',
     () => {
       it(
-        `The element must have class ${StyleClasses.HANDLEWRAPPER} if the isHorizontal property is true`,
+        `The element must have class ${StyleClasses.HANDLE_WRAPPER} if the isHorizontal property is true`,
         () => {
           wrapper = new SliderHandleWrapper(true, new MockHandle());
-          expect(wrapper.$elem.attr('class')).toBe(StyleClasses.HANDLEWRAPPER);
+          expect(wrapper.$elem.attr('class')).toBe(StyleClasses.HANDLE_WRAPPER);
         }
       );
 
       it(
-        `The element must have classes ${StyleClasses.HANDLEWRAPPER} and ${StyleClasses.HANDLEWRAPPERV} if the isHorizontal property is false`,
+        `The element must have classes ${StyleClasses.HANDLE_WRAPPER} and ${StyleClasses.HANDLE_WRAPPER_V} if the isHorizontal property is false`,
         () => {
           wrapper = new SliderHandleWrapper(false, new MockHandle(), new MockHandle());
-          expect(wrapper.$elem.attr('class')).toBe(`${StyleClasses.HANDLEWRAPPER} ${StyleClasses.HANDLEWRAPPERV}`);
+          expect(wrapper.$elem.attr('class')).toBe(`${StyleClasses.HANDLE_WRAPPER} ${StyleClasses.HANDLE_WRAPPER_V}`);
         }
       );
 
@@ -37,10 +37,10 @@ describe('Test SliderHandleWrapper', () => {
       );
 
       it(
-        `The element must have sub-element with classes ${StyleClasses.HANDLE} and ${StyleClasses.HANDLEV} if the isHorizontal property is false`,
+        `The element must have sub-element with classes ${StyleClasses.HANDLE} and ${StyleClasses.HANDLE_V} if the isHorizontal property is false`,
         () => {
           wrapper = new SliderHandleWrapper(false, new MockHandle(), new MockHandle(false));
-          expect(wrapper.$elem.find(`.${StyleClasses.HANDLE}`).attr('class')).toBe(`${StyleClasses.HANDLE} ${StyleClasses.HANDLEV}`);
+          expect(wrapper.$elem.find(`.${StyleClasses.HANDLE}`).attr('class')).toBe(`${StyleClasses.HANDLE} ${StyleClasses.HANDLE_V}`);
         }
       );
     }

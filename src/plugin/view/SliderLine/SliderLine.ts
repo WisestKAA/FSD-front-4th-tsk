@@ -46,7 +46,7 @@ class SliderLine extends AbstractElement implements ISliderLine {
   protected init(): void{
     this.$elem = this.isHorizontal
       ? $('<div>').addClass(StyleClasses.LINE)
-      : $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINEV]);
+      : $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINE_V]);
     this.isRangeLineEnabled && this.$elem.append(this.range.$elem);
   }
 }

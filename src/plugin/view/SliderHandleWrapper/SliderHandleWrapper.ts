@@ -77,8 +77,8 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     this.$elem = $('<div>');
     this.changeOrientation(
       this.isHorizontal,
-      StyleClasses.HANDLEWRAPPER,
-      StyleClasses.HANDLEWRAPPERV
+      StyleClasses.HANDLE_WRAPPER,
+      StyleClasses.HANDLE_WRAPPER_V
     );
     this.isRange
       ? this.$elem.append([this.handleFrom.$elem, this.handleTo.$elem])

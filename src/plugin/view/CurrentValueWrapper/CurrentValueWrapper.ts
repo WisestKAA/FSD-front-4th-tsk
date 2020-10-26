@@ -88,8 +88,8 @@ class CurrentValueWrapper extends AbstractElement {
     this.$elem = $('<div>');
     this.changeOrientation(
       this.isHorizontal,
-      StyleClasses.CURRENTVALWRAPPER,
-      StyleClasses.CURRENTVALWRAPPERV
+      StyleClasses.CURRENT_VAL_WRAPPER,
+      StyleClasses.CURRENT_VAL_WRAPPER_V
     );
 
     this.$elem.append(this.currentValueFrom.$elem);

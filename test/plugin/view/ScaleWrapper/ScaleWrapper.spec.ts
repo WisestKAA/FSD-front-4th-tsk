@@ -17,28 +17,28 @@ describe(
         items.push(new MockScaleItem(100));
 
         it(
-          `The element must have class ${StyleClasses.SCALEWRAPPER} if the isHorizontal property is true`,
+          `The element must have class ${StyleClasses.SCALE_WRAPPER} if the isHorizontal property is true`,
           () => {
             scaleWrapper = new ScaleWrapper(true, items);
-            expect(scaleWrapper.$elem.attr('class')).toBe(StyleClasses.SCALEWRAPPER);
+            expect(scaleWrapper.$elem.attr('class')).toBe(StyleClasses.SCALE_WRAPPER);
           }
         );
 
         it(
-          `The element must have classes ${StyleClasses.SCALEWRAPPER} and ${StyleClasses.SCALEWRAPPERV} if the isHorizontal property is false`,
+          `The element must have classes ${StyleClasses.SCALE_WRAPPER} and ${StyleClasses.SCALE_WRAPPER_V} if the isHorizontal property is false`,
           () => {
             scaleWrapper = new ScaleWrapper(false, items);
             expect(scaleWrapper.$elem.attr('class'))
-              .toBe(`${StyleClasses.SCALEWRAPPER} ${StyleClasses.SCALEWRAPPERV}`);
+              .toBe(`${StyleClasses.SCALE_WRAPPER} ${StyleClasses.SCALE_WRAPPER_V}`);
           }
         );
 
         it(
-          `The element must have sub-elements with class ${StyleClasses.SCALEITEM}`,
+          `The element must have sub-elements with class ${StyleClasses.SCALE_ITEM}`,
           () => {
             scaleWrapper = new ScaleWrapper(false, items);
             let numItems = 0;
-            const children = scaleWrapper.$elem.find(`.${StyleClasses.SCALEITEM}`);
+            const children = scaleWrapper.$elem.find(`.${StyleClasses.SCALE_ITEM}`);
             children.each(() => {
               numItems += 1;
             });
