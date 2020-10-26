@@ -12,8 +12,6 @@ import IElementsFactory from './IElementsFactory';
 import IView from './IView';
 
 class View implements IView {
-  private presenter: IPresenter;
-
   public $slider: JQuery<HTMLElement>;
 
   protected currentValueWrapper: ICurrentValueWrapper;
@@ -22,13 +20,15 @@ class View implements IView {
 
   protected options: IViewOptions;
 
+  protected scaleWrapper: IScaleWrapper;
+
+  private scaleValues?: number[] = null;
+
   private elem: HTMLElement;
 
   private elementsFactory: IElementsFactory;
 
-  protected scaleWrapper: IScaleWrapper;
-
-  private scaleValues?: number[] = null;
+  private presenter: IPresenter;
 
   constructor(viewOptions: {
       elem: HTMLElement,
@@ -45,6 +45,35 @@ class View implements IView {
     this.elem = elem;
     this.elementsFactory = elementsFactory;
     this.scaleValues = scaleValues;
+    this.init();
+    this.addEvents();
+  }
+
+  public getSliderHandlePosition(direction: SliderDirection): number {
+    return this.mainWrapper.getSliderHandlePosition(direction);
+  }
+
+  public setCurrentValue(currentValue: number[]): void {
+    this.currentValueWrapper.setCurrentValue(currentValue);
+  }
+
+  public getCurrentValue(): number[] {
+    return this.currentValueWrapper.getCurrentValue();
+  }
+
+  public getMaxHandlePosition(): number {
+    return this.mainWrapper.getMaxHandlePosition();
+  }
+
+  public setHandlePosition(position: number, direction: SliderDirection): void {
+    this.mainWrapper.setHandlePosition(position, direction);
+  }
+
+  public reinitialization(option: IViewOptions, scaleValues?: number[]): void{
+    this.$slider.html('');
+    this.options = option;
+    this.scaleValues = scaleValues;
+    this.elementsFactory.setNewOptions(option.isHorizontal, option.isRange);
     this.init();
     this.addEvents();
   }
@@ -68,6 +97,18 @@ class View implements IView {
       ]);
     }
     this.$slider = $(this.elem).append($mainDiv);
+  }
+
+  protected addEvents(): void {
+    this.mainWrapper.handlePositionChangedEvent.on((direction) => {
+      this.setCurrentValuePosition(direction);
+      this.presenter.sliderHandleChangedPosition(direction);
+    });
+    if (this.scaleValues !== null && this.scaleValues !== undefined) {
+      this.scaleWrapper.scaleItemClickedEvent.on((number) => {
+        this.presenter.scaleClicked(number);
+      });
+    }
   }
 
   private buildMainWrapper(isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper {
@@ -116,18 +157,6 @@ class View implements IView {
     return this.elementsFactory.buildScaleWrapper(scaleItems);
   }
 
-  protected addEvents(): void {
-    this.mainWrapper.handlePositionChangedEvent.on((direction) => {
-      this.setCurrentValuePosition(direction);
-      this.presenter.sliderHandleChangedPosition(direction);
-    });
-    if (this.scaleValues !== null && this.scaleValues !== undefined) {
-      this.scaleWrapper.scaleItemClickedEvent.on((number) => {
-        this.presenter.scaleClicked(number);
-      });
-    }
-  }
-
   private setCurrentValuePosition(direction: SliderDirection): void{
     const position = SliderDirection.isFrom(direction)
       ? this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
@@ -139,35 +168,6 @@ class View implements IView {
       lineSize: this.mainWrapper.getLineSize(),
       maxHandlePosition: this.getMaxHandlePosition()
     });
-  }
-
-  public getSliderHandlePosition(direction: SliderDirection): number {
-    return this.mainWrapper.getSliderHandlePosition(direction);
-  }
-
-  public setCurrentValue(currentValue: number[]): void {
-    this.currentValueWrapper.setCurrentValue(currentValue);
-  }
-
-  public getCurrentValue(): number[] {
-    return this.currentValueWrapper.getCurrentValue();
-  }
-
-  public getMaxHandlePosition(): number {
-    return this.mainWrapper.getMaxHandlePosition();
-  }
-
-  public setHandlePosition(position: number, direction: SliderDirection): void {
-    this.mainWrapper.setHandlePosition(position, direction);
-  }
-
-  public reinitialization(option: IViewOptions, scaleValues?: number[]): void{
-    this.$slider.html('');
-    this.options = option;
-    this.scaleValues = scaleValues;
-    this.elementsFactory.setNewOptions(option.isHorizontal, option.isRange);
-    this.init();
-    this.addEvents();
   }
 }
 

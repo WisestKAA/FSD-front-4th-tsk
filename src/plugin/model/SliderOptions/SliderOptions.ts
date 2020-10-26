@@ -23,6 +23,19 @@ class SliderOptions implements ISliderOptions {
     this.options = this.checkOptions(this.options);
   }
 
+  public getOptions(): ISliderSettings {
+    return this.options;
+  }
+
+  public setCurrentValue(currentVal: number[]): void{
+    this.options.currentVal = currentVal;
+  }
+
+  public setNewOptions(options: ISliderSettings): void{
+    this.options = $.extend(this.options, options);
+    this.options = this.checkOptions(this.options);
+  }
+
   private checkOptions(options: ISliderSettings): ISliderSettings {
     const opt = options;
     this.checkMinMaxValue(opt.minVal, opt.maxVal);
@@ -124,19 +137,6 @@ class SliderOptions implements ISliderOptions {
       return 0;
     }
     return step.toString().substring(dotIndex).length - 1;
-  }
-
-  public getOptions(): ISliderSettings {
-    return this.options;
-  }
-
-  public setCurrentValue(currentVal: number[]): void{
-    this.options.currentVal = currentVal;
-  }
-
-  public setNewOptions(options: ISliderSettings): void{
-    this.options = $.extend(this.options, options);
-    this.options = this.checkOptions(this.options);
   }
 }
 

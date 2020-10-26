@@ -4,7 +4,7 @@ import ISliderOptions from './ISliderOptions';
 import ISliderOptionsFactory from './ISliderOptionsFactory';
 
 class SliderOptionsFactory implements ISliderOptionsFactory {
-  options?: ISliderSettings;
+  private options?: ISliderSettings;
 
   constructor(options?: ISliderSettings) {
     this.options = options;

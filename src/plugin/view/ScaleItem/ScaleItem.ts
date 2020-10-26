@@ -23,6 +23,10 @@ class ScaleItem extends AbstractElement implements IScaleItem {
     this.addEvents();
   }
 
+  public get scaleItemClickedEvent(): ILiteEvent<number> {
+    return this.onScaleItemClicked.expose();
+  }
+
   protected init(): void {
     const $mark = this.isHorizontal
       ? $('<div>').addClass(StyleClasses.SCALEMARK)
@@ -38,10 +42,6 @@ class ScaleItem extends AbstractElement implements IScaleItem {
     this.$elem.click(() => {
       this.onScaleItemClicked.trigger(this.value);
     });
-  }
-
-  public get scaleItemClickedEvent(): ILiteEvent<number> {
-    return this.onScaleItemClicked.expose();
   }
 }
 

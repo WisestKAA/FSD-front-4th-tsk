@@ -17,6 +17,11 @@ class SliderCard {
       this.addEvents();
     }
 
+    protected initSlider(slider: HTMLElement, sliderSettings: ISliderSettings): void{
+      this.$slider = $(slider);
+      $(slider).SimpleSlider(sliderSettings);
+    }
+
     private init(): void{
       const $form = this.$elem.find('.js-slider-card__form');
       this.initFormInputs($form);
@@ -188,11 +193,6 @@ class SliderCard {
         return value;
       }
       throw new Error();
-    }
-
-    protected initSlider(slider: HTMLElement, sliderSettings: ISliderSettings): void{
-      this.$slider = $(slider);
-      $(slider).SimpleSlider(sliderSettings);
     }
 
     private initFormInputs(form: JQuery<HTMLElement>): void {

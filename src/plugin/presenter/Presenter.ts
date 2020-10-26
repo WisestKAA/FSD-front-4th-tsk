@@ -20,6 +20,56 @@ class Presenter implements IPresenter {
     this.addEvents();
   }
 
+  public sliderHandleChangedPosition(direction: SliderDirection): void {
+    const currentVal = this.getCurrentValFromPosition(direction);
+    const correctVal = this.model.getCorrectValWithStep(currentVal);
+    const current = this.getCorrectCurrentVal(correctVal, direction);
+    this.setCurrentValueModel(current);
+    const currentValFromPosition = this.getCurrentValFromPosition(direction);
+    correctVal !== currentValFromPosition && this.setCurrentHandlePosition(correctVal, direction);
+  }
+
+  public scaleClicked(value: number): void{
+    const options = this.model.getOptions();
+    const val = this.model.getCorrectValWithStep(value);
+
+    if (!options.isRange) {
+      this.setCurrentValueModel([val, 0]);
+      this.setCurrentHandlePosition(
+        val,
+        SliderDirection.getDirection(true, options.isHorizontal)
+      );
+      return;
+    }
+
+    if (val < options.currentVal[0]
+      || val - options.currentVal[0] < options.currentVal[1] - val
+    ) {
+      this.setCurrentValueModel([val, options.currentVal[1]]);
+      this.setCurrentHandlePosition(val, SliderDirection.getDirection(true, options.isHorizontal));
+    } else {
+      this.setCurrentValueModel([options.currentVal[0], val]);
+      this.setCurrentHandlePosition(val, SliderDirection.getDirection(false, options.isHorizontal));
+    }
+  }
+
+  @bind
+  public setNewOptions(options: ISliderSettings): void{
+    this.model.setNewOptions(options);
+  }
+
+  @bind
+  public getOptions(): ISliderSettings {
+    return this.model.getOptions();
+  }
+
+  @bind
+  public onCurrentValueChanged(callBack: Function): void{
+    this.model.changeCurrentValueEvent.on((data) => {
+      callBack(data);
+    });
+  }
+
   private init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{
     this.model = modelFactory.build();
     const currentOptions = this.model.getOptions();
@@ -179,56 +229,6 @@ class Presenter implements IPresenter {
       scaleValues.push(maxVal);
     }
     return scaleValues;
-  }
-
-  public sliderHandleChangedPosition(direction: SliderDirection): void {
-    const currentVal = this.getCurrentValFromPosition(direction);
-    const correctVal = this.model.getCorrectValWithStep(currentVal);
-    const current = this.getCorrectCurrentVal(correctVal, direction);
-    this.setCurrentValueModel(current);
-    const currentValFromPosition = this.getCurrentValFromPosition(direction);
-    correctVal !== currentValFromPosition && this.setCurrentHandlePosition(correctVal, direction);
-  }
-
-  public scaleClicked(value: number): void{
-    const options = this.model.getOptions();
-    const val = this.model.getCorrectValWithStep(value);
-
-    if (!options.isRange) {
-      this.setCurrentValueModel([val, 0]);
-      this.setCurrentHandlePosition(
-        val,
-        SliderDirection.getDirection(true, options.isHorizontal)
-      );
-      return;
-    }
-
-    if (val < options.currentVal[0]
-      || val - options.currentVal[0] < options.currentVal[1] - val
-    ) {
-      this.setCurrentValueModel([val, options.currentVal[1]]);
-      this.setCurrentHandlePosition(val, SliderDirection.getDirection(true, options.isHorizontal));
-    } else {
-      this.setCurrentValueModel([options.currentVal[0], val]);
-      this.setCurrentHandlePosition(val, SliderDirection.getDirection(false, options.isHorizontal));
-    }
-  }
-
-  @bind
-  public setNewOptions(options: ISliderSettings): void{
-    this.model.setNewOptions(options);
-  }
-
-  @bind
-  public getOptions(): ISliderSettings {
-    return this.model.getOptions();
-  }
-
-  @bind
-  public onCurrentValueChanged(callBack: Function): void{
-    this.model.changeCurrentValueEvent.on((data) => {
-      callBack(data);
-    });
   }
 }
 

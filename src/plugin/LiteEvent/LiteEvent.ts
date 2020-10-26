@@ -1,8 +1,6 @@
 import ILiteEvent from './ILiteEvent';
 
 class LiteEvent<T> implements ILiteEvent<T> {
-  private handlers: { (data?: T): void; }[] = [];
-
   public on(handler: { (data?: T): void }) : void {
     this.handlers.push(handler);
   }
@@ -16,6 +14,8 @@ class LiteEvent<T> implements ILiteEvent<T> {
   public expose() : ILiteEvent<T> {
     return this;
   }
+
+  private handlers: { (data?: T): void; }[] = [];
 }
 
 export default LiteEvent;

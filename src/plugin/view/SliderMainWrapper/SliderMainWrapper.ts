@@ -32,6 +32,34 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     this.addEvents();
   }
 
+  public getSliderHandlePosition(direction: SliderDirection): number {
+    return this.sliderHandleWrapper.getSliderHandlePosition(direction);
+  }
+
+  public getMaxHandlePosition(): number {
+    return this.sliderHandleWrapper.getMaxHandlePosition();
+  }
+
+  public setHandlePosition(position: number, direction: SliderDirection): void{
+    this.sliderHandleWrapper.setHandlePosition(position, direction);
+  }
+
+  public getHandleFromPosition(): number {
+    return this.sliderHandleWrapper.getHandleFromPosition();
+  }
+
+  public getHandleToPosition(): number | null{
+    return this.sliderHandleWrapper.getHandleToPosition();
+  }
+
+  public getLineSize(): number {
+    return this.sliderLine.getLineSize();
+  }
+
+  public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
+    return this.onHandlePositionChanged.expose();
+  }
+
   protected init(): void {
     this.$elem = $('<div>');
     this.changeOrientation(
@@ -65,34 +93,6 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
         maxHandlePosition: this.getMaxHandlePosition()
       };
     this.sliderLine.setRange(options);
-  }
-
-  public getSliderHandlePosition(direction: SliderDirection): number {
-    return this.sliderHandleWrapper.getSliderHandlePosition(direction);
-  }
-
-  public getMaxHandlePosition(): number {
-    return this.sliderHandleWrapper.getMaxHandlePosition();
-  }
-
-  public setHandlePosition(position: number, direction: SliderDirection): void{
-    this.sliderHandleWrapper.setHandlePosition(position, direction);
-  }
-
-  public getHandleFromPosition(): number {
-    return this.sliderHandleWrapper.getHandleFromPosition();
-  }
-
-  public getHandleToPosition(): number | null{
-    return this.sliderHandleWrapper.getHandleToPosition();
-  }
-
-  public getLineSize(): number {
-    return this.sliderLine.getLineSize();
-  }
-
-  public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
-    return this.onHandlePositionChanged.expose();
   }
 }
 

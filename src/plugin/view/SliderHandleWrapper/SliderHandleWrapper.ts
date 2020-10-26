@@ -33,6 +33,46 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     this.addEvents();
   }
 
+  public getMaxHandlePosition(): number {
+    let maxHandlePosition: number;
+    maxHandlePosition = this.handleFrom.getSliderHandleMaxPosition();
+    if (this.isRange) {
+      const maxHandlePositionTo = this.handleTo.getSliderHandleMaxPosition();
+      maxHandlePosition = Math.min(maxHandlePosition, maxHandlePositionTo);
+    }
+    return maxHandlePosition;
+  }
+
+  public setHandlePosition(position: number, direction: SliderDirection): void {
+    SliderDirection.isFrom(direction)
+      ? this.handleFrom.setCurrentPosition(position, direction)
+      : this.handleTo.setCurrentPosition(position, direction);
+    this.onHandlePositionChanged.trigger(direction);
+  }
+
+  public getSliderHandlePosition(direction: SliderDirection): number {
+    if (SliderDirection.isFrom(direction)) {
+      return this.handleFrom.getPosition();
+    }
+    return this.handleTo.getPosition();
+  }
+
+  public getHandleFromPosition(): number {
+    return this.handleFrom.getPosition();
+  }
+
+  public getHandleToPosition(): number | null{
+    return !this.isRange ? null : this.handleTo.getPosition();
+  }
+
+  public getIsRange(): boolean {
+    return this.isRange;
+  }
+
+  public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
+    return this.onHandlePositionChanged.expose();
+  }
+
   protected init(): void {
     this.$elem = $('<div>');
     this.changeOrientation(
@@ -79,46 +119,6 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
         ? this.setHandlePosition(maxPos - positionTo, direction)
         : this.setHandlePosition(maxPos - positionFrom, direction);
     }
-  }
-
-  public getMaxHandlePosition(): number {
-    let maxHandlePosition: number;
-    maxHandlePosition = this.handleFrom.getSliderHandleMaxPosition();
-    if (this.isRange) {
-      const maxHandlePositionTo = this.handleTo.getSliderHandleMaxPosition();
-      maxHandlePosition = Math.min(maxHandlePosition, maxHandlePositionTo);
-    }
-    return maxHandlePosition;
-  }
-
-  public setHandlePosition(position: number, direction: SliderDirection): void {
-    SliderDirection.isFrom(direction)
-      ? this.handleFrom.setCurrentPosition(position, direction)
-      : this.handleTo.setCurrentPosition(position, direction);
-    this.onHandlePositionChanged.trigger(direction);
-  }
-
-  public getSliderHandlePosition(direction: SliderDirection): number {
-    if (SliderDirection.isFrom(direction)) {
-      return this.handleFrom.getPosition();
-    }
-    return this.handleTo.getPosition();
-  }
-
-  public getHandleFromPosition(): number {
-    return this.handleFrom.getPosition();
-  }
-
-  public getHandleToPosition(): number | null{
-    return !this.isRange ? null : this.handleTo.getPosition();
-  }
-
-  public getIsRange(): boolean {
-    return this.isRange;
-  }
-
-  public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
-    return this.onHandlePositionChanged.expose();
   }
 }
 

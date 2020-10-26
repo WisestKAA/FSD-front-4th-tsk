@@ -12,6 +12,8 @@ import ISliderHandle from './ISliderHandle';
 class SliderHandle extends AbstractElement implements ISliderHandle {
   public $elem: JQuery<HTMLElement>;
 
+  protected isHorizontal: boolean;
+
   private shiftX: number;
 
   private shiftXR: number;
@@ -26,8 +28,6 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
 
   private onPositionChanged: LiteEvent<SliderDirection>;
 
-  protected isHorizontal: boolean;
-
   private maxPosition: number;
 
   private isFrom: boolean;
@@ -39,6 +39,40 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     this.isFrom = sliderHandleOptions.isFrom;
     this.init();
     this.addEvents();
+  }
+
+  public setNewPosition(position: number, direction: SliderDirection): void {
+    this.setCurrentPosition(position, direction);
+    this.onPositionChanged.trigger(direction);
+  }
+
+  public getSliderHandleMaxPosition(): number {
+    const lineSize = this.isHorizontal
+      ? this.line.$elem.outerWidth()
+      : this.line.$elem.outerHeight();
+    const handleSize = this.getHandleSize();
+    const maxWidth = lineSize - handleSize;
+    this.maxPosition = (100 * maxWidth) / lineSize;
+    return this.maxPosition;
+  }
+
+  public setCurrentPosition(position: number, direction: SliderDirection): void{
+    this.position = position;
+    position >= this.getSliderHandleMaxPosition()
+      ? this.$elem.attr('style', `${direction}: ${position}%; z-index: 100;`)
+      : this.$elem.attr('style', `${direction}: ${position}%`);
+  }
+
+  public getHandleSize(): number {
+    return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
+  }
+
+  public getPosition(): number {
+    return this.position;
+  }
+
+  public get positionChangedEvent(): ILiteEvent<SliderDirection> {
+    return this.onPositionChanged.expose();
   }
 
   protected init(): void {
@@ -182,40 +216,6 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     }
     const correctPosition = (100 * coordinate) / lineSize;
     return correctPosition;
-  }
-
-  public setNewPosition(position: number, direction: SliderDirection): void {
-    this.setCurrentPosition(position, direction);
-    this.onPositionChanged.trigger(direction);
-  }
-
-  public getSliderHandleMaxPosition(): number {
-    const lineSize = this.isHorizontal
-      ? this.line.$elem.outerWidth()
-      : this.line.$elem.outerHeight();
-    const handleSize = this.getHandleSize();
-    const maxWidth = lineSize - handleSize;
-    this.maxPosition = (100 * maxWidth) / lineSize;
-    return this.maxPosition;
-  }
-
-  public setCurrentPosition(position: number, direction: SliderDirection): void{
-    this.position = position;
-    position >= this.getSliderHandleMaxPosition()
-      ? this.$elem.attr('style', `${direction}: ${position}%; z-index: 100;`)
-      : this.$elem.attr('style', `${direction}: ${position}%`);
-  }
-
-  public getHandleSize(): number {
-    return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
-  }
-
-  public getPosition(): number {
-    return this.position;
-  }
-
-  public get positionChangedEvent(): ILiteEvent<SliderDirection> {
-    return this.onPositionChanged.expose();
   }
 }
 

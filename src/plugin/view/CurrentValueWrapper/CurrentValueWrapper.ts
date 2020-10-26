@@ -7,11 +7,11 @@ import ISetCurrentValuePositionOptions from './ISetCurrentValuePositionOptions';
 class CurrentValueWrapper extends AbstractElement {
   public $elem: JQuery<HTMLElement>;
 
+  protected isHorizontal: boolean;
+
   private currentValueFrom: ICurrentValue;
 
   private currentValueTo: ICurrentValue;
-
-  protected isHorizontal: boolean;
 
   private isRange: boolean;
 
@@ -26,18 +26,6 @@ class CurrentValueWrapper extends AbstractElement {
       this.isRange = false;
     }
     this.init();
-  }
-
-  protected init(): void {
-    this.$elem = $('<div>');
-    this.changeOrientation(
-      this.isHorizontal,
-      StyleClasses.CURRENTVALWRAPPER,
-      StyleClasses.CURRENTVALWRAPPERV
-    );
-
-    this.$elem.append(this.currentValueFrom.$elem);
-    this.isRange && this.$elem.append(this.currentValueTo.$elem);
   }
 
   public setCurrentValuePosition(options: ISetCurrentValuePositionOptions): void {
@@ -82,6 +70,30 @@ class CurrentValueWrapper extends AbstractElement {
         options.handleToPosition
       );
     }
+  }
+
+  public setCurrentValue(currentValue: number[]): void{
+    this.currentValueFrom.setCurrentValue(currentValue[0]);
+    this.isRange && this.currentValueTo.setCurrentValue(currentValue[1]);
+  }
+
+  public getCurrentValue(): number[] {
+    const val: number[] = [];
+    val.push(this.currentValueFrom.getCurrentValue());
+    this.isRange && val.push(this.currentValueTo.getCurrentValue());
+    return val;
+  }
+
+  protected init(): void {
+    this.$elem = $('<div>');
+    this.changeOrientation(
+      this.isHorizontal,
+      StyleClasses.CURRENTVALWRAPPER,
+      StyleClasses.CURRENTVALWRAPPERV
+    );
+
+    this.$elem.append(this.currentValueFrom.$elem);
+    this.isRange && this.$elem.append(this.currentValueTo.$elem);
   }
 
   private checkCurrentValueIntersection(
@@ -158,18 +170,6 @@ class CurrentValueWrapper extends AbstractElement {
       + shiftMiddlePosition - currentValueToPercent;
     this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
     this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
-  }
-
-  public setCurrentValue(currentValue: number[]): void{
-    this.currentValueFrom.setCurrentValue(currentValue[0]);
-    this.isRange && this.currentValueTo.setCurrentValue(currentValue[1]);
-  }
-
-  public getCurrentValue(): number[] {
-    const val: number[] = [];
-    val.push(this.currentValueFrom.getCurrentValue());
-    this.isRange && val.push(this.currentValueTo.getCurrentValue());
-    return val;
   }
 }
 

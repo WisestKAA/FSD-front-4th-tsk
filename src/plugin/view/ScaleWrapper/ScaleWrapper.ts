@@ -23,6 +23,10 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
     this.addEvents();
   }
 
+  public get scaleItemClickedEvent(): ILiteEvent<number> {
+    return this.onScaleItemClicked.expose();
+  }
+
   protected init(): void {
     this.$elem = $('<div>');
     this.changeOrientation(
@@ -41,10 +45,6 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
         this.onScaleItemClicked.trigger(val);
       });
     });
-  }
-
-  public get scaleItemClickedEvent(): ILiteEvent<number> {
-    return this.onScaleItemClicked.expose();
   }
 }
 

@@ -24,28 +24,6 @@ class CurrentValue implements ICurrentValue {
     this.init(isHorizontal);
   }
 
-  private init(isHorizontal: boolean): void {
-    this.$text = $('<div>').addClass(StyleClasses.CURRENTVALTEXT);
-    this.$text.html(`${this.val}`);
-
-    this.$arrow = $('<div>');
-    this.changeOrientation({
-      isHorizontal,
-      $elem: this.$arrow,
-      horizontalClass: StyleClasses.CURRENTVALARROW,
-      verticalClass: StyleClasses.CURRENTVALARROWV
-    });
-
-    this.$elem = $('<div>');
-    this.changeOrientation({
-      isHorizontal,
-      $elem: this.$elem,
-      horizontalClass: StyleClasses.CURRENTVAL,
-      verticalClass: StyleClasses.CURRENTVALV
-    });
-    this.$elem.append(this.$text, this.$arrow);
-  }
-
   public setCurrentValue(currentValue: number): void{
     this.$text.html(`${currentValue}`);
     this.val = currentValue;
@@ -63,17 +41,6 @@ class CurrentValue implements ICurrentValue {
     this.position = correctPosition;
     const direction = SliderDirection.getDirection(this.isFrom, this.isHorizontal);
     this.$elem.attr('style', `${direction}: ${correctPosition}%;`);
-  }
-
-  private getCorrectPosition(
-    position: number,
-    handlePercent: number,
-    lineWidth: number
-  ): number {
-    const currentPercent = (this.$elem.get(0).offsetWidth * 100) / lineWidth;
-    const shiftPosition = (currentPercent - handlePercent) / 2;
-    const currentPosition = position - shiftPosition;
-    return currentPosition;
   }
 
   public getCurrentValueSize(): number {
@@ -108,6 +75,39 @@ class CurrentValue implements ICurrentValue {
     isHorizontal
       ? elem.classList.add(horizontalClass)
       : elem.classList.add(horizontalClass, verticalClass);
+  }
+
+  private init(isHorizontal: boolean): void {
+    this.$text = $('<div>').addClass(StyleClasses.CURRENTVALTEXT);
+    this.$text.html(`${this.val}`);
+
+    this.$arrow = $('<div>');
+    this.changeOrientation({
+      isHorizontal,
+      $elem: this.$arrow,
+      horizontalClass: StyleClasses.CURRENTVALARROW,
+      verticalClass: StyleClasses.CURRENTVALARROWV
+    });
+
+    this.$elem = $('<div>');
+    this.changeOrientation({
+      isHorizontal,
+      $elem: this.$elem,
+      horizontalClass: StyleClasses.CURRENTVAL,
+      verticalClass: StyleClasses.CURRENTVALV
+    });
+    this.$elem.append(this.$text, this.$arrow);
+  }
+
+  private getCorrectPosition(
+    position: number,
+    handlePercent: number,
+    lineWidth: number
+  ): number {
+    const currentPercent = (this.$elem.get(0).offsetWidth * 100) / lineWidth;
+    const shiftPosition = (currentPercent - handlePercent) / 2;
+    const currentPosition = position - shiftPosition;
+    return currentPosition;
   }
 }
 

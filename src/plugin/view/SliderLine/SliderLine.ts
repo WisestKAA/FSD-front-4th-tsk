@@ -25,13 +25,6 @@ class SliderLine extends AbstractElement implements ISliderLine {
     this.init();
   }
 
-  protected init(): void{
-    this.$elem = this.isHorizontal
-      ? $('<div>').addClass(StyleClasses.LINE)
-      : $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINEV]);
-    this.isRangeLineEnabled && this.$elem.append(this.range.$elem);
-  }
-
   public getLineSize(): number {
     return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
   }
@@ -48,6 +41,13 @@ class SliderLine extends AbstractElement implements ISliderLine {
           setRangeOptions.maxHandlePosition
         );
     }
+  }
+
+  protected init(): void{
+    this.$elem = this.isHorizontal
+      ? $('<div>').addClass(StyleClasses.LINE)
+      : $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINEV]);
+    this.isRangeLineEnabled && this.$elem.append(this.range.$elem);
   }
 }
 
