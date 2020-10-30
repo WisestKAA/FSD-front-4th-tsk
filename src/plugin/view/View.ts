@@ -104,11 +104,16 @@ class View implements IView {
       this.setCurrentValuePosition(direction);
       this.presenter.sliderHandleChangedPosition(direction);
     });
+
     if (this.scaleValues !== null && this.scaleValues !== undefined) {
       this.scaleWrapper.scaleItemClickedEvent.on((number) => {
         this.presenter.scaleClicked(number);
       });
     }
+
+    this.currentValueWrapper.intersectionEndedEvent.on((direction) => {
+      this.setCurrentValuePosition(direction);
+    });
   }
 
   private buildMainWrapper(isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper {

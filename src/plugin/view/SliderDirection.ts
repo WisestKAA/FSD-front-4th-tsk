@@ -25,6 +25,31 @@ class SliderDirection {
   static isFrom(direction: SliderDirection): boolean {
     return !!(direction === this.LEFT || direction === this.BOTTOM);
   }
+
+  static getReverseDirection(direction: SliderDirection): SliderDirection {
+    let result: SliderDirection;
+    switch (direction) {
+    case SliderDirection.TOP: {
+      result = SliderDirection.BOTTOM;
+      break;
+    }
+    case SliderDirection.BOTTOM: {
+      result = SliderDirection.TOP;
+      break;
+    }
+    case SliderDirection.RIGHT: {
+      result = SliderDirection.LEFT;
+      break;
+    }
+    case SliderDirection.LEFT: {
+      result = SliderDirection.RIGHT;
+      break;
+    }
+    default: result = null;
+    }
+
+    return result;
+  }
 }
 
 export default SliderDirection;

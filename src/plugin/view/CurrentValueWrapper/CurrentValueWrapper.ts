@@ -1,5 +1,7 @@
 import AbstractElement from '../AbstractElement/AbstractElement';
 import ICurrentValue from '../CurrentValue/ICurrentValue';
+import LiteEvent from '../../LiteEvent/LiteEvent';
+import ILiteEvent from '../../LiteEvent/ILiteEvent';
 import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
 import ISetCurrentValuePositionOptions from './ISetCurrentValuePositionOptions';
@@ -15,6 +17,10 @@ class CurrentValueWrapper extends AbstractElement {
 
   private isRange: boolean;
 
+  private wasIntersected: boolean = false;
+
+  private onIntersectionEnded: LiteEvent<SliderDirection>;
+
   constructor(isHorizontal: boolean, valFrom: ICurrentValue, valTo?: ICurrentValue) {
     super();
     this.currentValueFrom = valFrom;
@@ -29,33 +35,42 @@ class CurrentValueWrapper extends AbstractElement {
   }
 
   public setCurrentValuePosition(options: ISetCurrentValuePositionOptions): void {
-    switch (options.direction) {
+    const {
+      direction,
+      position,
+      maxHandlePosition,
+      lineSize,
+      handleFromPosition,
+      handleToPosition
+    } = options;
+
+    switch (direction) {
     case SliderDirection.LEFT: {
-      const maxPosition = options.maxHandlePosition;
+      const maxPosition = maxHandlePosition;
       const handlePercent = 100 - maxPosition;
       this.currentValueFrom.setPosition(
-        options.position,
+        position,
         handlePercent,
-        options.lineSize
+        lineSize
       );
       break;
     }
     case SliderDirection.BOTTOM: {
-      this.currentValueFrom.setPosition(options.position);
+      this.currentValueFrom.setPosition(position);
       break;
     }
     case SliderDirection.RIGHT: {
-      const maxPosition = options.maxHandlePosition;
+      const maxPosition = maxHandlePosition;
       const handlePercent = 100 - maxPosition;
       this.currentValueTo.setPosition(
-        options.position,
+        position,
         handlePercent,
-        options.lineSize
+        lineSize
       );
       break;
     }
     case SliderDirection.TOP: {
-      this.currentValueTo.setPosition(options.position);
+      this.currentValueTo.setPosition(position);
       break;
     }
     default: {
@@ -64,11 +79,12 @@ class CurrentValueWrapper extends AbstractElement {
     }
 
     if (this.isRange) {
-      this.checkCurrentValueIntersection(
-        options.lineSize,
-        options.handleFromPosition,
-        options.handleToPosition
-      );
+      this.checkCurrentValueIntersection({
+        lineSize,
+        handleFromPosition,
+        handleToPosition,
+        direction
+      });
     }
   }
 
@@ -84,6 +100,10 @@ class CurrentValueWrapper extends AbstractElement {
     return val;
   }
 
+  public get intersectionEndedEvent(): ILiteEvent<SliderDirection> {
+    return this.onIntersectionEnded.expose();
+  }
+
   protected init(): void {
     this.$elem = $('<div>');
     this.changeOrientation(
@@ -94,13 +114,24 @@ class CurrentValueWrapper extends AbstractElement {
 
     this.$elem.append(this.currentValueFrom.$elem);
     this.isRange && this.$elem.append(this.currentValueTo.$elem);
+    this.onIntersectionEnded = new LiteEvent<SliderDirection>();
   }
 
   private checkCurrentValueIntersection(
-    lineSize: number,
-    handleFromPosition: number,
-    handleToPosition: number
+    data : {
+      lineSize: number,
+      handleFromPosition: number,
+      handleToPosition: number,
+      direction: SliderDirection
+    }
   ): void{
+    const {
+      lineSize,
+      handleFromPosition,
+      handleToPosition,
+      direction
+    } = data;
+
     const precision = Math.pow(10, 10);
     const currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
     const currentValueToSize = this.currentValueTo.getCurrentValueSize();
@@ -113,13 +144,19 @@ class CurrentValueWrapper extends AbstractElement {
       precision
     });
 
-    sumPosition >= maxSizePercent && this.fixIntersection({
-      handleFromPosition,
-      handleToPosition,
-      currentValueFromSize,
-      currentValueToSize,
-      lineSize
-    });
+    if (sumPosition >= maxSizePercent) {
+      this.wasIntersected = true;
+      this.fixIntersection({
+        handleFromPosition,
+        handleToPosition,
+        currentValueFromSize,
+        currentValueToSize,
+        lineSize
+      });
+    } else if (this.wasIntersected) {
+      this.wasIntersected = false;
+      this.onIntersectionEnded.trigger(SliderDirection.getReverseDirection(direction));
+    }
   }
 
   private getSumPosition(precision: number): number {
