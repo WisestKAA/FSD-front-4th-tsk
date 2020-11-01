@@ -26,6 +26,10 @@
     }
   }
 
+  &__handle-wrapper_vertical {
+    position: unset;
+  }
+
   &__main-wrapper_vertical {
     min-width: 17px;
   }
@@ -38,6 +42,7 @@
     border-radius: 3px;
     box-sizing: border-box;
     margin: 5px 0px 5px 0px;
+    cursor: pointer;
 
     &_vertical {
       height: 100%;

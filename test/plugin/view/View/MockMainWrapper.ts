@@ -10,10 +10,16 @@ class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {
 
   protected onHandlePositionChanged: LiteEvent<SliderDirection>;
 
+  private onLineClick: LiteEvent<number>;
+
   constructor(isHorizontal: boolean) {
     super();
     this.isHorizontal = isHorizontal;
     this.init();
+  }
+
+  public get lineClickEvent(): ILiteEvent<number> {
+    return this.onLineClick.expose();
   }
 
   protected init(): void {
@@ -24,6 +30,7 @@ class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {
       StyleClasses.MAIN_WRAPPER_V
     );
     this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
+    this.onLineClick = new LiteEvent<number>();
   }
 
   getSliderHandlePosition(directionMock: SliderDirection): number {

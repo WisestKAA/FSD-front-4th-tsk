@@ -21,36 +21,54 @@ class Presenter implements IPresenter {
   }
 
   public sliderHandleChangedPosition(direction: SliderDirection): void {
-    const currentVal = this.getCurrentValFromPosition(direction);
+    const currentVal = this.getCurrentValFromPosition(
+      direction,
+      this.view.getSliderHandlePosition(direction)
+    );
     const correctVal = this.model.getCorrectValWithStep(currentVal);
     const current = this.getCorrectCurrentVal(correctVal, direction);
     this.setCurrentValueModel(current);
-    const currentValFromPosition = this.getCurrentValFromPosition(direction);
+    const currentValFromPosition = this.getCurrentValFromPosition(
+      direction,
+      this.view.getSliderHandlePosition(direction)
+    );
     correctVal !== currentValFromPosition && this.setCurrentHandlePosition(correctVal, direction);
   }
 
   public scaleClicked(value: number): void{
-    const options = this.model.getOptions();
+    const {
+      currentVal,
+      isHorizontal,
+      isRange
+    } = this.model.getOptions();
     const val = this.model.getCorrectValWithStep(value);
 
-    if (!options.isRange) {
-      this.setCurrentValueModel([val, 0]);
-      this.setCurrentHandlePosition(
-        val,
-        SliderDirection.getDirection(true, options.isHorizontal)
-      );
-      return;
-    }
+    this.setNewValue({
+      currentVal,
+      isHorizontal,
+      isRange,
+      val
+    });
+  }
 
-    if (val < options.currentVal[0]
-      || val - options.currentVal[0] < options.currentVal[1] - val
-    ) {
-      this.setCurrentValueModel([val, options.currentVal[1]]);
-      this.setCurrentHandlePosition(val, SliderDirection.getDirection(true, options.isHorizontal));
-    } else {
-      this.setCurrentValueModel([options.currentVal[0], val]);
-      this.setCurrentHandlePosition(val, SliderDirection.getDirection(false, options.isHorizontal));
-    }
+  public lineClicked(position: number): void {
+    const {
+      currentVal,
+      isHorizontal,
+      isRange
+    } = this.model.getOptions();
+
+    const newVal = this.getCurrentValFromPosition(
+      isHorizontal ? SliderDirection.LEFT : SliderDirection.TOP,
+      position
+    );
+    const val = this.model.getCorrectValWithStep(newVal);
+    this.setNewValue({
+      currentVal,
+      isHorizontal,
+      isRange,
+      val
+    });
   }
 
   @bind
@@ -95,6 +113,39 @@ class Presenter implements IPresenter {
       valuesForeScale
     );
     this.initViewComponents();
+  }
+
+  private setNewValue(options: {
+    isRange: boolean,
+    val: number,
+    isHorizontal: boolean,
+    currentVal: number[]
+  }): void {
+    const {
+      isRange,
+      val,
+      isHorizontal,
+      currentVal
+    } = options;
+
+    if (!isRange) {
+      this.setCurrentValueModel([val, 0]);
+      this.setCurrentHandlePosition(
+        val,
+        SliderDirection.getDirection(true, isHorizontal)
+      );
+      return;
+    }
+
+    if (val < currentVal[0]
+      || val - currentVal[0] < currentVal[1] - val
+    ) {
+      this.setCurrentValueModel([val, currentVal[1]]);
+      this.setCurrentHandlePosition(val, SliderDirection.getDirection(true, isHorizontal));
+    } else {
+      this.setCurrentValueModel([currentVal[0], val]);
+      this.setCurrentHandlePosition(val, SliderDirection.getDirection(false, isHorizontal));
+    }
   }
 
   private initViewComponents(): void{
@@ -149,10 +200,10 @@ class Presenter implements IPresenter {
     return correctPosition;
   }
 
-  private getCurrentValFromPosition(direction: SliderDirection): number {
+  private getCurrentValFromPosition(direction: SliderDirection, position: number): number {
     const { maxVal, minVal, precision } = this.model.getOptions();
     const correctPosition = this.getCorrectPosition({
-      position: this.view.getSliderHandlePosition(direction),
+      position,
       maxHandlePosition: this.view.getMaxHandlePosition(),
       isForView: false,
       direction

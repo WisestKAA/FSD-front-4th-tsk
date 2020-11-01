@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/WisestKAA/FSD-front-4th-tsk#readme",
   "devDependencies": {
-
     "@metahub/karma-jasmine-jquery": "^4.0.1",
     "@types/jasmine": "^3.5.10",
     "@types/jasmine-jquery": "^1.5.33",

@@ -114,6 +114,10 @@ class View implements IView {
     this.currentValueWrapper.intersectionEndedEvent.on((direction) => {
       this.setCurrentValuePosition(direction);
     });
+
+    this.mainWrapper.lineClickEvent.on((percentVal) => {
+      this.presenter.lineClicked(percentVal);
+    });
   }
 
   private buildMainWrapper(isRangeLineEnabled: boolean, isRange: boolean): ISliderMainWrapper {

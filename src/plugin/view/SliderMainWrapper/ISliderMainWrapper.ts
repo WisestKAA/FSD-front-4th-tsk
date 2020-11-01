@@ -10,6 +10,7 @@ interface ISliderMainWrapper extends IElement{
   getHandleToPosition(): number | null;
   getLineSize(): number;
   handlePositionChangedEvent: ILiteEvent<SliderDirection>;
+  lineClickEvent: ILiteEvent<number>;
 }
 
 export default ISliderMainWrapper;

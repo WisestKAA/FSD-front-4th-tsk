@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import AbstractElement from '../AbstractElement/AbstractElement';
 import ISliderHandleWrapper from '../SliderHandleWrapper/ISliderHandleWrapper';
 import LiteEvent from '../../LiteEvent/LiteEvent';
@@ -18,6 +20,8 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
   private sliderHandleWrapper: ISliderHandleWrapper;
 
   private onHandlePositionChanged: LiteEvent<SliderDirection>;
+
+  private onLineClick: LiteEvent<number>;
 
   constructor(
     isHorizontal: boolean,
@@ -60,6 +64,10 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     return this.onHandlePositionChanged.expose();
   }
 
+  public get lineClickEvent(): ILiteEvent<number> {
+    return this.onLineClick.expose();
+  }
+
   protected init(): void {
     this.$elem = $('<div>');
     this.changeOrientation(
@@ -68,7 +76,9 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
       StyleClasses.MAIN_WRAPPER_V
     );
     this.$elem.append([this.sliderLine.$elem, this.sliderHandleWrapper.$elem]);
+
     this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
+    this.onLineClick = new LiteEvent<number>();
   }
 
   private addEvents(): void{
@@ -76,6 +86,15 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
       this.setRange();
       this.onHandlePositionChanged.trigger(direction);
     });
+
+    this.sliderLine.lineClickEvent.on(this.handleLineClick);
+  }
+
+  @bind
+  private handleLineClick(position: number): void {
+    const maxHandlePosition = this.sliderHandleWrapper.getMaxHandlePosition();
+    const correctPosition = position - ((100 - maxHandlePosition) / 2);
+    this.onLineClick.trigger(correctPosition);
   }
 
   private setRange(): void{
