@@ -2,7 +2,7 @@ import ScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/ScaleWrapper'
 import IScaleItem from '../../../../src/plugin/view/ScaleItem/IScaleItem';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import MockScaleItem from './MockScaleItem';
-import MockEvent from './MockEvent';
+import { MockEvent } from '../../../mocks/MockEvent';
 
 describe(
   'Test ScaleWrapper',
@@ -60,7 +60,7 @@ describe(
             items.push(itemFrom);
             items.push(itemTo);
             scaleWrapper = new ScaleWrapper(true, items);
-            const mockEvent = new MockEvent(scaleWrapper);
+            const mockEvent = new MockEvent(scaleWrapper.scaleItemClickedEvent);
             const eventSpy = spyOn(mockEvent, 'eventHandler');
             itemFrom.$elem.click();
             expect(eventSpy).toHaveBeenCalledWith(0);

@@ -1,6 +1,6 @@
 import Model from '../../../../src/plugin/model/Model';
 import MockOptionsFactory from './MockOptionsFactory';
-import MockEvent from './MockEvent';
+import { MockEvent } from '../../../mocks/MockEvent';
 
 describe('Test Model', () => {
   let model: Model;
@@ -30,8 +30,8 @@ describe('Test Model', () => {
           const { options } = factory;
           model = new Model(factory);
           const spyCurrentValue = spyOn(options, 'setCurrentValue');
-          const event = new MockEvent(model);
-          const spyEvent = spyOn(event, 'changeCurrentValue');
+          const event = new MockEvent(model.changeCurrentValueEvent);
+          const spyEvent = spyOn(event, 'eventHandler');
           model.setCurrentValue([0, 0]);
           expect(spyCurrentValue).toHaveBeenCalledWith([0, 0]);
           expect(spyEvent).toHaveBeenCalledWith([0, 0]);
@@ -45,8 +45,8 @@ describe('Test Model', () => {
           const { options } = factory;
           model = new Model(factory);
           const spyNewOptions = spyOn(options, 'setNewOptions');
-          const event = new MockEvent(model);
-          const spyEvent = spyOn(event, 'changeOptions');
+          const event = new MockEvent(model.changeOptionsEvent);
+          const spyEvent = spyOn(event, 'eventHandler');
           model.setNewOptions({ currentVal: [0, 0] });
           expect(spyNewOptions).toHaveBeenCalledWith({ currentVal: [0, 0] });
           expect(spyEvent).toHaveBeenCalled();

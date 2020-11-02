@@ -6,9 +6,10 @@ import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
 
 class MockLine implements ISliderLine {
   private onLineClick: LiteEvent<number>;
+
   $elem: JQuery<HTMLElement>;
 
-  constructor(){
+  constructor() {
     this.onLineClick = new LiteEvent<number>();
   }
 
@@ -27,6 +28,10 @@ class MockLine implements ISliderLine {
     horizontalClassMock: StyleClasses,
     verticalClassMock: StyleClasses
   ): void { }
+
+  lineClickTrigger(): void {
+    this.onLineClick.trigger(1);
+  }
 }
 
 export default MockLine;

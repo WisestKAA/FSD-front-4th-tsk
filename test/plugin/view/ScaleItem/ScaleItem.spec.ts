@@ -1,6 +1,6 @@
 import ScaleItem from '../../../../src/plugin/view/ScaleItem/ScaleItem';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import MockEvent from './MockEvent';
+import { MockEvent } from '../../../mocks/MockEvent';
 
 describe(
   'Test ScaleItem',
@@ -67,7 +67,7 @@ describe(
           'When user clicked on element, he must call scaleItemClickedEvent',
           () => {
             scaleItem = new ScaleItem(true, 0);
-            const mockEvent = new MockEvent(scaleItem);
+            const mockEvent = new MockEvent(scaleItem.scaleItemClickedEvent);
             const clickSpy = spyOn(mockEvent, 'eventHandler');
             scaleItem.$elem.click();
             expect(clickSpy).toHaveBeenCalledWith(0);

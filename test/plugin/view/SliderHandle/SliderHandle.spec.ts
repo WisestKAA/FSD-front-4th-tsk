@@ -2,7 +2,7 @@ import SliderHandle from '../../../../src/plugin/view/SliderHandle/SliderHandle'
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import MockSliderLine from './MockSliderLine';
-import MockHandleEvent from './MockHandleEvent';
+import { MockEvent } from '../../../mocks/MockEvent';
 
 describe(
   'Test SliderHandle',
@@ -226,8 +226,8 @@ describe(
               sliderLine: line,
               isFrom: true
             });
-            const mockHandleEvent = new MockHandleEvent(handle);
-            const spy = spyOn(mockHandleEvent, 'eventHandler');
+            const mockEvent = new MockEvent(handle.positionChangedEvent);
+            const spy = spyOn(mockEvent, 'eventHandler');
             handle.setNewPosition(10, SliderDirection.LEFT);
             expect(spy).toHaveBeenCalledWith(SliderDirection.LEFT);
           }

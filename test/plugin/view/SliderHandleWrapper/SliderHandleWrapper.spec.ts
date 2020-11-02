@@ -2,7 +2,7 @@ import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import SliderHandleWrapper from '../../../../src/plugin/view/SliderHandleWrapper/SliderHandleWrapper';
 import MockHandle from './MockHandle';
-import MockHandleWrapperEvent from './MockHandleWrapperEvent';
+import { MockEvent } from '../../../mocks/MockEvent';
 
 describe('Test SliderHandleWrapper', () => {
   let wrapper: SliderHandleWrapper;
@@ -186,8 +186,8 @@ describe('Test SliderHandleWrapper', () => {
         () => {
           handleFrom = new MockHandle();
           wrapper = new SliderHandleWrapper(true, handleFrom);
-          const mockHandleWrapperEvent = new MockHandleWrapperEvent(wrapper);
-          const spy = spyOn(mockHandleWrapperEvent, 'eventHandler');
+          const mockEvent = new MockEvent(wrapper.handlePositionChangedEvent);
+          const spy = spyOn(mockEvent, 'eventHandler');
           handleFrom.setNewPosition(0, SliderDirection.LEFT);
           expect(spy).toHaveBeenCalledWith(SliderDirection.LEFT);
         }
