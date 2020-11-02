@@ -152,7 +152,7 @@ class View implements IView {
     } else {
       currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(currentValueFrom);
     }
-    !this.options.isVisibleCurrentValue && currentValueWrapper.$elem.attr('style', 'display: none');
+    !this.options.isVisibleCurrentValue && currentValueWrapper.$elem.attr('style', 'visibility: hidden');
 
     return currentValueWrapper;
   }
