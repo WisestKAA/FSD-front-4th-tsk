@@ -42,10 +42,15 @@ class SliderCard {
       $(this.formInputs.isVisibleCurrentValue).on('change', this.handleVisibleCurrentValueChanged);
 
       this.formInputs.minVal.on('focusout', this.handleMinValFocusOut);
+      this.formInputs.minVal.on('keyup', this.handleInputEnterKeyUp);
       this.formInputs.maxVal.on('focusout', this.handleMaxValFocusOut);
+      this.formInputs.maxVal.on('keyup', this.handleInputEnterKeyUp);
       this.formInputs.currentVal.on('focusout', this.handleCurrentValFocusOut);
+      this.formInputs.currentVal.on('keyup', this.handleInputEnterKeyUp);
       this.formInputs.step.on('focusout', this.handleStepFocusOut);
+      this.formInputs.step.on('keyup', this.handleInputEnterKeyUp);
       this.formInputs.numberOfScaleMarks.on('focusout', this.handleNumOfScaleMarksFocusOut);
+      this.formInputs.numberOfScaleMarks.on('keyup', this.handleInputEnterKeyUp);
     }
 
     private handleSliderCurrentValueChanged(val: number[]): void{
@@ -53,6 +58,35 @@ class SliderCard {
         ? `${val[0]} ${val[1]}`
         : `${val[0]}`;
       this.options.currentVal = val;
+    }
+
+    @bind
+    private handleInputEnterKeyUp(event: JQuery.KeyUpEvent): void {
+      if (event.key === 'Enter') {
+        switch (event.target.name) {
+        case 'minVal': {
+          this.handleMinValFocusOut();
+          break;
+        }
+        case 'maxVal': {
+          this.handleMaxValFocusOut();
+          break;
+        }
+        case 'currentValue': {
+          this.handleCurrentValFocusOut();
+          break;
+        }
+        case 'step': {
+          this.handleStepFocusOut();
+          break;
+        }
+        case 'numOfScaleMark': {
+          this.handleNumOfScaleMarksFocusOut();
+          break;
+        }
+        default: null;
+        }
+      }
     }
 
     @bind
