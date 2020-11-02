@@ -279,7 +279,15 @@ class Presenter implements IPresenter {
       }
       scaleValues.push(maxVal);
     }
-    return scaleValues;
+    return this.getFixedScaleValues(scaleValues);
+  }
+
+  private getFixedScaleValues(values: number[]): number[] {
+    let currentValues = values.slice(1, values.length - 1);
+    currentValues = currentValues.map(val => this.model.getCorrectValWithStep(val));
+    currentValues.unshift(values[0]);
+    currentValues.push(values[values.length - 1]);
+    return currentValues;
   }
 }
 
