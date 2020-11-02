@@ -3,7 +3,7 @@ import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import MockLine from './MockLine';
 import MockHandleWrapper from './MockHandleWrapper';
-import MockWrapperEvent from './MockWrapperEvent';
+import { MockEvent } from '../../../mocks/MockEvent';
 
 describe('Tests SliderMainWrapper', () => {
   let wrapper: SliderMainWrapper;
@@ -122,8 +122,8 @@ describe('Tests SliderMainWrapper', () => {
         () => {
           const handleWrapper = new MockHandleWrapper();
           wrapper = new SliderMainWrapper(true, new MockLine(), handleWrapper);
-          const mockWrapperEvent = new MockWrapperEvent(wrapper);
-          const spy = spyOn(mockWrapperEvent, 'eventHandler');
+          const mockEvent = new MockEvent(wrapper.handlePositionChangedEvent);
+          const spy = spyOn(mockEvent, 'eventHandler');
           handleWrapper.setHandlePosition(0, SliderDirection.LEFT);
           expect(spy).toHaveBeenCalledWith(SliderDirection.LEFT);
         }
@@ -135,10 +135,23 @@ describe('Tests SliderMainWrapper', () => {
           const handleWrapper = new MockHandleWrapper();
           handleWrapper.isRange = false;
           wrapper = new SliderMainWrapper(true, new MockLine(), handleWrapper);
-          const mockWrapperEvent = new MockWrapperEvent(wrapper);
-          const spy = spyOn(mockWrapperEvent, 'eventHandler');
+          const mockEvent = new MockEvent(wrapper.handlePositionChangedEvent);
+          const spy = spyOn(mockEvent, 'eventHandler');
           handleWrapper.setHandlePosition(0, SliderDirection.LEFT);
           expect(spy).toHaveBeenCalledWith(SliderDirection.LEFT);
+        }
+      );
+
+      it(
+        'After clicking on the line should trigger the lineClickEvent event',
+        () => {
+          const handleWrapper = new MockHandleWrapper();
+          const line = new MockLine();
+          wrapper = new SliderMainWrapper(true, line, handleWrapper);
+          const mockEvent = new MockEvent<number>(line.lineClickEvent);
+          const spy = spyOn(mockEvent, 'eventHandler');
+          line.lineClickTrigger();
+          expect(spy).toHaveBeenCalled();
         }
       );
     }

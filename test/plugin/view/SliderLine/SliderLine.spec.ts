@@ -1,5 +1,6 @@
 import SliderLine from '../../../../src/plugin/view/SliderLine/SliderLine';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
+import { MockEvent } from '../../../mocks/MockEvent';
 import MockRange from './MockRange';
 
 describe('Test SliderLine', () => {
@@ -62,6 +63,18 @@ describe('Test SliderLine', () => {
           line = new SliderLine(true, range);
           const spy = spyOn(range, 'changeRangeLineOne');
           line.setRange({ handleFromPosition: 10, isRange: false });
+          expect(spy).toHaveBeenCalled();
+        }
+      );
+
+      it(
+        'After clicking on the line should trigger the lineClickEvent event',
+        () => {
+          const range = new MockRange();
+          line = new SliderLine(true, range);
+          const mockEvent = new MockEvent(line.lineClickEvent);
+          const spy = spyOn(mockEvent, 'eventHandler');
+          line.$elem.click();
           expect(spy).toHaveBeenCalled();
         }
       );
