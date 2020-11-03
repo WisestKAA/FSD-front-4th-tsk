@@ -87,15 +87,11 @@ class View implements IView {
     const $mainDiv = this.options.isHorizontal
       ? $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDER_JS])
       : $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDER_JS, StyleClasses.SLIDER_V]);
-    // if (this.scaleValues === null || this.scaleValues === undefined) {
-    //   $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
-    // } else {
     this.scaleWrapper = this.buildScaleWrapper();
     $mainDiv.append([
       this.currentValueWrapper.$elem,
       this.mainWrapper.$elem, this.scaleWrapper.$elem
     ]);
-    // }
     this.$slider = $(this.elem).append($mainDiv);
   }
 

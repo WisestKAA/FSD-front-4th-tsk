@@ -258,27 +258,6 @@ class Presenter implements IPresenter {
       },
       scaleValues
     );
-
-    // if (options.isScaleEnabled) {
-    //   const scaleValues = this.getValuesForScale({
-    //     minVal: options.minVal,
-    //     maxVal: options.maxVal,
-    //     numberOfScaleMarks: options.numberOfScaleMarks
-    //   });
-    //   this.view.reinitialization({
-    //     isHorizontal: options.isHorizontal,
-    //     isRange: options.isRange,
-    //     isRangeLineEnabled: options.isRangeLineEnabled,
-    //     isVisibleCurrentValue: options.isVisibleCurrentValue
-    //   }, scaleValues);
-    // } else {
-    //   this.view.reinitialization({
-    //     isHorizontal: options.isHorizontal,
-    //     isRange: options.isRange,
-    //     isRangeLineEnabled: options.isRangeLineEnabled,
-    //     isVisibleCurrentValue: options.isVisibleCurrentValue
-    //   });
-    // }
     this.initViewComponents();
   }
 
