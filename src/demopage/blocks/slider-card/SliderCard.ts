@@ -100,7 +100,7 @@ class SliderCard {
     @bind
     private handleMinValFocusOut(): void{
       this.inputValidation(
-        'Invalid input! The minimum value must be a number',
+        'Invalid input! The minimum value must be a number and less than max value',
         this.formInputs.minVal,
         this.options.minVal.toString(),
         () => {
@@ -128,7 +128,7 @@ class SliderCard {
       this.inputValidation(
         'The current value must be one or two digits separated by a space',
         this.formInputs.currentVal,
-        this.options.currentVal.toString(),
+        this.options.currentVal.join(' '),
         () => {
           const curVal = this.formInputs.currentVal.val().toString();
           const isRange = this.formInputs.isRange.checked;
@@ -259,8 +259,9 @@ class SliderCard {
       try {
         func();
       } catch (error) {
+        $element.val(oldValue);
+        func();
         $element.before(`<div class="slider-card__error js-slider-card__error">${errorMessage}</div>`);
-        $element.attr('value', oldValue);
       }
     }
 }

@@ -40,7 +40,7 @@ describe(
           () => {
             const elem = new MockElement();
             sliderCard = new MockSliderCard(elem.getElement({}).get(0));
-            sliderCard.getFormInputs().currentVal.attr('value', '5 0');
+            sliderCard.getFormInputs().currentVal.val('5 0');
             const setNewOptionsSpy = spyOn(sliderCard.presenter, 'setNewOptions');
             sliderCard.getFormInputs().currentVal.focusout();
             expect(setNewOptionsSpy).toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe(
         it(
           'If the minimum value field changed then after focusout the SliderCard must call the setNewOptions function from presenter with new options',
           () => {
-            sliderCard.getFormInputs().minVal.attr('value', '5');
+            sliderCard.getFormInputs().minVal.val('5');
             const setNewOptionsSpy = spyOn(sliderCard.presenter, 'setNewOptions');
             sliderCard.getFormInputs().minVal.focusout();
             expect(setNewOptionsSpy).toHaveBeenCalled();
@@ -62,7 +62,7 @@ describe(
         it(
           'If the maximum value field changed then after focusout the SliderCard must call the setNewOptions function from presenter with new options',
           () => {
-            sliderCard.getFormInputs().maxVal.attr('value', '99');
+            sliderCard.getFormInputs().maxVal.val('99');
             const setNewOptionsSpy = spyOn(sliderCard.presenter, 'setNewOptions');
             sliderCard.getFormInputs().maxVal.focusout();
             expect(setNewOptionsSpy).toHaveBeenCalled();
@@ -73,7 +73,7 @@ describe(
         it(
           'If the step field changed then after focusout the SliderCard must call the setNewOptions function from presenter with new options',
           () => {
-            sliderCard.getFormInputs().step.attr('value', '99');
+            sliderCard.getFormInputs().step.val('99');
             const setNewOptionsSpy = spyOn(sliderCard.presenter, 'setNewOptions');
             sliderCard.getFormInputs().step.focusout();
             expect(setNewOptionsSpy).toHaveBeenCalled();
@@ -84,7 +84,7 @@ describe(
         it(
           'If the numberOfScaleMarks field changed then after focusout the SliderCard must call the setNewOptions function from presenter with new options',
           () => {
-            sliderCard.getFormInputs().numberOfScaleMarks.attr('value', '3');
+            sliderCard.getFormInputs().numberOfScaleMarks.val('3');
             const setNewOptionsSpy = spyOn(sliderCard.presenter, 'setNewOptions');
             sliderCard.getFormInputs().numberOfScaleMarks.focusout();
             expect(setNewOptionsSpy).toHaveBeenCalled();
@@ -181,7 +181,7 @@ describe(
         it(
           'If the input value is incorrect, then the inputValidation function must throw an error and display it on the form before the input element',
           () => {
-            sliderCard.getFormInputs().maxVal.attr('value', 'asd');
+            sliderCard.getFormInputs().maxVal.val('asd');
             sliderCard.getFormInputs().maxVal.focusout();
             expect(sliderCard.getElem().find('.slider-card__error')
               .html())
