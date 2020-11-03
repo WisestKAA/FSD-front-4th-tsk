@@ -21,13 +21,15 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: false,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false
+            isVisibleCurrentValue: false,
+            isScaleEnabled: false
           };
           view = new View({
             elem,
             options,
             presenter: new MockPresenter(),
-            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
+            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+            scaleValues: [0, 100]
           });
           expect(view.$slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
             .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDER_JS}`);
@@ -42,13 +44,15 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false
+            isVisibleCurrentValue: false,
+            isScaleEnabled: false
           };
           view = new View({
             elem,
             options,
             presenter: new MockPresenter(),
-            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
+            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+            scaleValues: [0, 100]
           });
           expect(view.$slider.find(`.${StyleClasses.SLIDER}`).attr('class'))
             .toBe(`${StyleClasses.SLIDER} ${StyleClasses.SLIDER_JS} ${StyleClasses.SLIDER_V}`);
@@ -63,13 +67,15 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: true,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false
+            isVisibleCurrentValue: false,
+            isScaleEnabled: false
           };
           view = new View({
             elem,
             options,
             presenter: new MockPresenter(),
-            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
+            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+            scaleValues: [0, 100]
           });
           expect(view.$slider.find(`.${StyleClasses.CURRENT_VAL_WRAPPER}`).attr('class'))
             .toBe(StyleClasses.CURRENT_VAL_WRAPPER);
@@ -84,13 +90,15 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: true,
-            isVisibleCurrentValue: false
+            isVisibleCurrentValue: false,
+            isScaleEnabled: false
           };
           view = new View({
             elem,
             options,
             presenter: new MockPresenter(),
-            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
+            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+            scaleValues: [0, 100]
           });
           expect(view.$slider.find(`.${StyleClasses.CURRENT_VAL_WRAPPER}`).attr('class'))
             .toBe(`${StyleClasses.CURRENT_VAL_WRAPPER} ${StyleClasses.CURRENT_VAL_WRAPPER_V}`);
@@ -105,13 +113,15 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: true,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false
+            isVisibleCurrentValue: false,
+            isScaleEnabled: false
           };
           view = new View({
             elem,
             options,
             presenter: new MockPresenter(),
-            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
+            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+            scaleValues: [0, 100]
           });
           expect(view.$slider.find(`.${StyleClasses.MAIN_WRAPPER}`).attr('class'))
             .toBe(StyleClasses.MAIN_WRAPPER);
@@ -126,13 +136,15 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: true,
-            isVisibleCurrentValue: false
+            isVisibleCurrentValue: false,
+            isScaleEnabled: false
           };
           view = new View({
             elem,
             options,
             presenter: new MockPresenter(),
-            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange)
+            elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
+            scaleValues: [0, 100]
           });
           expect(view.$slider.find(`.${StyleClasses.MAIN_WRAPPER}`).attr('class'))
             .toBe(`${StyleClasses.MAIN_WRAPPER} ${StyleClasses.MAIN_WRAPPER_V}`);
@@ -147,7 +159,8 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: true,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false
+            isVisibleCurrentValue: false,
+            isScaleEnabled: true
           };
           view = new View({
             elem,
@@ -169,7 +182,8 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: true,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false
+            isVisibleCurrentValue: false,
+            isScaleEnabled: true
           };
           view = new View({
             elem,
@@ -199,8 +213,10 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false
-            }
+              isVisibleCurrentValue: false,
+              isScaleEnabled: false
+            },
+            [0, 100]
           );
           const mainWrapper = localView.getMainWrapper();
           const spy = spyOn(mainWrapper, 'getSliderHandlePosition');
@@ -220,8 +236,10 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false
-            }
+              isVisibleCurrentValue: false,
+              isScaleEnabled: false
+            },
+            [0, 100]
           );
           const currentValueWrapper = localView.getCurrentValueWrapper();
           const spy = spyOn(currentValueWrapper, 'setCurrentValue');
@@ -241,8 +259,10 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false
-            }
+              isVisibleCurrentValue: false,
+              isScaleEnabled: false
+            },
+            [0, 100]
           );
           const currentValueWrapper = localView.getCurrentValueWrapper();
           const spy = spyOn(currentValueWrapper, 'getCurrentValue');
@@ -262,8 +282,10 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false
-            }
+              isVisibleCurrentValue: false,
+              isScaleEnabled: false
+            },
+            [0, 100]
           );
           const mainWrapper = localView.getMainWrapper();
           const spy = spyOn(mainWrapper, 'getMaxHandlePosition');
@@ -283,8 +305,10 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false
-            }
+              isVisibleCurrentValue: false,
+              isScaleEnabled: false
+            },
+            [0, 100]
           );
           const mainWrapper = localView.getMainWrapper();
           const spy = spyOn(mainWrapper, 'setHandlePosition');
@@ -305,8 +329,10 @@ describe('Test View', () => {
               isHorizontal: true,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false
-            }
+              isVisibleCurrentValue: false,
+              isScaleEnabled: false
+            },
+            [0, 100]
           );
           const spy = spyOn(presenter, 'sliderHandleChangedPosition');
           localView.setHandlePosition(1000, SliderDirection.LEFT);
@@ -325,8 +351,10 @@ describe('Test View', () => {
               isHorizontal: true,
               isRange: true,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false
-            }
+              isVisibleCurrentValue: false,
+              isScaleEnabled: false
+            },
+            [0, 100]
           );
           const currentValueWrapper = localView.getCurrentValueWrapper();
           const spy = spyOn(currentValueWrapper, 'setCurrentValuePosition');
@@ -343,15 +371,17 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: false,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: true
+            isVisibleCurrentValue: true,
+            isScaleEnabled: false
           };
           const newOptions: IViewOptions = {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: true,
-            isVisibleCurrentValue: true
+            isVisibleCurrentValue: true,
+            isScaleEnabled: false
           };
-          const localView = new MockView(elem, new MockPresenter(), oldOptions);
+          const localView = new MockView(elem, new MockPresenter(), oldOptions, [0, 100]);
           const spySlider = spyOn(localView.$slider, 'html');
           const spyInit = spyOn(localView, 'init');
           const spyAddEvents = spyOn(localView, 'addEvents');
@@ -370,7 +400,8 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: true,
-            isVisibleCurrentValue: true
+            isVisibleCurrentValue: true,
+            isScaleEnabled: true
           };
           const localPresenter = new MockPresenter();
           const localView = new MockView($('<div>').get(0), localPresenter, options, [0, 100]);

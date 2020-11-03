@@ -3,6 +3,7 @@ interface IViewOptions{
   isRange: boolean;
   isRangeLineEnabled: boolean;
   isVisibleCurrentValue: boolean;
+  isScaleEnabled: boolean;
 }
 
 export default IViewOptions;

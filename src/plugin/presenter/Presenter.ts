@@ -95,7 +95,8 @@ class Presenter implements IPresenter {
       isHorizontal: currentOptions.isHorizontal,
       isRange: currentOptions.isRange,
       isRangeLineEnabled: currentOptions.isRangeLineEnabled,
-      isVisibleCurrentValue: currentOptions.isVisibleCurrentValue
+      isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
+      isScaleEnabled: currentOptions.isScaleEnabled
     };
 
     const valuesForeScale = currentOptions.isScaleEnabled
@@ -104,7 +105,11 @@ class Presenter implements IPresenter {
         minVal: currentOptions.minVal,
         numberOfScaleMarks: currentOptions.numberOfScaleMarks
       })
-      : null;
+      : this.getValuesForScale({
+        maxVal: currentOptions.maxVal,
+        minVal: currentOptions.minVal,
+        numberOfScaleMarks: 2
+      });
 
     this.view = viewFactory.build(
       this,
@@ -227,27 +232,53 @@ class Presenter implements IPresenter {
   }
 
   private optionsChanged(): void{
-    const options = this.model.getOptions();
-    if (options.isScaleEnabled) {
-      const scaleValues = this.getValuesForScale({
-        minVal: options.minVal,
-        maxVal: options.maxVal,
-        numberOfScaleMarks: options.numberOfScaleMarks
-      });
-      this.view.reinitialization({
-        isHorizontal: options.isHorizontal,
-        isRange: options.isRange,
-        isRangeLineEnabled: options.isRangeLineEnabled,
-        isVisibleCurrentValue: options.isVisibleCurrentValue
-      }, scaleValues);
-    } else {
-      this.view.reinitialization({
-        isHorizontal: options.isHorizontal,
-        isRange: options.isRange,
-        isRangeLineEnabled: options.isRangeLineEnabled,
-        isVisibleCurrentValue: options.isVisibleCurrentValue
-      });
-    }
+    const {
+      minVal,
+      maxVal,
+      isScaleEnabled,
+      numberOfScaleMarks,
+      isHorizontal,
+      isRange,
+      isRangeLineEnabled,
+      isVisibleCurrentValue
+    } = this.model.getOptions();
+    const scaleValues = this.getValuesForScale({
+      minVal,
+      maxVal,
+      numberOfScaleMarks: isScaleEnabled ? numberOfScaleMarks : 2
+    });
+
+    this.view.reinitialization(
+      {
+        isHorizontal,
+        isRange,
+        isRangeLineEnabled,
+        isVisibleCurrentValue,
+        isScaleEnabled
+      },
+      scaleValues
+    );
+
+    // if (options.isScaleEnabled) {
+    //   const scaleValues = this.getValuesForScale({
+    //     minVal: options.minVal,
+    //     maxVal: options.maxVal,
+    //     numberOfScaleMarks: options.numberOfScaleMarks
+    //   });
+    //   this.view.reinitialization({
+    //     isHorizontal: options.isHorizontal,
+    //     isRange: options.isRange,
+    //     isRangeLineEnabled: options.isRangeLineEnabled,
+    //     isVisibleCurrentValue: options.isVisibleCurrentValue
+    //   }, scaleValues);
+    // } else {
+    //   this.view.reinitialization({
+    //     isHorizontal: options.isHorizontal,
+    //     isRange: options.isRange,
+    //     isRangeLineEnabled: options.isRangeLineEnabled,
+    //     isVisibleCurrentValue: options.isVisibleCurrentValue
+    //   });
+    // }
     this.initViewComponents();
   }
 

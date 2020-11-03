@@ -11,7 +11,7 @@ class MockView extends View {
     elem: HTMLElement,
     presenter: IPresenter,
     options: IViewOptions,
-    scaleValues?: number[]
+    scaleValues: number[]
   ) {
     super({
       elem,

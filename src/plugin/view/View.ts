@@ -35,7 +35,7 @@ class View implements IView {
       presenter: IPresenter,
       options: IViewOptions,
       elementsFactory: IElementsFactory,
-      scaleValues?: number[]
+      scaleValues: number[]
   }) {
     const {
       elem, presenter, options, elementsFactory, scaleValues
@@ -69,7 +69,7 @@ class View implements IView {
     this.mainWrapper.setHandlePosition(position, direction);
   }
 
-  public reinitialization(option: IViewOptions, scaleValues?: number[]): void{
+  public reinitialization(option: IViewOptions, scaleValues: number[]): void{
     this.$slider.html('');
     this.options = option;
     this.scaleValues = scaleValues;
@@ -87,15 +87,15 @@ class View implements IView {
     const $mainDiv = this.options.isHorizontal
       ? $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDER_JS])
       : $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDER_JS, StyleClasses.SLIDER_V]);
-    if (this.scaleValues === null || this.scaleValues === undefined) {
-      $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
-    } else {
-      this.scaleWrapper = this.buildScaleWrapper();
-      $mainDiv.append([
-        this.currentValueWrapper.$elem,
-        this.mainWrapper.$elem, this.scaleWrapper.$elem
-      ]);
-    }
+    // if (this.scaleValues === null || this.scaleValues === undefined) {
+    //   $mainDiv.append([this.currentValueWrapper.$elem, this.mainWrapper.$elem]);
+    // } else {
+    this.scaleWrapper = this.buildScaleWrapper();
+    $mainDiv.append([
+      this.currentValueWrapper.$elem,
+      this.mainWrapper.$elem, this.scaleWrapper.$elem
+    ]);
+    // }
     this.$slider = $(this.elem).append($mainDiv);
   }
 
@@ -163,7 +163,9 @@ class View implements IView {
     this.scaleValues.forEach((value) => {
       scaleItems.push(this.elementsFactory.buildScaleItem(value));
     });
-    return this.elementsFactory.buildScaleWrapper(scaleItems);
+    const scaleWrapper = this.elementsFactory.buildScaleWrapper(scaleItems);
+    !this.options.isScaleEnabled && scaleWrapper.$elem.attr('style', 'visibility: hidden');
+    return scaleWrapper;
   }
 
   private setCurrentValuePosition(direction: SliderDirection): void{
