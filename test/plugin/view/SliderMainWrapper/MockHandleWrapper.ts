@@ -29,7 +29,11 @@ class MockHandleWrapper implements ISliderHandleWrapper {
     return 90;
   }
 
-  setHandlePosition(positionMock: number, direction: SliderDirection): void {
+  setHandlePosition(
+    positionMock: number,
+    direction: SliderDirection,
+    isNewPosition: boolean = true
+  ): void {
     this.onHandlePositionChanged.trigger(direction);
   }
 

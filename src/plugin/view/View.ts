@@ -65,8 +65,12 @@ class View implements IView {
     return this.mainWrapper.getMaxHandlePosition();
   }
 
-  public setHandlePosition(position: number, direction: SliderDirection): void {
-    this.mainWrapper.setHandlePosition(position, direction);
+  public setHandlePosition(
+    position: number,
+    direction: SliderDirection,
+    isNewPosition: boolean = true
+  ): void {
+    this.mainWrapper.setHandlePosition(position, direction, isNewPosition);
   }
 
   public reinitialization(option: IViewOptions, scaleValues: number[]): void{
@@ -76,6 +80,19 @@ class View implements IView {
     this.elementsFactory.setNewOptions(option.isHorizontal, option.isRange);
     this.init();
     this.addEvents();
+  }
+
+  public setCurrentValuePosition(direction: SliderDirection): void{
+    const position = SliderDirection.isFrom(direction)
+      ? this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
+    this.currentValueWrapper.setCurrentValuePosition({
+      position,
+      direction,
+      handleFromPosition: this.mainWrapper.getHandleFromPosition(),
+      handleToPosition: this.mainWrapper.getHandleToPosition(),
+      lineSize: this.mainWrapper.getLineSize(),
+      maxHandlePosition: this.getMaxHandlePosition()
+    });
   }
 
   protected init(): void{
@@ -162,19 +179,6 @@ class View implements IView {
     const scaleWrapper = this.elementsFactory.buildScaleWrapper(scaleItems);
     !this.options.isScaleEnabled && scaleWrapper.$elem.attr('style', 'visibility: hidden');
     return scaleWrapper;
-  }
-
-  private setCurrentValuePosition(direction: SliderDirection): void{
-    const position = SliderDirection.isFrom(direction)
-      ? this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
-    this.currentValueWrapper.setCurrentValuePosition({
-      position,
-      direction,
-      handleFromPosition: this.mainWrapper.getHandleFromPosition(),
-      handleToPosition: this.mainWrapper.getHandleToPosition(),
-      lineSize: this.mainWrapper.getLineSize(),
-      maxHandlePosition: this.getMaxHandlePosition()
-    });
   }
 }
 

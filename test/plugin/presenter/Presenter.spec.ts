@@ -247,7 +247,7 @@ describe(
             presenter.scaleClicked(10);
 
             expect(spyModel).toHaveBeenCalledWith([10, 0]);
-            expect(spyView).toHaveBeenCalledWith(9, SliderDirection.LEFT);
+            expect(spyView).toHaveBeenCalledWith(9, SliderDirection.LEFT, true);
           }
         );
 
@@ -266,7 +266,7 @@ describe(
             presenter.scaleClicked(10);
 
             expect(spyModel).toHaveBeenCalledWith([10, 50]);
-            expect(spyView).toHaveBeenCalledWith(9, SliderDirection.LEFT);
+            expect(spyView).toHaveBeenCalledWith(9, SliderDirection.LEFT, true);
           }
         );
 
@@ -285,7 +285,7 @@ describe(
             presenter.scaleClicked(40);
 
             expect(spyModel).toHaveBeenCalledWith([5, 40]);
-            expect(spyView).toHaveBeenCalledWith(54, SliderDirection.RIGHT);
+            expect(spyView).toHaveBeenCalledWith(54, SliderDirection.RIGHT, true);
           }
         );
       }

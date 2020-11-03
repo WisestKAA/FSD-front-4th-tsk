@@ -312,8 +312,8 @@ describe('Test View', () => {
           );
           const mainWrapper = localView.getMainWrapper();
           const spy = spyOn(mainWrapper, 'setHandlePosition');
-          localView.setHandlePosition(0, SliderDirection.BOTTOM);
-          expect(spy).toHaveBeenCalledWith(0, SliderDirection.BOTTOM);
+          localView.setHandlePosition(0, SliderDirection.BOTTOM, true);
+          expect(spy).toHaveBeenCalledWith(0, SliderDirection.BOTTOM, true);
         }
       );
 
@@ -335,7 +335,7 @@ describe('Test View', () => {
             [0, 100]
           );
           const spy = spyOn(presenter, 'sliderHandleChangedPosition');
-          localView.setHandlePosition(1000, SliderDirection.LEFT);
+          localView.setHandlePosition(1000, SliderDirection.LEFT, true);
           expect(spy).toHaveBeenCalled();
         }
       );
@@ -358,7 +358,7 @@ describe('Test View', () => {
           );
           const currentValueWrapper = localView.getCurrentValueWrapper();
           const spy = spyOn(currentValueWrapper, 'setCurrentValuePosition');
-          localView.setHandlePosition(1000, SliderDirection.RIGHT);
+          localView.setHandlePosition(1000, SliderDirection.RIGHT, true);
           expect(spy).toHaveBeenCalled();
         }
       );
@@ -385,7 +385,7 @@ describe('Test View', () => {
           const spySlider = spyOn(localView.$slider, 'html');
           const spyInit = spyOn(localView, 'init');
           const spyAddEvents = spyOn(localView, 'addEvents');
-          localView.reinitialization(newOptions);
+          localView.reinitialization(newOptions, [0, 100]);
           expect(localView.getOptions()).toEqual(newOptions);
           expect(spySlider).toHaveBeenCalled();
           expect(spyInit).toHaveBeenCalled();

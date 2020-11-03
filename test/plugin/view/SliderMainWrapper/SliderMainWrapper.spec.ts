@@ -79,8 +79,8 @@ describe('Tests SliderMainWrapper', () => {
           const handleWrapper = new MockHandleWrapper();
           wrapper = new SliderMainWrapper(true, new MockLine(), handleWrapper);
           const spy = spyOn(handleWrapper, 'setHandlePosition');
-          wrapper.setHandlePosition(0, SliderDirection.LEFT);
-          expect(spy).toHaveBeenCalledWith(0, SliderDirection.LEFT);
+          wrapper.setHandlePosition(0, SliderDirection.LEFT, true);
+          expect(spy).toHaveBeenCalledWith(0, SliderDirection.LEFT, true);
         }
       );
 

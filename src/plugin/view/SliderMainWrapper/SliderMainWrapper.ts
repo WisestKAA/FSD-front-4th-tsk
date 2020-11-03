@@ -44,8 +44,12 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     return this.sliderHandleWrapper.getMaxHandlePosition();
   }
 
-  public setHandlePosition(position: number, direction: SliderDirection): void{
-    this.sliderHandleWrapper.setHandlePosition(position, direction);
+  public setHandlePosition(
+    position: number,
+    direction: SliderDirection,
+    isNewPosition: boolean = true
+  ): void{
+    this.sliderHandleWrapper.setHandlePosition(position, direction, isNewPosition);
   }
 
   public getHandleFromPosition(): number {

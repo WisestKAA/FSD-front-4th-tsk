@@ -25,6 +25,16 @@ class Presenter implements IPresenter {
       direction,
       this.view.getSliderHandlePosition(direction)
     );
+
+    const currentValFromModel = SliderDirection.isFrom(direction)
+      ? this.model.getOptions().currentVal[0]
+      : this.model.getOptions().currentVal[1];
+    if (currentVal === currentValFromModel) {
+      this.setCurrentHandlePosition(currentVal, direction, false);
+      this.view.setCurrentValuePosition(direction);
+      return;
+    }
+
     const correctVal = this.model.getCorrectValWithStep(currentVal);
     const current = this.getCorrectCurrentVal(correctVal, direction);
     this.setCurrentValueModel(current);
@@ -219,7 +229,11 @@ class Presenter implements IPresenter {
     return Math.round(newCurrentVal * correctPrecision) / correctPrecision;
   }
 
-  private setCurrentHandlePosition(correctValue: number, direction: SliderDirection): void {
+  private setCurrentHandlePosition(
+    correctValue: number,
+    direction: SliderDirection,
+    isNewPosition: boolean = true
+  ): void {
     const options = this.model.getOptions();
     let position = (100 * (correctValue - options.minVal)) / (options.maxVal - options.minVal);
     position = this.getCorrectPosition({
@@ -228,7 +242,7 @@ class Presenter implements IPresenter {
       isForView: true,
       direction
     });
-    this.view.setHandlePosition(position, direction);
+    this.view.setHandlePosition(position, direction, isNewPosition);
   }
 
   private optionsChanged(): void{

@@ -6,7 +6,12 @@ interface IView {
   setCurrentValue(currentValue: number[]): void;
   getCurrentValue(): number[];
   getMaxHandlePosition(): number;
-  setHandlePosition(position: number, direction: SliderDirection): void;
+  setHandlePosition(
+    position: number,
+    direction: SliderDirection,
+    isNewPosition?: boolean
+  ): void;
+  setCurrentValuePosition(direction: SliderDirection): void;
   reinitialization(option: IViewOptions, scaleValues?: number[]): void;
 }
 

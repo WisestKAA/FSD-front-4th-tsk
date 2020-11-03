@@ -7,7 +7,7 @@ import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 class MockLine implements ISliderLine {
   private onLineClick: LiteEvent<number>;
 
-  constructor(){
+  constructor() {
     this.onLineClick = new LiteEvent<number>();
   }
 

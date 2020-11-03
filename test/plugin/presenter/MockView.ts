@@ -29,7 +29,11 @@ class MockView implements IView {
     return 90;
   }
 
-  setHandlePosition(position: number, direction: SliderDirection): void {
+  setHandlePosition(
+    position: number,
+    direction: SliderDirection,
+    isNewPosition: boolean = true
+  ): void {
     if (SliderDirection.isFrom(direction)) {
       this.handleFromPosition = position;
     } else {
@@ -46,6 +50,10 @@ class MockView implements IView {
     scaleValues?: number[]
   ):void{
     this.scaleValues = scaleValues;
+  }
+
+  setCurrentValuePosition(direction: SliderDirection): void {
+    throw new Error('Method not implemented.');
   }
 }
 

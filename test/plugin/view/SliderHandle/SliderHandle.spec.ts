@@ -41,14 +41,14 @@ describe(
     describe(
       'Test SliderHandle / functions',
       () => {
-        const checkChangePosition = function (options: {
+        const checkChangePosition = (options: {
             isHorizontal: boolean,
             isFrom: boolean,
             isRange: boolean,
             startPosition: number,
             endPosition: number,
             expectVal: number
-        }): void{
+        }): void => {
           const {
             isHorizontal,
             isFrom,
