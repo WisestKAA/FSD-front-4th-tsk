@@ -4,6 +4,7 @@ import IScaleItem from '../ScaleItem/IScaleItem';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
 import IScaleWrapper from './IScaleWrapper';
+import SliderDirection from '../SliderDirection';
 
 class ScaleWrapper extends AbstractElement implements IScaleWrapper {
   public $elem: JQuery<HTMLElement>;
@@ -11,6 +12,8 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
   protected isHorizontal: boolean;
 
   private scaleItems: IScaleItem[];
+
+  private scaleItemsValues: number[] = [];
 
   private onScaleItemClicked: LiteEvent<number>;
 
@@ -27,6 +30,17 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
     return this.onScaleItemClicked.expose();
   }
 
+  public get scaleItemMarkValues(): number[] {
+    return this.scaleItemsValues;
+  }
+
+  public setScaleMarksPosition(positions: number[]): void {
+    const direction = this.isHorizontal ? 'left' : 'top';
+    for (let i = 0; i < positions.length; i += 1) {
+      this.scaleItems[i].$elem.attr('style', `${direction}: ${positions[i]}%`);
+    }
+  }
+
   protected init(): void {
     this.$elem = $('<div>');
     this.changeOrientation(
@@ -36,6 +50,7 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
     );
     this.scaleItems.forEach((value) => {
       this.$elem.append(value.$elem);
+      this.scaleItemsValues.push(value.scaleMarkValue);
     });
   }
 

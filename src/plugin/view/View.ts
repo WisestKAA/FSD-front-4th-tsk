@@ -53,16 +53,16 @@ class View implements IView {
     return this.mainWrapper.getSliderHandlePosition(direction);
   }
 
-  public setCurrentValue(currentValue: number[]): void {
-    this.currentValueWrapper.setCurrentValue(currentValue);
-  }
-
   public getCurrentValue(): number[] {
     return this.currentValueWrapper.getCurrentValue();
   }
 
   public getMaxHandlePosition(): number {
     return this.mainWrapper.getMaxHandlePosition();
+  }
+
+  public getScaleMarkValues(): number[] {
+    return this.scaleWrapper.scaleItemMarkValues;
   }
 
   public setHandlePosition(
@@ -73,13 +73,8 @@ class View implements IView {
     this.mainWrapper.setHandlePosition(position, direction, isNewPosition);
   }
 
-  public reinitialization(option: IViewOptions, scaleValues: number[]): void{
-    this.$slider.html('');
-    this.options = option;
-    this.scaleValues = scaleValues;
-    this.elementsFactory.setNewOptions(option.isHorizontal, option.isRange);
-    this.init();
-    this.addEvents();
+  public setCurrentValue(currentValue: number[]): void {
+    this.currentValueWrapper.setCurrentValue(currentValue);
   }
 
   public setCurrentValuePosition(direction: SliderDirection): void{
@@ -93,6 +88,19 @@ class View implements IView {
       lineSize: this.mainWrapper.getLineSize(),
       maxHandlePosition: this.getMaxHandlePosition()
     });
+  }
+
+  public setScaleMarksPosition(positions: number[]): void {
+    this.scaleWrapper.setScaleMarksPosition(positions);
+  }
+
+  public reinitialization(option: IViewOptions, scaleValues: number[]): void{
+    this.$slider.html('');
+    this.options = option;
+    this.scaleValues = scaleValues;
+    this.elementsFactory.setNewOptions(option.isHorizontal, option.isRange);
+    this.init();
+    this.addEvents();
   }
 
   protected init(): void{

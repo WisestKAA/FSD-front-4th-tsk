@@ -65,6 +65,7 @@
     border-radius: 50%;
     box-sizing: border-box;
     cursor: pointer;
+    z-index: 1;
 
     &_vertical {
       position: absolute;
@@ -158,6 +159,7 @@
       display: flex;
       justify-content: space-between;
       margin-top: -5px;
+      position: relative;
 
       &_vertical {
         margin: 0 -5px 0 0;
@@ -172,6 +174,7 @@
       align-items: center;
       cursor: pointer;
       user-select: none;
+      position: absolute;
 
       &_vertical {
         flex-direction: row-reverse;

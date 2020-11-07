@@ -27,6 +27,10 @@ class ScaleItem extends AbstractElement implements IScaleItem {
     return this.onScaleItemClicked.expose();
   }
 
+  public get scaleMarkValue(): number {
+    return this.value;
+  }
+
   protected init(): void {
     const $mark = this.isHorizontal
       ? $('<div>').addClass(StyleClasses.SCALE_MARK)

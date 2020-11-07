@@ -3,7 +3,7 @@ import IViewOptions from './IViewOptions';
 
 interface IView {
   getSliderHandlePosition(direction: SliderDirection): number;
-  setCurrentValue(currentValue: number[]): void;
+  getScaleMarkValues(): number[];
   getCurrentValue(): number[];
   getMaxHandlePosition(): number;
   setHandlePosition(
@@ -12,6 +12,8 @@ interface IView {
     isNewPosition?: boolean
   ): void;
   setCurrentValuePosition(direction: SliderDirection): void;
+  setCurrentValue(currentValue: number[]): void;
+  setScaleMarksPosition(positions: number[]): void;
   reinitialization(option: IViewOptions, scaleValues?: number[]): void;
 }
 
