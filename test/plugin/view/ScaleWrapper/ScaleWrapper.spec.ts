@@ -68,6 +68,50 @@ describe(
             expect(eventSpy).toHaveBeenCalledWith(100);
           }
         );
+
+        it(
+          'The scaleItemMarkValues function must return scale mark values',
+          () => {
+            const items: IScaleItem[] = [];
+            const itemFrom = new MockScaleItem(0);
+            const itemTo = new MockScaleItem(100);
+            items.push(itemFrom);
+            items.push(itemTo);
+            scaleWrapper = new ScaleWrapper(true, items);
+            const checkItems = scaleWrapper.scaleItemMarkValues;
+            expect(checkItems).toEqual([0, 100]);
+          }
+        );
+
+        it(
+          'The setScaleMarksPosition function must set position to scaleItems',
+          () => {
+            const items: IScaleItem[] = [];
+            const itemFrom = new MockScaleItem(0);
+            const itemTo = new MockScaleItem(100);
+            items.push(itemFrom);
+            items.push(itemTo);
+            scaleWrapper = new ScaleWrapper(true, items);
+            scaleWrapper.setScaleMarksPosition([10, 15]);
+            expect(items[0].$elem.attr('style')).toBe('left: 10%');
+            expect(items[1].$elem.attr('style')).toBe('left: 15%');
+          }
+        );
+
+        it(
+          'If the isHorizontal property is false the setScaleMarksPosition function don`t must set position to lust of scaleItems',
+          () => {
+            const items: IScaleItem[] = [];
+            const itemFrom = new MockScaleItem(0);
+            const itemTo = new MockScaleItem(100);
+            items.push(itemFrom);
+            items.push(itemTo);
+            scaleWrapper = new ScaleWrapper(false, items);
+            scaleWrapper.setScaleMarksPosition([10, 15]);
+            expect(items[0].$elem.attr('style')).toBe('top: 10%');
+            expect(items[1].$elem.attr('style')).toBe('');
+          }
+        );
       }
     );
   }

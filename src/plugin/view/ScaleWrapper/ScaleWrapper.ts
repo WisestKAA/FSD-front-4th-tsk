@@ -4,7 +4,6 @@ import IScaleItem from '../ScaleItem/IScaleItem';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
 import IScaleWrapper from './IScaleWrapper';
-import SliderDirection from '../SliderDirection';
 
 class ScaleWrapper extends AbstractElement implements IScaleWrapper {
   public $elem: JQuery<HTMLElement>;
@@ -39,6 +38,7 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
     for (let i = 0; i < positions.length; i += 1) {
       this.scaleItems[i].$elem.attr('style', `${direction}: ${positions[i]}%`);
     }
+    !this.isHorizontal && this.scaleItems[positions.length - 1].$elem.attr('style', '');
   }
 
   protected init(): void {

@@ -14,10 +14,13 @@ class MockScaleItem implements IScaleItem {
     this.$elem = $('<div>').addClass(StyleClasses.SCALE_ITEM);
     this.onScaleItemClicked = new LiteEvent<number>();
     this.value = value;
+    this.scaleMarkValue = value;
     this.$elem.click(() => {
       this.onScaleItemClicked.trigger(this.value);
     });
   }
+
+  scaleMarkValue: number;
 
   changeOrientation(
     isHorizontalMock: boolean,

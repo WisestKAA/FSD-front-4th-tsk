@@ -73,6 +73,15 @@ describe(
             expect(clickSpy).toHaveBeenCalledWith(0);
           }
         );
+
+        it(
+          'The scaleMarkValue function must return current value of scale mark',
+          () => {
+            scaleItem = new ScaleItem(true, 10);
+            const value = scaleItem.scaleMarkValue;
+            expect(value).toBe(10);
+          }
+        );
       }
     );
   }

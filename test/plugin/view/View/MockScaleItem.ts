@@ -4,6 +4,8 @@ import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
 
 class MockScaleItem implements IScaleItem {
+  scaleMarkValue: number;
+
   protected onScaleItemClicked: LiteEvent<number>;
 
   scaleItemClickedEvent: ILiteEvent<number>;

@@ -165,23 +165,23 @@ class Presenter implements IPresenter {
 
   private initViewComponents(): void{
     const options = this.model.getOptions();
-    let direction = SliderDirection.getDirection(true, options.isHorizontal);
+    const directionFrom = SliderDirection.getDirection(true, options.isHorizontal);
 
     const correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
     this.setCurrentValueView([correctValFrom, 0]);
-    this.setCurrentHandlePosition(correctValFrom, direction);
+    this.setCurrentHandlePosition(correctValFrom, directionFrom);
     if (options.isRange) {
-      direction = SliderDirection.getDirection(false, options.isHorizontal);
+      const directionTo = SliderDirection.getDirection(false, options.isHorizontal);
       const correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
       this.setCurrentValueView([correctValFrom, correctValTo]);
-      this.setCurrentHandlePosition(correctValTo, direction);
+      this.setCurrentHandlePosition(correctValTo, directionTo);
     }
 
     const scaleItemMarkValues = this.view.getScaleMarkValues();
     const scaleMarksPosition = scaleItemMarkValues.map(
-      val => this.getPositionFromValue(val, direction)
+      val => this.getPositionFromValue(val, directionFrom)
     );
-    options.isHorizontal && scaleMarksPosition.reverse();
+    !options.isHorizontal && scaleMarksPosition.reverse();
     this.view.setScaleMarksPosition(scaleMarksPosition);
   }
 
@@ -242,13 +242,7 @@ class Presenter implements IPresenter {
     direction: SliderDirection,
     isNewPosition: boolean = true
   ): void {
-    let position = this.getPositionFromValue(correctValue, direction);
-    // position = this.getCorrectPosition({
-    //   position,
-    //   maxHandlePosition: this.view.getMaxHandlePosition(),
-    //   isForView: true,
-    //   direction
-    // });
+    const position = this.getPositionFromValue(correctValue, direction);
     this.view.setHandlePosition(position, direction, isNewPosition);
   }
 
@@ -332,13 +326,6 @@ class Presenter implements IPresenter {
     currentValues.push(values[values.length - 1]);
     return currentValues;
   }
-
-  // private getScaleValuesWithPosition(fixedValues: number[]): number[][] {
-  //   const result: number[][] = [];
-  //   const positions = fixedValues.map(val => this.getPositionFromValue(val));
-  //   result.push(fixedValues, positions);
-  //   return result;
-  // }
 }
 
 export default Presenter;

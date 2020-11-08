@@ -5,6 +5,12 @@ import IViewOptions from '../../../src/plugin/view/IViewOptions';
 import IPresenter from '../../../src/plugin/presenter/IPresenter';
 
 class MockView implements IView {
+  getScaleMarkValues(): number[] {
+    return [0, 100];
+  }
+
+  setScaleMarksPosition(positions: number[]): void {}
+
   currentValue: number[];
 
   handleFromPosition: number;

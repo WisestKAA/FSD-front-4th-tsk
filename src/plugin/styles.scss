@@ -176,9 +176,19 @@
       user-select: none;
       position: absolute;
 
+      &:first-child{
+        position: relative;
+      }
+
       &_vertical {
         flex-direction: row-reverse;
         width: auto;
+        right: 0;
+
+        &:first-child,
+        &:last-child{
+          position: relative;
+        }
       }
     }
 

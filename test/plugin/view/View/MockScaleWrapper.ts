@@ -21,6 +21,12 @@ class MockScaleWrapper implements IScaleWrapper {
     });
   }
 
+  scaleItemMarkValues: number[];
+
+  setScaleMarksPosition(positions: number[]): void {
+    // throw new Error('Method not implemented.');
+  }
+
   public get scaleItemClickedEvent(): ILiteEvent<number> {
     return this.onScaleItemClicked.expose();
   }
