@@ -57,18 +57,23 @@
 # Руководство по использованию
 
 ## Быстрый старт
+
 1. Клонировать репозиторий
+
 2. Запустить команду:
 
     > npm run buildplugin
     
 3. Скопировать папку с дистрибутивом (plugindist) в свой проект
-4. Подключить библиотеку jQuery ([официальная страница](https://jquery.com/)) или из папки с дистрибутивом
+
+4. Подключить библиотеку jQuery ([официальная страница](https://jquery.com/)) версии не ниже 3.5.1
+
 5. Подключить файл плагина и стили
+
 ```html
 ...
 <head>
-    <script src="./plugindist/lib/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./plugindist/simpleslider.jquery.js"></script>
     <link rel="stylesheet" href="./plugindist/style.css">
 </head>

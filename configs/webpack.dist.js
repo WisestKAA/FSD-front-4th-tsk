@@ -47,11 +47,6 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: './style.css'
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: './node_modules/jquery/dist/jquery.js', to: './lib/jquery.js' }
-      ]
     })
   ]
 };
