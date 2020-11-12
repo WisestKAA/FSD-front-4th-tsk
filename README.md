@@ -11,36 +11,46 @@
 
 1. Загрузите исходные файлы удобным способом:
 
-  * [Скачайте архив](https://github.com/WisestKAA/FSD-front-4th-tsk/archive/master.zip) и распакуйте его в удобном месте
-  * Клонируйте репазиторий с помощью git:
-  > $ git clone https://github.com/WisestKAA/FSD-front-4th-tsk.git
+    * [Скачайте архив](https://github.com/WisestKAA/FSD-front-4th-tsk/archive/master.zip) и распакуйте его в удобном месте
+  
+    * Клонируйте репазиторий с помощью git:
+    
+      > $ git clone https://github.com/WisestKAA/FSD-front-4th-tsk.git
  
- 2. Установите необходимые node_module's:
-  > npm i
+ 2. Установите необходимые зависимости:
+ 
+    > npm i
 
 
 ## Развертывание
 
 Запустить webpack
->npm run webpack
+
+   > npm run webpack
 
 Запуск сервера webpack
->npm start
+
+   > npm start
 
 Запуск тестов
->npm test
+
+   > npm test
 
 Собрать дистрибутив плагина
->npm run buildplugin
+
+   > npm run buildplugin
 
 Запустить Eslint по файлам проекта
->npm run eslint
+
+   > npm run eslint
 
 Собрать демонстрационную страницу для production
->npm run builddemo
+
+   > npm run builddemo
 
 Загрузить сборку на GitHub Pages
->npm run deploy
+
+   > npm run deploy
 
 ---
 
@@ -49,7 +59,9 @@
 ## Быстрый старт
 1. Клонировать репозиторий
 2. Запустить команду:
-> npm run buildplugin
+
+    > npm run buildplugin
+    
 3. Скопировать папку с дистрибутивом (plugindist) в свой проект
 4. Подключить библиотеку jQuery ([официальная страница](https://jquery.com/)) или из папки с дистрибутивом
 5. Подключить файл плагина и стили
