@@ -109,7 +109,8 @@ class SliderCard {
         () => {
           const minVal = this.getNumInputValue(this.formInputs.minVal);
           minVal !== this.options.minVal && this.optionsChanged({ minVal });
-        }
+        },
+        true
       );
     }
 
@@ -122,7 +123,8 @@ class SliderCard {
         () => {
           const maxVal = this.getNumInputValue(this.formInputs.maxVal);
           maxVal !== this.options.maxVal && this.optionsChanged({ maxVal });
-        }
+        },
+        true
       );
     }
 
@@ -171,6 +173,7 @@ class SliderCard {
     @bind
     private handleRangeChanged(): void{
       this.optionsChanged({ isRange: this.formInputs.isRange.checked });
+      this.setCurrentValue();
     }
 
     @bind
@@ -257,15 +260,22 @@ class SliderCard {
     private inputValidation(
       errorMessage: string,
       $element: JQuery<HTMLElement>,
-      oldValue: string, func: Function
+      oldValue: string, func: Function,
+      isChangedCurrentValue: boolean = false
     ): void{
       try {
         func();
+        isChangedCurrentValue && this.setCurrentValue();
       } catch (error) {
         $element.val(oldValue);
         func();
         $element.before(`<div class="slider-card__error js-slider-card__error">${errorMessage}</div>`);
       }
+    }
+
+    private setCurrentValue(): void {
+      const { currentVal } = this.$slider.SimpleSlider('getOptions').get(0) as ISliderSettings;
+      this.handleSliderCurrentValueChanged(currentVal);
     }
 }
 
