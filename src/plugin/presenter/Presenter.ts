@@ -9,15 +9,19 @@ import ISliderSettings from '../model/ISliderSettings';
 import IModel from '../model/IModel';
 import IModelFactory from '../model/IModelFactory';
 import IPresenter from './IPresenter';
+import LiteEvent from '../LiteEvent/LiteEvent';
 
 class Presenter implements IPresenter {
   private model: IModel;
 
   private view: IView;
 
+  private onOptionsChangedEvent: LiteEvent<ISliderSettings>;
+
   constructor(viewFactory: IViewFactory, modelFactory: IModelFactory) {
     this.init(viewFactory, modelFactory);
     this.addEvents();
+    this.onOptionsChangedEvent = new LiteEvent<ISliderSettings>();
   }
 
   public sliderHandleChangedPosition(direction: SliderDirection): void {
@@ -84,6 +88,7 @@ class Presenter implements IPresenter {
   @bind
   public setNewOptions(options: ISliderSettings): void{
     this.model.setNewOptions(options);
+    this.onOptionsChangedEvent.trigger(this.model.getOptions());
   }
 
   @bind
@@ -95,6 +100,13 @@ class Presenter implements IPresenter {
   public onCurrentValueChanged(callBack: Function): void{
     this.model.changeCurrentValueEvent.on((data) => {
       callBack(data);
+    });
+  }
+
+  @bind
+  public onOptionsChanged(callBack: Function): void{
+    this.onOptionsChangedEvent.on(options => {
+      callBack(options);
     });
   }
 

@@ -201,7 +201,7 @@
 ```JavaScript
     const $slider = $('.slider');
     $slider.SimpleSlider();
-    const options = $slider.SimpleSlider('getOptions');
+    const options = $slider.SimpleSlider('getOptions').get(0);
 ```
 
 ### Изменение текущих параметров слайдера
@@ -225,6 +225,18 @@
       'onCurrentValueChanged',
       (currentValue) => {
         console.log(`Current value: [${currentValue[0]}, ${currentValue[1]}]`);
+      }
+    );
+```
+
+### Callback функция для отслеживания изменения параметров слайдера за исключением текущего значения
+```JavaScript
+    const $slider = $('.slider');
+    $slider.SimpleSlider();
+    $slider.SimpleSlider(
+      'onOptionsChanged',
+      (options) => {
+        console.log(options);
       }
     );
 ```
