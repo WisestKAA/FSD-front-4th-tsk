@@ -31,9 +31,12 @@ class SliderCard {
     }
 
     private addEvents(): void{
-      this.$slider.data('presenter').onCurrentValueChanged((val: number[]) => {
-        this.handleSliderCurrentValueChanged(val);
-      });
+      this.$slider.SimpleSlider(
+        'onCurrentValueChanged',
+        (val: number[]) => {
+          this.handleSliderCurrentValueChanged(val);
+        }
+      );
 
       $(this.formInputs.isHorizontal).on('change', this.handleHorizontalChanged);
       $(this.formInputs.isRange).on('change', this.handleRangeChanged);
@@ -248,7 +251,7 @@ class SliderCard {
     private optionsChanged(option: Object): void{
       this.$elem.find('.js-slider-card__error').remove();
       this.options = $.extend(this.options, option);
-      this.$slider.data('presenter').setNewOptions(this.options);
+      this.$slider.SimpleSlider('setNewOptions', this.options);
     }
 
     private inputValidation(

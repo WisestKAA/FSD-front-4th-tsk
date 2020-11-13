@@ -11,7 +11,7 @@ declare global {
     }
     interface JQuery {
         SimpleSlider: (
-            options?: ISliderSettings | 'setNewOptions' | 'getOptions',
+            options?: ISliderSettings | 'setNewOptions' | 'getOptions' | 'onCurrentValueChanged',
             additionalOptions?: ISliderSettings | Function
         ) => JQuery<Element> | JQuery<Object>;
     }
@@ -20,7 +20,7 @@ declare global {
 (function ($: JQueryStatic) {
   // eslint-disable-next-line no-param-reassign
   $.fn.SimpleSlider = function start(options?, additionalOptions?: ISliderSettings) {
-    return this.map((iter: number, elem: HTMLElement) => {
+    return this.map((_: number, elem: HTMLElement) => {
       if (typeof options === 'object' || !options) {
         const sliderOptionsFactory = new SliderOptionsFactory(options as ISliderSettings);
         const modelFactory = new ModelFactory(sliderOptionsFactory);

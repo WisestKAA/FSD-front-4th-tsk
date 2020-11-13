@@ -197,42 +197,36 @@
 
 ## API 
 
-### Сохранение экземпляра объекта в переменную
-```JavaScript
-    $(".slider").SimpleSlider();
-    let $slider = $(".slider").data("presenter");
-```
-
 ### Получение текущих параметров слайдера
 ```JavaScript
-    $(".slider").SimpleSlider();
-    let $slider = $(".slider").data("presenter");
-    let options = $slider.getOptions();
+    const $slider = $('.slider');
+    $slider.SimpleSlider();
+    const options = $slider.SimpleSlider('getOptions');
 ```
 
 ### Изменение текущих параметров слайдера
 ```JavaScript
-    $(".slider").SimpleSlider({
-        minVal: 0,
-        maxVal: 100,
-        currentVal: [0, 0],
-    });
-    let $slider = $(".slider").data("presenter");
-    let options = $slider.setNewOptions({
+    const $slider = $('.slider');
+    $slider.SimpleSlider();
+    const options = {
         minVal: -100,
         maxVal: 150,
         currentVal: [10, 50],
         isRange: true
-    });
+    }
+    $slider.SimpleSlider('setNewOptions', options);
 ```
 
 ### Callback функция для отслеживания изменения текущего значения
 ```JavaScript
-    $(".slider").SimpleSlider();
-    let $slider = $(".slider").data("presenter");
-    let options = $slider.onCurrentValueChanged(function(currentValue){
+    const $slider = $('.slider');
+    $slider.SimpleSlider();
+    $slider.SimpleSlider(
+      'onCurrentValueChanged',
+      (currentValue) => {
         console.log(`Current value: [${currentValue[0]}, ${currentValue[1]}]`);
-    });
+      }
+    );
 ```
 ---
 
