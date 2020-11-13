@@ -1,8 +1,8 @@
 import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
-import ICurrentValue from './ICurrentValue';
+import IHint from './IHint';
 
-class CurrentValue implements ICurrentValue {
+class Hint implements IHint {
   public $elem: JQuery<HTMLElement>;
 
   private $text: JQuery<HTMLElement>;
@@ -24,12 +24,12 @@ class CurrentValue implements ICurrentValue {
     this.init(isHorizontal);
   }
 
-  public setCurrentValue(currentValue: number): void{
+  public setHintValue(currentValue: number): void{
     this.$text.html(`${currentValue}`);
     this.val = currentValue;
   }
 
-  public setPosition(
+  public setHintPosition(
     position: number,
     handlePercent?: number,
     lineWidth?: number,
@@ -43,18 +43,18 @@ class CurrentValue implements ICurrentValue {
     this.$elem.attr('style', `${direction}: ${correctPosition}%;`);
   }
 
-  public getCurrentValueSize(): number {
+  public getHintSize(): number {
     if (this.isHorizontal) {
       return this.$elem.get(0).offsetWidth;
     }
     return this.$elem.get(0).offsetHeight;
   }
 
-  public getCurrentValue(): number {
+  public getHintValue(): number {
     return this.val;
   }
 
-  public getCurrentValuePosition(): number {
+  public getHintPosition(): number {
     return this.position;
   }
 
@@ -111,4 +111,4 @@ class CurrentValue implements ICurrentValue {
   }
 }
 
-export default CurrentValue;
+export default Hint;

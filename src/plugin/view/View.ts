@@ -1,5 +1,5 @@
 import IPresenter from '../presenter/IPresenter';
-import ICurrentValueWrapper from './CurrentValueWrapper/ICurrentValueWrapper';
+import ICurrentValueWrapper from './HintWrapper/IHintWrapper';
 import ISliderMainWrapper from './SliderMainWrapper/ISliderMainWrapper';
 import ISliderLine from './SliderLine/ISliderLine';
 import ISliderHandleWrapper from './SliderHandleWrapper/ISliderHandleWrapper';

@@ -1,4 +1,4 @@
-import CurrentValueWrapper from '../../../../src/plugin/view/CurrentValueWrapper/CurrentValueWrapper';
+import CurrentValueWrapper from '../../../../src/plugin/view/HintWrapper/HintWrapper';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import MockCurrentValue from './MockCurrentValue';

@@ -1,6 +1,6 @@
 import SliderDirection from '../SliderDirection';
 
-interface ISetCurrentValuePositionOptions{
+interface ISetHintPositionOptions{
   position: number;
   direction: SliderDirection;
   maxHandlePosition?: number;
@@ -9,4 +9,4 @@ interface ISetCurrentValuePositionOptions{
   handleToPosition?: number;
 }
 
-export default ISetCurrentValuePositionOptions;
+export default ISetHintPositionOptions;

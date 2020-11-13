@@ -1,8 +1,8 @@
 import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
 import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 import AbstractElement from '../../../../src/plugin/view/AbstractElement/AbstractElement';
-import ICurrentValueWrapper from '../../../../src/plugin/view/CurrentValueWrapper/ICurrentValueWrapper';
-import ISetCurrentValuePositionOptions from '../../../../src/plugin/view/CurrentValueWrapper/ISetCurrentValuePositionOptions';
+import ICurrentValueWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
+import ISetCurrentValuePositionOptions from '../../../../src/plugin/view/HintWrapper/ISetHintPositionOptions';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 

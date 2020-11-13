@@ -1,19 +1,20 @@
 import AbstractElement from '../AbstractElement/AbstractElement';
-import ICurrentValue from '../CurrentValue/ICurrentValue';
+import IHint from '../Hint/IHint';
 import LiteEvent from '../../LiteEvent/LiteEvent';
 import ILiteEvent from '../../LiteEvent/ILiteEvent';
 import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
-import ISetCurrentValuePositionOptions from './ISetCurrentValuePositionOptions';
+import ISetHintPositionOptions from './ISetHintPositionOptions';
+import IHintWrapper from './IHintWrapper';
 
-class CurrentValueWrapper extends AbstractElement {
+class HintWrapper extends AbstractElement implements IHintWrapper {
   public $elem: JQuery<HTMLElement>;
 
   protected isHorizontal: boolean;
 
-  private currentValueFrom: ICurrentValue;
+  private hintFrom: IHint;
 
-  private currentValueTo: ICurrentValue;
+  private hintTo: IHint;
 
   private isRange: boolean;
 
@@ -21,12 +22,12 @@ class CurrentValueWrapper extends AbstractElement {
 
   private onIntersectionEnded: LiteEvent<SliderDirection>;
 
-  constructor(isHorizontal: boolean, valFrom: ICurrentValue, valTo?: ICurrentValue) {
+  constructor(isHorizontal: boolean, hintFrom: IHint, hintTo?: IHint) {
     super();
-    this.currentValueFrom = valFrom;
+    this.hintFrom = hintFrom;
     this.isHorizontal = isHorizontal;
-    if (valTo) {
-      this.currentValueTo = valTo;
+    if (hintTo) {
+      this.hintTo = hintTo;
       this.isRange = true;
     } else {
       this.isRange = false;
@@ -34,7 +35,7 @@ class CurrentValueWrapper extends AbstractElement {
     this.init();
   }
 
-  public setCurrentValuePosition(options: ISetCurrentValuePositionOptions): void {
+  public setCurrentValuePosition(options: ISetHintPositionOptions): void {
     const {
       direction,
       position,
@@ -48,7 +49,7 @@ class CurrentValueWrapper extends AbstractElement {
     case SliderDirection.LEFT: {
       const maxPosition = maxHandlePosition;
       const handlePercent = 100 - maxPosition;
-      this.currentValueFrom.setPosition(
+      this.hintFrom.setHintPosition(
         position,
         handlePercent,
         lineSize
@@ -56,13 +57,13 @@ class CurrentValueWrapper extends AbstractElement {
       break;
     }
     case SliderDirection.BOTTOM: {
-      this.currentValueFrom.setPosition(position);
+      this.hintFrom.setHintPosition(position);
       break;
     }
     case SliderDirection.RIGHT: {
       const maxPosition = maxHandlePosition;
       const handlePercent = 100 - maxPosition;
-      this.currentValueTo.setPosition(
+      this.hintTo.setHintPosition(
         position,
         handlePercent,
         lineSize
@@ -70,7 +71,7 @@ class CurrentValueWrapper extends AbstractElement {
       break;
     }
     case SliderDirection.TOP: {
-      this.currentValueTo.setPosition(position);
+      this.hintTo.setHintPosition(position);
       break;
     }
     default: {
@@ -79,7 +80,7 @@ class CurrentValueWrapper extends AbstractElement {
     }
 
     if (this.isRange) {
-      this.checkCurrentValueIntersection({
+      this.checkHintsIntersection({
         lineSize,
         handleFromPosition,
         handleToPosition,
@@ -88,15 +89,15 @@ class CurrentValueWrapper extends AbstractElement {
     }
   }
 
-  public setCurrentValue(currentValue: number[]): void{
-    this.currentValueFrom.setCurrentValue(currentValue[0]);
-    this.isRange && this.currentValueTo.setCurrentValue(currentValue[1]);
+  public setHintValue(currentValue: number[]): void{
+    this.hintFrom.setHintValue(currentValue[0]);
+    this.isRange && this.hintTo.setHintValue(currentValue[1]);
   }
 
-  public getCurrentValue(): number[] {
+  public getHintValue(): number[] {
     const val: number[] = [];
-    val.push(this.currentValueFrom.getCurrentValue());
-    this.isRange && val.push(this.currentValueTo.getCurrentValue());
+    val.push(this.hintFrom.getHintValue());
+    this.isRange && val.push(this.hintTo.getHintValue());
     return val;
   }
 
@@ -112,12 +113,12 @@ class CurrentValueWrapper extends AbstractElement {
       StyleClasses.CURRENT_VAL_WRAPPER_V
     );
 
-    this.$elem.append(this.currentValueFrom.$elem);
-    this.isRange && this.$elem.append(this.currentValueTo.$elem);
+    this.$elem.append(this.hintFrom.$elem);
+    this.isRange && this.$elem.append(this.hintTo.$elem);
     this.onIntersectionEnded = new LiteEvent<SliderDirection>();
   }
 
-  private checkCurrentValueIntersection(
+  private checkHintsIntersection(
     data : {
       lineSize: number,
       handleFromPosition: number,
@@ -133,13 +134,13 @@ class CurrentValueWrapper extends AbstractElement {
     } = data;
 
     const precision = Math.pow(10, 10);
-    const currentValueFromSize = this.currentValueFrom.getCurrentValueSize() + 1;
-    const currentValueToSize = this.currentValueTo.getCurrentValueSize();
+    const hintFromSize = this.hintFrom.getHintSize() + 1;
+    const hintToSize = this.hintTo.getHintSize();
 
     const sumPosition = this.getSumPosition(precision);
     const maxSizePercent = this.getMaxSizePercent({
-      currentValueFromSize,
-      currentValueToSize,
+      hintFromSize,
+      hintToSize,
       lineSize,
       precision
     });
@@ -149,8 +150,8 @@ class CurrentValueWrapper extends AbstractElement {
       this.fixIntersection({
         handleFromPosition,
         handleToPosition,
-        currentValueFromSize,
-        currentValueToSize,
+        hintFromSize,
+        hintToSize,
         lineSize
       });
     } else if (this.wasIntersected) {
@@ -160,25 +161,25 @@ class CurrentValueWrapper extends AbstractElement {
   }
 
   private getSumPosition(precision: number): number {
-    let sumPosition = this.currentValueFrom.getCurrentValuePosition()
-      + this.currentValueTo.getCurrentValuePosition();
+    let sumPosition = this.hintFrom.getHintPosition()
+      + this.hintTo.getHintPosition();
     sumPosition = Math.round(sumPosition * precision) / precision;
     return sumPosition;
   }
 
   private getMaxSizePercent(data : {
-    currentValueFromSize: number,
-    currentValueToSize: number,
+    hintFromSize: number,
+    hintToSize: number,
     lineSize: number,
     precision: number
   }): number {
     const {
-      currentValueFromSize,
-      currentValueToSize,
+      hintFromSize,
+      hintToSize,
       lineSize,
       precision
     } = data;
-    const maxSize = lineSize - currentValueFromSize - currentValueToSize;
+    const maxSize = lineSize - hintFromSize - hintToSize;
     let maxSizePercent = (maxSize * 100) / lineSize;
     maxSizePercent = Math.round(maxSizePercent * precision) / precision;
     return maxSizePercent;
@@ -187,27 +188,27 @@ class CurrentValueWrapper extends AbstractElement {
   private fixIntersection(data: {
     handleFromPosition: number,
     handleToPosition: number,
-    currentValueFromSize: number,
-    currentValueToSize: number,
+    hintFromSize: number,
+    hintToSize: number,
     lineSize: number
   }): void {
     const {
       handleFromPosition,
       handleToPosition,
-      currentValueFromSize,
-      currentValueToSize,
+      hintFromSize,
+      hintToSize,
       lineSize
     } = data;
     const shiftMiddlePosition = (100 - handleFromPosition - handleToPosition) / 2;
-    const currentValueFromPercent = (currentValueFromSize * 100) / lineSize;
-    const currentValueToPercent = (currentValueToSize * 100) / lineSize;
-    const currentPositionValueFrom = handleFromPosition
-      + shiftMiddlePosition - currentValueFromPercent;
-    const currentPositionValueTo = handleToPosition
-      + shiftMiddlePosition - currentValueToPercent;
-    this.currentValueFrom.setPosition(currentPositionValueFrom, null, null, true);
-    this.currentValueTo.setPosition(currentPositionValueTo, null, null, true);
+    const hintFromPercent = (hintFromSize * 100) / lineSize;
+    const hintToPercent = (hintToSize * 100) / lineSize;
+    const currentHintPositionFrom = handleFromPosition
+      + shiftMiddlePosition - hintFromPercent;
+    const currentHintPositionTo = handleToPosition
+      + shiftMiddlePosition - hintToPercent;
+    this.hintFrom.setHintPosition(currentHintPositionFrom, null, null, true);
+    this.hintTo.setHintPosition(currentHintPositionTo, null, null, true);
   }
 }
 
-export default CurrentValueWrapper;
+export default HintWrapper;

@@ -1,13 +1,13 @@
 import ILiteEvent from '../../LiteEvent/ILiteEvent';
 import IElement from '../AbstractElement/IElement';
 import SliderDirection from '../SliderDirection';
-import ISetCurrentValuePositionOptions from './ISetCurrentValuePositionOptions';
+import ISetCurrentValuePositionOptions from './ISetHintPositionOptions';
 
-interface ICurrentValueWrapper extends IElement{
+interface IHintWrapper extends IElement{
   setCurrentValuePosition(setCurrentValuePositionOptions: ISetCurrentValuePositionOptions): void;
-  setCurrentValue(currentValue: number[]): void;
-  getCurrentValue(): number[];
+  setHintValue(currentValue: number[]): void;
+  getHintValue(): number[];
   intersectionEndedEvent: ILiteEvent<SliderDirection>;
 }
 
-export default ICurrentValueWrapper;
+export default IHintWrapper;

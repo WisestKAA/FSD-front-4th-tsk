@@ -1,4 +1,4 @@
-import CurrentValue from '../../../../src/plugin/view/CurrentValue/CurrentValue';
+import CurrentValue from '../../../../src/plugin/view/Hint/Hint';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 
 describe('Test CurrentValue', () => {

@@ -1,4 +1,4 @@
-import ICurrentValue from '../../../../src/plugin/view/CurrentValue/ICurrentValue';
+import ICurrentValue from '../../../../src/plugin/view/Hint/IHint';
 
 class MockCurrentValue implements ICurrentValue {
   $elem: JQuery<HTMLElement>;

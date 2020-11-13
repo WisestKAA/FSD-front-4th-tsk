@@ -3,8 +3,8 @@ import ISliderLine from './SliderLine/ISliderLine';
 import ISliderHandle from './SliderHandle/ISliderHandle';
 import ISliderHandleWrapper from './SliderHandleWrapper/ISliderHandleWrapper';
 import ISliderMainWrapper from './SliderMainWrapper/ISliderMainWrapper';
-import ICurrentValue from './CurrentValue/ICurrentValue';
-import ICurrentValueWrapper from './CurrentValueWrapper/ICurrentValueWrapper';
+import ICurrentValue from './Hint/IHint';
+import ICurrentValueWrapper from './HintWrapper/IHintWrapper';
 import IScaleItem from './ScaleItem/IScaleItem';
 import IScaleWrapper from './ScaleWrapper/IScaleWrapper';
 
