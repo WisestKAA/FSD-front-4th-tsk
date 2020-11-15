@@ -11,7 +11,7 @@ class MockSliderOptions implements ISliderOptions {
     precision: 0,
     isRange: false,
     isRangeLineEnabled: false,
-    isVisibleCurrentValue: true
+    isVisibleHint: true
   }
 
   getOptions(): ISliderSettings {

@@ -21,7 +21,7 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: false,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false,
+            isVisibleHint: false,
             isScaleEnabled: false
           };
           view = new View({
@@ -44,7 +44,7 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false,
+            isVisibleHint: false,
             isScaleEnabled: false
           };
           view = new View({
@@ -60,14 +60,14 @@ describe('Test View', () => {
       );
 
       it(
-        `The element must have have sub-element with class ${StyleClasses.CURRENT_VAL_WRAPPER} if the isHorizontal property is true`,
+        `The element must have have sub-element with class ${StyleClasses.HINT_WRAPPER} if the isHorizontal property is true`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
             isHorizontal: true,
             isRange: true,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false,
+            isVisibleHint: false,
             isScaleEnabled: false
           };
           view = new View({
@@ -77,20 +77,20 @@ describe('Test View', () => {
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
             scaleValues: [0, 100]
           });
-          expect(view.$slider.find(`.${StyleClasses.CURRENT_VAL_WRAPPER}`).attr('class'))
-            .toBe(StyleClasses.CURRENT_VAL_WRAPPER);
+          expect(view.$slider.find(`.${StyleClasses.HINT_WRAPPER}`).attr('class'))
+            .toBe(StyleClasses.HINT_WRAPPER);
         }
       );
 
       it(
-        `The element must have have sub-element with classes ${StyleClasses.CURRENT_VAL_WRAPPER} and ${StyleClasses.CURRENT_VAL_WRAPPER_V} if the isHorizontal property is false`,
+        `The element must have have sub-element with classes ${StyleClasses.HINT_WRAPPER} and ${StyleClasses.HINT_WRAPPER_V} if the isHorizontal property is false`,
         () => {
           const elem = $('<div>').get(0);
           const options: IViewOptions = {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: true,
-            isVisibleCurrentValue: false,
+            isVisibleHint: false,
             isScaleEnabled: false
           };
           view = new View({
@@ -100,8 +100,8 @@ describe('Test View', () => {
             elementsFactory: new MockElementsFactory(options.isHorizontal, options.isRange),
             scaleValues: [0, 100]
           });
-          expect(view.$slider.find(`.${StyleClasses.CURRENT_VAL_WRAPPER}`).attr('class'))
-            .toBe(`${StyleClasses.CURRENT_VAL_WRAPPER} ${StyleClasses.CURRENT_VAL_WRAPPER_V}`);
+          expect(view.$slider.find(`.${StyleClasses.HINT_WRAPPER}`).attr('class'))
+            .toBe(`${StyleClasses.HINT_WRAPPER} ${StyleClasses.HINT_WRAPPER_V}`);
         }
       );
 
@@ -113,7 +113,7 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: true,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false,
+            isVisibleHint: false,
             isScaleEnabled: false
           };
           view = new View({
@@ -136,7 +136,7 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: true,
-            isVisibleCurrentValue: false,
+            isVisibleHint: false,
             isScaleEnabled: false
           };
           view = new View({
@@ -159,7 +159,7 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: true,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false,
+            isVisibleHint: false,
             isScaleEnabled: true
           };
           view = new View({
@@ -182,7 +182,7 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: true,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: false,
+            isVisibleHint: false,
             isScaleEnabled: true
           };
           view = new View({
@@ -213,7 +213,7 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false,
+              isVisibleHint: false,
               isScaleEnabled: false
             },
             [0, 100]
@@ -226,7 +226,7 @@ describe('Test View', () => {
       );
 
       it(
-        'The setCurrentValue function must call the setCurrentValue function from currentValueWrapper',
+        'The setHintValue function must call the setHintValue function from hintWrapper',
         () => {
           const elem = $('<div>').get(0);
           const localView = new MockView(
@@ -236,20 +236,20 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false,
+              isVisibleHint: false,
               isScaleEnabled: false
             },
             [0, 100]
           );
-          const currentValueWrapper = localView.getCurrentValueWrapper();
-          const spy = spyOn(currentValueWrapper, 'setCurrentValue');
-          localView.setCurrentValue([0, 0]);
+          const hintWrapper = localView.getHintWrapper();
+          const spy = spyOn(hintWrapper, 'setHintValue');
+          localView.setHintValue([0, 0]);
           expect(spy).toHaveBeenCalledWith([0, 0]);
         }
       );
 
       it(
-        'The getCurrentValue function must call the getCurrentValue function from currentValueWrapper',
+        'The getHintValue function must call the getHintValue function from hintWrapper',
         () => {
           const elem = $('<div>').get(0);
           const localView = new MockView(
@@ -259,14 +259,14 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false,
+              isVisibleHint: false,
               isScaleEnabled: false
             },
             [0, 100]
           );
-          const currentValueWrapper = localView.getCurrentValueWrapper();
-          const spy = spyOn(currentValueWrapper, 'getCurrentValue');
-          localView.getCurrentValue();
+          const hintWrapper = localView.getHintWrapper();
+          const spy = spyOn(hintWrapper, 'getHintValue');
+          localView.getHintValue();
           expect(spy).toHaveBeenCalled();
         }
       );
@@ -282,7 +282,7 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false,
+              isVisibleHint: false,
               isScaleEnabled: false
             },
             [0, 100]
@@ -305,7 +305,7 @@ describe('Test View', () => {
               isHorizontal: false,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false,
+              isVisibleHint: false,
               isScaleEnabled: false
             },
             [0, 100]
@@ -329,7 +329,7 @@ describe('Test View', () => {
               isHorizontal: true,
               isRange: false,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false,
+              isVisibleHint: false,
               isScaleEnabled: false
             },
             [0, 100]
@@ -341,7 +341,7 @@ describe('Test View', () => {
       );
 
       it(
-        'When the handle position changed the View must call the setCurrentValuePosition function from currentValueWrapper',
+        'When the handle position changed the View must call the setHintPosition function from hintWrapper',
         () => {
           const elem = $('<div>').get(0);
           const localView = new MockView(
@@ -351,13 +351,13 @@ describe('Test View', () => {
               isHorizontal: true,
               isRange: true,
               isRangeLineEnabled: true,
-              isVisibleCurrentValue: false,
+              isVisibleHint: false,
               isScaleEnabled: false
             },
             [0, 100]
           );
-          const currentValueWrapper = localView.getCurrentValueWrapper();
-          const spy = spyOn(currentValueWrapper, 'setCurrentValuePosition');
+          const hintWrapper = localView.getHintWrapper();
+          const spy = spyOn(hintWrapper, 'setHintPosition');
           localView.setHandlePosition(1000, SliderDirection.RIGHT, true);
           expect(spy).toHaveBeenCalled();
         }
@@ -371,14 +371,14 @@ describe('Test View', () => {
             isHorizontal: true,
             isRange: false,
             isRangeLineEnabled: false,
-            isVisibleCurrentValue: true,
+            isVisibleHint: true,
             isScaleEnabled: false
           };
           const newOptions: IViewOptions = {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: true,
-            isVisibleCurrentValue: true,
+            isVisibleHint: true,
             isScaleEnabled: false
           };
           const localView = new MockView(elem, new MockPresenter(), oldOptions, [0, 100]);
@@ -400,7 +400,7 @@ describe('Test View', () => {
             isHorizontal: false,
             isRange: false,
             isRangeLineEnabled: true,
-            isVisibleCurrentValue: true,
+            isVisibleHint: true,
             isScaleEnabled: true
           };
           const localPresenter = new MockPresenter();

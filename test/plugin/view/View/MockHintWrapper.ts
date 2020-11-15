@@ -1,12 +1,12 @@
 import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
 import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 import AbstractElement from '../../../../src/plugin/view/AbstractElement/AbstractElement';
-import ICurrentValueWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
-import ISetCurrentValuePositionOptions from '../../../../src/plugin/view/HintWrapper/ISetHintPositionOptions';
+import IHintWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
+import ISetHintPositionOptions from '../../../../src/plugin/view/HintWrapper/ISetHintPositionOptions';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 
-class MockCurrentValueWrapper extends AbstractElement implements ICurrentValueWrapper {
+class MockHintWrapper extends AbstractElement implements IHintWrapper {
   protected isHorizontal: boolean;
 
   private onIntersectionEnded: LiteEvent<SliderDirection>;
@@ -25,21 +25,21 @@ class MockCurrentValueWrapper extends AbstractElement implements ICurrentValueWr
     this.$elem = $('<div>');
     this.changeOrientation(
       this.isHorizontal,
-      StyleClasses.CURRENT_VAL_WRAPPER,
-      StyleClasses.CURRENT_VAL_WRAPPER_V
+      StyleClasses.HINT_WRAPPER,
+      StyleClasses.HINT_WRAPPER_V
     );
     this.onIntersectionEnded = new LiteEvent<SliderDirection>();
   }
 
-  setCurrentValuePosition(optionsMock: ISetCurrentValuePositionOptions): void { }
+  setHintPosition(optionsMock: ISetHintPositionOptions): void { }
 
-  setCurrentValue(currentValueMock: number[]): void {}
+  setHintValue(hintValue: number[]): void {}
 
-  getCurrentValue(): number[] {
+  getHintValue(): number[] {
     return [0, 0];
   }
 
   $elem: JQuery<HTMLElement> = $('<div>');
 }
 
-export default MockCurrentValueWrapper;
+export default MockHintWrapper;

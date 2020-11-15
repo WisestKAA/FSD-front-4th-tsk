@@ -8,10 +8,10 @@ import ISliderHandleWrapper from './SliderHandleWrapper/ISliderHandleWrapper';
 import SliderHandleWrapper from './SliderHandleWrapper/SliderHandleWrapper';
 import ISliderMainWrapper from './SliderMainWrapper/ISliderMainWrapper';
 import SliderMainWrapper from './SliderMainWrapper/SliderMainWrapper';
-import ICurrentValue from './Hint/IHint';
-import CurrentValue from './Hint/Hint';
-import ICurrentValueWrapper from './HintWrapper/IHintWrapper';
-import CurrentValueWrapper from './HintWrapper/HintWrapper';
+import IHint from './Hint/IHint';
+import Hint from './Hint/Hint';
+import IHintWrapper from './HintWrapper/IHintWrapper';
+import HintWrapper from './HintWrapper/HintWrapper';
 import IScaleItem from './ScaleItem/IScaleItem';
 import ScaleItem from './ScaleItem/ScaleItem';
 import IScaleWrapper from './ScaleWrapper/IScaleWrapper';
@@ -63,15 +63,15 @@ class ElementsFactory implements IElementsFactory {
     return new SliderMainWrapper(this.isHorizontal, sliderLine, sliderHandleWrapper);
   }
 
-  public buildCurrentValue(isFrom: boolean): ICurrentValue {
-    return new CurrentValue(isFrom, this.isHorizontal);
+  public buildHint(isFrom: boolean): IHint {
+    return new Hint(isFrom, this.isHorizontal);
   }
 
-  public buildCurrentValueWrapper(
-    valueFrom: ICurrentValue,
-    valueTo?: ICurrentValue
-  ): ICurrentValueWrapper {
-    return new CurrentValueWrapper(this.isHorizontal, valueFrom, valueTo);
+  public buildHintWrapper(
+    valueFrom: IHint,
+    valueTo?: IHint
+  ): IHintWrapper {
+    return new HintWrapper(this.isHorizontal, valueFrom, valueTo);
   }
 
   public buildScaleItem(value: number): IScaleItem {

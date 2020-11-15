@@ -3,7 +3,6 @@ import ViewFactory from './view/ViewFactory';
 import Presenter from './presenter/Presenter';
 import ISliderSettings from './model/ISliderSettings';
 import ModelFactory from './model/ModelFactory';
-import './styles.scss';
 
 declare global {
     interface Window {

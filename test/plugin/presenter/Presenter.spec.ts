@@ -34,14 +34,14 @@ describe(
         );
 
         it(
-          'After initialization the currentValue from the view must be equal the currentValue from the model',
+          'After initialization the hint value must be equal the currentValue from the model',
           () => {
             const viewFactory = new MockViewFactory();
             const modelFactory = new MockModelFactory({ isRange: true, currentVal: [1, 1] });
             const { view } = viewFactory;
             const { model } = modelFactory;
             presenter = new Presenter(viewFactory, modelFactory);
-            expect(view.getCurrentValue()).toEqual(model.getOptions().currentVal);
+            expect(view.getHintValue()).toEqual(model.getOptions().currentVal);
           }
         );
 
@@ -130,14 +130,14 @@ describe(
             presenter = new Presenter(viewFactory, modelFactory);
 
             const { view } = viewFactory;
-            const oldCurValView = view.getCurrentValue();
+            const oldCurValView = view.getHintValue();
             const { model } = modelFactory;
 
             view.setHandlePosition(10, SliderDirection.LEFT);
             presenter.sliderHandleChangedPosition(SliderDirection.LEFT);
 
-            expect(view.getCurrentValue()).not.toEqual(oldCurValView);
-            expect(view.getCurrentValue()).toEqual(model.getOptions().currentVal);
+            expect(view.getHintValue()).not.toEqual(oldCurValView);
+            expect(view.getHintValue()).toEqual(model.getOptions().currentVal);
           }
         );
 
@@ -149,14 +149,14 @@ describe(
             presenter = new Presenter(viewFactory, modelFactory);
 
             const { view } = viewFactory;
-            const oldCurValView = view.getCurrentValue();
+            const oldCurValView = view.getHintValue();
             const { model } = modelFactory;
 
             view.setHandlePosition(10, SliderDirection.RIGHT);
             presenter.sliderHandleChangedPosition(SliderDirection.RIGHT);
 
-            expect(view.getCurrentValue()).not.toEqual(oldCurValView);
-            expect(view.getCurrentValue()).toEqual(model.getOptions().currentVal);
+            expect(view.getHintValue()).not.toEqual(oldCurValView);
+            expect(view.getHintValue()).toEqual(model.getOptions().currentVal);
           }
         );
 
@@ -168,14 +168,14 @@ describe(
             presenter = new Presenter(viewFactory, modelFactory);
 
             const { view } = viewFactory;
-            const oldCurValView = view.getCurrentValue();
+            const oldCurValView = view.getHintValue();
             const { model } = modelFactory;
 
             view.setHandlePosition(10, SliderDirection.LEFT);
             presenter.sliderHandleChangedPosition(SliderDirection.LEFT);
 
-            expect(view.getCurrentValue()).not.toEqual(oldCurValView);
-            expect(view.getCurrentValue()).toEqual(model.getOptions().currentVal);
+            expect(view.getHintValue()).not.toEqual(oldCurValView);
+            expect(view.getHintValue()).toEqual(model.getOptions().currentVal);
           }
         );
 

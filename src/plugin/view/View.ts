@@ -1,5 +1,5 @@
 import IPresenter from '../presenter/IPresenter';
-import ICurrentValueWrapper from './HintWrapper/IHintWrapper';
+import IHintWrapper from './HintWrapper/IHintWrapper';
 import ISliderMainWrapper from './SliderMainWrapper/ISliderMainWrapper';
 import ISliderLine from './SliderLine/ISliderLine';
 import ISliderHandleWrapper from './SliderHandleWrapper/ISliderHandleWrapper';
@@ -14,7 +14,7 @@ import IView from './IView';
 class View implements IView {
   public $slider: JQuery<HTMLElement>;
 
-  protected currentValueWrapper: ICurrentValueWrapper;
+  protected hintWrapper: IHintWrapper;
 
   protected mainWrapper: ISliderMainWrapper;
 
@@ -53,8 +53,8 @@ class View implements IView {
     return this.mainWrapper.getSliderHandlePosition(direction);
   }
 
-  public getCurrentValue(): number[] {
-    return this.currentValueWrapper.getCurrentValue();
+  public getHintValue(): number[] {
+    return this.hintWrapper.getHintValue();
   }
 
   public getMaxHandlePosition(): number {
@@ -73,14 +73,14 @@ class View implements IView {
     this.mainWrapper.setHandlePosition(position, direction, isNewPosition);
   }
 
-  public setCurrentValue(currentValue: number[]): void {
-    this.currentValueWrapper.setCurrentValue(currentValue);
+  public setHintValue(hintValue: number[]): void {
+    this.hintWrapper.setHintValue(hintValue);
   }
 
-  public setCurrentValuePosition(direction: SliderDirection): void{
+  public setHintPosition(direction: SliderDirection): void{
     const position = SliderDirection.isFrom(direction)
       ? this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
-    this.currentValueWrapper.setCurrentValuePosition({
+    this.hintWrapper.setHintPosition({
       position,
       direction,
       handleFromPosition: this.mainWrapper.getHandleFromPosition(),
@@ -104,7 +104,7 @@ class View implements IView {
   }
 
   protected init(): void{
-    this.currentValueWrapper = this.buildCurrentValueWrapper(this.options.isRange);
+    this.hintWrapper = this.buildHintWrapper(this.options.isRange);
     this.mainWrapper = this.buildMainWrapper(
       this.options.isRangeLineEnabled,
       this.options.isRange
@@ -114,7 +114,7 @@ class View implements IView {
       : $('<div>').addClass([StyleClasses.SLIDER, StyleClasses.SLIDER_JS, StyleClasses.SLIDER_V]);
     this.scaleWrapper = this.buildScaleWrapper();
     $mainDiv.append([
-      this.currentValueWrapper.$elem,
+      this.hintWrapper.$elem,
       this.mainWrapper.$elem, this.scaleWrapper.$elem
     ]);
     this.$slider = $(this.elem).append($mainDiv);
@@ -122,7 +122,7 @@ class View implements IView {
 
   protected addEvents(): void {
     this.mainWrapper.handlePositionChangedEvent.on((direction) => {
-      this.setCurrentValuePosition(direction);
+      this.setHintPosition(direction);
       this.presenter.sliderHandleChangedPosition(direction);
     });
 
@@ -132,8 +132,8 @@ class View implements IView {
       });
     }
 
-    this.currentValueWrapper.intersectionEndedEvent.on((direction) => {
-      this.setCurrentValuePosition(direction);
+    this.hintWrapper.intersectionEndedEvent.on((direction) => {
+      this.setHintPosition(direction);
     });
 
     this.mainWrapper.lineClickEvent.on((percentVal) => {
@@ -161,21 +161,21 @@ class View implements IView {
     return this.elementsFactory.buildMainWrapper(line, handleWrapper);
   }
 
-  private buildCurrentValueWrapper(isRange: boolean): ICurrentValueWrapper {
-    const currentValueFrom = this.elementsFactory.buildCurrentValue(true);
-    let currentValueWrapper: ICurrentValueWrapper;
+  private buildHintWrapper(isRange: boolean): IHintWrapper {
+    const hintFrom = this.elementsFactory.buildHint(true);
+    let hintWrapper: IHintWrapper;
     if (isRange) {
-      const currentValueTo = this.elementsFactory.buildCurrentValue(false);
-      currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(
-        currentValueFrom,
-        currentValueTo
+      const hintTo = this.elementsFactory.buildHint(false);
+      hintWrapper = this.elementsFactory.buildHintWrapper(
+        hintFrom,
+        hintTo
       );
     } else {
-      currentValueWrapper = this.elementsFactory.buildCurrentValueWrapper(currentValueFrom);
+      hintWrapper = this.elementsFactory.buildHintWrapper(hintFrom);
     }
-    !this.options.isVisibleCurrentValue && currentValueWrapper.$elem.attr('style', 'visibility: hidden');
+    !this.options.isVisibleHint && hintWrapper.$elem.attr('style', 'visibility: hidden');
 
-    return currentValueWrapper;
+    return hintWrapper;
   }
 
   private buildScaleWrapper(): IScaleWrapper {

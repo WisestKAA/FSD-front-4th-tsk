@@ -78,23 +78,23 @@ class Hint implements IHint {
   }
 
   private init(isHorizontal: boolean): void {
-    this.$text = $('<div>').addClass(StyleClasses.CURRENT_VAL_TEXT);
+    this.$text = $('<div>').addClass(StyleClasses.HINT_TEXT);
     this.$text.html(`${this.val}`);
 
     this.$arrow = $('<div>');
     this.changeOrientation({
       isHorizontal,
       $elem: this.$arrow,
-      horizontalClass: StyleClasses.CURRENT_VAL_ARROW,
-      verticalClass: StyleClasses.CURRENT_VAL_ARROW_V
+      horizontalClass: StyleClasses.HINT_ARROW,
+      verticalClass: StyleClasses.HINT_ARROW_V
     });
 
     this.$elem = $('<div>');
     this.changeOrientation({
       isHorizontal,
       $elem: this.$elem,
-      horizontalClass: StyleClasses.CURRENT_VAL,
-      verticalClass: StyleClasses.CURRENT_VAL_V
+      horizontalClass: StyleClasses.HINT,
+      verticalClass: StyleClasses.HINT_V
     });
     this.$elem.append(this.$text, this.$arrow);
   }

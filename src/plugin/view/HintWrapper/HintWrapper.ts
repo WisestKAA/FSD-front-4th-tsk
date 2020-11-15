@@ -35,7 +35,7 @@ class HintWrapper extends AbstractElement implements IHintWrapper {
     this.init();
   }
 
-  public setCurrentValuePosition(options: ISetHintPositionOptions): void {
+  public setHintPosition(options: ISetHintPositionOptions): void {
     const {
       direction,
       position,
@@ -109,8 +109,8 @@ class HintWrapper extends AbstractElement implements IHintWrapper {
     this.$elem = $('<div>');
     this.changeOrientation(
       this.isHorizontal,
-      StyleClasses.CURRENT_VAL_WRAPPER,
-      StyleClasses.CURRENT_VAL_WRAPPER_V
+      StyleClasses.HINT_WRAPPER,
+      StyleClasses.HINT_WRAPPER_V
     );
 
     this.$elem.append(this.hintFrom.$elem);

@@ -19,7 +19,7 @@ class MockElement {
 
   $range: JQuery<HTMLElement>;
 
-  $visibleCurrentValue: JQuery<HTMLElement>;
+  $visibleHint: JQuery<HTMLElement>;
 
   $rangeLine: JQuery<HTMLElement>;
 
@@ -33,7 +33,7 @@ class MockElement {
     numberOfScaleMarks: 2,
     isHorizontal: true,
     isRange: false,
-    isVisibleCurrentValue: true,
+    isVisibleHint: true,
     isRangeLineEnabled: false,
     isScaleEnabled: false
   };
@@ -50,7 +50,7 @@ class MockElement {
     numberOfScaleMarks?: number,
     isHorizontal?: boolean,
     isRange?: boolean,
-    isVisibleCurrentValue?: boolean,
+    isVisibleHint?: boolean,
     isRangeLineEnabled?: boolean,
     isScaleEnabled?: boolean,
   }): JQuery<HTMLSpanElement> {
@@ -63,7 +63,7 @@ class MockElement {
       numberOfScaleMarks,
       isHorizontal,
       isRange,
-      isVisibleCurrentValue,
+      isVisibleHint,
       isRangeLineEnabled,
       isScaleEnabled
     } = option;
@@ -96,10 +96,10 @@ class MockElement {
       .attr('type', 'checkbox')
       .attr('name', 'range');
     isRange && this.$range.attr('checked', 'checked');
-    this.$visibleCurrentValue = $('<input>').addClass('checkbox-button__input')
+    this.$visibleHint = $('<input>').addClass('checkbox-button__input')
       .attr('type', 'checkbox')
-      .attr('name', 'visibleCurrentValue');
-    isVisibleCurrentValue && this.$visibleCurrentValue.attr('checked', 'checked');
+      .attr('name', 'visibleHint');
+    isVisibleHint && this.$visibleHint.attr('checked', 'checked');
     this.$rangeLine = $('<input>').addClass('checkbox-button__input')
       .attr('type', 'checkbox')
       .attr('name', 'rangeLine');
@@ -122,7 +122,7 @@ class MockElement {
             this.$numOfScaleMark,
             this.$horizontal,
             this.$range,
-            this.$visibleCurrentValue,
+            this.$visibleHint,
             this.$rangeLine,
             this.$scale
           )

@@ -13,7 +13,7 @@ mixin slider-card({ data }={})
       numOfScaleMark=2,
       isHorizontal=true,
       isRange=false,
-      isCurrentValueVisible=true,
+      isHintVisible=true,
       isRangeLineEnabled=false,
       isScaleEnabled=false
     } = data
@@ -27,7 +27,7 @@ mixin slider-card({ data }={})
     checkboxes = [
       { text: 'Horizontal', name: 'horizontal', isChecked: isHorizontal },
       { text: 'Range', name: 'range', isChecked: isRange },
-      { text: 'Visible current value', name: 'visibleCurrentValue', isChecked: isCurrentValueVisible },
+      { text: 'Visible hint', name: 'visibleHint', isChecked: isHintVisible },
       { text: 'Range line', name: 'rangeLine', isChecked: isRangeLineEnabled },
       { text: 'Scale', name: 'scale', isChecked: isScaleEnabled }
     ]

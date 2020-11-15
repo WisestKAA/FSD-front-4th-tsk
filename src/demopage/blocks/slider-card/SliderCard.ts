@@ -1,4 +1,6 @@
 import bind from 'bind-decorator';
+
+import '../../../plugin/simpleslider';
 import ISliderSettings from './ISliderSettings';
 import IFormInputs from './IFormInputs';
 
@@ -42,7 +44,7 @@ class SliderCard {
       $(this.formInputs.isRange).on('change', this.handleRangeChanged);
       $(this.formInputs.isRangeLineEnabled).on('change', this.handleRangeLineEnabledChanged);
       $(this.formInputs.isScaleEnabled).on('change', this.handleScaleEnabledChanged);
-      $(this.formInputs.isVisibleCurrentValue).on('change', this.handleVisibleCurrentValueChanged);
+      $(this.formInputs.isVisibleHint).on('change', this.handleVisibleHintChanged);
 
       this.formInputs.minVal.on('focusout', this.handleMinValFocusOut);
       this.formInputs.minVal.on('keyup', this.handleInputEnterKeyUp);
@@ -182,8 +184,8 @@ class SliderCard {
     }
 
     @bind
-    private handleVisibleCurrentValueChanged(): void{
-      this.optionsChanged({ isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked });
+    private handleVisibleHintChanged(): void{
+      this.optionsChanged({ isVisibleHint: this.formInputs.isVisibleHint.checked });
     }
 
     @bind
@@ -203,7 +205,7 @@ class SliderCard {
         step: this.getNumInputValue(this.formInputs.step),
         isRange,
         isRangeLineEnabled: this.formInputs.isRangeLineEnabled.checked,
-        isVisibleCurrentValue: this.formInputs.isVisibleCurrentValue.checked,
+        isVisibleHint: this.formInputs.isVisibleHint.checked,
         isScaleEnabled: this.formInputs.isScaleEnabled.checked,
         numberOfScaleMarks: this.getNumInputValue(this.formInputs.numberOfScaleMarks)
       };
@@ -244,8 +246,8 @@ class SliderCard {
         step: form.find('input[name=step]'),
         isRange: <HTMLInputElement>form.find('input[name=range]').get(0),
         isRangeLineEnabled: <HTMLInputElement>form.find('input[name=rangeLine]').get(0),
-        isVisibleCurrentValue: <HTMLInputElement>form
-          .find('input[name=visibleCurrentValue]').get(0),
+        isVisibleHint: <HTMLInputElement>form
+          .find('input[name=visibleHint]').get(0),
         isScaleEnabled: <HTMLInputElement>form.find('input[name=scale]').get(0),
         numberOfScaleMarks: form.find('input[name=numOfScaleMark]')
       };
@@ -274,7 +276,8 @@ class SliderCard {
     }
 
     private setCurrentValue(): void {
-      const { currentVal } = this.$slider.SimpleSlider('getOptions').get(0) as ISliderSettings;
+      const a = this.$slider.SimpleSlider('getOptions');
+      const { currentVal } = this.$slider.SimpleSlider('getOptions')[0] as ISliderSettings;
       this.handleSliderCurrentValueChanged(currentVal);
     }
 }

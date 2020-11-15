@@ -11,7 +11,7 @@ class SliderOptions implements ISliderOptions {
     precision: 0,
     isRange: false,
     isRangeLineEnabled: false,
-    isVisibleCurrentValue: true,
+    isVisibleHint: true,
     isScaleEnabled: false,
     numberOfScaleMarks: 2
   }

@@ -1,4 +1,4 @@
-import ICurrentValueWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
+import IHintWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
 import ISliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper';
 import IScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/IScaleWrapper';
 import View from '../../../../src/plugin/view/View';
@@ -22,8 +22,8 @@ class MockView extends View {
     });
   }
 
-  getCurrentValueWrapper(): ICurrentValueWrapper {
-    return this.currentValueWrapper;
+  getHintWrapper(): IHintWrapper {
+    return this.hintWrapper;
   }
 
   getMainWrapper(): ISliderMainWrapper {

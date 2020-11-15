@@ -7,7 +7,7 @@ interface ISliderSettings {
   precision?: number;
   isRange?: boolean;
   isRangeLineEnabled?: boolean;
-  isVisibleCurrentValue?: boolean;
+  isVisibleHint?: boolean;
   isScaleEnabled?: boolean;
   numberOfScaleMarks?: number;
 }

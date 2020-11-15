@@ -6,7 +6,7 @@ interface IFormInputs{
   step: JQuery<HTMLElement>,
   isRange: HTMLInputElement,
   isRangeLineEnabled: HTMLInputElement,
-  isVisibleCurrentValue: HTMLInputElement,
+  isVisibleHint: HTMLInputElement,
   isScaleEnabled: HTMLInputElement,
   numberOfScaleMarks: JQuery<HTMLElement>
 }

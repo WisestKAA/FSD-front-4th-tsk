@@ -2,7 +2,7 @@ interface IViewOptions{
   isHorizontal: boolean;
   isRange: boolean;
   isRangeLineEnabled: boolean;
-  isVisibleCurrentValue: boolean;
+  isVisibleHint: boolean;
   isScaleEnabled: boolean;
 }
 

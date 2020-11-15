@@ -1,3 +1,4 @@
+import SliderCard from '../../src/demopage/blocks/slider-card/SliderCard';
 import MockElement from './MockElement';
 import MockSliderCard from './MockSliderCard';
 
@@ -148,13 +149,13 @@ describe(
         );
 
         it(
-          'If the isVisibleCurrentValue field changed then after changed the SliderCard must call the setNewOptions function from presenter with new options',
+          'If the isVisibleHint field changed then after changed the SliderCard must call the setNewOptions function from presenter with new options',
           () => {
-            sliderCard.getFormInputs().isVisibleCurrentValue.checked = true;
+            sliderCard.getFormInputs().isVisibleHint.checked = true;
             const setNewOptionsSpy = spyOn(sliderCard.presenter, 'setNewOptions');
-            $(sliderCard.getFormInputs().isVisibleCurrentValue).change();
+            $(sliderCard.getFormInputs().isVisibleHint).change();
             expect(setNewOptionsSpy).toHaveBeenCalled();
-            expect(sliderCard.getOpt().isVisibleCurrentValue).toEqual(true);
+            expect(sliderCard.getOpt().isVisibleHint).toEqual(true);
           }
         );
 

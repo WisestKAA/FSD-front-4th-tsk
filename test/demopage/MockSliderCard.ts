@@ -9,7 +9,7 @@ class MockSliderCard extends SliderCard {
   initSlider(slider: HTMLElement, sliderSettings: ISliderSettings): void{
     this.$slider = $(slider);
     this.presenter = new MockPresenter(sliderSettings);
-    $(slider).data('presenter', this.presenter);
+    this.$slider.data('presenter', this.presenter);
   }
 
   getOpt(): ISliderSettings {

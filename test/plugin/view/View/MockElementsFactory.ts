@@ -6,11 +6,11 @@ import ISliderLine from '../../../../src/plugin/view/SliderLine/ISliderLine';
 import ISliderHandle from '../../../../src/plugin/view/SliderHandle/ISliderHandle';
 import ISliderHandleWrapper from '../../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper';
 import ISliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper';
-import ICurrentValue from '../../../../src/plugin/view/Hint/IHint';
-import ICurrentValueWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
-import MockCurrentValueWrapper from './MockCurrentValueWrapper';
+import IHint from '../../../../src/plugin/view/Hint/IHint';
+import IHintWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
+import MockHintWrapper from './MockHintWrapper';
 import MockScaleItem from './MockScaleItem';
-import MockCurrentValue from './MockCurrentValue';
+import MockHint from './MockHint';
 import MockMainWrapper from './MockMainWrapper';
 import MockHandle from './MockHandle';
 import MockLine from './MockLine';
@@ -61,15 +61,15 @@ class MockElementsFactory implements IElementsFactory {
     return new MockMainWrapper(this.isHorizontal);
   }
 
-  buildCurrentValue(isFromMock: boolean): ICurrentValue {
-    return new MockCurrentValue();
+  buildHint(isFromMock: boolean): IHint {
+    return new MockHint();
   }
 
-  buildCurrentValueWrapper(
-    valueFromMock: ICurrentValue,
-    valueToMock?: ICurrentValue
-  ): ICurrentValueWrapper {
-    return new MockCurrentValueWrapper(this.isHorizontal);
+  buildHintWrapper(
+    hintFromMock: IHint,
+    hintToMock?: IHint
+  ): IHintWrapper {
+    return new MockHintWrapper(this.isHorizontal);
   }
 
   setNewOptions(isHorizontal: boolean, isRange: boolean): void {

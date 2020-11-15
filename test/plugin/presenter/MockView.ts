@@ -11,7 +11,7 @@ class MockView implements IView {
 
   setScaleMarksPosition(positions: number[]): void {}
 
-  currentValue: number[];
+  hintValue: number[];
 
   handleFromPosition: number;
 
@@ -23,12 +23,12 @@ class MockView implements IView {
     return SliderDirection.isFrom(direction) ? this.handleFromPosition : this.handleToPosition;
   }
 
-  setCurrentValue(currentValue: number[]): void {
-    this.currentValue = currentValue;
+  setHintValue(hintValue: number[]): void {
+    this.hintValue = hintValue;
   }
 
-  getCurrentValue(): number[] {
-    return this.currentValue;
+  getHintValue(): number[] {
+    return this.hintValue;
   }
 
   getMaxHandlePosition(): number {
@@ -58,7 +58,7 @@ class MockView implements IView {
     this.scaleValues = scaleValues;
   }
 
-  setCurrentValuePosition(direction: SliderDirection): void {
+  setHintPosition(direction: SliderDirection): void {
     throw new Error('Method not implemented.');
   }
 }

@@ -35,13 +35,13 @@ class Presenter implements IPresenter {
       : this.model.getOptions().currentVal[1];
     if (currentVal === currentValFromModel) {
       this.setCurrentHandlePosition(currentVal, direction, false);
-      this.view.setCurrentValuePosition(direction);
+      this.view.setHintPosition(direction);
       return;
     }
 
     const correctVal = this.model.getCorrectValWithStep(currentVal);
     const current = this.getCorrectCurrentVal(correctVal, direction);
-    this.setCurrentValueModel(current);
+    this.setCurrentValue(current);
     const currentValFromPosition = this.getCurrentValFromPosition(
       direction,
       this.view.getSliderHandlePosition(direction)
@@ -112,24 +112,33 @@ class Presenter implements IPresenter {
 
   private init(viewFactory: IViewFactory, modelFactory: IModelFactory): void{
     this.model = modelFactory.build();
-    const currentOptions = this.model.getOptions();
+    const {
+      isHorizontal,
+      isRange,
+      isRangeLineEnabled,
+      isVisibleHint,
+      isScaleEnabled,
+      maxVal,
+      minVal,
+      numberOfScaleMarks
+    } = this.model.getOptions();
     const viewOptions: IViewOptions = {
-      isHorizontal: currentOptions.isHorizontal,
-      isRange: currentOptions.isRange,
-      isRangeLineEnabled: currentOptions.isRangeLineEnabled,
-      isVisibleCurrentValue: currentOptions.isVisibleCurrentValue,
-      isScaleEnabled: currentOptions.isScaleEnabled
+      isHorizontal,
+      isRange,
+      isRangeLineEnabled,
+      isVisibleHint,
+      isScaleEnabled
     };
 
-    const valuesForeScale = currentOptions.isScaleEnabled
+    const valuesForeScale = isScaleEnabled
       ? this.getValuesForScale({
-        maxVal: currentOptions.maxVal,
-        minVal: currentOptions.minVal,
-        numberOfScaleMarks: currentOptions.numberOfScaleMarks
+        maxVal,
+        minVal,
+        numberOfScaleMarks
       })
       : this.getValuesForScale({
-        maxVal: currentOptions.maxVal,
-        minVal: currentOptions.minVal,
+        maxVal,
+        minVal,
         numberOfScaleMarks: 2
       });
 
@@ -156,7 +165,7 @@ class Presenter implements IPresenter {
     } = options;
 
     if (!isRange) {
-      this.setCurrentValueModel([val, 0]);
+      this.setCurrentValue([val, 0]);
       this.setCurrentHandlePosition(
         val,
         SliderDirection.getDirection(true, isHorizontal)
@@ -167,10 +176,10 @@ class Presenter implements IPresenter {
     if (val < currentVal[0]
       || val - currentVal[0] < currentVal[1] - val
     ) {
-      this.setCurrentValueModel([val, currentVal[1]]);
+      this.setCurrentValue([val, currentVal[1]]);
       this.setCurrentHandlePosition(val, SliderDirection.getDirection(true, isHorizontal));
     } else {
-      this.setCurrentValueModel([currentVal[0], val]);
+      this.setCurrentValue([currentVal[0], val]);
       this.setCurrentHandlePosition(val, SliderDirection.getDirection(false, isHorizontal));
     }
   }
@@ -180,12 +189,12 @@ class Presenter implements IPresenter {
     const directionFrom = SliderDirection.getDirection(true, options.isHorizontal);
 
     const correctValFrom = this.model.getCorrectValWithStep(options.currentVal[0]);
-    this.setCurrentValueView([correctValFrom, 0]);
+    this.setHintValue([correctValFrom, 0]);
     this.setCurrentHandlePosition(correctValFrom, directionFrom);
     if (options.isRange) {
       const directionTo = SliderDirection.getDirection(false, options.isHorizontal);
       const correctValTo = this.model.getCorrectValWithStep(options.currentVal[1]);
-      this.setCurrentValueView([correctValFrom, correctValTo]);
+      this.setHintValue([correctValFrom, correctValTo]);
       this.setCurrentHandlePosition(correctValTo, directionTo);
     }
 
@@ -198,15 +207,15 @@ class Presenter implements IPresenter {
   }
 
   private addEvents(): void{
-    this.model.changeCurrentValueEvent.on((data) => { this.setCurrentValueView(data); });
+    this.model.changeCurrentValueEvent.on((data) => { this.setHintValue(data); });
     this.model.changeOptionsEvent.on(() => { this.optionsChanged(); });
   }
 
-  private setCurrentValueView(currentValue: number[]): void{
-    this.view.setCurrentValue(currentValue);
+  private setHintValue(hintValue: number[]): void{
+    this.view.setHintValue(hintValue);
   }
 
-  private setCurrentValueModel(currentVal?: number[]): void{
+  private setCurrentValue(currentVal?: number[]): void{
     this.model.setCurrentValue(currentVal);
   }
 
@@ -279,7 +288,7 @@ class Presenter implements IPresenter {
       isHorizontal,
       isRange,
       isRangeLineEnabled,
-      isVisibleCurrentValue
+      isVisibleHint
     } = this.model.getOptions();
     const scaleValues = this.getValuesForScale({
       minVal,
@@ -292,7 +301,7 @@ class Presenter implements IPresenter {
         isHorizontal,
         isRange,
         isRangeLineEnabled,
-        isVisibleCurrentValue,
+        isVisibleHint,
         isScaleEnabled
       },
       scaleValues
