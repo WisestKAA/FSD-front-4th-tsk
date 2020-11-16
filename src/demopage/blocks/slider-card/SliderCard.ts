@@ -276,8 +276,7 @@ class SliderCard {
     }
 
     private setCurrentValue(): void {
-      const a = this.$slider.SimpleSlider('getOptions');
-      const { currentVal } = this.$slider.SimpleSlider('getOptions')[0] as ISliderSettings;
+      const { currentVal } = this.$slider.SimpleSlider('getOptions').get(0) as ISliderSettings;
       this.handleSliderCurrentValueChanged(currentVal);
     }
 }
