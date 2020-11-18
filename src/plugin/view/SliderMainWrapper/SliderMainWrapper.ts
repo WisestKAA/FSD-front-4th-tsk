@@ -93,7 +93,6 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
 
   private addEvents(): void{
     this.sliderHandleWrapper.handlePositionChangedEvent.on((direction) => {
-      this.setRange();
       this.onHandlePositionChanged.trigger(direction);
     });
 
@@ -107,7 +106,8 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     this.onLineClick.trigger(correctPosition);
   }
 
-  private setRange(): void{
+  @bind
+  public setRange(): void{
     let options: ISetRangeOptions;
     const isRange = this.sliderHandleWrapper.getIsRange();
     isRange

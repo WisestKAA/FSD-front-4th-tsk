@@ -79,6 +79,11 @@ class View implements IView {
   }
 
   @bind
+  public setRange(): void {
+    this.mainWrapper.setRange();
+  }
+
+  @bind
   public setHintValue(hintValue: number[]): void {
     this.hintWrapper.setHintValue(hintValue);
   }

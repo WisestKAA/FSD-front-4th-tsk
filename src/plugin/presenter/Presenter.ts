@@ -33,6 +33,7 @@ class Presenter implements IPresenter {
     if (currentVal === currentValFromModel) {
       this.setCurrentHandlePosition(currentVal, direction, false);
       this.view.setHintPosition(direction);
+      this.view.setRange();
       return;
     }
 

@@ -23,6 +23,7 @@ interface IView {
   setHintPosition(direction: SliderDirection): void;
   setHintValue(hintValue: number[]): void;
   setScaleMarksPosition(positions: number[]): void;
+  setRange(): void;
   reinitialization(option: IViewOptions, scaleValues?: number[]): void;
 }
 
