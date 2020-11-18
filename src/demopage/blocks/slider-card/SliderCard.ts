@@ -280,4 +280,4 @@ class SliderCard {
     }
 }
 
-export { SliderCard };
+export default SliderCard;

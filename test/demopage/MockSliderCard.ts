@@ -1,4 +1,4 @@
-import { SliderCard } from '../../src/demopage/blocks/slider-card/SliderCard';
+import SliderCard from '../../src/demopage/blocks/slider-card/SliderCard';
 import { ISliderSettings } from '../../src/plugin/model/Model.types';
 import { IFormInputs } from '../../src/demopage/blocks/slider-card/SliderCard.types';
 import MockPresenter from './MockPresenter';
