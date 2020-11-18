@@ -2,15 +2,15 @@ import AbstractElement from '../../../../src/plugin/view/AbstractElement/Abstrac
 import { ISliderMainWrapper } from '../../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper.types';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
+import Observer from '../../../../src/plugin/Observer/Observer';
 
 class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {
   protected isHorizontal: boolean;
 
-  protected onHandlePositionChanged: LiteEvent<SliderDirection>;
+  protected onHandlePositionChanged: Observer<SliderDirection>;
 
-  private onLineClick: LiteEvent<number>;
+  private onLineClick: Observer<number>;
 
   constructor(isHorizontal: boolean) {
     super();
@@ -18,7 +18,7 @@ class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {
     this.init();
   }
 
-  public get lineClickEvent(): ILiteEvent<number> {
+  public get lineClickEvent(): IObserver<number> {
     return this.onLineClick.expose();
   }
 
@@ -29,8 +29,8 @@ class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {
       StyleClasses.MAIN_WRAPPER,
       StyleClasses.MAIN_WRAPPER_V
     );
-    this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
-    this.onLineClick = new LiteEvent<number>();
+    this.onHandlePositionChanged = new Observer<SliderDirection>();
+    this.onLineClick = new Observer<number>();
   }
 
   getSliderHandlePosition(directionMock: SliderDirection): number {
@@ -57,7 +57,7 @@ class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {
     return 100;
   }
 
-  public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
+  public get handlePositionChangedEvent(): IObserver<SliderDirection> {
     return this.onHandlePositionChanged.expose();
   }
 

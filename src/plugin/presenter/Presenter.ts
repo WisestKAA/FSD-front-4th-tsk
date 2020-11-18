@@ -5,19 +5,19 @@ import { IView, IViewFactory, IViewOptions } from '../view/View.types';
 import ElementsFactory from '../view/ElementsFactory';
 import { IModel, IModelFactory, ISliderSettings } from '../model/Model.types';
 import { IPresenter } from './Presenter.types';
-import LiteEvent from '../LiteEvent/LiteEvent';
+import Observer from '../Observer/Observer';
 
 class Presenter implements IPresenter {
   private model: IModel;
 
   private view: IView;
 
-  private onOptionsChangedEvent: LiteEvent<ISliderSettings>;
+  private onOptionsChangedEvent: Observer<ISliderSettings>;
 
   constructor(viewFactory: IViewFactory, modelFactory: IModelFactory) {
     this.init(viewFactory, modelFactory);
     this.addEvents();
-    this.onOptionsChangedEvent = new LiteEvent<ISliderSettings>();
+    this.onOptionsChangedEvent = new Observer<ISliderSettings>();
   }
 
   @bind

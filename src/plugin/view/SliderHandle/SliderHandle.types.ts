@@ -1,4 +1,4 @@
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { IObserver } from '../../Observer/Observer.types';
 import { IElement } from '../AbstractElement/AbstractElement.types';
 import { ISliderLine } from '../SliderLine/SliderLine.types';
 import SliderDirection from '../SliderDirection';
@@ -9,7 +9,7 @@ interface ISliderHandle extends IElement{
   setCurrentPosition(position: number, direction: SliderDirection): void;
   getHandleSize(): number;
   getPosition(): number;
-  positionChangedEvent: ILiteEvent<SliderDirection>;
+  positionChangedEvent: IObserver<SliderDirection>;
 }
 
 interface ISliderHandleOptions{

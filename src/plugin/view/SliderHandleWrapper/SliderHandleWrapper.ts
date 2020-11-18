@@ -1,7 +1,7 @@
 import bind from 'bind-decorator';
 
-import LiteEvent from '../../LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import Observer from '../../Observer/Observer';
+import { IObserver } from '../../Observer/Observer.types';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import { ISliderHandle } from '../SliderHandle/SliderHandle.types';
 import SliderDirection from '../SliderDirection';
@@ -19,7 +19,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
 
   private isRange: boolean;
 
-  private onHandlePositionChanged: LiteEvent<SliderDirection>;
+  private onHandlePositionChanged: Observer<SliderDirection>;
 
   constructor(isHorizontal: boolean, handleFrom: ISliderHandle, handleTo?: ISliderHandle) {
     super();
@@ -86,7 +86,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     return this.isRange;
   }
 
-  public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
+  public get handlePositionChangedEvent(): IObserver<SliderDirection> {
     return this.onHandlePositionChanged.expose();
   }
 
@@ -101,7 +101,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
       ? this.$elem.append([this.handleFrom.$elem, this.handleTo.$elem])
       : this.$elem.append(this.handleFrom.$elem);
 
-    this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
+    this.onHandlePositionChanged = new Observer<SliderDirection>();
   }
 
   private addEvents(): void{

@@ -1,14 +1,14 @@
 import { ISliderHandleWrapper } from '../../../../src/plugin/view/SliderHandleWrapper/SliderHandleWrapper.types';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
+import Observer from '../../../../src/plugin/Observer/Observer';
 
 class MockHandleWrapper implements ISliderHandleWrapper {
-  protected onHandlePositionChanged: LiteEvent<SliderDirection>;
+  protected onHandlePositionChanged: Observer<SliderDirection>;
 
   constructor() {
-    this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
+    this.onHandlePositionChanged = new Observer<SliderDirection>();
   }
 
   getMaxHandlePosition(): number {
@@ -36,7 +36,7 @@ class MockHandleWrapper implements ISliderHandleWrapper {
     return false;
   }
 
-  public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
+  public get handlePositionChangedEvent(): IObserver<SliderDirection> {
     return this.onHandlePositionChanged.expose();
   }
 

@@ -1,10 +1,10 @@
 import { IScaleWrapper } from '../../../../src/plugin/view/ScaleWrapper/ScaleWrapper.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
+import Observer from '../../../../src/plugin/Observer/Observer';
 
 class MockScaleWrapper implements IScaleWrapper {
-  protected onScaleItemClicked: LiteEvent<number>;
+  protected onScaleItemClicked: Observer<number>;
 
   isHorizontal: boolean;
 
@@ -12,7 +12,7 @@ class MockScaleWrapper implements IScaleWrapper {
 
   constructor(isHorizontal: boolean) {
     this.isHorizontal = isHorizontal;
-    this.onScaleItemClicked = new LiteEvent<number>();
+    this.onScaleItemClicked = new Observer<number>();
     this.$elem = this.isHorizontal
       ? $('<div>').addClass(StyleClasses.SCALE_WRAPPER)
       : $('<div>').addClass([StyleClasses.SCALE_WRAPPER, StyleClasses.SCALE_WRAPPER_V]);
@@ -27,7 +27,7 @@ class MockScaleWrapper implements IScaleWrapper {
     // throw new Error('Method not implemented.');
   }
 
-  public get scaleItemClickedEvent(): ILiteEvent<number> {
+  public get scaleItemClickedEvent(): IObserver<number> {
     return this.onScaleItemClicked.expose();
   }
 

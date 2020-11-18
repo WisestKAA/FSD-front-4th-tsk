@@ -1,8 +1,8 @@
 import { ISliderHandle } from '../../../../src/plugin/view/SliderHandle/SliderHandle.types';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
+import Observer from '../../../../src/plugin/Observer/Observer';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
 
 class MockHandle implements ISliderHandle {
   $elem: JQuery<HTMLElement>;
@@ -11,16 +11,16 @@ class MockHandle implements ISliderHandle {
 
   size: number = 10;
 
-  protected onPositionChanged: LiteEvent<SliderDirection>;
+  protected onPositionChanged: Observer<SliderDirection>;
 
-  public get positionChangedEvent(): ILiteEvent<SliderDirection> {
+  public get positionChangedEvent(): IObserver<SliderDirection> {
     return this.onPositionChanged.expose();
   }
 
   constructor(isHorizontal?: boolean) {
     this.$elem = isHorizontal ? $('<div>').attr('class', StyleClasses.HANDLE)
       : $('<div>').attr('class', `${StyleClasses.HANDLE} ${StyleClasses.HANDLE_V}`);
-    this.onPositionChanged = new LiteEvent<SliderDirection>();
+    this.onPositionChanged = new Observer<SliderDirection>();
   }
 
   setNewPosition(position: number, direction: SliderDirection): void {

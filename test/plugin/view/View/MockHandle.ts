@@ -1,7 +1,7 @@
 import { ISliderHandle } from '../../../../src/plugin/view/SliderHandle/SliderHandle.types';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
 
 class MockHandle implements ISliderHandle {
   setNewPosition(positionMock: number, directionMock: SliderDirection): void {}
@@ -20,7 +20,7 @@ class MockHandle implements ISliderHandle {
     return 0;
   }
 
-    positionChangedEvent: ILiteEvent<SliderDirection>;
+    positionChangedEvent: IObserver<SliderDirection>;
 
     $elem: JQuery<HTMLElement> = $('<div>');
 

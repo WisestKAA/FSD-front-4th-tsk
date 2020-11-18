@@ -1,4 +1,4 @@
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { IObserver } from '../../Observer/Observer.types';
 import { IElement } from '../AbstractElement/AbstractElement.types';
 import SliderDirection from '../SliderDirection';
 
@@ -13,8 +13,8 @@ interface ISliderMainWrapper extends IElement{
   getHandleFromPosition(): number;
   getHandleToPosition(): number | null;
   getLineSize(): number;
-  handlePositionChangedEvent: ILiteEvent<SliderDirection>;
-  lineClickEvent: ILiteEvent<number>;
+  handlePositionChangedEvent: IObserver<SliderDirection>;
+  lineClickEvent: IObserver<number>;
 }
 
 export { ISliderMainWrapper };

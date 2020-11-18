@@ -1,19 +1,19 @@
 import { ISliderLine } from '../../../../src/plugin/view/SliderLine/SliderLine.types';
 import { ISetRangeOptions } from '../../../../src/plugin/view/SliderLine/SliderLine.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
+import Observer from '../../../../src/plugin/Observer/Observer';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
 
 class MockLine implements ISliderLine {
-  private onLineClick: LiteEvent<number>;
+  private onLineClick: Observer<number>;
 
   $elem: JQuery<HTMLElement>;
 
   constructor() {
-    this.onLineClick = new LiteEvent<number>();
+    this.onLineClick = new Observer<number>();
   }
 
-  public get lineClickEvent(): ILiteEvent<number> {
+  public get lineClickEvent(): IObserver<number> {
     return this.onLineClick.expose();
   }
 

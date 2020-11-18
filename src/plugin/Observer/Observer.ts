@@ -1,8 +1,8 @@
 import bind from 'bind-decorator';
 
-import { ILiteEvent } from './LiteEvent.types';
+import { IObserver } from './Observer.types';
 
-class LiteEvent<T> implements ILiteEvent<T> {
+class Observer<T> implements IObserver<T> {
   @bind
   public on(handler: { (data?: T): void }) : void {
     this.handlers.push(handler);
@@ -16,11 +16,11 @@ class LiteEvent<T> implements ILiteEvent<T> {
   }
 
   @bind
-  public expose() : ILiteEvent<T> {
+  public expose() : IObserver<T> {
     return this;
   }
 
   private handlers: { (data?: T): void; }[] = [];
 }
 
-export default LiteEvent;
+export default Observer;

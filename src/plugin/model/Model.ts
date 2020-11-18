@@ -1,21 +1,21 @@
 import bind from 'bind-decorator';
 
-import LiteEvent from '../LiteEvent/LiteEvent';
-import { ILiteEvent } from '../LiteEvent/LiteEvent.types';
+import Observer from '../Observer/Observer';
+import { IObserver } from '../Observer/Observer.types';
 import { ISliderOptions, ISliderOptionsFactory } from './SliderOptions/SliderOptions.types';
 import { IModel, ISliderSettings } from './Model.types';
 
 class Model implements IModel {
   private sliderOptions: ISliderOptions;
 
-  private onCurrentValueChanged: LiteEvent<number[]>;
+  private onCurrentValueChanged: Observer<number[]>;
 
-  private onOptionsChanged: LiteEvent<void>;
+  private onOptionsChanged: Observer<void>;
 
   constructor(optionsFactory: ISliderOptionsFactory) {
     this.sliderOptions = optionsFactory.build();
-    this.onCurrentValueChanged = new LiteEvent<number[]>();
-    this.onOptionsChanged = new LiteEvent<void>();
+    this.onCurrentValueChanged = new Observer<number[]>();
+    this.onOptionsChanged = new Observer<void>();
   }
 
   @bind
@@ -56,11 +56,11 @@ class Model implements IModel {
     return this.sliderOptions.getOptions();
   }
 
-  public get changeCurrentValueEvent(): ILiteEvent<number[]> {
+  public get changeCurrentValueEvent(): IObserver<number[]> {
     return this.onCurrentValueChanged.expose();
   }
 
-  public get changeOptionsEvent(): ILiteEvent<void> {
+  public get changeOptionsEvent(): IObserver<void> {
     return this.onOptionsChanged.expose();
   }
 }

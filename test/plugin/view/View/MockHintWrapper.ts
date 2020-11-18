@@ -1,5 +1,5 @@
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
+import Observer from '../../../../src/plugin/Observer/Observer';
 import AbstractElement from '../../../../src/plugin/view/AbstractElement/AbstractElement';
 import { IHintWrapper, ISetHintPositionOptions } from '../../../../src/plugin/view/HintWrapper/HintWrapper.types';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
@@ -8,7 +8,7 @@ import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 class MockHintWrapper extends AbstractElement implements IHintWrapper {
   protected isHorizontal: boolean;
 
-  private onIntersectionEnded: LiteEvent<SliderDirection>;
+  private onIntersectionEnded: Observer<SliderDirection>;
 
   constructor(isHorizontal: boolean) {
     super();
@@ -16,7 +16,7 @@ class MockHintWrapper extends AbstractElement implements IHintWrapper {
     this.init();
   }
 
-  public get intersectionEndedEvent(): ILiteEvent<SliderDirection> {
+  public get intersectionEndedEvent(): IObserver<SliderDirection> {
     return this.onIntersectionEnded.expose();
   }
 
@@ -27,7 +27,7 @@ class MockHintWrapper extends AbstractElement implements IHintWrapper {
       StyleClasses.HINT_WRAPPER,
       StyleClasses.HINT_WRAPPER_V
     );
-    this.onIntersectionEnded = new LiteEvent<SliderDirection>();
+    this.onIntersectionEnded = new Observer<SliderDirection>();
   }
 
   setHintPosition(optionsMock: ISetHintPositionOptions): void { }

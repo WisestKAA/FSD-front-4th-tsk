@@ -2,8 +2,8 @@ import bind from 'bind-decorator';
 
 import AbstractElement from '../AbstractElement/AbstractElement';
 import { IHint } from '../Hint/Hint.types';
-import LiteEvent from '../../LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import Observer from '../../Observer/Observer';
+import { IObserver } from '../../Observer/Observer.types';
 import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
 import { IHintWrapper, ISetHintPositionOptions } from './HintWrapper.types';
@@ -21,7 +21,7 @@ class HintWrapper extends AbstractElement implements IHintWrapper {
 
   private wasIntersected: boolean = false;
 
-  private onIntersectionEnded: LiteEvent<SliderDirection>;
+  private onIntersectionEnded: Observer<SliderDirection>;
 
   constructor(isHorizontal: boolean, hintFrom: IHint, hintTo?: IHint) {
     super();
@@ -105,7 +105,7 @@ class HintWrapper extends AbstractElement implements IHintWrapper {
     return val;
   }
 
-  public get intersectionEndedEvent(): ILiteEvent<SliderDirection> {
+  public get intersectionEndedEvent(): IObserver<SliderDirection> {
     return this.onIntersectionEnded.expose();
   }
 
@@ -119,7 +119,7 @@ class HintWrapper extends AbstractElement implements IHintWrapper {
 
     this.$elem.append(this.hintFrom.$elem);
     this.isRange && this.$elem.append(this.hintTo.$elem);
-    this.onIntersectionEnded = new LiteEvent<SliderDirection>();
+    this.onIntersectionEnded = new Observer<SliderDirection>();
   }
 
   private checkHintsIntersection(

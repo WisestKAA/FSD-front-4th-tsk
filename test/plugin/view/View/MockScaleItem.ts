@@ -1,14 +1,14 @@
 import { IScaleItem } from '../../../../src/plugin/view/ScaleItem/ScaleItem.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
+import Observer from '../../../../src/plugin/Observer/Observer';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
 
 class MockScaleItem implements IScaleItem {
   scaleMarkValue: number;
 
-  protected onScaleItemClicked: LiteEvent<number>;
+  protected onScaleItemClicked: Observer<number>;
 
-  scaleItemClickedEvent: ILiteEvent<number>;
+  scaleItemClickedEvent: IObserver<number>;
 
   $elem: JQuery<HTMLElement>;
 

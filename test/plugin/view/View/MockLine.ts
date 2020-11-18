@@ -1,13 +1,13 @@
 import { ISetRangeOptions, ISliderLine } from '../../../../src/plugin/view/SliderLine/SliderLine.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
-import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
+import { IObserver } from '../../../../src/plugin/Observer/Observer.types';
+import Observer from '../../../../src/plugin/Observer/Observer';
 
 class MockLine implements ISliderLine {
-  private onLineClick: LiteEvent<number>;
+  private onLineClick: Observer<number>;
 
   constructor() {
-    this.onLineClick = new LiteEvent<number>();
+    this.onLineClick = new Observer<number>();
   }
 
   changeOrientation(
@@ -18,7 +18,7 @@ class MockLine implements ISliderLine {
 
   public $elem: JQuery<HTMLElement> = $('<div>');
 
-  public get lineClickEvent(): ILiteEvent<number> {
+  public get lineClickEvent(): IObserver<number> {
     return this.onLineClick.expose();
   }
 

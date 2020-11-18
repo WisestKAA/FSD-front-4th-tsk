@@ -1,7 +1,7 @@
 import bind from 'bind-decorator';
 
-import LiteEvent from '../../LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import Observer from '../../Observer/Observer';
+import { IObserver } from '../../Observer/Observer.types';
 import { IScaleItem } from '../ScaleItem/ScaleItem.types';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
@@ -16,18 +16,18 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
 
   private scaleItemsValues: number[] = [];
 
-  private onScaleItemClicked: LiteEvent<number>;
+  private onScaleItemClicked: Observer<number>;
 
   constructor(isHorizontal: boolean, scaleItems: IScaleItem[]) {
     super();
     this.isHorizontal = isHorizontal;
     this.scaleItems = scaleItems;
-    this.onScaleItemClicked = new LiteEvent<number>();
+    this.onScaleItemClicked = new Observer<number>();
     this.init();
     this.addEvents();
   }
 
-  public get scaleItemClickedEvent(): ILiteEvent<number> {
+  public get scaleItemClickedEvent(): IObserver<number> {
     return this.onScaleItemClicked.expose();
   }
 

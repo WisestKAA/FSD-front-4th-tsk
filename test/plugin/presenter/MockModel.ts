@@ -1,17 +1,17 @@
 import { IModel, ISliderSettings } from '../../../src/plugin/model/Model.types';
-import LiteEvent from '../../../src/plugin/LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../../src/plugin/LiteEvent/LiteEvent.types';
+import Observer from '../../../src/plugin/Observer/Observer';
+import { IObserver } from '../../../src/plugin/Observer/Observer.types';
 
 class MockModel implements IModel {
   private sliderOptions: ISliderSettings
 
-  private onCurrentValueChanged: LiteEvent<number[]>;
+  private onCurrentValueChanged: Observer<number[]>;
 
-  private onOptionsChanged: LiteEvent<void>;
+  private onOptionsChanged: Observer<void>;
 
   constructor(sliderOptions?: ISliderSettings) {
-    this.onCurrentValueChanged = new LiteEvent<number[]>();
-    this.onOptionsChanged = new LiteEvent<void>();
+    this.onCurrentValueChanged = new Observer<number[]>();
+    this.onOptionsChanged = new Observer<void>();
     this.sliderOptions = {
       isHorizontal: true,
       maxVal: 100,
@@ -64,11 +64,11 @@ class MockModel implements IModel {
     return this.sliderOptions;
   }
 
-  public get changeCurrentValueEvent(): ILiteEvent<number[]> {
+  public get changeCurrentValueEvent(): IObserver<number[]> {
     return this.onCurrentValueChanged.expose();
   }
 
-  public get changeOptionsEvent(): ILiteEvent<void> {
+  public get changeOptionsEvent(): IObserver<void> {
     return this.onOptionsChanged.expose();
   }
 }

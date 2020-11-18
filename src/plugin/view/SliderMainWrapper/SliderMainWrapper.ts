@@ -2,8 +2,8 @@ import bind from 'bind-decorator';
 
 import AbstractElement from '../AbstractElement/AbstractElement';
 import { ISliderHandleWrapper } from '../SliderHandleWrapper/SliderHandleWrapper.types';
-import LiteEvent from '../../LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import Observer from '../../Observer/Observer';
+import { IObserver } from '../../Observer/Observer.types';
 import { ISetRangeOptions } from '../SliderLine/SliderLine.types';
 import { ISliderLine } from '../SliderLine/SliderLine.types';
 import SliderDirection from '../SliderDirection';
@@ -19,9 +19,9 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
 
   private sliderHandleWrapper: ISliderHandleWrapper;
 
-  private onHandlePositionChanged: LiteEvent<SliderDirection>;
+  private onHandlePositionChanged: Observer<SliderDirection>;
 
-  private onLineClick: LiteEvent<number>;
+  private onLineClick: Observer<number>;
 
   constructor(
     isHorizontal: boolean,
@@ -70,11 +70,11 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     return this.sliderLine.getLineSize();
   }
 
-  public get handlePositionChangedEvent(): ILiteEvent<SliderDirection> {
+  public get handlePositionChangedEvent(): IObserver<SliderDirection> {
     return this.onHandlePositionChanged.expose();
   }
 
-  public get lineClickEvent(): ILiteEvent<number> {
+  public get lineClickEvent(): IObserver<number> {
     return this.onLineClick.expose();
   }
 
@@ -87,8 +87,8 @@ class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
     );
     this.$elem.append([this.sliderLine.$elem, this.sliderHandleWrapper.$elem]);
 
-    this.onHandlePositionChanged = new LiteEvent<SliderDirection>();
-    this.onLineClick = new LiteEvent<number>();
+    this.onHandlePositionChanged = new Observer<SliderDirection>();
+    this.onLineClick = new Observer<number>();
   }
 
   private addEvents(): void{

@@ -1,7 +1,7 @@
 import bind from 'bind-decorator';
 
-import LiteEvent from '../../LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import Observer from '../../Observer/Observer';
+import { IObserver } from '../../Observer/Observer.types';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
@@ -25,7 +25,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
 
   private line: ISliderLine;
 
-  private onPositionChanged: LiteEvent<SliderDirection>;
+  private onPositionChanged: Observer<SliderDirection>;
 
   private maxPosition: number;
 
@@ -75,7 +75,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     return this.position;
   }
 
-  public get positionChangedEvent(): ILiteEvent<SliderDirection> {
+  public get positionChangedEvent(): IObserver<SliderDirection> {
     return this.onPositionChanged.expose();
   }
 
@@ -88,7 +88,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     this.shiftXR = 0;
     this.shiftY = 0;
     this.shiftYT = 0;
-    this.onPositionChanged = new LiteEvent<SliderDirection>();
+    this.onPositionChanged = new Observer<SliderDirection>();
   }
 
   private addEvents(): void {

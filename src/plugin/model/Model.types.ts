@@ -1,12 +1,12 @@
-import { ILiteEvent } from '../LiteEvent/LiteEvent.types';
+import { IObserver } from '../Observer/Observer.types';
 
 interface IModel{
   setCurrentValue(newVal: number[]): void;
   setNewOptions(options: ISliderSettings): void;
   getCorrectValWithStep(currentVal: number): number;
   getOptions(): ISliderSettings
-  changeCurrentValueEvent: ILiteEvent<number[]>;
-  changeOptionsEvent: ILiteEvent<void>;
+  changeCurrentValueEvent: IObserver<number[]>;
+  changeOptionsEvent: IObserver<void>;
 }
 
 interface IModelFactory {

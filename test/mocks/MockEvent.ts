@@ -1,7 +1,7 @@
-import { ILiteEvent } from '../../src/plugin/LiteEvent/LiteEvent.types';
+import { IObserver } from '../../src/plugin/Observer/Observer.types';
 
 class MockEvent<T> {
-  constructor(handler: ILiteEvent<T>) {
+  constructor(handler: IObserver<T>) {
     handler.on(d => this.eventHandler(d));
   }
 

@@ -1,5 +1,5 @@
-import LiteEvent from '../../LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import Observer from '../../Observer/Observer';
+import { IObserver } from '../../Observer/Observer.types';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
 import { IScaleItem } from './ScaleItem.types';
@@ -11,19 +11,19 @@ class ScaleItem extends AbstractElement implements IScaleItem {
 
   private value: number;
 
-  private onScaleItemClicked: LiteEvent<number>;
+  private onScaleItemClicked: Observer<number>;
 
   constructor(isHorizontal: boolean, value: number) {
     super();
     this.isHorizontal = isHorizontal;
     this.value = value;
-    this.onScaleItemClicked = new LiteEvent<number>();
+    this.onScaleItemClicked = new Observer<number>();
 
     this.init();
     this.addEvents();
   }
 
-  public get scaleItemClickedEvent(): ILiteEvent<number> {
+  public get scaleItemClickedEvent(): IObserver<number> {
     return this.onScaleItemClicked.expose();
   }
 

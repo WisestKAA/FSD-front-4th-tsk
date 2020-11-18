@@ -1,7 +1,7 @@
 import bind from 'bind-decorator';
 
-import LiteEvent from '../../LiteEvent/LiteEvent';
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import Observer from '../../Observer/Observer';
+import { IObserver } from '../../Observer/Observer.types';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import { ISliderRange } from '../SliderRange/SliderRange.types';
 import StyleClasses from '../StyleClasses';
@@ -17,7 +17,7 @@ class SliderLine extends AbstractElement implements ISliderLine {
 
   private range: ISliderRange;
 
-  private onLineClick: LiteEvent<number>;
+  private onLineClick: Observer<number>;
 
   constructor(isHorizontal: boolean, range?: ISliderRange) {
     super();
@@ -53,7 +53,7 @@ class SliderLine extends AbstractElement implements ISliderLine {
       : this.range.changeRangeLineOne(handleFromPosition, maxHandlePosition);
   }
 
-  public get lineClickEvent(): ILiteEvent<number> {
+  public get lineClickEvent(): IObserver<number> {
     return this.onLineClick.expose();
   }
 
@@ -63,7 +63,7 @@ class SliderLine extends AbstractElement implements ISliderLine {
       : $('<div>').addClass([StyleClasses.LINE, StyleClasses.LINE_V]);
     this.isRangeLineEnabled && this.$elem.append(this.range.$elem);
 
-    this.onLineClick = new LiteEvent<number>();
+    this.onLineClick = new Observer<number>();
   }
 
   private addEvents(): void {

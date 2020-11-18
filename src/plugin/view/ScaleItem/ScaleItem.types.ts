@@ -1,8 +1,8 @@
-import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { IObserver } from '../../Observer/Observer.types';
 import { IElement } from '../AbstractElement/AbstractElement.types';
 
 interface IScaleItem extends IElement{
-  scaleItemClickedEvent: ILiteEvent<number>;
+  scaleItemClickedEvent: IObserver<number>;
   scaleMarkValue: number;
 }
 
