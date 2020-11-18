@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import StyleClasses from '../StyleClasses';
 
 abstract class AbstractElement {
@@ -7,6 +9,7 @@ abstract class AbstractElement {
 
   protected abstract init(): void ;
 
+  @bind
   public changeOrientation(
     isHorizontal: boolean,
     horizontalClass: StyleClasses,

@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import LiteEvent from '../../LiteEvent/LiteEvent';
 import ILiteEvent from '../../LiteEvent/ILiteEvent';
 import AbstractElement from '../AbstractElement/AbstractElement';
@@ -33,6 +35,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     this.addEvents();
   }
 
+  @bind
   public getMaxHandlePosition(): number {
     let maxHandlePosition: number;
     maxHandlePosition = this.handleFrom.getSliderHandleMaxPosition();
@@ -43,6 +46,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     return maxHandlePosition;
   }
 
+  @bind
   public setHandlePosition(
     position: number,
     direction: SliderDirection,
@@ -59,6 +63,7 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     }
   }
 
+  @bind
   public getSliderHandlePosition(direction: SliderDirection): number {
     if (SliderDirection.isFrom(direction)) {
       return this.handleFrom.getPosition();
@@ -66,14 +71,17 @@ class SliderHandleWrapper extends AbstractElement implements ISliderHandleWrappe
     return this.handleTo.getPosition();
   }
 
+  @bind
   public getHandleFromPosition(): number {
     return this.handleFrom.getPosition();
   }
 
+  @bind
   public getHandleToPosition(): number | null{
     return !this.isRange ? null : this.handleTo.getPosition();
   }
 
+  @bind
   public getIsRange(): boolean {
     return this.isRange;
   }

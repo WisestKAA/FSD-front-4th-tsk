@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import ISliderRange from './SliderRange/ISliderRange';
 import SliderRange from './SliderRange/SliderRange';
 import SliderLine from './SliderLine/SliderLine';
@@ -27,19 +29,23 @@ class ElementsFactory implements IElementsFactory {
     this.setNewOptions(isHorizontal, isRange);
   }
 
+  @bind
   public setNewOptions(isHorizontal: boolean, isRange: boolean): void{
     this.isHorizontal = isHorizontal;
     this.isRange = isRange;
   }
 
+  @bind
   public buildRange(): ISliderRange {
     return new SliderRange(this.isHorizontal);
   }
 
+  @bind
   public buildLine(range?: ISliderRange): ISliderLine {
     return new SliderLine(this.isHorizontal, range);
   }
 
+  @bind
   public buildHandle(line: ISliderLine, isFrom: boolean): ISliderHandle {
     return new SliderHandle({
       isHorizontal: this.isHorizontal,
@@ -49,6 +55,7 @@ class ElementsFactory implements IElementsFactory {
     });
   }
 
+  @bind
   public buildHandleWrapper(
     handleFrom: ISliderHandle,
     handleTo?: ISliderHandle
@@ -56,6 +63,7 @@ class ElementsFactory implements IElementsFactory {
     return new SliderHandleWrapper(this.isHorizontal, handleFrom, handleTo);
   }
 
+  @bind
   public buildMainWrapper(
     sliderLine: ISliderLine,
     sliderHandleWrapper: ISliderHandleWrapper
@@ -63,10 +71,12 @@ class ElementsFactory implements IElementsFactory {
     return new SliderMainWrapper(this.isHorizontal, sliderLine, sliderHandleWrapper);
   }
 
+  @bind
   public buildHint(isFrom: boolean): IHint {
     return new Hint(isFrom, this.isHorizontal);
   }
 
+  @bind
   public buildHintWrapper(
     valueFrom: IHint,
     valueTo?: IHint
@@ -74,10 +84,12 @@ class ElementsFactory implements IElementsFactory {
     return new HintWrapper(this.isHorizontal, valueFrom, valueTo);
   }
 
+  @bind
   public buildScaleItem(value: number): IScaleItem {
     return new ScaleItem(this.isHorizontal, value);
   }
 
+  @bind
   public buildScaleWrapper(scaleItems: IScaleItem[]): IScaleWrapper {
     return new ScaleWrapper(this.isHorizontal, scaleItems);
   }

@@ -24,6 +24,7 @@ class Presenter implements IPresenter {
     this.onOptionsChangedEvent = new LiteEvent<ISliderSettings>();
   }
 
+  @bind
   public sliderHandleChangedPosition(direction: SliderDirection): void {
     const currentVal = this.getCurrentValFromPosition(
       direction,
@@ -49,6 +50,7 @@ class Presenter implements IPresenter {
     correctVal !== currentValFromPosition && this.setCurrentHandlePosition(correctVal, direction);
   }
 
+  @bind
   public scaleClicked(value: number): void{
     const {
       currentVal,
@@ -65,6 +67,7 @@ class Presenter implements IPresenter {
     });
   }
 
+  @bind
   public lineClicked(position: number): void {
     const {
       currentVal,

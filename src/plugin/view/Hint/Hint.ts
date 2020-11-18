@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
 import IHint from './IHint';
@@ -24,11 +26,13 @@ class Hint implements IHint {
     this.init(isHorizontal);
   }
 
+  @bind
   public setHintValue(currentValue: number): void{
     this.$text.html(`${currentValue}`);
     this.val = currentValue;
   }
 
+  @bind
   public setHintPosition(
     position: number,
     handlePercent?: number,
@@ -43,6 +47,7 @@ class Hint implements IHint {
     this.$elem.attr('style', `${direction}: ${correctPosition}%;`);
   }
 
+  @bind
   public getHintSize(): number {
     if (this.isHorizontal) {
       return this.$elem.get(0).offsetWidth;
@@ -50,14 +55,17 @@ class Hint implements IHint {
     return this.$elem.get(0).offsetHeight;
   }
 
+  @bind
   public getHintValue(): number {
     return this.val;
   }
 
+  @bind
   public getHintPosition(): number {
     return this.position;
   }
 
+  @bind
   public changeOrientation(options: {
     isHorizontal: boolean,
     $elem: JQuery<HTMLElement>,

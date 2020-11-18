@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import AbstractElement from '../AbstractElement/AbstractElement';
 import IHint from '../Hint/IHint';
 import LiteEvent from '../../LiteEvent/LiteEvent';
@@ -35,6 +37,7 @@ class HintWrapper extends AbstractElement implements IHintWrapper {
     this.init();
   }
 
+  @bind
   public setHintPosition(options: ISetHintPositionOptions): void {
     const {
       direction,
@@ -89,11 +92,13 @@ class HintWrapper extends AbstractElement implements IHintWrapper {
     }
   }
 
+  @bind
   public setHintValue(currentValue: number[]): void{
     this.hintFrom.setHintValue(currentValue[0]);
     this.isRange && this.hintTo.setHintValue(currentValue[1]);
   }
 
+  @bind
   public getHintValue(): number[] {
     const val: number[] = [];
     val.push(this.hintFrom.getHintValue());

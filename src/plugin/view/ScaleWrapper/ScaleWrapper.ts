@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import LiteEvent from '../../LiteEvent/LiteEvent';
 import ILiteEvent from '../../LiteEvent/ILiteEvent';
 import IScaleItem from '../ScaleItem/IScaleItem';
@@ -33,6 +35,7 @@ class ScaleWrapper extends AbstractElement implements IScaleWrapper {
     return this.scaleItemsValues;
   }
 
+  @bind
   public setScaleMarksPosition(positions: number[]): void {
     const direction = this.isHorizontal ? 'left' : 'top';
     for (let i = 0; i < positions.length; i += 1) {

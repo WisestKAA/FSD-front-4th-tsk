@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
 import ISliderRange from './ISliderRange';
@@ -13,6 +15,7 @@ class SliderRange extends AbstractElement implements ISliderRange {
     this.init();
   }
 
+  @bind
   public changeRangeLineTwo(positionFrom: number, positionTo: number): void{
     const rangePosition = positionFrom;
     const rangeSize = 100 - positionTo - positionFrom;
@@ -21,6 +24,7 @@ class SliderRange extends AbstractElement implements ISliderRange {
     this.$elem.attr('style', `${direction}: ${rangePosition}%; ${wh}: ${rangeSize}%`);
   }
 
+  @bind
   public changeRangeLineOne(positionFrom: number, maxHandlePosition: number): void{
     const size = ((100 - maxHandlePosition) / 2) + positionFrom;
     const direction = this.isHorizontal ? 'left' : 'bottom';

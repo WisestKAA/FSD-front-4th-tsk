@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import IPresenter from '../presenter/IPresenter';
 import IHintWrapper from './HintWrapper/IHintWrapper';
 import ISliderMainWrapper from './SliderMainWrapper/ISliderMainWrapper';
@@ -49,22 +51,27 @@ class View implements IView {
     this.addEvents();
   }
 
+  @bind
   public getSliderHandlePosition(direction: SliderDirection): number {
     return this.mainWrapper.getSliderHandlePosition(direction);
   }
 
+  @bind
   public getHintValue(): number[] {
     return this.hintWrapper.getHintValue();
   }
 
+  @bind
   public getMaxHandlePosition(): number {
     return this.mainWrapper.getMaxHandlePosition();
   }
 
+  @bind
   public getScaleMarkValues(): number[] {
     return this.scaleWrapper.scaleItemMarkValues;
   }
 
+  @bind
   public setHandlePosition(
     position: number,
     direction: SliderDirection,
@@ -73,10 +80,12 @@ class View implements IView {
     this.mainWrapper.setHandlePosition(position, direction, isNewPosition);
   }
 
+  @bind
   public setHintValue(hintValue: number[]): void {
     this.hintWrapper.setHintValue(hintValue);
   }
 
+  @bind
   public setHintPosition(direction: SliderDirection): void{
     const position = SliderDirection.isFrom(direction)
       ? this.mainWrapper.getHandleFromPosition() : this.mainWrapper.getHandleToPosition();
@@ -90,10 +99,12 @@ class View implements IView {
     });
   }
 
+  @bind
   public setScaleMarksPosition(positions: number[]): void {
     this.scaleWrapper.setScaleMarksPosition(positions);
   }
 
+  @bind
   public reinitialization(option: IViewOptions, scaleValues: number[]): void{
     this.$slider.html('');
     this.options = option;

@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import ISliderOptionsFactory from './SliderOptions/ISliderOptionsFactory';
 import IModelFactory from './IModelFactory';
 import IModel from './IModel';
@@ -10,6 +12,7 @@ class ModelFactory implements IModelFactory {
     this.sliderOptionsFactory = sliderOptionsFactory;
   }
 
+  @bind
   public build(): IModel {
     return new Model(this.sliderOptionsFactory);
   }

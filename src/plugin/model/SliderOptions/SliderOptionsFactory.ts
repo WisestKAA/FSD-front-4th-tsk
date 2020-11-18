@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import ISliderSettings from '../ISliderSettings';
 import SliderOptions from './SliderOptions';
 import ISliderOptions from './ISliderOptions';
@@ -10,6 +12,7 @@ class SliderOptionsFactory implements ISliderOptionsFactory {
     this.options = options;
   }
 
+  @bind
   public build(): ISliderOptions {
     return new SliderOptions(this.options);
   }

@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import ISliderSettings from '../ISliderSettings';
 import ISliderOptions from './ISliderOptions';
 
@@ -23,14 +25,17 @@ class SliderOptions implements ISliderOptions {
     this.options = this.checkOptions(this.options);
   }
 
+  @bind
   public getOptions(): ISliderSettings {
     return this.options;
   }
 
+  @bind
   public setCurrentValue(currentVal: number[]): void{
     this.options.currentVal = currentVal;
   }
 
+  @bind
   public setNewOptions(options: ISliderSettings): void{
     this.options = $.extend(this.options, options);
     this.options = this.checkOptions(this.options);

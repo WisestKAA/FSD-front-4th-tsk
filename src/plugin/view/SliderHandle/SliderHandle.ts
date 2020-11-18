@@ -41,11 +41,13 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     this.addEvents();
   }
 
+  @bind
   public setNewPosition(position: number, direction: SliderDirection): void {
     this.setCurrentPosition(position, direction);
     this.onPositionChanged.trigger(direction);
   }
 
+  @bind
   public getSliderHandleMaxPosition(): number {
     const lineSize = this.isHorizontal
       ? this.line.$elem.outerWidth()
@@ -56,6 +58,7 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
     return this.maxPosition;
   }
 
+  @bind
   public setCurrentPosition(position: number, direction: SliderDirection): void{
     this.position = position;
     position >= this.getSliderHandleMaxPosition()
@@ -63,10 +66,12 @@ class SliderHandle extends AbstractElement implements ISliderHandle {
       : this.$elem.attr('style', `${direction}: ${position}%`);
   }
 
+  @bind
   public getHandleSize(): number {
     return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
   }
 
+  @bind
   public getPosition(): number {
     return this.position;
   }

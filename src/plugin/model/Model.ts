@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import LiteEvent from '../LiteEvent/LiteEvent';
 import ILiteEvent from '../LiteEvent/ILiteEvent';
 import ISliderOptions from './SliderOptions/ISliderOptions';
@@ -18,16 +20,19 @@ class Model implements IModel {
     this.onOptionsChanged = new LiteEvent<void>();
   }
 
+  @bind
   public setCurrentValue(newVal: number[]): void{
     this.sliderOptions.setCurrentValue(newVal);
     this.onCurrentValueChanged.trigger(newVal);
   }
 
+  @bind
   public setNewOptions(options: ISliderSettings): void{
     this.sliderOptions.setNewOptions(options);
     this.onOptionsChanged.trigger();
   }
 
+  @bind
   public getCorrectValWithStep(currentVal: number): number {
     const options = this.getOptions();
     const { step } = options;
@@ -48,6 +53,7 @@ class Model implements IModel {
     return correctVal;
   }
 
+  @bind
   public getOptions(): ISliderSettings {
     return this.sliderOptions.getOptions();
   }

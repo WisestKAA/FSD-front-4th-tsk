@@ -32,10 +32,12 @@ class SliderLine extends AbstractElement implements ISliderLine {
     this.addEvents();
   }
 
+  @bind
   public getLineSize(): number {
     return this.isHorizontal ? this.$elem.outerWidth() : this.$elem.outerHeight();
   }
 
+  @bind
   public setRange(setRangeOptions: ISetRangeOptions): void{
     if (this.isRangeLineEnabled) {
       setRangeOptions.isRange

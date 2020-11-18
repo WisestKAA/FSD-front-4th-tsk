@@ -1,3 +1,5 @@
+import bind from 'bind-decorator';
+
 import IPresenter from '../presenter/IPresenter';
 import IView from './IView';
 import View from './View';
@@ -12,6 +14,7 @@ class ViewFactory implements IViewFactory {
     this.elem = elem;
   }
 
+  @bind
   public build(
     presenter: IPresenter,
     option: IViewOptions,
