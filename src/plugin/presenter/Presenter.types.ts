@@ -6,4 +6,4 @@ interface IPresenter{
   lineClicked(position: number): void;
 }
 
-export default IPresenter;
+export { IPresenter };

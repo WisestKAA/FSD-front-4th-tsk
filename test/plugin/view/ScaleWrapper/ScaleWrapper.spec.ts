@@ -1,5 +1,5 @@
 import ScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/ScaleWrapper';
-import IScaleItem from '../../../../src/plugin/view/ScaleItem/IScaleItem';
+import { IScaleItem } from '../../../../src/plugin/view/ScaleItem/ScaleItem.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import MockScaleItem from './MockScaleItem';
 import { MockEvent } from '../../../mocks/MockEvent';

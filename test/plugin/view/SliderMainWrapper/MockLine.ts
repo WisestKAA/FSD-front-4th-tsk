@@ -1,8 +1,8 @@
-import ISliderLine from '../../../../src/plugin/view/SliderLine/ISliderLine';
-import ISetRangeOptions from '../../../../src/plugin/view/SliderLine/ISetRangeOptions';
+import { ISliderLine } from '../../../../src/plugin/view/SliderLine/SliderLine.types';
+import { ISetRangeOptions } from '../../../../src/plugin/view/SliderLine/SliderLine.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
-import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
 
 class MockLine implements ISliderLine {
   private onLineClick: LiteEvent<number>;

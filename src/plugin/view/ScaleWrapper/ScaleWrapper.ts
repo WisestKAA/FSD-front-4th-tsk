@@ -1,11 +1,11 @@
 import bind from 'bind-decorator';
 
 import LiteEvent from '../../LiteEvent/LiteEvent';
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
-import IScaleItem from '../ScaleItem/IScaleItem';
+import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { IScaleItem } from '../ScaleItem/ScaleItem.types';
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
-import IScaleWrapper from './IScaleWrapper';
+import { IScaleWrapper } from './ScaleWrapper.types';
 
 class ScaleWrapper extends AbstractElement implements IScaleWrapper {
   public $elem: JQuery<HTMLElement>;

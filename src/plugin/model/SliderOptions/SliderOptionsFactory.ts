@@ -1,9 +1,8 @@
 import bind from 'bind-decorator';
 
-import ISliderSettings from '../ISliderSettings';
+import { ISliderSettings } from '../Model.types';
 import SliderOptions from './SliderOptions';
-import ISliderOptions from './ISliderOptions';
-import ISliderOptionsFactory from './ISliderOptionsFactory';
+import { ISliderOptions, ISliderOptionsFactory } from './SliderOptions.types';
 
 class SliderOptionsFactory implements ISliderOptionsFactory {
   private options?: ISliderSettings;

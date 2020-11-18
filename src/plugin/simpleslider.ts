@@ -1,7 +1,7 @@
 import SliderOptionsFactory from './model/SliderOptions/SliderOptionsFactory';
 import ViewFactory from './view/ViewFactory';
 import Presenter from './presenter/Presenter';
-import ISliderSettings from './model/ISliderSettings';
+import { ISliderSettings } from './model/Model.types';
 import ModelFactory from './model/ModelFactory';
 
 declare global {

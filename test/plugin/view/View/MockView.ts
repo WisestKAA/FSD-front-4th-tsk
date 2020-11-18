@@ -1,9 +1,9 @@
-import IHintWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
-import ISliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper';
-import IScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/IScaleWrapper';
+import { IHintWrapper } from '../../../../src/plugin/view/HintWrapper/HintWrapper.types';
+import { ISliderMainWrapper } from '../../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper.types';
+import { IScaleWrapper } from '../../../../src/plugin/view/ScaleWrapper/ScaleWrapper.types';
 import View from '../../../../src/plugin/view/View';
-import IViewOptions from '../../../../src/plugin/view/IViewOptions';
-import IPresenter from '../../../../src/plugin/presenter/IPresenter';
+import { IViewOptions } from '../../../../src/plugin/view/View.types';
+import { IPresenter } from '../../../../src/plugin/presenter/Presenter.types';
 import MockElementsFactory from './MockElementsFactory';
 
 class MockView extends View {

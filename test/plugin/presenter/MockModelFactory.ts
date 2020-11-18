@@ -1,6 +1,4 @@
-import IModelFactory from '../../../src/plugin/model/IModelFactory';
-import IModel from '../../../src/plugin/model/IModel';
-import ISliderSettings from '../../../src/plugin/model/ISliderSettings';
+import { IModel, IModelFactory, ISliderSettings } from '../../../src/plugin/model/Model.types';
 import MockModel from './MockModel';
 
 class MockModelFactory implements IModelFactory {

@@ -1,17 +1,15 @@
 import bind from 'bind-decorator';
 
-import IPresenter from '../presenter/IPresenter';
-import IHintWrapper from './HintWrapper/IHintWrapper';
-import ISliderMainWrapper from './SliderMainWrapper/ISliderMainWrapper';
-import ISliderLine from './SliderLine/ISliderLine';
-import ISliderHandleWrapper from './SliderHandleWrapper/ISliderHandleWrapper';
-import IScaleWrapper from './ScaleWrapper/IScaleWrapper';
-import IScaleItem from './ScaleItem/IScaleItem';
+import { IPresenter } from '../presenter/Presenter.types';
+import { IHintWrapper } from './HintWrapper/HintWrapper.types';
+import { ISliderMainWrapper } from './SliderMainWrapper/SliderMainWrapper.types';
+import { ISliderLine } from './SliderLine/SliderLine.types';
+import { ISliderHandleWrapper } from './SliderHandleWrapper/SliderHandleWrapper.types';
+import { IScaleWrapper } from './ScaleWrapper/ScaleWrapper.types';
+import { IScaleItem } from './ScaleItem/ScaleItem.types';
+import { IElementsFactory, IView, IViewOptions } from './View.types';
 import StyleClasses from './StyleClasses';
-import IViewOptions from './IViewOptions';
 import SliderDirection from './SliderDirection';
-import IElementsFactory from './IElementsFactory';
-import IView from './IView';
 
 class View implements IView {
   public $slider: JQuery<HTMLElement>;

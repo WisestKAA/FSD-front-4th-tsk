@@ -2,7 +2,7 @@ import bind from 'bind-decorator';
 
 import AbstractElement from '../AbstractElement/AbstractElement';
 import StyleClasses from '../StyleClasses';
-import ISliderRange from './ISliderRange';
+import { ISliderRange } from './SliderRange.types';
 
 class SliderRange extends AbstractElement implements ISliderRange {
   public $elem: JQuery<HTMLElement>;

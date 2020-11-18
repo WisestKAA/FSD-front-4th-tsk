@@ -1,14 +1,14 @@
 import bind from 'bind-decorator';
 
 import AbstractElement from '../AbstractElement/AbstractElement';
-import ISliderHandleWrapper from '../SliderHandleWrapper/ISliderHandleWrapper';
+import { ISliderHandleWrapper } from '../SliderHandleWrapper/SliderHandleWrapper.types';
 import LiteEvent from '../../LiteEvent/LiteEvent';
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
-import ISetRangeOptions from '../SliderLine/ISetRangeOptions';
-import ISliderLine from '../SliderLine/ISliderLine';
+import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { ISetRangeOptions } from '../SliderLine/SliderLine.types';
+import { ISliderLine } from '../SliderLine/SliderLine.types';
 import SliderDirection from '../SliderDirection';
 import StyleClasses from '../StyleClasses';
-import ISliderMainWrapper from './ISliderMainWrapper';
+import { ISliderMainWrapper } from './SliderMainWrapper.types';
 
 class SliderMainWrapper extends AbstractElement implements ISliderMainWrapper {
   public $elem: JQuery<HTMLElement>;

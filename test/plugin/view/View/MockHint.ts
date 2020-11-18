@@ -1,4 +1,4 @@
-import IHint from '../../../../src/plugin/view/Hint/IHint';
+import { IHint } from '../../../../src/plugin/view/Hint/Hint.types';
 
 class MockHint implements IHint {
   $elem: JQuery<HTMLElement>;

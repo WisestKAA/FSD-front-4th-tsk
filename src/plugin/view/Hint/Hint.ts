@@ -2,7 +2,7 @@ import bind from 'bind-decorator';
 
 import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
-import IHint from './IHint';
+import { IHint } from './Hint.types';
 
 class Hint implements IHint {
   public $elem: JQuery<HTMLElement>;

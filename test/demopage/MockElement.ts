@@ -1,4 +1,4 @@
-import ISliderSettings from '../../src/plugin/model/ISliderSettings';
+import { ISliderSettings } from '../../src/plugin/model/Model.types';
 
 class MockElement {
   $elem: JQuery<HTMLElement>;

@@ -1,11 +1,9 @@
 import bind from 'bind-decorator';
 
 import LiteEvent from '../LiteEvent/LiteEvent';
-import ILiteEvent from '../LiteEvent/ILiteEvent';
-import ISliderOptions from './SliderOptions/ISliderOptions';
-import ISliderOptionsFactory from './SliderOptions/ISliderOptionsFactory';
-import ISliderSettings from './ISliderSettings';
-import IModel from './IModel';
+import { ILiteEvent } from '../LiteEvent/LiteEvent.types';
+import { ISliderOptions, ISliderOptionsFactory } from './SliderOptions/SliderOptions.types';
+import { IModel, ISliderSettings } from './Model.types';
 
 class Model implements IModel {
   private sliderOptions: ISliderOptions;

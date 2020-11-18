@@ -1,5 +1,5 @@
 import SliderOptions from '../../../../src/plugin/model/SliderOptions/SliderOptions';
-import ISliderSettings from '../../../../src/plugin/model/ISliderSettings';
+import { ISliderSettings } from '../../../../src/plugin/model/Model.types';
 
 describe(
   'Test SliderOptions',

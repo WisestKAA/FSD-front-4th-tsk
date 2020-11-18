@@ -1,8 +1,8 @@
 import AbstractElement from '../../../../src/plugin/view/AbstractElement/AbstractElement';
-import ISliderMainWrapper from '../../../../src/plugin/view/SliderMainWrapper/ISliderMainWrapper';
+import { ISliderMainWrapper } from '../../../../src/plugin/view/SliderMainWrapper/SliderMainWrapper.types';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
 import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 
 class MockMainWrapper extends AbstractElement implements ISliderMainWrapper {

@@ -1,4 +1,4 @@
-import IPresenter from '../../../../src/plugin/presenter/IPresenter';
+import { IPresenter } from '../../../../src/plugin/presenter/Presenter.types';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 
 class MockPresenter implements IPresenter {

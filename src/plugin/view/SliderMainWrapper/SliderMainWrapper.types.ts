@@ -1,5 +1,5 @@
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
-import IElement from '../AbstractElement/IElement';
+import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { IElement } from '../AbstractElement/AbstractElement.types';
 import SliderDirection from '../SliderDirection';
 
 interface ISliderMainWrapper extends IElement{
@@ -17,4 +17,4 @@ interface ISliderMainWrapper extends IElement{
   lineClickEvent: ILiteEvent<number>;
 }
 
-export default ISliderMainWrapper;
+export { ISliderMainWrapper };

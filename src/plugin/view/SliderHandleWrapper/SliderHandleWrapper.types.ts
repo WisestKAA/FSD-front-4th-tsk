@@ -1,5 +1,5 @@
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
-import IElement from '../AbstractElement/IElement';
+import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { IElement } from '../AbstractElement/AbstractElement.types';
 import SliderDirection from '../SliderDirection';
 
 interface ISliderHandleWrapper extends IElement{
@@ -16,4 +16,4 @@ interface ISliderHandleWrapper extends IElement{
   handlePositionChangedEvent: ILiteEvent<SliderDirection>;
 }
 
-export default ISliderHandleWrapper;
+export { ISliderHandleWrapper };

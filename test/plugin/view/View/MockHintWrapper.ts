@@ -1,8 +1,7 @@
-import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
 import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 import AbstractElement from '../../../../src/plugin/view/AbstractElement/AbstractElement';
-import IHintWrapper from '../../../../src/plugin/view/HintWrapper/IHintWrapper';
-import ISetHintPositionOptions from '../../../../src/plugin/view/HintWrapper/ISetHintPositionOptions';
+import { IHintWrapper, ISetHintPositionOptions } from '../../../../src/plugin/view/HintWrapper/HintWrapper.types';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 

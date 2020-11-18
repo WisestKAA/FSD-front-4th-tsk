@@ -1,7 +1,6 @@
-import IModel from '../../../src/plugin/model/IModel';
-import ISliderSettings from '../../../src/plugin/model/ISliderSettings';
+import { IModel, ISliderSettings } from '../../../src/plugin/model/Model.types';
 import LiteEvent from '../../../src/plugin/LiteEvent/LiteEvent';
-import ILiteEvent from '../../../src/plugin/LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../../src/plugin/LiteEvent/LiteEvent.types';
 
 class MockModel implements IModel {
   private sliderOptions: ISliderSettings

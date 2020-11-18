@@ -1,4 +1,4 @@
-import ILiteEvent from '../../src/plugin/LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../src/plugin/LiteEvent/LiteEvent.types';
 
 class MockEvent<T> {
   constructor(handler: ILiteEvent<T>) {

@@ -1,6 +1,6 @@
-import SliderCard from '../../src/demopage/blocks/slider-card/SliderCard';
-import ISliderSettings from '../../src/plugin/model/ISliderSettings';
-import IFormInputs from '../../src/demopage/blocks/slider-card/IFormInputs';
+import { SliderCard } from '../../src/demopage/blocks/slider-card/SliderCard';
+import { ISliderSettings } from '../../src/plugin/model/Model.types';
+import { IFormInputs } from '../../src/demopage/blocks/slider-card/SliderCard.types';
 import MockPresenter from './MockPresenter';
 
 class MockSliderCard extends SliderCard {

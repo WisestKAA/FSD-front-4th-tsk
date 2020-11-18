@@ -1,8 +1,10 @@
-import IViewFactory from '../../../src/plugin/view/IViewFactory';
-import IViewOptions from '../../../src/plugin/view/IViewOptions';
-import IElementsFactory from '../../../src/plugin/view/IElementsFactory';
-import IView from '../../../src/plugin/view/IView';
-import IPresenter from '../../../src/plugin/presenter/IPresenter';
+import {
+  IElementsFactory,
+  IViewFactory,
+  IViewOptions,
+  IView
+} from '../../../src/plugin/view/View.types';
+import { IPresenter } from '../../../src/plugin/presenter/Presenter.types';
 import MockView from './MockView';
 
 class MockViewFactory implements IViewFactory {

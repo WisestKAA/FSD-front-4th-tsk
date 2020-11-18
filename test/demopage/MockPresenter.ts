@@ -1,5 +1,5 @@
-import ISliderSettings from '../../src/plugin/model/ISliderSettings';
-import IPresenter from '../../src/plugin/presenter/IPresenter';
+import { ISliderSettings } from '../../src/plugin/model/Model.types';
+import { IPresenter } from '../../src/plugin/presenter/Presenter.types';
 import SliderDirection from '../../src/plugin/view/SliderDirection';
 
 class MockPresenter implements IPresenter {

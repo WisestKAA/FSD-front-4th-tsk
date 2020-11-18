@@ -1,24 +1,24 @@
 import bind from 'bind-decorator';
 
-import ISliderRange from './SliderRange/ISliderRange';
+import { ISliderRange } from './SliderRange/SliderRange.types';
 import SliderRange from './SliderRange/SliderRange';
 import SliderLine from './SliderLine/SliderLine';
-import ISliderLine from './SliderLine/ISliderLine';
+import { ISliderLine } from './SliderLine/SliderLine.types';
 import SliderHandle from './SliderHandle/SliderHandle';
-import ISliderHandle from './SliderHandle/ISliderHandle';
-import ISliderHandleWrapper from './SliderHandleWrapper/ISliderHandleWrapper';
+import { ISliderHandle } from './SliderHandle/SliderHandle.types';
+import { ISliderHandleWrapper } from './SliderHandleWrapper/SliderHandleWrapper.types';
 import SliderHandleWrapper from './SliderHandleWrapper/SliderHandleWrapper';
-import ISliderMainWrapper from './SliderMainWrapper/ISliderMainWrapper';
+import { ISliderMainWrapper } from './SliderMainWrapper/SliderMainWrapper.types';
 import SliderMainWrapper from './SliderMainWrapper/SliderMainWrapper';
-import IHint from './Hint/IHint';
+import { IHint } from './Hint/Hint.types';
 import Hint from './Hint/Hint';
-import IHintWrapper from './HintWrapper/IHintWrapper';
+import { IHintWrapper } from './HintWrapper/HintWrapper.types';
 import HintWrapper from './HintWrapper/HintWrapper';
-import IScaleItem from './ScaleItem/IScaleItem';
+import { IScaleItem } from './ScaleItem/ScaleItem.types';
 import ScaleItem from './ScaleItem/ScaleItem';
-import IScaleWrapper from './ScaleWrapper/IScaleWrapper';
+import { IScaleWrapper } from './ScaleWrapper/ScaleWrapper.types';
 import ScaleWrapper from './ScaleWrapper/ScaleWrapper';
-import IElementsFactory from './IElementsFactory';
+import { IElementsFactory } from './View.types';
 
 class ElementsFactory implements IElementsFactory {
   private isHorizontal: boolean;

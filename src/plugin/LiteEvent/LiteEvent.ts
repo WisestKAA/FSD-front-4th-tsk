@@ -1,6 +1,6 @@
 import bind from 'bind-decorator';
 
-import ILiteEvent from './ILiteEvent';
+import { ILiteEvent } from './LiteEvent.types';
 
 class LiteEvent<T> implements ILiteEvent<T> {
   @bind

@@ -9,4 +9,4 @@ interface IElement{
   ): void;
 }
 
-export default IElement;
+export { IElement };

@@ -1,5 +1,6 @@
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
-import IElement from '../AbstractElement/IElement';
+import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { IElement } from '../AbstractElement/AbstractElement.types';
+import { ISliderLine } from '../SliderLine/SliderLine.types';
 import SliderDirection from '../SliderDirection';
 
 interface ISliderHandle extends IElement{
@@ -11,4 +12,11 @@ interface ISliderHandle extends IElement{
   positionChangedEvent: ILiteEvent<SliderDirection>;
 }
 
-export default ISliderHandle;
+interface ISliderHandleOptions{
+  isFrom?: boolean;
+  sliderLine: ISliderLine;
+  isHorizontal: boolean;
+  isRange: boolean;
+}
+
+export { ISliderHandle, ISliderHandleOptions };

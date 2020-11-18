@@ -1,6 +1,6 @@
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import View from '../../../../src/plugin/view/View';
-import IViewOptions from '../../../../src/plugin/view/IViewOptions';
+import { IViewOptions } from '../../../../src/plugin/view/View.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import MockPresenter from './MockPresenter';
 import MockElementsFactory from './MockElementsFactory';

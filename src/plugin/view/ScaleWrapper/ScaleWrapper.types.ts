@@ -1,5 +1,5 @@
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
-import IElement from '../AbstractElement/IElement';
+import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
+import { IElement } from '../AbstractElement/AbstractElement.types';
 
 interface IScaleWrapper extends IElement{
   scaleItemClickedEvent: ILiteEvent<number>;
@@ -7,4 +7,4 @@ interface IScaleWrapper extends IElement{
   setScaleMarksPosition(positions: number[]): void
 }
 
-export default IScaleWrapper;
+export { IScaleWrapper };

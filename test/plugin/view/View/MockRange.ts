@@ -1,4 +1,4 @@
-import ISliderRange from '../../../../src/plugin/view/SliderRange/ISliderRange';
+import { ISliderRange } from '../../../../src/plugin/view/SliderRange/SliderRange.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 
 class MockRange implements ISliderRange {

@@ -1,11 +1,12 @@
 import bind from 'bind-decorator';
 
-import IPresenter from '../presenter/IPresenter';
-import IView from './IView';
+import { IPresenter } from '../presenter/Presenter.types';
+import {
+  IElementsFactory,
+  IView, IViewOptions,
+  IViewFactory
+} from './View.types';
 import View from './View';
-import IViewOptions from './IViewOptions';
-import IElementsFactory from './IElementsFactory';
-import IViewFactory from './IViewFactory';
 
 class ViewFactory implements IViewFactory {
   private elem: HTMLElement;

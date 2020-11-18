@@ -1,7 +1,7 @@
-import IScaleItem from '../../../../src/plugin/view/ScaleItem/IScaleItem';
+import { IScaleItem } from '../../../../src/plugin/view/ScaleItem/ScaleItem.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
-import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
 
 class MockScaleItem implements IScaleItem {
   $elem: JQuery<HTMLElement>;

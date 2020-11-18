@@ -1,6 +1,6 @@
-import IScaleWrapper from '../../../../src/plugin/view/ScaleWrapper/IScaleWrapper';
+import { IScaleWrapper } from '../../../../src/plugin/view/ScaleWrapper/ScaleWrapper.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
-import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
 import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
 
 class MockScaleWrapper implements IScaleWrapper {

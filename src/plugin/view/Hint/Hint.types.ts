@@ -12,4 +12,4 @@ interface IHint{
   getHintPosition(): number;
 }
 
-export default IHint;
+export { IHint };

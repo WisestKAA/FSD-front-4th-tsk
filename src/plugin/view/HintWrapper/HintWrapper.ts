@@ -1,13 +1,12 @@
 import bind from 'bind-decorator';
 
 import AbstractElement from '../AbstractElement/AbstractElement';
-import IHint from '../Hint/IHint';
+import { IHint } from '../Hint/Hint.types';
 import LiteEvent from '../../LiteEvent/LiteEvent';
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
 import StyleClasses from '../StyleClasses';
 import SliderDirection from '../SliderDirection';
-import ISetHintPositionOptions from './ISetHintPositionOptions';
-import IHintWrapper from './IHintWrapper';
+import { IHintWrapper, ISetHintPositionOptions } from './HintWrapper.types';
 
 class HintWrapper extends AbstractElement implements IHintWrapper {
   public $elem: JQuery<HTMLElement>;

@@ -1,12 +1,12 @@
 import bind from 'bind-decorator';
 
 import LiteEvent from '../../LiteEvent/LiteEvent';
-import ILiteEvent from '../../LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../LiteEvent/LiteEvent.types';
 import AbstractElement from '../AbstractElement/AbstractElement';
-import ISliderRange from '../SliderRange/ISliderRange';
+import { ISliderRange } from '../SliderRange/SliderRange.types';
 import StyleClasses from '../StyleClasses';
-import ISliderLine from './ISliderLine';
-import ISetRangeOptions from './ISetRangeOptions';
+import { ISliderLine } from './SliderLine.types';
+import { ISetRangeOptions } from './SliderLine.types';
 
 class SliderLine extends AbstractElement implements ISliderLine {
   public $elem: JQuery<HTMLElement>;

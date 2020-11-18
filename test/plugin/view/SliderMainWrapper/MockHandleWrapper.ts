@@ -1,8 +1,8 @@
-import ISliderHandleWrapper from '../../../../src/plugin/view/SliderHandleWrapper/ISliderHandleWrapper';
+import { ISliderHandleWrapper } from '../../../../src/plugin/view/SliderHandleWrapper/SliderHandleWrapper.types';
 import StyleClasses from '../../../../src/plugin/view/StyleClasses';
 import SliderDirection from '../../../../src/plugin/view/SliderDirection';
 import LiteEvent from '../../../../src/plugin/LiteEvent/LiteEvent';
-import ILiteEvent from '../../../../src/plugin/LiteEvent/ILiteEvent';
+import { ILiteEvent } from '../../../../src/plugin/LiteEvent/LiteEvent.types';
 
 class MockHandleWrapper implements ISliderHandleWrapper {
   $elem: JQuery<HTMLElement>;

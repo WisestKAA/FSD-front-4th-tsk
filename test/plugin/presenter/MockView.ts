@@ -1,8 +1,6 @@
-import IView from '../../../src/plugin/view/IView';
+import { IElementsFactory, IViewOptions, IView } from '../../../src/plugin/view/View.types';
 import SliderDirection from '../../../src/plugin/view/SliderDirection';
-import IElementsFactory from '../../../src/plugin/view/IElementsFactory';
-import IViewOptions from '../../../src/plugin/view/IViewOptions';
-import IPresenter from '../../../src/plugin/presenter/IPresenter';
+import { IPresenter } from '../../../src/plugin/presenter/Presenter.types';
 
 class MockView implements IView {
   getScaleMarkValues(): number[] {

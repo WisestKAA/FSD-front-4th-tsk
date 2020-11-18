@@ -1,8 +1,7 @@
 import bind from 'bind-decorator';
 
 import '../../../plugin/simpleslider';
-import ISliderSettings from './ISliderSettings';
-import IFormInputs from './IFormInputs';
+import { ISliderSettings, IFormInputs } from './SliderCard.types';
 
 class SliderCard {
     protected $elem: JQuery<HTMLElement>;
@@ -281,4 +280,4 @@ class SliderCard {
     }
 }
 
-export default SliderCard;
+export { SliderCard };

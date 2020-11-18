@@ -1,14 +1,10 @@
 import bind from 'bind-decorator';
 
 import SliderDirection from '../view/SliderDirection';
-import IView from '../view/IView';
-import IViewFactory from '../view/IViewFactory';
-import IViewOptions from '../view/IViewOptions';
+import { IView, IViewFactory, IViewOptions } from '../view/View.types';
 import ElementsFactory from '../view/ElementsFactory';
-import ISliderSettings from '../model/ISliderSettings';
-import IModel from '../model/IModel';
-import IModelFactory from '../model/IModelFactory';
-import IPresenter from './IPresenter';
+import { IModel, IModelFactory, ISliderSettings } from '../model/Model.types';
+import { IPresenter } from './Presenter.types';
 import LiteEvent from '../LiteEvent/LiteEvent';
 
 class Presenter implements IPresenter {
