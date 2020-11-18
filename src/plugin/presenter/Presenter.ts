@@ -60,7 +60,8 @@ class Presenter implements IPresenter {
       currentVal,
       isHorizontal,
       isRange,
-      val
+      val,
+      incorrectVal: value
     });
   }
 
@@ -72,16 +73,17 @@ class Presenter implements IPresenter {
       isRange
     } = this.model.getOptions();
 
-    const newVal = this.getCurrentValFromPosition(
+    const incorrectVal = this.getCurrentValFromPosition(
       isHorizontal ? SliderDirection.LEFT : SliderDirection.TOP,
       position
     );
-    const val = this.model.getCorrectValWithStep(newVal);
+    const val = this.model.getCorrectValWithStep(incorrectVal);
     this.setNewValue({
       currentVal,
       isHorizontal,
       isRange,
-      val
+      val,
+      incorrectVal
     });
   }
 
@@ -154,12 +156,14 @@ class Presenter implements IPresenter {
   private setNewValue(options: {
     isRange: boolean,
     val: number,
+    incorrectVal: number
     isHorizontal: boolean,
     currentVal: number[]
   }): void {
     const {
       isRange,
       val,
+      incorrectVal,
       isHorizontal,
       currentVal
     } = options;
@@ -173,8 +177,8 @@ class Presenter implements IPresenter {
       return;
     }
 
-    if (val < currentVal[0]
-      || val - currentVal[0] < currentVal[1] - val
+    if (incorrectVal < currentVal[0]
+      || incorrectVal - currentVal[0] < currentVal[1] - incorrectVal
     ) {
       this.setCurrentValue([val, currentVal[1]]);
       this.setCurrentHandlePosition(val, SliderDirection.getDirection(true, isHorizontal));
