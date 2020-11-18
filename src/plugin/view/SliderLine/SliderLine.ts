@@ -39,17 +39,18 @@ class SliderLine extends AbstractElement implements ISliderLine {
 
   @bind
   public setRange(setRangeOptions: ISetRangeOptions): void{
-    if (this.isRangeLineEnabled) {
-      setRangeOptions.isRange
-        ? this.range.changeRangeLineTwo(
-          setRangeOptions.handleFromPosition,
-          setRangeOptions.handleToPosition
-        )
-        : this.range.changeRangeLineOne(
-          setRangeOptions.handleFromPosition,
-          setRangeOptions.maxHandlePosition
-        );
-    }
+    if (!this.isRangeLineEnabled) { return; }
+
+    const {
+      isRange,
+      handleFromPosition,
+      handleToPosition,
+      maxHandlePosition
+    } = setRangeOptions;
+
+    isRange
+      ? this.range.changeRangeLineTwo(handleFromPosition, handleToPosition)
+      : this.range.changeRangeLineOne(handleFromPosition, maxHandlePosition);
   }
 
   public get lineClickEvent(): ILiteEvent<number> {
