@@ -34,6 +34,10 @@ class MockPresenter implements IPresenter {
   mockTriggerEvent(val: number[]) {
     this.callBack(val);
   }
+
+  getOptions(): ISliderSettings {
+    return this.sliderSettings;
+  }
 }
 
 export default MockPresenter;
